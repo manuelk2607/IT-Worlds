@@ -1,0 +1,41 @@
+name: Idee oder Lernspiel vorschlagen
+description: Eine Funktion, einen Lernmechanismus oder ein Spiel als Konzept beschreiben.
+title: "[Idee] "
+body:
+  - type: dropdown
+    id: category
+    attributes:
+      label: Art des Vorschlags
+      options:
+        - Quiz oder Lernspiel
+        - Navigation oder Gestaltung
+        - Technischer Ansatz
+        - Anderer Projektvorschlag
+    validations:
+      required: true
+  - type: textarea
+    id: need
+    attributes:
+      label: Bedarf und Nutzen
+      description: Wem hilft die Idee? Bei einem Lernspiel bitte das Lernziel nennen.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Idee und Ablauf
+      description: Wie würde eine Person die Funktion nutzen? Bei einem Spiel bitte Aufgabe und Rückmeldung beschreiben.
+    validations:
+      required: true
+  - type: textarea
+    id: criteria
+    attributes:
+      label: Erfolgskriterien
+      description: Woran ließe sich erkennen, dass die Idee das genannte Problem löst?
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Kleine erste Fassung und offene Fragen
+      description: Was wäre der kleinste nützliche Umfang? Bitte auch mobile Bedienung und Tastaturbedienung mitdenken.

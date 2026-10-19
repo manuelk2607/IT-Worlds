@@ -1,0 +1,29 @@
+name: Fehler oder Korrektur melden
+description: Eine unklare Aussage, einen fachlichen Fehler oder ein Repository-Problem melden.
+title: "[Korrektur] "
+body:
+  - type: input
+    id: location
+    attributes:
+      label: Betroffene Stelle
+      description: Link oder Dateipfad mit Abschnitt angeben.
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Was ist falsch oder unklar?
+      description: Bei einem Bedienungsproblem bitte die Schritte und das beobachtete Ergebnis nennen.
+    validations:
+      required: true
+  - type: textarea
+    id: correction
+    attributes:
+      label: Erwartetes Ergebnis oder Korrekturvorschlag
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Quellen oder zusätzliche Hinweise
+      description: Fachliche Korrekturen nach Möglichkeit mit einer verlässlichen Quelle begründen. Keine Zugangsdaten oder privaten Informationen angeben.

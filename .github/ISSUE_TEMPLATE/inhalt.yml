@@ -1,0 +1,35 @@
+name: Inhalt vorschlagen
+description: Ein Thema, einen Artikel oder einen Lernpfad für IT-Worlds vorschlagen.
+title: "[Inhalt] "
+body:
+  - type: textarea
+    id: topic
+    attributes:
+      label: Thema und Leitfrage
+      description: Welche konkrete Frage soll der Inhalt beantworten? Zu welcher Themenwelt gehört er?
+    validations:
+      required: true
+  - type: textarea
+    id: audience
+    attributes:
+      label: Zielgruppe und Vorwissen
+      description: Für wen ist der Inhalt gedacht und was sollte bereits bekannt sein?
+    validations:
+      required: true
+  - type: textarea
+    id: learning_goal
+    attributes:
+      label: Lernziel
+      description: Was soll eine Person danach erklären oder anwenden können?
+    validations:
+      required: true
+  - type: textarea
+    id: sources
+    attributes:
+      label: Quellen und verwandte Inhalte
+      description: Nach Möglichkeit offizielle Dokumentation oder andere überprüfbare Quellen verlinken. Noch fehlende Quellen benennen.
+  - type: textarea
+    id: exercise
+    attributes:
+      label: Passende Übung
+      description: Gibt es eine Idee für eine Quizfrage, ein Beispiel oder ein Lernspiel?
