@@ -1,0 +1,74 @@
+---
+import { getContent, translate, type Locale } from "../lib/i18n";
+const locale: Locale = Astro.props.locale ?? "de";
+const t = translate(locale);
+const { sources } = getContent(locale);
+interface Props { locale?: Locale }
+import Layout from "../layouts/Layout.astro";
+import SourceCard from "../components/SourceCard.astro";
+import Icon from "../components/Icon.astro";
+import type { SourceId } from "../data/content";
+---
+
+<Layout locale={locale} title={t("Quellen & Qualität", "Sources & quality")} active="quellen">
+  <section class="container page-top page-intro">
+    <p class="eyebrow">{t("DAS FUNDAMENT UNSERES WISSENS", "THE FOUNDATION OF OUR KNOWLEDGE")}</p>
+    <h1>
+      {t("Gute Antworten", "Good answers")}
+      <br />
+      {t("brauchen", "need")} <span>{t("gute Quellen.", "good sources.")}</span>
+    </h1>
+    <p class="page-lead">
+      {t("Du sollst Aussagen nachvollziehen können. Deshalb verlinken wir Originaldokumentationen und Standards direkt an den Stellen, an denen du sie brauchst.", "You should be able to check statements. We link original documentation and standards where you need them.")}
+    </p>
+  </section>
+  <section class="container section">
+    <div class="quality-grid">
+      <div>
+        <span>01</span>
+        <h2>{t("Originale statt Umwege.", "Go to the original.")}</h2>
+        <p>
+          {t("Für technische Grundlagen bevorzugen wir offizielle Dokumentationen und Spezifikationen. Hier findest du die Herausgeber und konkreten Abschnitte.", "For technical foundations, we prefer official documentation and specifications. Find publishers and specific sections here.")}
+        </p>
+      </div>
+      <div>
+        <span>02</span>
+        <h2>{t("Jede Antwort mit Beleg.", "Evidence for every answer.")}</h2>
+        <p>
+          {t("Jede aktuelle Quizfrage verweist auf eine bestimmte Quelle. Auch bei einer falschen Antwort erhältst du eine Erklärung und den Weg zur Originalstelle.", "Each current quiz question refers to a specific source. Even a wrong answer comes with an explanation and a link to the original section.")}
+        </p>
+      </div>
+      <div>
+        <span>03</span>
+        <h2>{t("Prüfstand sichtbar.", "Review status made visible.")}</h2>
+        <p>
+          {t("Version, Ausgabe und Lesedatum sind dokumentiert. Die Texte sind redaktionelle Entwürfe; ein unabhängiges Fachreview steht noch aus.", "Version, edition and reading date are documented. These texts are editorial drafts; an independent expert review is still pending.")}
+        </p>
+      </div>
+    </div>
+    <div class="section-heading sources-heading">
+      <div>
+        <p class="eyebrow">{t("ZUM NACHLESEN UND WEITERDENKEN", "READ FURTHER AND KEEP EXPLORING")}</p>
+        <h2>{t("Unser erstes Quellenverzeichnis.", "Our first source directory.")}</h2>
+        <p>
+          {t(`${Object.keys(sources).length} gelesene Primärquellen. Ein Anfang für die Lerntexte, keine vollständige Bibliografie aller geplanten Themen.`, `${Object.keys(sources).length} primary sources read. A starting point for the articles, not a complete bibliography of all planned topics.`)}
+        </p>
+      </div>
+      <span class="source-count">{Object.keys(sources).length} {t("Quellen", "sources")}</span>
+    </div>
+    <div class="sources-grid">
+      {(Object.keys(sources) as SourceId[]).map((id) => (
+        <SourceCard locale={locale} id={id} />
+      ))}
+    </div>
+    <div class="editorial-note">
+      <Icon name="book" />
+      <div>
+        <h2>{t("So verwenden wir Quellen.", "How we use sources.")}</h2>
+        <p>
+          {t("Die Erklärungen sind eigenständige Zusammenfassungen. Englischsprachige Originale werden als solche verlinkt. Gelesen wurden die offiziellen Dokumentationsquelltexte der Herausgeber; diese sind unter „Beleg & Prüfstand“ zusätzlich erreichbar. Bei fortlaufenden Dokumentationen kann sich der Inhalt ändern. Wissenschaftliche Aussagen zu Wirksamkeit oder Modellleistung benötigen später eigene Studienbelege.", "The explanations are original summaries. English-language originals are linked as such. The publishers’ official documentation source files were read; these are also linked under “Evidence & review status”. Continuously updated documentation may change. Future scientific claims about effectiveness or model performance will require their own research evidence.")}
+        </p>
+      </div>
+    </div>
+  </section>
+</Layout>

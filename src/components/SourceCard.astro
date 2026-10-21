@@ -1,0 +1,48 @@
+---
+import { getContent, translate, type Locale } from "../lib/i18n";
+const locale: Locale = Astro.props.locale ?? "de";
+const t = translate(locale);
+const { sources } = getContent(locale);
+import type { SourceId } from "../data/content";
+import Icon from "./Icon.astro";
+interface Props {
+  locale?: Locale;
+  id: SourceId;
+  compact?: boolean;
+}
+const { id, compact = false } = Astro.props;
+const source = sources[id];
+---
+
+<article class:list={["source-card", { compact }]} data-source={id}>
+  <div class="source-publisher">
+    <Icon name="book" size={17} />
+    {source.publisher}
+  </div>
+  <h3>
+    <a href={source.url} target="_blank" rel="noopener noreferrer">
+      {source.title}
+      <Icon name="external" size={15} />
+      <span class="sr-only"> {t("(öffnet in neuem Tab)", "(opens in a new tab)")}</span>
+    </a>
+  </h3>
+  <p>{source.description}</p>
+  <div class="source-meta">
+    <span>{source.version}</span>
+    <span>{t("Abschnitt:", "Section:")} {source.section}</span>
+  </div>
+  <details>
+    <summary>{t("Beleg & Prüfstand", "Evidence & review status")}</summary>
+    <p>
+      {t("Dokumentationsquelltext gelesen am", "Documentation source file read on")}{" "}
+      <time datetime={source.reviewedAt}>
+        {new Intl.DateTimeFormat(locale, {dateStyle: "medium", timeZone: "UTC"}).format(new Date(source.reviewedAt))}
+      </time>{" "}
+      {t("Die verlinkte Originaldokumentation ist die Grundlage; ein unabhängiges Fachreview der Lerntexte steht noch aus.", "The linked original documentation is the basis; an independent expert review of the articles is still pending.")}
+    </p>
+    <a href={source.evidenceUrl} target="_blank" rel="noopener noreferrer">
+      {t("Gelesenen Originalquelltext öffnen ↗", "Open the source file that was read ↗")}
+      <span class="sr-only"> {t("(neuer Tab)", "(new tab)")}</span>
+    </a>
+  </details>
+</article>

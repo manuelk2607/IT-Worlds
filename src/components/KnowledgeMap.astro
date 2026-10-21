@@ -1,0 +1,78 @@
+---
+import { translate, type Locale } from "../lib/i18n";
+const locale: Locale = Astro.props.locale ?? "de";
+const t = translate(locale);
+interface Props { locale?: Locale }
+import Icon from "./Icon.astro";
+---
+
+<div
+  class="knowledge-map"
+  aria-label={t("Themen sind verbunden: vom Code über APIs und Daten bis zur eigenen Website", "Topics connect: from code to APIs, data and your own website")}
+  role="img"
+>
+  <div class="map-grid"></div>
+  <div class="orbit orbit-one"></div>
+  <div class="orbit orbit-two"></div>
+  <svg class="map-connections" viewBox="0 0 520 420" aria-hidden="true">
+    <path d="M260 205 112 98M260 205 409 83M260 205 426 288M260 205 132 319" />
+    <circle cx="260" cy="205" r="114" />
+  </svg>
+  <div class="map-center">
+    <span class="map-center-logo">
+      <i></i>
+      <i></i>
+      <i></i>
+      <i></i>
+    </span>
+    <strong>
+      {t("Alles hängt", "Everything is")}
+      <br />
+      {t("zusammen.", "connected.")}
+    </strong>
+    <span>{t("Entdecke die Verbindungen", "Explore the connections")}</span>
+  </div>
+  <div class="map-node node-code">
+    <span class="color-blue">
+      <Icon name="code" size={25} />
+    </span>
+    <div>
+      <strong>{t("Deine erste Zeile", "Your first line")}</strong>
+      <small>{t("Programmiersprachen", "Programming languages")}</small>
+    </div>
+    <span class="map-code">&lt;/&gt;</span>
+  </div>
+  <div class="map-node node-ai">
+    <span class="color-purple">
+      <Icon name="network" size={24} />
+    </span>
+    <div>
+      <strong>{t("Neue Perspektiven", "New perspectives")}</strong>
+      <small>{t("KI & neuronale Netze", "AI & neural networks")}</small>
+    </div>
+  </div>
+  <div class="map-node node-db">
+    <span class="color-orange">
+      <Icon name="database" size={24} />
+    </span>
+    <div>
+      <strong>{t("Wissen verknüpfen", "Connect knowledge")}</strong>
+      <small>{t("Datenbanken & APIs", "Databases & APIs")}</small>
+    </div>
+  </div>
+  <div class="map-node node-web">
+    <span class="color-green">
+      <Icon name="browser" size={24} />
+    </span>
+    <div>
+      <strong>{t("Ideen sichtbar machen", "Bring ideas to life")}</strong>
+      <small>{t("Website bauen", "Build a website")}</small>
+    </div>
+  </div>
+  <span class="map-star star-one">✦</span>
+  <span class="map-star star-two">+</span>
+  <span class="map-small-dot"></span>
+  <span class="map-caption">
+    <span></span>{t("Dein Wissen wächst mit jeder Verbindung", "Your knowledge grows with every connection")}
+  </span>
+</div>

@@ -1,0 +1,236 @@
+---
+import { getContent, translate, localePath, type Locale } from "../lib/i18n";
+const locale: Locale = Astro.props.locale ?? "de";
+const t = translate(locale);
+const { topics, paths, levelName } = getContent(locale);
+interface Props { locale?: Locale }
+import Layout from "../layouts/Layout.astro";
+import Icon from "../components/Icon.astro";
+import TopicCard from "../components/TopicCard.astro";
+import KnowledgeMap from "../components/KnowledgeMap.astro";
+
+---
+
+<Layout locale={locale} active="home">
+  <section class="hero container">
+    <div class="hero-copy">
+      <p class="eyebrow">
+        <span class="tiny-spark">✦</span> {t("FÜR ALLE, DIE MEHR VERSTEHEN WOLLEN", "FOR EVERYONE WHO WANTS TO UNDERSTAND MORE")}
+      </p>
+      <h1>
+        {t("IT verstehen.", "Understand IT.")}
+        <br />
+        {t("Deine Welt", "Expand your")}
+        <br />
+        <span>{t("erweitern.", "world.")}</span>
+      </h1>
+      <p class="hero-description">
+        {t("Von der ersten Codezeile bis zu großen Zusammenhängen. Entdecke die IT-Welt – in deinem Tempo, auf deinem Level.", "From your first line of code to the bigger picture. Explore IT at your own pace, at your own level.")}
+      </p>
+      <div class="hero-actions">
+        <a class="button primary" href="#themenwelten">
+          {t("Deine Themenwelt finden", "Find your topic")} <Icon name="arrow" size={19} />
+        </a>
+        <a class="text-link" href={localePath(locale, "/lernpfade/")}>
+          {t("Lernpfade entdecken", "Explore learning paths")} <span>↗</span>
+        </a>
+      </div>
+      <div class="hero-assurances">
+        <span>
+          <Icon name="check" size={16} />
+          {t("Vom Einstieg bis zum Profi", "From beginner to advanced")}
+        </span>
+        <span>
+          <Icon name="check" size={16} />
+          {t("Mit nachvollziehbaren Quellen", "With traceable sources")}
+        </span>
+      </div>
+    </div>
+    <KnowledgeMap locale={locale} />
+  </section>
+  <div class="intro-strip">
+    <div class="container">
+      <p>
+        <span class="small-icon">↗</span> {t("Eine Frage führt zur nächsten.", "One question leads to the next.")}{" "}
+        <strong>{t("Hier findest du die Zusammenhänge.", "Find the connections here.")}</strong>
+      </p>
+      <span>
+        {t("10 Themenwelten", "10 topics")} <span class="dot-separator">·</span> {t("3 Lernstufen", "3 levels")}{" "}
+        <span class="dot-separator">·</span> {t("Deine Neugier", "Your curiosity")}
+      </span>
+    </div>
+  </div>
+  <section class="section container" id="themenwelten">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">{t("DEIN EINSTIEG IN DIE IT-WELT", "YOUR WAY INTO THE WORLD OF IT")}</p>
+        <h2>{t("Was möchtest du entdecken?", "What would you like to explore?")}</h2>
+        <p>
+          {t("Such dir ein Thema. Wir zeigen dir, wo du anfangen und wie du weitergehen kannst.", "Choose a topic. We show you where to start and how to continue.")}
+        </p>
+      </div>
+      <span class="section-side-note">
+        <span class="status-dot"></span>{t("Wissen, das mit dir wächst", "Knowledge that grows with you")}
+      </span>
+    </div>
+    <div class="topic-toolbar">
+      <div class="filter-chips" role="group" aria-label={t("Themenwelten filtern", "Filter topics")}>
+        <button
+          class="filter-chip active"
+          data-topic-filter="alle"
+          aria-pressed="true"
+        >
+          {t("Alle Themen", "All topics")} <span>10</span>
+        </button>
+        <button
+          class="filter-chip"
+          data-topic-filter="bauen"
+          aria-pressed="false"
+        >
+          {t("Programmieren & Bauen", "Programming & building")}
+        </button>
+        <button
+          class="filter-chip"
+          data-topic-filter="daten"
+          aria-pressed="false"
+        >
+          {t("Daten & KI", "Data & AI")}
+        </button>
+        <button
+          class="filter-chip"
+          data-topic-filter="systeme"
+          aria-pressed="false"
+        >
+          {t("Systeme & Sicherheit", "Systems & security")}
+        </button>
+      </div>
+      <label class="topic-search">
+        <Icon name="search" size={18} />
+        <input
+          type="search"
+          id="topic-search"
+          aria-label={t("Themen durchsuchen", "Search topics")}
+          placeholder={t("Thema suchen …", "Search topics …")}
+        />
+      </label>
+    </div>
+    <p class="sr-only" id="topic-result-count" role="status">
+      {t("10 Themenwelten", "10 topics")}
+    </p>
+    <div class="topic-grid">
+      {topics.map((topic, index) => (
+        <TopicCard locale={locale} topic={topic} index={index} />
+      ))}
+      <aside class="curiosity-card" data-grid-note>
+        <span>{t("DEIN WISSEN. DEIN WEG.", "YOUR KNOWLEDGE. YOUR JOURNEY.")}</span>
+        <h3>
+          {t("Du musst nicht alles wissen.", "You don’t have to know everything.")}
+          <br />
+          {t("Nur wissen, wo du anfängst.", "Just where to begin.")}
+        </h3>
+        <p>{t("Unsere Lernpfade verbinden einzelne Themen zu einem roten Faden.", "Our learning paths connect individual topics into a clear route.")}</p>
+        <a href={localePath(locale, "/lernpfade/")}>
+          {t("Finde deinen Lernpfad", "Find your learning path")} <Icon name="arrow" size={19} />
+        </a>
+        <span class="curiosity-spark" aria-hidden="true">
+          <Icon name="spark" size={170} />
+        </span>
+      </aside>
+    </div>
+    <div id="topics-empty" class="empty-state" hidden>
+      <h3>{t("Noch keine passende Themenwelt gefunden?", "No matching topic yet?")}</h3>
+      <p>{t("Versuche einen anderen Begriff oder setze die Filter zurück.", "Try another search term or reset the filters.")}</p>
+      <button class="button secondary" id="reset-topic-filter">
+        {t("Filter zurücksetzen", "Reset filters")}
+      </button>
+    </div>
+  </section>
+  <section class="path-section">
+    <div class="container section">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">{t("AUS EINZELNEN SCHRITTEN WIRD EIN WEG", "INDIVIDUAL STEPS BECOME A JOURNEY")}</p>
+          <h2>{t("Ein roter Faden für deine Neugier.", "A clear route for your curiosity.")}</h2>
+          <p>
+            {t("Geplante Lernwege mit klaren Voraussetzungen. Erste Einstiege kannst du schon lesen.", "Planned learning paths with clear prerequisites. The first introductions are already available.")}
+          </p>
+        </div>
+        <a class="text-link" href={localePath(locale, "/lernpfade/")}>
+          {t("Alle Lernpfade", "All learning paths")} <Icon name="arrow" size={18} />
+        </a>
+      </div>
+      <div class="path-grid">
+        {paths.map((path, i) => (
+          <a
+            class={`path-card color-${path.color}`}
+            href={localePath(locale, `/lernpfade/${path.id}/`)}
+          >
+            <div class="path-top">
+              <span class="level-badge">{levelName(path.level)}</span>
+              <span class="path-no">0{i + 1}</span>
+            </div>
+            <span class="path-illustration">
+              <Icon name={path.icon} size={44} />
+            </span>
+            <h3>{path.title}</h3>
+            <p>{path.description}</p>
+            <div class="path-bottom">
+              <span>
+                {t(`${path.steps.filter((step) => step.available).length} von ${path.steps.length} Schritten verfügbar`, `${path.steps.filter((step) => step.available).length} of ${path.steps.length} steps available`)}
+              </span>
+              <Icon name="arrow" size={19} />
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+  <section class="container section trust-section">
+    <div class="trust-visual" aria-hidden="true">
+      <span class="trust-ring"></span>
+      <span class="trust-book">
+        <Icon name="book" size={42} />
+      </span>
+      <span class="trust-check">
+        <Icon name="check" size={24} />
+      </span>
+      <span class="trust-label">{t("Wissen braucht ein Fundament.", "Knowledge needs a foundation.")}</span>
+    </div>
+    <div>
+      <p class="eyebrow">{t("NEUGIER TRIFFT NACHVOLLZIEHBARKEIT", "CURIOSITY MEETS TRACEABILITY")}</p>
+      <h2>
+        {t("Nicht einfach behauptet.", "More than a claim.")}
+        <br />
+        {t("Zum Nachlesen verlinkt.", "Linked so you can check.")}
+      </h2>
+      <p>
+        {t("Jeder erste Lerntext und jede Quizfrage führen zu ihrer Primärquelle. Du siehst, woher eine Aussage kommt, für welche Version sie gilt und wann die Quelle gelesen wurde.", "Every introductory article and quiz question links to its primary source. See where a statement comes from, which version it applies to and when the source was read.")}
+      </p>
+      <div class="source-names">
+        <span>MDN Web Docs</span>
+        <span>Python</span>
+        <span>PostgreSQL</span>
+        <span>PyTorch</span>
+      </div>
+      <a class="text-link" href={localePath(locale, "/quellen/")}>
+        {t("Quellen & Qualitätsanspruch", "Sources & quality")} <Icon name="arrow" size={18} />
+      </a>
+    </div>
+  </section>
+  <section class="container quiz-banner">
+    <div>
+      <p class="eyebrow">{t("EIN KLEINES AHA FÜR ZWISCHENDURCH", "A SMALL MOMENT OF DISCOVERY")}</p>
+      <h2>{t("Was weißt du schon?", "What do you already know?")}</h2>
+      <p>
+        {t("Fünf erste Fragen. Kein Zeitdruck. Dafür eine Erklärung zu jeder Antwort.", "Five first questions. No time pressure. An explanation for every answer.")}
+      </p>
+    </div>
+    <a href={localePath(locale, "/quiz/")} class="button light">
+      {t("Wissensquiz ausprobieren", "Try the knowledge quiz")} <Icon name="arrow" size={19} />
+    </a>
+    <span class="banner-decoration" aria-hidden="true">
+      ?
+    </span>
+  </section>
+  <script src="../scripts/topics.ts"></script>
+</Layout>

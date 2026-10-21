@@ -1,0 +1,31 @@
+---
+import Home from '../index.astro';
+import Quiz from '../quiz.astro';
+import Sources from '../quellen.astro';
+import Paths from '../lernpfade/index.astro';
+import Path from '../lernpfade/[slug].astro';
+import Topic from '../themen/[slug].astro';
+import Account from '../konto.astro';
+import Progress from '../fortschritt.astro';
+import NotFound from '../404.astro';
+import { topics, paths } from '../../data/content.en';
+import type { Topic as TopicData, LearningPath } from '../../data/content';
+interface Props { view: string; topic?: TopicData; path?: LearningPath }
+export function getStaticPaths() {
+  return [
+    ...[undefined, 'quiz', 'quellen', 'lernpfade', 'konto', 'fortschritt', '404'].map(page => ({ params: { page }, props: { view: page ?? 'home' } })),
+    ...topics.map(topic => ({ params: { page: `themen/${topic.id}` }, props: { view: 'topic', topic } })),
+    ...paths.map(path => ({ params: { page: `lernpfade/${path.id}` }, props: { view: 'path', path } })),
+  ];
+}
+const { view, topic, path } = Astro.props;
+---
+{view === 'home' && <Home locale="en" />}
+{view === 'quiz' && <Quiz locale="en" />}
+{view === 'quellen' && <Sources locale="en" />}
+{view === 'lernpfade' && <Paths locale="en" />}
+{view === 'konto' && <Account locale="en" />}
+{view === 'fortschritt' && <Progress locale="en" />}
+{view === '404' && <NotFound locale="en" />}
+{view === 'topic' && topic && <Topic locale="en" topic={topic} />}
+{view === 'path' && path && <Path locale="en" path={path} />}

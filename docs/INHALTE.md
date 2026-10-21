@@ -1,5 +1,9 @@
 # Inhaltskonzept
 
+## Aktueller Umsetzungsstand
+
+Die Website enthält fünf kurze Einstiege zu Python-Operatoren, SQL-Abfragen, HTML, PyTorch-Modulen und OpenAPI sowie je eine passende Quizfrage. Themen, Lernziele, Quellen und Antworterklärungen sind in `src/data/content.ts` implementiert. Das [Quellenprotokoll](QUELLEN.md) beschreibt die gelesenen Originale. Die folgenden sechs Artikel gehören zu einem früheren Ausbauvorschlag und sind weiterhin geplant.
+
 ## Themen ordnen und Wissen verbinden
 
 Die Themenwelten in der [README](../README.md#mögliche-themenwelten) bilden die oberste Ebene. Innerhalb einer Welt gibt es einzelne Artikel, Begriffserklärungen und zusammenhängende Lernpfade. Schlagwörter verbinden verwandte Themen über die Welten hinweg.
@@ -36,7 +40,7 @@ Als Richtwert eignen sich fünf bis zehn Minuten Lesezeit. Ein komplizierter Zus
 
 ## Geplante Inhaltsmetadaten
 
-Diese Felder beschreiben ein mögliches späteres Inhaltsmodell, noch kein implementiertes Dateiformat:
+Die folgende Tabelle beschreibt das vollständige Zielmodell. Ein Teil davon ist bereits in den TypeScript-Inhaltsdaten umgesetzt; Verantwortlichkeit, Inhaltsversionen und ein CMS sind noch nicht implementiert:
 
 | Feld | Zweck |
 | --- | --- |

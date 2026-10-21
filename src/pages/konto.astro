@@ -1,0 +1,59 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { translate, localePath, type Locale } from '../lib/locale';
+interface Props { locale?: Locale }
+const locale: Locale = Astro.props.locale ?? 'de';
+const t = translate(locale);
+---
+<Layout locale={locale} title={t('Mein Account', 'My account')}>
+  <section class="container page-top page-intro">
+    <p class="eyebrow">{t('DEIN WEG. DEIN LERNSTAND.', 'YOUR JOURNEY. YOUR PROGRESS.')}</p>
+    <h1>{t('Deine Neugier.', 'Your curiosity.')}<br /><span>{t('Dein Fortschritt.', 'Your progress.')}</span></h1>
+    <p class="page-lead">{t('Mit einem freiwilligen Account behältst du gelesene Einstiege und bearbeitete Fragen im Blick – auch auf anderen Geräten. Alle Inhalte bleiben ohne Anmeldung zugänglich.', 'An optional account keeps track of introductions you have read and questions you have practised, across devices. All content remains accessible without signing in.')}</p>
+  </section>
+  <section class="container narrow account-section">
+    <p class="account-status" data-session-status role="status"></p>
+    <div class="account-panel" data-signed-in hidden>
+      <h2>{t('Schön, dass du da bist,', 'Welcome,')} <span data-user-name></span>.</h2>
+      <p data-user-email></p>
+      <div class="result-actions"><a class="button primary" href={localePath(locale, '/fortschritt/')}>{t('Meinen Lernstand ansehen', 'View my progress')}</a><button class="button secondary" data-sign-out>{t('Abmelden', 'Sign out')}</button></div>
+    </div>
+    <div class="account-panel" data-signed-out>
+      <div class="account-tabs" role="group" aria-label={t('Account-Aktion wählen', 'Choose account action')}>
+        <button class="filter-chip active" type="button" data-auth-tab="sign-in" aria-pressed="true">{t('Anmelden', 'Sign in')}</button>
+        <button class="filter-chip" type="button" data-auth-tab="sign-up" aria-pressed="false">{t('Account erstellen', 'Create account')}</button>
+      </div>
+      <form class="account-form" data-auth-form="sign-in">
+        <h2>{t('Willkommen zurück.', 'Welcome back.')}</h2>
+        <label>{t('E-Mail-Adresse', 'Email address')}<input name="email" type="email" autocomplete="email" required maxlength="254" /></label>
+        <label>{t('Passwort', 'Password')}<input name="password" type="password" autocomplete="current-password" required maxlength="128" /></label>
+        <button class="button primary" type="submit" disabled>{t('Anmelden', 'Sign in')}</button>
+        <button class="text-link" type="button" data-auth-tab="forgot">{t('Passwort vergessen?', 'Forgot password?')}</button>
+      </form>
+      <form class="account-form" data-auth-form="sign-up" hidden>
+        <h2>{t('Dein Lernstand beginnt hier.', 'Your learning record starts here.')}</h2>
+        <label>{t('Anzeigename (optional)', 'Display name (optional)')}<input name="name" type="text" autocomplete="nickname" maxlength="80" /></label>
+        <label>{t('E-Mail-Adresse', 'Email address')}<input name="email" type="email" autocomplete="email" required maxlength="254" /></label>
+        <label>{t('Passwort (mindestens 12 Zeichen)', 'Password (at least 12 characters)')}<input name="password" type="password" autocomplete="new-password" required minlength="12" maxlength="128" /></label>
+        <p class="muted">{t('Wir speichern deinen Account und Lernstand bei Neon. Eine E-Mail-Bestätigung ist nicht erforderlich. Die Adresse wird für die Anmeldung und das Zurücksetzen des Passworts verwendet.', 'We store your account and learning progress with Neon. Email verification is not required. Your address is used for signing in and resetting your password.')}</p>
+        <button class="button primary" type="submit" disabled>{t('Account erstellen', 'Create account')}</button>
+      </form>
+      <form class="account-form" data-auth-form="forgot" hidden>
+        <h2>{t('Wieder Zugang bekommen.', 'Get back into your account.')}</h2>
+        <p>{t('Wenn für die Adresse ein Account besteht, erhältst du einen Link zum Zurücksetzen. Der gemeinsame Neon-Maildienst hat Versandlimits; bei einer Begrenzung versuche es später erneut.', 'If an account exists for this address, you will receive a reset link. Neon’s shared email service has sending limits; if a limit is reached, try again later.')}</p>
+        <label>{t('E-Mail-Adresse', 'Email address')}<input name="email" type="email" autocomplete="email" required maxlength="254" /></label>
+        <button class="button primary" type="submit" disabled>{t('Link anfordern', 'Request reset link')}</button>
+        <button class="text-link" type="button" data-auth-tab="sign-in">{t('Zurück zur Anmeldung', 'Back to sign in')}</button>
+      </form>
+      <form class="account-form" data-auth-form="reset" hidden>
+        <h2>{t('Ein neues Passwort.', 'A new password.')}</h2>
+        <label>{t('Neues Passwort (mindestens 12 Zeichen)', 'New password (at least 12 characters)')}<input name="password" type="password" autocomplete="new-password" required minlength="12" maxlength="128" /></label>
+        <button class="button primary" type="submit" disabled>{t('Passwort speichern', 'Save password')}</button>
+      </form>
+      <p id="auth-message" role="status" aria-live="polite"></p>
+    </div>
+    <p><a class="text-link" href={localePath(locale, '/#themenwelten')}>{t('Ohne Account weiterlernen →', 'Keep learning without an account →')}</a></p>
+    <noscript><p>{t('Für Anmeldung und Fortschrittsspeicherung benötigst du JavaScript. Alle Lerninhalte bleiben lesbar.', 'JavaScript is required for signing in and saving progress. All learning content remains readable.')}</p></noscript>
+  </section>
+  <script src="../scripts/account.ts"></script>
+</Layout>

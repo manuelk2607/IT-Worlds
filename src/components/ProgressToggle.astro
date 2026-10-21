@@ -1,0 +1,15 @@
+---
+import { translate, localePath, type Locale } from '../lib/locale';
+import type { ProgressKind } from '../lib/progress';
+interface Props { kind: ProgressKind; contentId: string; locale?: Locale }
+const { kind, contentId, locale = 'de' } = Astro.props;
+const t = translate(locale);
+---
+<div class="progress-control" data-progress-control data-kind={kind} data-content-id={contentId}>
+  <label class="progress-checkbox">
+    <input type="checkbox" data-progress-toggle disabled />
+    <span>{kind === 'lesson' ? t('Als gelesen markieren', 'Mark as read') : t('Als bearbeitet markieren', 'Mark as practised')}</span>
+  </label>
+  <p data-progress-message role="status"></p>
+  <a class="text-link" data-progress-login href={`${localePath(locale, '/konto/')}?next=${encodeURIComponent(Astro.url.pathname + Astro.url.search + (kind === 'lesson' ? '#einstiegsartikel' : ''))}`}>{t('Optional anmelden und Fortschritt speichern →', 'Sign in to save progress (optional) →')}</a>
+</div>

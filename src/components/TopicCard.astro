@@ -1,0 +1,42 @@
+---
+import { translate, localePath, type Locale } from "../lib/i18n";
+const locale: Locale = Astro.props.locale ?? "de";
+const t = translate(locale);
+import type { Topic } from "../data/content";
+import Icon from "./Icon.astro";
+interface Props {
+  locale?: Locale;
+  topic: Topic;
+  index?: number;
+}
+const { topic, index = 0 } = Astro.props;
+---
+
+<a
+  href={localePath(locale, `/themen/${topic.id}/`)}
+  class={`topic-card color-${topic.color}`}
+  data-topic-card
+  data-group={topic.group}
+  data-search={`${topic.title} ${topic.short} ${topic.tags.join(" ")} ${Object.values(topic.curriculum).flat().join(" ")}`.toLocaleLowerCase(locale)}
+>
+  <div class="card-top">
+    <span class="topic-icon">
+      <Icon name={topic.icon} size={25} />
+    </span>
+    <span class="card-number">{String(index + 1).padStart(2, "0")}</span>
+  </div>
+  <h3>{topic.title}</h3>
+  <p>{topic.short}</p>
+  <div class="topic-tags">
+    {topic.tags.map((tag) => (
+      <span>{tag}</span>
+    ))}
+  </div>
+  <div class="card-bottom">
+    <span>
+      {topic.lesson ? t("Einstieg verfügbar", "Introduction available") : t("Themenplan entdecken", "Explore the outline")}
+      <span class="dot-separator">·</span>{t("3 Lernstufen", "3 levels")}
+    </span>
+    <Icon name="arrow" size={19} />
+  </div>
+</a>

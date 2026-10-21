@@ -1,64 +1,21 @@
 # GitHub-Einrichtung
 
-## Stand
+Repository: [manuelk2607/IT-Worlds](https://github.com/manuelk2607/IT-Worlds). Website: [it-worlds.maki26.workers.dev](https://it-worlds.maki26.workers.dev).
 
-Das Repository heißt [manuelk2607/IT-Worlds](https://github.com/manuelk2607/IT-Worlds). Der lokale Git-Remote wurde auf die neue URL aktualisiert. Der lokale Arbeitsordner kann weiterhin `IT-Welten` heißen; das ändert den Repository-Namen nicht.
+Der About-Bereich beschreibt den tatsächlichen Funktionsumfang. Mit „Tags“ sind GitHub-Topics gemeint, keine Release-Tags. README und englische README erklären Einrichtung, aktuellen Inhalt, Accounts, Designs, Sprachen und Grenzen. Technische Betriebsdokumentation liegt unter `docs/`.
 
-README, Konzeptdokumente und Beitragsvorlagen sind Bestandteil dieses Einrichtungspakets. **Die unten vorgeschlagene Beschreibung und die Topics sind noch nicht in den GitHub-Metadaten gesetzt.** Die verfügbare GitHub-Anbindung bietet dafür keine Schreibfunktion; die lokale GitHub-CLI erhält aktuell eine Zugriffssperre. Diese Datei hält die vollständigen Angaben zur direkten Übernahme fest.
+## Beschreibung
 
-## Beschreibung für den About-Bereich
-
-> Deutschsprachige IT-Wissensplattform im Aufbau: verständliche Artikel, kuratierte Quellen, Lernpfade, Quizzes und Lernspiele rund um die IT-Welt.
-
-Eine Website-URL erst eintragen, wenn eine tatsächlich verfügbare Projektwebsite existiert.
+> Deutsch-englische IT-Lernplattform mit zehn Themenwelten, quellenbasierten Einstiegen, Quiz, optionalen Accounts und gespeichertem Lernfortschritt. Astro, TypeScript, Neon und Cloudflare Workers.
 
 ## Topics
 
-Mit „Tags“ sind hier GitHub-Topics für Auffindbarkeit gemeint. Release-Tags sind erst für spätere veröffentlichte Versionen sinnvoll.
+`astro`, `typescript`, `neon`, `postgresql`, `cloudflare-workers`, `education`, `learning-platform`, `learning-progress`, `quiz`, `bilingual`, `dark-mode`, `programming`, `information-technology`.
 
-```text
-information-technology
-computer-science
-education
-learning-platform
-knowledge-base
-interactive-learning
-gamification
-quiz
-learning-games
-german
-```
+Beschreibung, Homepage und Topics lassen sich mit der vorhandenen GitHub-Anmeldung pflegen. Vorhandene passende Topics erhalten und den gesetzten Stand anschließend zurücklesen. Keine vollständigen Kurse, Zertifizierung oder offene Lizenz behaupten.
 
-Framework-Topics wie `astro` oder `nextjs` erst ergänzen, wenn eine entsprechende Entscheidung getroffen und die Technik tatsächlich eingesetzt wurde.
+## Beiträge und weitere Pflege
 
-## Angaben übernehmen
+Issue-Formulare sammeln Inhaltsvorschläge, Lernspielideen und Fehler/Korrekturen. Pull Requests sollen Zweck, Umfang, Prüfungen und Quellen nennen. Eigene Änderungen auf einem Branch vorbereiten und den geprüften Stand ohne Force-Push veröffentlichen. Fremde lokale Dateien und parallele Änderungen erhalten.
 
-Im Repository rechts neben **About** das Zahnrad öffnen und Beschreibung sowie Topics eintragen. Alternativ in einer Umgebung mit funktionierender GitHub-CLI-Anmeldung und passenden Repository-Rechten ausführen:
-
-```bash
-gh repo edit manuelk2607/IT-Worlds \
-  --description 'Deutschsprachige IT-Wissensplattform im Aufbau: verständliche Artikel, kuratierte Quellen, Lernpfade, Quizzes und Lernspiele rund um die IT-Welt.' \
-  --add-topic information-technology,computer-science,education,learning-platform,knowledge-base,interactive-learning,gamification,quiz,learning-games,german
-```
-
-Der Befehl ergänzt Topics. Vorhandene Topics werden nicht entfernt. Nach erfolgreicher Übernahme diesen Status und den entsprechenden Punkt in der [Roadmap](ROADMAP.md) aktualisieren.
-
-## Beitragsvorlagen
-
-- **Inhalt vorschlagen:** Thema, Zielgruppe, Lernziel und Quellen sammeln.
-- **Idee oder Lernspiel vorschlagen:** Nutzen, Ablauf, Aufwand und Erfolgskriterien beschreiben.
-- **Fehler oder Korrektur melden:** betroffene Stelle, Problem und begründete Korrektur erfassen.
-- **Pull Request:** Zweck, Dokumentationsprüfung und Quellen nachvollziehbar machen.
-
-Die Issue-Formulare vergeben noch keine Labels automatisch. So sind sie ohne zusätzliche Label-Einrichtung verwendbar.
-
-## Sinnvolle spätere Repository-Pflege
-
-- Kleine Änderungen über Pull Requests prüfen, sobald mehrere Personen mitarbeiten.
-- Bei Bedarf Labels wie `content`, `learning-game`, `documentation` und `decision` einführen.
-- Arbeitspakete zunächst in Issues pflegen; ein Projektboard erst bei genügend paralleler Arbeit ergänzen.
-- Automatische Build- und Inhaltsprüfungen nach der Technikauswahl einrichten.
-- Lizenzmodell für Programmcode und eigene Bildungsinhalte bewusst auswählen; Rechte an Fremdmaterial separat dokumentieren.
-- Sicherheitsmeldungen und einen passenden Kontakt vor Einführung von Konten oder Serverfunktionen planen.
-
-Eine Lizenz, Release-Version, Roadmap-Frist oder eine produktive Website wird durch dieses Konzeptpaket nicht behauptet.
+Spätere Aufgaben sind unabhängige Fachreviews, inhaltlicher Ausbau, CI und eine bewusst ausgewählte Lizenz für Code und eigene Lerntexte. Rechte an Fremdmaterial separat dokumentieren.

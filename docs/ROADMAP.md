@@ -2,6 +2,20 @@
 
 Die Reihenfolge beschreibt vorgeschlagene Ausbaustufen, keine zugesagten Termine. Umfang und Prioritäten werden nach Rückmeldungen angepasst.
 
+## Aktueller Website-Rahmen
+
+- [x] Zehn Themenwelten mit Einstieg, Vertiefung und Profi-Themen strukturieren.
+- [x] Startseite, Themen- und Lernpfadseiten mit responsivem Layout umsetzen.
+- [x] Themen- und Lernpfadsuche sowie Themen- und Stufenfilter bereitstellen.
+- [x] Fünf kurze Einstiegsartikel und fünf passende Quizfragen mit Primärquellen hinterlegen.
+- [x] 14 Originalquellen mit Herausgeber, Version, Abschnitt und Lesedatum dokumentieren.
+- [x] LaTeX, Typst und Markdown als Unterbereich von Programmiersprachen einordnen.
+- [x] Projektcode einschließlich Tests, Hilfsskripten und Astro-Konfiguration auf TypeScript vereinheitlichen.
+- [ ] Unabhängiges Fachreview der Einstiege und Quizfragen durchführen.
+- [ ] Lernpfade vollständig ausarbeiten und für Vertiefung/Profi passende Belege recherchieren.
+
+Der frühere Vorschlag „Vom Browser zur Website“ bleibt eine mögliche spätere inhaltliche Ausbaustufe. Die drei derzeit sichtbaren Lernpfade sind Skizzen, keine abgeschlossenen Kurse. Details im [Website-Aufbau](WEBSITE-AUFBAU.md).
+
 ## Phase 0: Konzept und Repository
 
 Dieses Dokumentationspaket umfasst:
@@ -12,8 +26,9 @@ Dieses Dokumentationspaket umfasst:
 - [x] Technische Ansätze vergleichen und eine vorläufige Empfehlung begründen.
 - [x] README, Beitragsleitfaden sowie Issue- und Pull-Request-Vorlagen vorbereiten.
 - [x] Repository-Beschreibung und GitHub-Topics zur Übernahme vorbereiten.
-- [ ] Beschreibung und Topics in den GitHub-Metadaten übernehmen; siehe [Einrichtungsstatus](GITHUB-SETUP.md).
-- [ ] Zielgruppe, Lizenzmodell und technische Richtung festlegen.
+- [x] Beschreibung, Website-Link und Topics in den GitHub-Metadaten pflegen; siehe [Einrichtungsstatus](GITHUB-SETUP.md).
+- [x] Breite Themenlandkarte vom Einstieg bis zum Profi sowie Astro für den ersten Website-Rahmen festlegen.
+- [ ] Lizenzmodell und unabhängige fachliche Prüfung klären.
 
 ## Phase 1: Ein vollständiger Lernpfad als erste Version
 
@@ -28,7 +43,7 @@ Vorgeschlagener Umfang:
 - Das Spiel „Paketreise“ als Wiederholung des Gesamtzusammenhangs.
 - Mobile Darstellung und vollständige Bedienung per Tastatur.
 
-Der Einstieg braucht noch keine Anmeldung, öffentliche Rangliste, automatische Newsimporte oder Ausführung von Nutzer-Code. Optionaler lokaler Fortschritt kann ergänzt werden, wenn er beim ersten Nutzertest hilft.
+Der Einstieg braucht noch keine Anmeldung, öffentliche Rangliste, automatische Newsimporte oder Ausführung von Nutzer-Code. Freiwillige Accounts speichern inzwischen den persönlichen Fortschritt.
 
 **Vor Umsetzung klären:** Zielgruppe und Schwierigkeitsgrad, redaktionell prüfende Person, Framework und Hosting sowie Rechte an eigenen Texten und Medien.
 
@@ -46,14 +61,15 @@ Der Einstieg braucht noch keine Anmeldung, öffentliche Rangliste, automatische 
 - Den ersten Lernpfad mit einigen Personen aus der Zielgruppe beobachten und Stolperstellen beheben.
 - Eine weitere Welt nach Interesse und redaktioneller Kapazität ergänzen, etwa IT-Sicherheit oder Programmiergrundlagen.
 - Binärlabor oder Phishing-Detektiv passend zu den neuen Artikeln entwickeln.
-- Bei nachgewiesenem Bedarf lokale Lesezeichen, Wiederholungen und Fortschritt ergänzen.
+- Wiederholungen und Lesezeichen bei Bedarf ergänzen; persönlicher Fortschritt ist bereits verfügbar.
 - Suche und Querverweise anhand tatsächlich gestellter Fragen verbessern.
 
 ## Phase 3: Persönliches Lernen und größere Übungen
 
-- Konten und synchronisierte Lernstände nur bei erkennbarem Nutzen ergänzen.
+- [x] Freiwillige Accounts und synchronisierten Lernstand auf Wunsch des Betreibers ergänzen.
 - Ein CMS erwägen, wenn die Redaktion am Git-Workflow scheitert.
 - Isolierte Praxisumgebungen für SQL oder Programmierung gesondert konzipieren.
+- [x] Deutsch/Englisch und optionales dunkles Design ergänzen.
 - Weitere Sprachen, Community-Beiträge und freiwillige Lernziele prüfen.
 
 ## Offene Entscheidungen
@@ -63,8 +79,8 @@ Der Einstieg braucht noch keine Anmeldung, öffentliche Rangliste, automatische 
 | Für wen schreiben wir zuerst? | deutschsprachige Interessierte ohne tiefes Vorwissen | Rückmeldung aus Zielgruppengesprächen |
 | Breite oder Tiefe? | ein verbundener Lernpfad, dazu eine Themenlandkarte | der erste Pfad wird verständlich und zuverlässig genutzt |
 | Welche Technik? | statische Artikel mit gezielten interaktiven Komponenten | umfangreiche dynamische Anforderungen |
-| Brauchen wir Nutzerkonten? | zunächst ohne Konto | belegter Wunsch nach Synchronisierung |
+| Brauchen wir Nutzerkonten? | freiwillige Accounts für Synchronisierung; Inhalte frei | weitere persönliche Funktionen |
 | Wie werden Inhalte gepflegt? | Markdown und Review im Repository | Redaktion benötigt eine andere Oberfläche |
 | Wie lizenzieren wir das Projekt? | Code, Lerntexte und Fremdmaterial getrennt beurteilen | vor entsprechenden externen Beiträgen und Veröffentlichung |
 
-Konkrete nächste Arbeitspakete nach dem Konzept: Zielgruppe festhalten, den Lernpfad fachlich skizzieren, zwei Artikelentwürfe mit Quizfragen gegenlesen lassen und erst danach einen kleinen technischen Prototyp planen.
+Konkrete nächste Arbeitspakete: die fünf Einstiege und Fragen fachlich gegenlesen lassen, einen Lernpfad vollständig ausarbeiten und die Beleglage für Vertiefungs- und Profi-Inhalte aufbauen.

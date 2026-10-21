@@ -1,0 +1,15 @@
+node_modules/
+dist/
+.astro/
+.wrangler/
+.dev.vars
+.dev.vars.*
+.env
+.env.*
+!.env.example
+*.log
+.DS_Store
+
+# Local Neon branch selection and service credentials
+.neon
+.neon.*

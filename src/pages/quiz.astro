@@ -1,0 +1,167 @@
+---
+import { getContent, translate, localePath, type Locale } from "../lib/i18n";
+const locale: Locale = Astro.props.locale ?? "de";
+const t = translate(locale);
+const { questions, topicById, sources } = getContent(locale);
+interface Props { locale?: Locale }
+import ProgressToggle from "../components/ProgressToggle.astro";
+import Layout from "../layouts/Layout.astro";
+import Icon from "../components/Icon.astro";
+
+---
+
+<Layout locale={locale} title={t("Wissensquiz", "Knowledge quiz")} active="quiz">
+  <section class="container page-top page-intro quiz-intro">
+    <p class="eyebrow">{t("NEUGIER AN. ZEITDRUCK AUS.", "CURIOSITY ON. TIME PRESSURE OFF.")}</p>
+    <h1>
+      {t("Ein kleines Quiz.", "A little quiz.")}
+      <br />
+      {t("Ein neues", "A new")} <span>{t("Aha.", "discovery.")}</span>
+    </h1>
+    <p class="page-lead">
+      {t("Teste dein Verständnis mit fünf ersten Fragen. Mit einem freiwilligen Account werden bearbeitete Fragen und richtige Antworten gespeichert. Ohne Account bleibt das Quiz frei nutzbar.", "Test your understanding with five first questions. An optional account saves practised questions and correct answers. The quiz remains freely available without an account.")}
+    </p>
+  </section>
+  <section class="container narrow quiz-section">
+    <div class="quiz-controls">
+      <label for="quiz-topic">{t("Deine Themenwahl", "Your topic")}</label>
+      <select id="quiz-topic">
+        <option value="alle">{t("Alle fünf Themen", "All five topics")}</option>
+        {questions.map((question) => (
+          <option value={question.topic}>
+            {topicById(question.topic)!.title}
+          </option>
+        ))}
+      </select>
+    </div>
+    <div class="quiz-shell">
+      <div id="quiz-progress">
+        <div>
+          <span id="question-count">{t("Frage 1 von 5", "Question 1 of 5")}</span>
+          <span>{t("Ohne Zeitlimit", "No time limit")}</span>
+        </div>
+        <progress
+          id="question-progress"
+          value="0"
+          max="5"
+          aria-label={t("Beantwortete Fragen", "Questions answered")}
+        ></progress>
+      </div>
+      <div id="quiz-questions">
+        {questions.map((question, index) => (
+          <section
+            data-question={question.id}
+            data-topic={question.topic}
+            hidden={index !== 0}
+          >
+            <span class="quiz-topic-label">
+              {topicById(question.topic)!.title}{" "}
+              <span class="dot-separator">·</span> {t("Einstieg", "Beginner")}
+            </span>
+            <form data-quiz-form data-answer={question.answer}>
+              <fieldset>
+                <legend>{question.prompt}</legend>
+                <div class="answer-options">
+                  {question.options.map((option, optionIndex) => (
+                    <label class="answer-option">
+                      <input
+                        type="radio"
+                        name={question.id}
+                        value={optionIndex}
+                        required
+                      />
+                      <span class="option-letter">
+                        {String.fromCharCode(65 + optionIndex)}
+                      </span>
+                      <span>{option.text}</span>
+                      <span class="option-marker" aria-hidden="true"></span>
+                    </label>
+                  ))}
+                </div>
+              </fieldset>
+              <button type="submit" class="button primary check-answer">
+                {t("Antwort prüfen", "Check answer")} <Icon name="arrow" size={18} />
+              </button>
+              <div class="quiz-feedback" role="status" hidden>
+                <strong class="feedback-heading"></strong>
+                {question.options.map((option, optionIndex) => (
+                  <p data-explanation={optionIndex} hidden>
+                    {option.explanation}
+                  </p>
+                ))}
+                <a
+                  class="feedback-source"
+                  href={sources[question.source].url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {t("Beleg:", "Source:")} {sources[question.source].publisher} ·{" "}
+                  {sources[question.source].section} ↗
+                  <span class="sr-only"> {t("(neuer Tab)", "(new tab)")}</span>
+                </a>
+              </div>
+              <button type="button" class="button primary next-question" hidden>
+                {t("Nächste Frage", "Next question")} <Icon name="arrow" size={18} />
+              </button>
+            </form>
+            <ProgressToggle locale={locale} kind="question" contentId={question.id} />
+            <p class="quiz-footnote">
+              {t("Grundlage:", "Based on:")} {sources[question.source].version} · {t("Quellenabgleich:", "Sources checked:")}
+              20.10.2026
+            </p>
+            <details class="no-js-solution">
+              <summary>{t("Lösung und Erklärungen", "Answer and explanations")}</summary>
+              {question.options.map((option) => (
+                <p>{option.explanation}</p>
+              ))}
+              <a href={sources[question.source].url}>{t("Originalquelle", "Original source")}</a>
+            </details>
+          </section>
+        ))}
+      </div>
+      <section id="quiz-result" hidden>
+        <span class="result-icon">
+          <Icon name="spark" size={38} />
+        </span>
+        <p class="eyebrow">{t("JEDES AHA ZÄHLT", "EVERY DISCOVERY COUNTS")}</p>
+        <h2 tabindex="-1">{t("Dein nächster Schritt beginnt hier.", "Your next step starts here.")}</h2>
+        <p id="quiz-score" role="status"></p>
+        <p>
+          {t("Ein kurzes Quiz zeigt einen Ausschnitt. Du kannst die Grundlagen nachlesen oder eine andere Themenwelt ausprobieren.", "A short quiz offers a glimpse. Read the foundations or try another topic.")}
+        </p>
+        <div class="result-actions">
+          <button class="button primary" id="restart-quiz">
+            {t("Noch einmal versuchen", "Try again")} <Icon name="arrow" size={18} />
+          </button>
+          <a class="text-link" href={localePath(locale, "/#themenwelten")}>
+            {t("Themen entdecken →", "Explore topics →")}
+          </a>
+        </div>
+      </section>
+    </div>
+    <p class="quiz-note">
+      <Icon name="book" size={17} />
+      {t("Fünf quellenbasierte Entwurfsfragen. Kein Zertifikat und keine Einstufung deiner gesamten IT-Kompetenz.", "Five draft questions based on sources. No certificate or overall assessment of your IT skills.")}
+    </p>
+    <noscript>
+      <style>
+        [data-question][hidden] {
+          display: block !important;
+          margin-top: 2rem;
+        }
+        .no-js-solution {
+          display: block;
+        }
+        .check-answer,
+        .quiz-controls,
+        #quiz-progress {
+          display: none;
+        }
+      </style>
+      <p>
+        {t("Für die interaktive Auswertung aktiviere JavaScript. Alle Fragen, Lösungen und Quellen kannst du auch hier lesen.", "Enable JavaScript for interactive feedback. You can still read all questions, answers and sources here.")}
+      </p>
+    </noscript>
+  </section>
+  <script src="../scripts/quiz.ts"></script>
+</Layout>

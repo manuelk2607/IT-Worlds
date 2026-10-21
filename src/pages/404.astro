@@ -1,0 +1,20 @@
+---
+import { translate, localePath, type Locale } from "../lib/i18n";
+const locale: Locale = Astro.props.locale ?? "de";
+const t = translate(locale);
+interface Props { locale?: Locale }
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout locale={locale} title={t("Seite nicht gefunden", "Page not found")}>
+  <section class="container section empty-state">
+    <p class="eyebrow">{t("404 · HIER GEHT ES NOCH NICHT WEITER", "404 · THIS ROUTE ENDS HERE")}</p>
+    <h1>{t("Eine neue Richtung?", "A new direction?")}</h1>
+    <p>
+      {t("Diese Seite gibt es hier noch nicht. Entdecke stattdessen unsere Themenwelten.", "This page does not exist here yet. Explore our topics instead.")}
+    </p>
+    <a href={localePath(locale, "/")} class="button primary">
+      {t("Zur Startseite →", "Back to home →")}
+    </a>
+  </section>
+</Layout>

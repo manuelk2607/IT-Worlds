@@ -1,0 +1,86 @@
+---
+import { getContent, translate, localePath, type Locale } from "../../lib/i18n";
+const locale: Locale = Astro.props.locale ?? "de";
+const t = translate(locale);
+const { paths, levels, levelName } = getContent(locale);
+interface Props { locale?: Locale }
+import Layout from "../../layouts/Layout.astro";
+import Icon from "../../components/Icon.astro";
+
+---
+
+<Layout locale={locale} title={t("Lernpfade", "Learning paths")} active="pfade">
+  <section class="container page-top page-intro">
+    <p class="eyebrow">{t("SCHRITT FÜR SCHRITT ZU MEHR VERSTÄNDNIS", "STEP BY STEP TOWARDS UNDERSTANDING")}</p>
+    <h1>
+      {t("Finde deinen", "Find your")}
+      <br />
+      <span>{t("roten Faden.", "learning route.")}</span>
+    </h1>
+    <p class="page-lead">
+      {t("Themen sind spannend. Zusammenhänge machen sie wertvoll. Diese Lernpfade zeigen dir eine sinnvolle Reihenfolge – mit Voraussetzungen und einem klaren Ziel.", "Topics are interesting. Connections make them valuable. These learning paths suggest a useful sequence, with prerequisites and a clear goal.")}
+    </p>
+  </section>
+  <section class="container section">
+    <div
+      class="filter-chips path-filter"
+      role="group"
+      aria-label={t("Lernpfade nach Stufe filtern", "Filter learning paths by level")}
+    >
+      <button
+        class="filter-chip active"
+        data-path-filter="alle"
+        aria-pressed="true"
+      >
+        {t("Alle Lernstufen", "All levels")}
+      </button>
+      {levels.map((level) => (
+        <button
+          class="filter-chip"
+          data-path-filter={level.id}
+          aria-pressed="false"
+        >
+          {level.name}
+        </button>
+      ))}
+    </div>
+    <p class="sr-only" id="path-count" role="status">
+      {t("3 Lernpfade", "3 learning paths")}
+    </p>
+    <div class="path-grid">
+      {paths.map((path, i) => (
+        <a
+          class={`path-card color-${path.color}`}
+          href={localePath(locale, `/lernpfade/${path.id}/`)}
+          data-path-level={path.level}
+        >
+          <div class="path-top">
+            <span class="level-badge">{levelName(path.level)}</span>
+            <span class="path-no">0{i + 1}</span>
+          </div>
+          <span class="path-illustration">
+            <Icon name={path.icon} size={44} />
+          </span>
+          <h2>{path.title}</h2>
+          <p>{path.description}</p>
+          <div class="path-bottom">
+            <span>
+              {t(`${path.steps.filter((step) => step.available).length} von ${path.steps.length} Schritten verfügbar`, `${path.steps.filter((step) => step.available).length} of ${path.steps.length} steps available`)}
+            </span>
+            <Icon name="arrow" size={19} />
+          </div>
+        </a>
+      ))}
+    </div>
+    <div class="editorial-note">
+      <Icon name="spark" />
+      <div>
+        <h2>{t("Vom Anfänger bis zum Profi ist das Ziel.", "From beginner to advanced is the goal.")}</h2>
+        <p>
+          {t("Aktuell stehen fünf kurze Einstiegsartikel und fünf belegte Quizfragen bereit. Die Vertiefungs- und Profi-Inhalte sind als Themenplan angelegt und werden schrittweise ergänzt. Die Pfade sind noch keine vollständigen Kurse.", "Five short introductory articles and five sourced quiz questions are available. Intermediate and advanced content is outlined and will be added gradually. These paths are not yet complete courses.")}
+        </p>
+      </div>
+    </div>
+  </section>
+  <script src="../../scripts/paths.ts"></script>
+</Layout>

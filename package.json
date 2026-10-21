@@ -1,0 +1,35 @@
+{
+  "name": "it-worlds",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.22.0"
+  },
+  "scripts": {
+    "dev": "astro dev --host 0.0.0.0",
+    "check": "astro check",
+    "build": "astro build",
+    "preview": "astro preview --host 0.0.0.0",
+    "test": "node --experimental-strip-types --test tests/*.test.ts",
+    "ready": "node --experimental-strip-types scripts/readiness.ts",
+    "worker:dev": "wrangler dev --local --port 8787",
+    "deploy:check": "npm run build && wrangler deploy --dry-run",
+    "deploy": "npm run build && wrangler deploy",
+    "dev:full": "npm run build && wrangler dev --local --port 8787",
+    "migrate": "node --experimental-strip-types scripts/migrate.ts",
+    "provision:runtime": "node --experimental-strip-types scripts/provision-runtime.ts"
+  },
+  "dependencies": {
+    "@neon/config": "1.9.2",
+    "@neondatabase/auth": "0.6.0-beta",
+    "@neondatabase/serverless": "1.2.0",
+    "astro": "7.4.1"
+  },
+  "devDependencies": {
+    "@astrojs/check": "0.9.11",
+    "@types/node": "24.19.2",
+    "typescript": "6.0.3",
+    "wrangler": "4.151.3"
+  }
+}

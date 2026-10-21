@@ -1,0 +1,76 @@
+:root { color-scheme: light; }
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --paper: #0f1523; --white: #192236; --ink: #e5ecfa; --muted: #afbdd5;
+  --blue: #a6b8ff; --line: #34425c;
+}
+.header-actions { gap: 12px; }
+.locale-switch, .theme-toggle { display: inline-flex; align-items: center; justify-content: center; min-width: 36px; min-height: 36px; font-size: .82rem; font-weight: 700; border-radius: 9px; }
+.locale-switch { border: 1px solid var(--line); }
+.theme-toggle { border: 0; font-size: 1.25rem; }
+.account-section { padding-block: 20px 80px; }
+.account-panel, .progress-entry, .progress-stats article { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius); padding: 28px; }
+.account-panel { margin-bottom: 24px; }
+.account-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
+.account-form { display: grid; gap: 20px; }
+.account-form h2 { font-size: 1.5rem; margin: 0; }
+.account-form label { display: grid; gap: 8px; font-size: .9rem; font-weight: 600; }
+.account-form input { min-width: 0; width: 100%; border: 1px solid var(--line); border-radius: 10px; padding: 13px 15px; background: var(--paper); color: var(--ink); }
+.account-form .text-link { justify-self: start; border: 0; background: transparent; padding: 0; }
+.account-form p, .account-status { font-size: .9rem; }
+.account-form p { margin: 0; }
+#auth-message:not(:empty), [data-session-status]:not(:empty) { padding: 16px; border: 1px solid var(--line); border-radius: 10px; margin-top: 18px; }
+.progress-control { margin-block: 18px; border-top: 1px solid var(--line); padding-top: 16px; font-size: .84rem; }
+.progress-control p { margin: 8px 0; font-size: .8rem; color: var(--muted); }
+.progress-checkbox { display: flex; align-items: flex-start; gap: 10px; cursor: pointer; font-weight: 600; }
+.progress-checkbox input { width: 19px; height: 19px; flex: 0 0 19px; margin: 0; accent-color: #3555d6; }
+.progress-checkbox:has(input:disabled) { color: var(--muted); cursor: default; }
+.is-complete .progress-checkbox { color: #216246; }
+.progress-welcome { display: flex; justify-content: space-between; gap: 16px; align-items: baseline; }
+.progress-welcome button, [data-sign-out].text-link { border: 0; background: transparent; }
+.progress-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; margin-block: 28px; }
+.progress-stats article { display: grid; gap: 10px; }
+.progress-stats strong { font-size: 2rem; }
+.progress-stats article > span { color: var(--muted); font-size: .9rem; }
+.progress-overview-label { display: grid; gap: 12px; font-weight: 600; margin-block: 20px; }
+.progress-overview-label progress { width: 100%; height: 14px; accent-color: #3555d6; }
+.progress-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-block: 50px; }
+.progress-columns h2 { font-size: 1.65rem; }
+.progress-list { display: grid; gap: 18px; }
+.progress-entry h3 { margin-top: 8px; font-size: 1rem; }
+.progress-entry .progress-control { margin-bottom: 0; }
+.progress-entry > a:hover h3 { color: var(--blue); }
+.solved-label { color: #216246; font-weight: 600; font-size: .8rem; }
+html[data-theme="dark"] .color-blue { --accent: #b0bfff; --soft: #26365a; --deep: #2f4270; }
+html[data-theme="dark"] .color-orange { --accent: #f1b97e; --soft: #423323; --deep: #52412d; }
+html[data-theme="dark"] .color-green { --accent: #91d9b8; --soft: #203d37; --deep: #294e43; }
+html[data-theme="dark"] .color-purple { --accent: #cdb1f6; --soft: #382c4e; --deep: #473760; }
+html[data-theme="dark"] .color-pink { --accent: #edafd0; --soft: #462b3b; --deep: #573548; }
+html[data-theme="dark"] .color-yellow { --accent: #e8cf85; --soft: #3e3827; --deep: #51492f; }
+html[data-theme="dark"] .color-cyan { --accent: #99d8e3; --soft: #233e48; --deep: #2c4f5a; }
+html[data-theme="dark"] .color-red { --accent: #f1ada6; --soft: #472f35; --deep: #583a3f; }
+html[data-theme="dark"] .color-slate { --accent: #bdcce3; --soft: #2b384c; --deep: #37465e; }
+html[data-theme="dark"] .site-header { background: #0f1523f5; }
+html[data-theme="dark"] :is(.secondary, .light, .map-node, .topic-card, .path-card, .trust-book, .topic-page-header .topic-tags > span, .curriculum-level, .sidebar-note, .source-count, .source-card, .quiz-controls select, .quiz-shell, .search-field, .topic-search) { background: var(--white); }
+html[data-theme="dark"] :is(.primary, .header-cta) { background: #3555d6; color: #fff; }
+html[data-theme="dark"] .primary:hover { background: #4565e6; }
+html[data-theme="dark"] .map-center { background: radial-gradient(circle at 30% 20%, #2b3a57, #192338); border-color: var(--line); box-shadow: 0 12px 60px #0004; }
+html[data-theme="dark"] :is(.orbit, .map-connections circle) { border-color: var(--line); stroke: var(--line); }
+html[data-theme="dark"] .map-connections path { stroke: #435678; }
+html[data-theme="dark"] :is(.intro-strip, .editorial-note) { background: #19223688; }
+html[data-theme="dark"] :is(.filter-chip.active, .filter-chip > span, .curiosity-card, .step-number, .result-icon) { background: #253452; border-color: #3b507d; }
+html[data-theme="dark"] :is(.filter-chip:hover, #search-results a:hover, .topic-tags > span, .curriculum-heading > span, .planned-badge, .option-letter) { background: #253047; }
+html[data-theme="dark"] :is(.path-section, .site-footer) { background: #131c2e; }
+html[data-theme="dark"] .path-illustration { background: radial-gradient(var(--soft), transparent); }
+html[data-theme="dark"] .prerequisite { background: #202e49; color: var(--ink); }
+html[data-theme="dark"] :is(.takeaway, .quiz-feedback.success, .answer-option.correct) { background: #203d32; color: #c5ecd4; border-color: #527d64; }
+html[data-theme="dark"] .takeaway strong { color: #c5ecd4; }
+html[data-theme="dark"] :is(.quiz-feedback, .answer-option.incorrect) { background: #413426; border-color: #846a47; }
+html[data-theme="dark"] .answer-option:has(input:checked):not(.correct):not(.incorrect) { background: #26365a; border-color: #8a9fea; }
+html[data-theme="dark"] :is(.search-trigger kbd, .card-number, .card-bottom, .topic-tags > span, .path-no, .source-names, .footer-bottom, .curriculum li > small, .lesson-article > p, .planned-badge, .source-meta, .quiz-topic-label, .option-letter, .quiz-feedback > p, .quiz-footnote, .quiz-note, .curiosity-card p, .curiosity-card > span:first-child) { color: var(--muted); }
+html[data-theme="dark"] :is(.solved-label, .is-complete .progress-checkbox) { color: #98d8b5; }
+html[data-theme="dark"] .code-example { border: 1px solid var(--line); }
+html[data-theme="dark"] ::selection { background: #425a9a; color: #fff; }
+@media (max-width: 1240px) { .search-trigger span, .search-trigger kbd { display: none; } .desktop-nav { gap: 19px; } .header-actions { gap: 8px; } }
+@media (max-width: 700px) { .progress-stats { gap: 10px; } .progress-stats article { padding: 16px; } .progress-stats strong { font-size: 1.5rem; } .progress-columns { grid-template-columns: 1fr; } .account-panel { padding: 22px; } }
+@media (max-width: 480px) { .header-inner { gap: 8px; } .header-actions { gap: 3px; } .header-cta { display: none; } .progress-stats { grid-template-columns: 1fr; } .progress-stats article { display: flex; align-items: center; gap: 16px; } .progress-welcome { flex-wrap: wrap; } }

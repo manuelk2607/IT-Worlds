@@ -1,0 +1,204 @@
+---
+import { getContent, translate, localePath, type Locale } from "../lib/i18n";
+const locale: Locale = Astro.props.locale ?? "de";
+const t = translate(locale);
+const { topics, paths } = getContent(locale);
+import "../styles/global.css";
+import "../styles/preferences.css";
+import Icon from "../components/Icon.astro";
+import ts from "typescript";
+import themeInit from "../scripts/theme-init.ts?raw";
+import { switchLocalePath } from "../lib/i18n";
+const themeBoot = ts.transpileModule(themeInit, { compilerOptions: { target: ts.ScriptTarget.ES2022 } }).outputText;
+
+interface Props {
+  locale?: Locale;
+  title?: string;
+  description?: string;
+  active?: string;
+}
+const {
+  title = t("IT verstehen. Deine Welt erweitern.", "Understand IT. Expand your world."),
+  description = t("Entdecke zehn IT-Themenwelten, Lernwege vom Einstieg bis zum Profi und erste Quizfragen mit nachvollziehbaren Primärquellen.", "Explore ten IT topics, learning paths from beginner to advanced and introductory quizzes with traceable primary sources."),
+  active = "",
+} = Astro.props;
+const nav = [
+  { label: t("Entdecken", "Explore"), href: "/", id: "home" },
+  { label: t("Themenwelten", "Topics"), href: "/#themenwelten", id: "themen" },
+  { label: t("Lernpfade", "Learning paths"), href: "/lernpfade/", id: "pfade" },
+  { label: t("Wissensquiz", "Quiz"), href: "/quiz/", id: "quiz" },
+  { label: t("Quellen", "Sources"), href: "/quellen/", id: "quellen" },
+];
+---
+
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <script is:inline set:html={themeBoot}></script>
+    <link rel="alternate" hreflang="de" href={new URL(Astro.url.pathname.replace(/^\/en(?=\/|$)/, "") || "/", "https://it-worlds.maki26.workers.dev").href} />
+    <link rel="alternate" hreflang="en" href={new URL(locale === "en" ? Astro.url.pathname : `/en${Astro.url.pathname}`, "https://it-worlds.maki26.workers.dev").href} />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#f7f8fc" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title} | IT-Worlds</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#inhalt">
+      {t("Zum Inhalt springen", "Skip to content")}
+    </a>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href={localePath(locale, "/")} aria-label={t("IT-Worlds – Startseite", "IT-Worlds – Home")}>
+          <span class="brand-symbol">
+            <i></i>
+            <i></i>
+            <i></i>
+            <i></i>
+          </span>
+          IT<span class="brand-hyphen">-</span>Worlds
+          <span class="brand-period">.</span>
+        </a>
+        <nav class="desktop-nav" aria-label={t("Hauptnavigation", "Main navigation")}>
+          {nav.map((item) => (
+            <a
+              href={localePath(locale, item.href)}
+              class:list={{ active: active === item.id }}
+              aria-current={active === item.id ? "page" : undefined}
+            >
+              {item.label}
+            </a>
+          ))}
+        </nav>
+        <div class="header-actions">
+          <button
+            class="search-trigger"
+            data-open-search
+            aria-label={t("Suchen – Website durchsuchen", "Search the website")}
+          >
+            <Icon name="search" size={19} />
+            <span>{t("Suchen", "Search")}</span>
+            <kbd aria-hidden="true">/</kbd>
+          </button>
+          <a href={localePath(locale, "/konto/")} class="header-cta" data-account-link>{t("Anmelden", "Sign in")}</a>
+          <a class="locale-switch" href={switchLocalePath(Astro.url.pathname)} data-language-switch hreflang={locale === "de" ? "en" : "de"} lang={locale === "de" ? "en" : "de"} aria-label={t("Switch to English", "Zu Deutsch wechseln")}>{locale === "de" ? "EN" : "DE"}</a>
+          <button class="theme-toggle icon-button" data-theme-toggle aria-label={t("Dunkles Design aktivieren", "Switch to dark mode")} aria-pressed="false"><span data-theme-icon aria-hidden="true">◐</span></button>
+          <button
+            class="mobile-menu-button"
+            aria-label={t("Menü öffnen", "Open menu")}
+            aria-expanded="false"
+            aria-controls="mobile-nav"
+          >
+            <Icon name="menu" />
+          </button>
+        </div>
+      </div>
+      <nav
+        id="mobile-nav"
+        class="mobile-nav"
+        aria-label={t("Mobile Hauptnavigation", "Mobile main navigation")}
+        hidden
+      >
+        {nav.map((item) => (
+          <a href={localePath(locale, item.href)}>{item.label}</a>
+        ))}
+      <a href={localePath(locale, "/fortschritt/")}>{t("Mein Lernstand", "My progress")}</a>
+        <a href={localePath(locale, "/konto/")}>{t("Mein Account", "My account")}</a>
+      </nav>
+    </header>
+    <main id="inhalt">
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <div class="container footer-top">
+        <div>
+          <a class="brand" href={localePath(locale, "/")}>
+            IT-Worlds<span class="brand-period">.</span>
+          </a>
+          <p>{t("Wissen verbindet. Neugier bringt dich weiter.", "Knowledge connects. Curiosity takes you further.")}</p>
+        </div>
+        <div class="footer-links">
+          <a href={localePath(locale, "/#themenwelten")}>{t("Themenwelten", "Topics")}</a>
+          <a href={localePath(locale, "/lernpfade/")}>{t("Lernpfade", "Learning paths")}</a>
+          <a href={localePath(locale, "/quellen/")}>{t("Quellen & Qualität", "Sources & quality")}</a>
+          <a
+            href="https://github.com/manuelk2607/IT-Worlds"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {t("Auf GitHub mitwirken ↗", "Contribute on GitHub ↗")}
+          </a>
+        </div>
+      </div>
+      <div class="container footer-bottom">
+        <span>{t("Ein wachsendes Lernprojekt. Offen für deine Neugier.", "A growing learning project. Open to your curiosity.")}</span>
+        <span>{t("Erster Website-Entwurf · Inhalte im Aufbau", "First website draft · Content in progress")}</span>
+      </div>
+    </footer>
+    <dialog id="search-dialog" aria-labelledby="search-title">
+      <div class="search-dialog-head">
+        <h2 id="search-title">{t("Was möchtest du verstehen?", "What would you like to understand?")}</h2>
+        <button
+          class="icon-button"
+          data-close-search
+          aria-label={t("Suche schließen", "Close search")}
+        >
+          <Icon name="close" />
+        </button>
+      </div>
+      <label for="global-search" class="sr-only">
+        {t("Themen und Lernpfade durchsuchen", "Search topics and learning paths")}
+      </label>
+      <div class="search-field">
+        <Icon name="search" size={21} />
+        <input
+          id="global-search"
+          type="search"
+          placeholder={t("Zum Beispiel Python, SQL oder KI …", "For example Python, SQL or AI …")}
+          autocomplete="off"
+        />
+      </div>
+      <p class="search-help">{t("Themenwelten & Lernpfade durchsuchen", "Search topics & learning paths")}</p>
+      <div id="search-results" aria-live="polite">
+        {topics.map((topic) => (
+          <a
+            href={localePath(locale, `/themen/${topic.id}/`)}
+            data-search-item
+            data-search-text={`${topic.title} ${topic.tags.join(" ")} ${Object.values(topic.curriculum).flat().join(" ")}`.toLocaleLowerCase(locale)}
+          >
+            <span class={`search-result-icon color-${topic.color}`}>
+              <Icon name={topic.icon} size={19} />
+            </span>
+            <span>
+              {topic.title}
+              <small>{t("Themenwelt · Einstieg bis Profi", "Topic · Beginner to advanced")}</small>
+            </span>
+            <Icon name="arrow" size={17} />
+          </a>
+        ))}
+        {paths.map((path) => (
+          <a
+            href={localePath(locale, `/lernpfade/${path.id}/`)}
+            data-search-item
+            data-search-text={`${t("lernpfad", "learning path")} ${path.title} ${path.description}`.toLocaleLowerCase(locale)}
+          >
+            <span class="search-result-icon">
+              <Icon name="book" size={19} />
+            </span>
+            <span>
+              {path.title}
+              <small>{t("Lernpfad", "Learning path")}</small>
+            </span>
+            <Icon name="arrow" size={17} />
+          </a>
+        ))}
+      </div>
+      <p id="search-empty" hidden>
+        {t("Keine Treffer. Versuche einen Begriff wie „Python“, „Linux“ oder „Website“.", "No results. Try a term such as “Python”, “Linux” or “website”.")}
+      </p>
+    </dialog>
+    <script src="../scripts/site.ts"></script>
+    <script src="../scripts/progress-client.ts"></script>
+  </body>
+</html>

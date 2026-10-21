@@ -1,0 +1,36 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ProgressToggle from '../components/ProgressToggle.astro';
+import { getContent, translate, localePath, type Locale } from '../lib/i18n';
+interface Props { locale?: Locale }
+const locale: Locale = Astro.props.locale ?? 'de';
+const t = translate(locale);
+const { topics, questions, paths, topicById } = getContent(locale);
+const lessons = topics.filter(topic => topic.lesson);
+---
+<Layout locale={locale} title={t('Mein Lernstand', 'My progress')}>
+  <section class="container page-top page-intro">
+    <p class="eyebrow">{t('KLEINE SCHRITTE. SICHTBARER FORTSCHRITT.', 'SMALL STEPS. VISIBLE PROGRESS.')}</p>
+    <h1>{t('Dein Wissen', 'Your knowledge')}<br /><span>{t('wächst.', 'is growing.')}</span></h1>
+    <p class="page-lead">{t('Deine gelesenen Einstiege und bearbeiteten Fragen an einem Ort. Deutsch und Englisch teilen denselben Lernstand.', 'Your read introductions and practised questions in one place. German and English share the same learning record.')}</p>
+  </section>
+  <section class="container section progress-dashboard">
+    <p data-session-status role="status"></p>
+    <div class="editorial-note" data-signed-out><div><h2>{t('Dein Account ist freiwillig.', 'Your account is optional.')}</h2><p>{t('Melde dich an, um deinen Lernstand geräteübergreifend zu speichern. Die Inhalte unten und alle anderen Seiten bleiben frei zugänglich.', 'Sign in to save your progress across devices. The content below and every other page remain freely accessible.')}</p><a class="button primary" href={localePath(locale, '/konto/')}>{t('Anmelden oder Account erstellen', 'Sign in or create an account')}</a></div></div>
+    <div data-signed-in hidden class="progress-welcome"><p>{t('Willkommen,', 'Welcome,')} <strong data-user-name></strong>.</p><button class="text-link" data-sign-out>{t('Abmelden', 'Sign out')}</button></div>
+    <div class="progress-stats">
+      <article><strong><span data-lessons-count>0</span> / {lessons.length}</strong><span>{t('Einstiege gelesen', 'Introductions read')}</span></article>
+      <article><strong><span data-questions-count>0</span> / {questions.length}</strong><span>{t('Fragen bearbeitet', 'Questions practised')}</span></article>
+      <article><strong data-solved-count>0</strong><span>{t('Fragen richtig beantwortet', 'Questions answered correctly')}</span></article>
+    </div>
+    <label class="progress-overview-label">{t('Bearbeitete verfügbare Inhalte', 'Available content completed')}<progress data-total-progress value="0" max={lessons.length + questions.length}></progress></label>
+    <p class="muted">{t('Zuletzt gespeichert:', 'Last saved:')} <span data-last-activity>{t('Noch kein gespeicherter Fortschritt.', 'No saved progress yet.')}</span></p>
+    <div class="progress-columns">
+      <section><h2>{t('Deine Einstiege', 'Your introductions')}</h2><div class="progress-list">{lessons.map(topic => <article class="progress-entry"><a href={localePath(locale, `/themen/${topic.id}/#einstiegsartikel`)}><span class="muted">{topic.title}</span><h3>{topic.lesson!.title}</h3></a><ProgressToggle locale={locale} kind="lesson" contentId={topic.id} /></article>)}</div></section>
+      <section><h2>{t('Deine Fragen', 'Your questions')}</h2><div class="progress-list">{questions.map(question => <article class="progress-entry"><a href={localePath(locale, `/quiz/?thema=${question.topic}`)}><span class="muted">{topicById(question.topic)!.title}</span><h3>{question.prompt}</h3></a><span class="solved-label" data-question-solved={question.id}></span><ProgressToggle locale={locale} kind="question" contentId={question.id} /></article>)}</div></section>
+    </div>
+    <h2>{t('Deine Lernpfade', 'Your learning paths')}</h2>
+    <div class="path-grid">{paths.map(path => <article class="progress-entry"><a href={localePath(locale, `/lernpfade/${path.id}/`)}><h3>{path.title}</h3></a><p data-path-lesson-ids={JSON.stringify(path.steps.filter(step => step.available).map(step => step.topic))}></p><p class="muted">{t(`${path.steps.length - path.steps.filter(step => step.available).length} weitere Schritte sind geplant.`, `${path.steps.length - path.steps.filter(step => step.available).length} further steps are planned.`)}</p></article>)}</div>
+    <p class="editorial-note">{t('Der Lernstand zählt nur die fünf verfügbaren Einstiege und fünf Fragen. Markierungen sind deine persönliche Orientierung und kein Zertifikat. Geplante Lektionen zählen nicht als abgeschlossen.', 'Your learning record counts only the five available introductions and five questions. Checkmarks are personal guidance, not a certificate. Planned lessons are not counted as completed.')}</p>
+  </section>
+</Layout>

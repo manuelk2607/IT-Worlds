@@ -2,70 +2,68 @@
 
 **IT verstehen. Zusammenhänge entdecken. Wissen spielerisch testen.**
 
-IT-Worlds soll eine deutschsprachige Wissens- und Lernplattform für die IT-Welt werden. Verständliche Artikel, kuratierte Quellen, Lernpfade, Quizzes und kleine Spiele sollen zusammenführen, was sonst über viele Websites verteilt ist.
+[Website auf Deutsch](https://it-worlds.maki26.workers.dev) · [Website in English](https://it-worlds.maki26.workers.dev/en/) · [English README](README.en.md)
 
-> **Status: Konzept und Repository-Aufbau.** Dieses Repository enthält die Projektplanung und Vorlagen für Beiträge. Eine Website, ausführbare Spiele oder eine technische Projektstruktur sind noch nicht implementiert. Alle beschriebenen Funktionen und Technikentscheidungen sind Vorschläge.
+IT-Worlds ist eine deutsch-englische IT-Lernplattform mit zehn Themenwelten. Alle Inhalte, Quellen und Quizfragen sind ohne Anmeldung zugänglich. Ein freiwilliger Account speichert gelesene Einstiege, bearbeitete Fragen und richtig beantwortete Fragen geräteübergreifend. Ein optionales dunkles Design ergänzt das helle Design; die Auswahl bleibt im Browser gespeichert.
 
-## Die Idee
+**Stand:** Zehn Themenpläne für Einstieg, Vertiefung und Profi, drei Lernpfad-Skizzen, fünf kurze Einstiegsartikel, fünf interaktive Fragen mit Erklärung jeder Antwort und 14 offizielle Quellen. Weitere Lektionen sind als geplant gekennzeichnet. Vollständige Profi-Kurse und ein unabhängiges Fachreview stehen aus.
 
-Jede Themenwelt verbindet drei Zugänge:
+## Themenwelten
 
-- **Verstehen:** kurze Erklärungen, anschauliche Beispiele, ein Glossar und weiterführende Quellen.
-- **Verbinden:** Lernpfade zeigen Voraussetzungen und Zusammenhänge zwischen Themen.
-- **Anwenden:** Quizzes mit begründeten Antworten und kleine Spiele machen Wissen überprüfbar.
+Programmiersprachen · Datenbanken · Website bauen · KI & neuronale Netze · APIs & Schnittstellen · IT-Grundlagen · Internet & Netzwerke · IT-Sicherheit · Cloud & DevOps · Betriebssysteme & Linux.
 
-Ein möglicher Lernweg: „Wie kommt eine Website in meinen Browser?“ → Artikel zu Client und Server, IP, DNS und HTTPS → kurze Verständnisfragen → ein Spiel, in dem die Stationen einer Webanfrage geordnet werden.
+LaTeX, Typst und Markdown gehören unter **Programmiersprachen → Auszeichnungs- & Satzsprachen**. Die Inhalte unterscheiden Programmierung, Dokumentstruktur und Textsatz.
 
-## Mögliche Themenwelten
+## Lokal entwickeln
 
-| Themenwelt | Beispiele |
-| --- | --- |
-| IT-Grundlagen | Bits und Bytes, Hardware, Software, Datenformate |
-| Internet und Netzwerke | IP, DNS, HTTP, Routing, WLAN |
-| Programmierung | Algorithmen, Programmiersprachen, Debugging, Git |
-| Webentwicklung | HTML, CSS, JavaScript, APIs, Barrierefreiheit |
-| Betriebssysteme und Administration | Linux, Windows, Prozesse, Rechte, Kommandozeile |
-| IT-Sicherheit und Datenschutz | Phishing, Authentifizierung, Verschlüsselung, Datensparsamkeit |
-| Datenbanken und Daten | Datenmodelle, SQL, Backups, Datenqualität |
-| Cloud und DevOps | Hosting, Container, CI/CD, Monitoring |
-| KI und maschinelles Lernen | Modelle, Training, Grenzen, verantwortlicher Einsatz |
-| IT im Alltag und Beruf | Fehlersuche, digitale Kompetenzen, Berufsbilder |
+Voraussetzung: Node.js ab 22.22.0 und npm. Mit Node.js 26.8.1 geprüft.
 
-Die breite Themenlandkarte ist das langfristige Ziel. Für die erste Version empfiehlt sich ein zusammenhängender Lernpfad mit sechs Artikeln, 24 geprüften Quizfragen und einem kleinen Lernspiel; siehe [Roadmap](docs/ROADMAP.md).
+```bash
+npm ci
+npm run dev
+```
 
-## Ideen für Quizzes und Spiele
+Astro startet auf Port 4321. Inhalte, Übersetzungen, Suche, Filter und Quiz funktionieren ohne Zugangsdaten. Persönliche Funktionen benötigen die Worker-API und einen Neon-Entwicklungsbranch. Dessen drei Laufzeitwerte lokal in der ignorierten `.dev.vars` hinterlegen; siehe [Accounts und Datenbank](docs/ACCOUNTS.md).
 
-- **Wissensquiz:** eine Frage beantworten und direkt erfahren, warum eine Antwort passt.
-- **Paketreise:** die Stationen einer Webanfrage in eine sinnvolle Reihenfolge bringen.
-- **Binärlabor:** Zahlen zwischen Dezimal- und Binärdarstellung übersetzen.
-- **Phishing-Detektiv:** Hinweise in fiktiven Nachrichten erkennen und begründen.
-- **Debugging-Mission:** einen kleinen Fehler finden und die Wirkung der Korrektur erklären.
-- **SQL-Werkstatt:** später Abfragen an einem vorbereiteten Übungsdatensatz lösen.
+```bash
+npm run dev:full
+```
 
-Lernen steht im Vordergrund: Wiederholungen und Hinweise statt Punktabzug; Zeitdruck und öffentliche Ranglisten gehören nicht zum vorgeschlagenen Einstieg. Weitere Ideen und Prioritäten stehen im [Lernspielkonzept](docs/LERNSPIELE.md).
+Das baut die statischen Seiten und startet den lokalen Cloudflare Worker auf Port 8787. Nach Inhaltsänderungen erneut bauen. `npm run worker:dev` startet nur den Worker mit dem vorhandenen Build; `npm run preview` zeigt ausschließlich den statischen Build.
 
-## Planung im Repository
+## Prüfen und veröffentlichen
+
+```bash
+npm test
+npm run check
+npm run build
+npm run deploy:check
+```
+
+`npm run ready` prüft HTTP-Seiten eines laufenden Servers; die Adresse lässt sich mit `IT_WORLDS_URL` setzen. Accounts mit getrennten Testnutzern prüfen. Suche, Filter, mobiles Menü, Quiz samt Erklärungen und Neustart, Quellenlinks, Designs, Sprachwechsel und 404-Seiten zusätzlich im Browser prüfen.
+
+Die Website läuft auf dem bestehenden Cloudflare Worker **it-worlds**. `npm run deploy` veröffentlicht nach Prüfung von Account, Einstellungen und Bindings. Zugangsdaten gehören in lokale ignorierte Dateien bzw. Cloudflare Secrets. Der Cloud-Chat-Token ist dafür nicht erforderlich.
+
+## Architektur und Dokumentation
+
+Astro erzeugt statische Seiten mit TypeScript und CSS. Ein kleiner TypeScript-Worker ergänzt Authentifizierung und persönliche Fortschrittsdaten. Neon Managed Auth übernimmt Accounts und Sessions; Neon Postgres speichert den Lernstand. Der Worker verwendet eine eingeschränkte Datenbankrolle mit Row Level Security. Gäste erhalten denselben Lerninhalt.
 
 | Dokument | Inhalt |
 | --- | --- |
-| [Produktkonzept](docs/KONZEPT.md) | Zielgruppen, Nutzerwege, Navigation und Gestaltungsideen |
-| [Inhaltskonzept](docs/INHALTE.md) | Themenstruktur, Artikelaufbau, Quellen und Qualität |
-| [Quizzes und Lernspiele](docs/LERNSPIELE.md) | Spielideen, Lernziele, Rückmeldungen und Bewertung |
-| [Technische Ansätze](docs/TECHNIK.md) | Vergleich möglicher Architekturen und eine vorläufige Empfehlung |
-| [Roadmap](docs/ROADMAP.md) | Kleine erste Version, Ausbaustufen und offene Entscheidungen |
-| [GitHub-Einrichtung](docs/GITHUB-SETUP.md) | Beschreibung, Topics und weiterer Repository-Aufbau |
-| [Mitwirken](CONTRIBUTING.md) | Ideen, Inhalte und Korrekturen beitragen |
+| [Website-Aufbau](docs/WEBSITE-AUFBAU.md) | Seiten, Sprachen, Themen und Verfügbarkeit |
+| [Technik](docs/TECHNIK.md) | Architektur, Datenfluss und Projektdateien |
+| [Accounts](docs/ACCOUNTS.md) | Neon, Rollen, Migrationen, Sessions und Mailkonfiguration |
+| [Cloudflare](docs/CLOUDFLARE.md) | Bestandsprüfung, Secrets und Veröffentlichung |
+| [Quellen](docs/QUELLEN.md) | Tatsächlich gelesene Primärquellen und Grenzen des Reviews |
+| [Validierung](docs/VALIDIERUNG.md) | Durchgeführte Prüfungen und Deployment-Nachweis |
+| [Roadmap](docs/ROADMAP.md) | Inhaltlicher Ausbau und offene Entscheidungen |
+| [GitHub](docs/GITHUB-SETUP.md) | Beschreibung, Website-Link und Topics |
+| [Mitwirken](CONTRIBUTING.md) | Beiträge, Übersetzungen und Quellenregeln |
 
-## Technische Richtung
+Inhaltsdaten liegen in `src/data/content.ts` und `src/data/content.en.ts`; stabile IDs verbinden beide Sprachen mit demselben Lernstand. Eigener Code, Tests, Skripte und unterstützte Konfigurationen verwenden strikt geprüftes TypeScript. Python-, SQL- und LaTeX-Beispiele behalten ihre Sprache. Verbindliche Regeln: [AGENTS.md](AGENTS.md).
 
-Ein Ansatz mit statisch erzeugten Artikeln und gezielt eingebauten interaktiven Komponenten erscheint für den Einstieg passend, beispielsweise Astro mit Markdown/MDX und TypeScript. Eine stärker anwendungsorientierte Lösung mit Next.js oder ein dokumentationsorientierter Aufbau mit Docusaurus sind Alternativen. Die [Gegenüberstellung](docs/TECHNIK.md) erläutert die Abwägung; ein Framework ist noch nicht festgelegt.
+## Mitwirken und Rechte
 
-Für die erste Version wären weder ein Konto noch eine Datenbank nötig. Damit können Inhalte und Lernmechanik zuerst erprobt werden. Konten, synchronisierter Lernfortschritt, ein CMS oder Community-Funktionen wären spätere Erweiterungen.
+Ideen, Quellenhinweise und fachliche Korrekturen sind willkommen: [Issue-Vorlagen](https://github.com/manuelk2607/IT-Worlds/issues/new/choose). Das [Produktkonzept](docs/KONZEPT.md), [Inhaltskonzept](docs/INHALTE.md) und [Lernspielkonzept](docs/LERNSPIELE.md) dokumentieren weitere Ziele; sie beschreiben teilweise noch geplante Funktionen.
 
-## Mitwirken und Projektstatus
-
-Ideen, Quellenhinweise und fachliche Korrekturen sind willkommen. Dafür stehen [Issue-Vorlagen](https://github.com/manuelk2607/IT-Worlds/issues/new/choose) bereit. Bitte vor einem Beitrag die [Hinweise zur Mitarbeit](CONTRIBUTING.md) lesen.
-
-Der Projektname lautet **IT-Worlds**; das Repository liegt unter [manuelk2607/IT-Worlds](https://github.com/manuelk2607/IT-Worlds).
-
-**Lizenz:** Noch nicht festgelegt. Die Lizenzierung von künftigem Programmcode, eigenen Lerninhalten und Materialien Dritter wird vor deren Veröffentlichung geklärt. Der öffentliche Repository-Status allein vergibt keine allgemeine Nutzungslizenz.
+**Lizenz:** Noch nicht festgelegt. Der öffentliche Repository-Status allein vergibt keine allgemeine Nutzungslizenz. Rechte an Programmcode, eigenen Lerntexten und Fremdmaterial sind getrennt zu klären.
