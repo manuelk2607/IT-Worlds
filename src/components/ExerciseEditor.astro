@@ -1,0 +1,27 @@
+---
+import '../styles/exercises.css';
+import { exercises } from '../data/exercises';
+import { getContent, translate, type Locale } from '../lib/i18n';
+interface Props { topic: string; locale: Locale }
+const {topic,locale} = Astro.props;
+const exercise = exercises.find(item => item.topic === topic)!;
+const {sources} = getContent(locale);
+const t = translate(locale);
+const editorId = `editor-${topic}`;
+---
+<section id="uebungseditor" class="exercise-editor" data-exercise={topic}>
+  <p class="eyebrow">{t('SELBST AUSPROBIEREN', 'TRY IT YOURSELF')}</p>
+  <h2>{exercise.title[locale]}</h2>
+  <p>{exercise.task[locale]}</p>
+  <p class="exercise-limit">{t('Lokale Modellprüfung · begrenzte Syntax', 'Local model checker · limited syntax')}<br />{t('Kein vollständiger Interpreter. Deine Eingabe wird als Text geprüft, nicht als Programm ausgeführt oder an einen Server gesendet. Beim Neuladen wird sie verworfen.', 'This is not a full interpreter. Your input is checked as text, never executed as a program or sent to a server. Reloading discards it.')}</p>
+  <div class="editor-toolbar"><span>{exercise.format}</span><span data-line-count></span></div>
+  <label for={editorId} class="sr-only">{t('Code für die Übung bearbeiten', 'Edit the exercise code')}</label>
+  <textarea id={editorId} data-editor spellcheck="false" autocapitalize="off" autocomplete="off" maxlength="8000" wrap="off" rows="9">{exercise.starter}</textarea>
+  <div class="editor-actions"><button class="button primary" data-check-exercise>{t('Aufgabe prüfen', 'Check task')}</button><button class="button secondary" data-reset-exercise>{t('Zurücksetzen', 'Reset')}</button></div>
+  <p class="exercise-feedback" data-exercise-feedback role="status" aria-live="polite"></p>
+  <div class="exercise-output" hidden data-exercise-output><h3>{t('Ausgabe des Lernmodells', 'Learning model output')}</h3><pre><code data-exercise-output-text></code></pre></div>
+  <details><summary>{t('Hinweis anzeigen', 'Show hint')}</summary><p>{exercise.hint[locale]}</p></details>
+  <details><summary>{t('Musterlösung anzeigen', 'Show a solution')}</summary><pre><code>{exercise.solution}</code></pre><button class="text-link" data-load-solution>{t('Musterlösung in den Editor laden', 'Load solution into the editor')}</button></details>
+  <p class="exercise-sources">{t('Grundlagen dieser Übung:', 'Sources behind this task:')} {exercise.sources.map(id=><a href={sources[id].url} target="_blank" rel="noopener noreferrer">{sources[id].publisher} · {sources[id].title} ↗</a>)}</p>
+</section>
+<script src="../scripts/exercises.ts"></script>

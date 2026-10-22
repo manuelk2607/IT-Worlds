@@ -1,8 +1,8 @@
 # Quellenprotokoll
 
-Stand des Quellenabgleichs: **20. Oktober 2026**. Alle 14 unten verlinkten offiziellen Dokumentationsquelltexte wurden per HTTPS mit aktiver Zertifikatsprüfung geladen und gelesen. Die HTML-Zielseiten sind die kanonischen Lesefassungen; abgerufen wurden die explizit verlinkten Quelltexte aus den offiziellen Repositories. Es wurden keine fremden Artikeltexte oder Bilder übernommen. Die Lerntexte sind eigenständige Zusammenfassungen.
+Stand der Erweiterung: **22. Oktober 2026**. Das Verzeichnis umfasst 19 offizielle Quellen. Die ursprünglichen 14 wurden am 20. Oktober gelesen; fünf weitere Quellen und der Docker-Stand wurden am 22. Oktober anhand der unten festgehaltenen Originale gelesen. Die HTML-Zielseiten sind die kanonischen Lesefassungen; abgerufen wurden die explizit verlinkten Quelltexte aus den offiziellen Repositories beziehungsweise die RFC-Originale. Es wurden keine fremden Artikeltexte oder Bilder übernommen. Die Lerntexte sind eigenständige Zusammenfassungen.
 
-Die fünf Quizfragen beziehen sich auf Python-Operatoren, SQL-WHERE, die Aufgabe von HTML, die Basisklasse des gezeigten PyTorch-Modells und den Zweck von OpenAPI. Die weiteren Quellen dienen zunächst der Einordnung und als Ausgangspunkt der ergänzenden Themenwelten. Sie belegen nicht automatisch alle geplanten Profi-Lektionen. OWASP wird ausdrücklich als Ausgabe 2021 verwendet, ohne Behauptung über die aktuelle Rangfolge.
+Die zehn Quizfragen beziehen sich auf Python, SQL, HTML, PyTorch, OpenAPI, UTF-8, DNS-TTL, MFA-Faktoren, Image/Container und Dateirechte. Zehn eigene Editor-Aufgaben üben dieselben Grundlagen mit begrenzten lokalen Lernmodellen. Sie belegen nicht automatisch alle geplanten Profi-Lektionen. OWASP wird ausdrücklich als Ausgabe 2021 verwendet, ohne Behauptung über die aktuelle Rangfolge.
 
 Quellenabgleich bedeutet hier: die konkreten Aussagen und Frageantworten mit den gelesenen Abschnitten vergleichen. Ein unabhängiges Fachreview, eine umfassende wissenschaftliche Literaturrecherche und eine erneute Prüfung in einer neuen Cloud-Instanz sind damit nicht behauptet.
 
@@ -80,12 +80,12 @@ Die Prüfsumme dokumentiert die tatsächlich gelesene Datei. Bei fortlaufenden B
 
 ## Docker – What is Docker?
 
-- Version/Ausgabe: Fortlaufende Dokumentation
-- Abschnitt: The Docker platform
+- Version/Ausgabe: Docker Docs · b98c400647c7
+- Abschnitt: Docker objects · Images · Containers
 - [Kanonische Dokumentation](https://docs.docker.com/get-started/docker-overview/)
-- [Tatsächlich gelesener Dokumentationsquelltext](https://raw.githubusercontent.com/docker/docs/main/content/get-started/docker-overview.md)
-- Lesedatum: 2026-10-20
-- Zweck: Einordnung von Images, Containern und der Docker-Plattform.
+- [Tatsächlich gelesener Beleg](https://raw.githubusercontent.com/docker/docs/b98c400647c70f3e2177d513802d5d785aef232e/content/get-started/docker-overview.md)
+- Lesedatum: 2026-10-22
+- Zweck: Images als Vorlagen, Container als Instanzen sowie ihre beschreibbare Schicht und persistente Speicherung.
 - SHA-256 der gelesenen Datei: `9624ef1839c96183b6d71ca5c513c52dc6fa90da78d62e482adba3710a5e7243`
 
 ## Linux-Kernel-Projekt – Linux kernel release 6.x
@@ -147,3 +147,59 @@ Die Prüfsumme dokumentiert die tatsächlich gelesene Datei. Bei fortlaufenden B
 - Lesedatum: 2026-10-20
 - Zweck: Markdown als Klartextformat für strukturierte Dokumente und die präzisierte CommonMark-Syntax.
 - SHA-256 der gelesenen Datei: `257c41ad946f7a1414a499aca402a1aa8fdac3678532266611348c1cf54f4b80`
+
+## IETF · RFC Editor – UTF-8, a transformation format of ISO 10646
+
+- Version/Ausgabe: RFC 3629 · 2003-11
+- Abschnitt: 3 · UTF-8 definition
+- [Kanonische Dokumentation](https://www.rfc-editor.org/rfc/rfc3629.html#section-3)
+- [Tatsächlich gelesener Beleg](https://www.rfc-editor.org/rfc/rfc3629.txt)
+- Lesedatum: 2026-10-22
+- Zweck: UTF-8 codiert Unicode-Codepunkte mit einem bis vier Oktetten; ASCII bleibt erhalten.
+- SHA-256 der gelesenen Datei: `a2a3a39457d30420c812f87a38cc2b9194832f6982ef17e619de7d816879d6a6`
+
+## MDN Web Docs – TextEncoder: encode() method
+
+- Version/Ausgabe: MDN · ccd1540ad8c5
+- Abschnitt: Return value · Examples
+- [Kanonische Dokumentation](https://developer.mozilla.org/en-US/docs/Web/API/TextEncoder/encode)
+- [Tatsächlich gelesener Beleg](https://raw.githubusercontent.com/mdn/content/ccd1540ad8c51242b318bf437dfabe2e5315b3fa/files/en-us/web/api/textencoder/encode/index.md)
+- Lesedatum: 2026-10-22
+- Zweck: TextEncoder.encode gibt die UTF-8-Bytes einer Zeichenkette als Uint8Array zurück.
+- SHA-256 der gelesenen Datei: `1c325db10eca3ed4f4eb04f3a396182216a21b4c150331728fb8b2ddc1a863f7`
+
+## IETF · RFC Editor – Domain names – concepts and facilities
+
+- Version/Ausgabe: RFC 1034 · 1987-11
+- Abschnitt: 2.4 · Elements of the DNS; 3.6 · Resource Records
+- [Kanonische Dokumentation](https://www.rfc-editor.org/rfc/rfc1034.html#section-3.6)
+- [Tatsächlich gelesener Beleg](https://www.rfc-editor.org/rfc/rfc1034.txt)
+- Lesedatum: 2026-10-22
+- Zweck: DNS-Namensraum, Resolver, autoritative Nameserver sowie Resource Records und TTL. Grundlage, keine vollständige Darstellung späterer Erweiterungen.
+- SHA-256 der gelesenen Datei: `d6b10a71441df879cc2817d23f2dad120c8a5f87e74eba1e4ed4b743a76a891a`
+
+## OWASP Foundation – Multifactor Authentication Cheat Sheet
+
+- Version/Ausgabe: OWASP Cheat Sheet · ec35f68a0d06
+- Abschnitt: Introduction · Something You Know · Software OTP Tokens
+- [Kanonische Dokumentation](https://cheatsheetseries.owasp.org/cheatsheets/Multifactor_Authentication_Cheat_Sheet.html)
+- [Tatsächlich gelesener Beleg](https://raw.githubusercontent.com/OWASP/CheatSheetSeries/ec35f68a0d06fe5279051525c9a9f654b407c1dc/cheatsheets/Multifactor_Authentication_Cheat_Sheet.md)
+- Lesedatum: 2026-10-22
+- Zweck: Unterschiedliche Authentifizierungsfaktoren, Grenzen von Passwort plus PIN und Risiken von TOTP.
+- SHA-256 der gelesenen Datei: `aa0c03c9d10c1facfaef0ace5f61536aab46e2a8ea409cf8527086d0d11132f2`
+
+## GNU Project · Free Software Foundation – File permissions
+
+- Version/Ausgabe: GNU Coreutils 9.7
+- Abschnitt: Mode Structure · Setting Permissions · Numeric Modes
+- [Kanonische Dokumentation](https://github.com/coreutils/coreutils/blob/v9.7/doc/perm.texi)
+- [Tatsächlich gelesener Beleg](https://raw.githubusercontent.com/coreutils/coreutils/v9.7/doc/perm.texi)
+- Lesedatum: 2026-10-22
+- Zweck: Dateirechte für Eigentümer, Gruppe und andere; symbolische und oktale Schreibweise. Untersucht wurde die festgehaltene Version 9.7.
+- SHA-256 der gelesenen Datei: `d70e14a4b8259b81348a5f1b40edb5794bc2f34516541d00253afc07b8d08490`
+
+## Grenzen der Erweiterung
+
+RFC 1034 dient als Grundlage für DNS-Rollen und TTL; spätere Erweiterungen werden damit nicht vollständig erklärt. Die Coreutils-Übung behandelt reguläre Dateien ohne ACLs, Sonderbits oder Verzeichnisregeln. MFA- und Container-JSON sind eigene Lernmodelle, keine echten Konfigurationen. Die Editoren führen weder Python noch SQL, HTML oder Shell-Code aus. Die Beispiele und Prüfer sind eigene Entwicklungen.
+
+Die UTF-8-Beispielbytes und alle zehn Musterlösungen sind automatisiert geprüft. Ein unabhängiges Fachreview steht weiterhin aus.

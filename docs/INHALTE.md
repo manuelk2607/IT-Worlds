@@ -2,7 +2,7 @@
 
 ## Aktueller Umsetzungsstand
 
-Die Website enthält fünf kurze Einstiege zu Python-Operatoren, SQL-Abfragen, HTML, PyTorch-Modulen und OpenAPI sowie je eine passende Quizfrage. Themen, Lernziele, Quellen und Antworterklärungen sind in `src/data/content.ts` implementiert. Das [Quellenprotokoll](QUELLEN.md) beschreibt die gelesenen Originale. Die folgenden sechs Artikel gehören zu einem früheren Ausbauvorschlag und sind weiterhin geplant.
+Die Website enthält zehn kurze Einstiege, darunter Python, SQL, HTML, PyTorch, OpenAPI, UTF-8, DNS, MFA, Container und Dateirechte, sowie je eine passende Quizfrage. Themen, Lernziele, Quellen und Antworterklärungen sind in `src/data/content.ts` implementiert. Das [Quellenprotokoll](QUELLEN.md) beschreibt die gelesenen Originale. Die folgenden sechs Artikel gehören zu einem früheren Ausbauvorschlag und sind weiterhin geplant.
 
 ## Themen ordnen und Wissen verbinden
 

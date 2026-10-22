@@ -18,7 +18,8 @@
     "deploy": "npm run build && wrangler deploy",
     "dev:full": "npm run build && wrangler dev --local --port 8787",
     "migrate": "node --experimental-strip-types scripts/migrate.ts",
-    "provision:runtime": "node --experimental-strip-types scripts/provision-runtime.ts"
+    "provision:runtime": "node --experimental-strip-types scripts/provision-runtime.ts",
+    "seo:check": "node --experimental-strip-types scripts/seo-check.ts"
   },
   "dependencies": {
     "@neon/config": "1.9.2",

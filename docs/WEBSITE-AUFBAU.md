@@ -10,12 +10,15 @@ Der erste Rahmen macht die breite Themenlandkarte benutzbar. Das Ziel ist Wissen
 | `/themen/[slug]/`    | Beschreibung, Voraussetzungen, drei Lernstufen, gegebenenfalls erster Artikel, passende Quellen           |
 | `/lernpfade/`        | Drei Lernweg-Skizzen, nach Lernstufe filterbar                                                            |
 | `/lernpfade/[slug]/` | Voraussetzungen, Schritte, tatsächliche Verfügbarkeit und Verknüpfung zur Themenwelt                      |
-| `/quiz/`             | Fünf Fragen, Themenauswahl, Erklärung zu jeder Antwort, Beleg, Ergebnis und Neustart                      |
-| `/quellen/`          | 14 Originalquellen mit Herausgeber, Version, Abschnitt, Lesedatum und gelesenem Dokumentationsquelltext |
+| `/uebungen/` | Zehn Editor-Aufgaben mit lokalem Prüfer, Hinweisen und Musterlösungen |
+| `/quiz/`             | Zehn Fragen, Themenauswahl, Erklärung zu jeder Antwort, Beleg, Ergebnis und Neustart                      |
+| `/quellen/`          | 19 Originalquellen mit Herausgeber, Version, Abschnitt, Lesedatum und gelesenem Dokumentationsquelltext |
 
 Die globale Suche findet Themen und Lernpfade, auch über zugeordnete Unterthemen. Sie lässt sich über die Suchschaltfläche oder `/` außerhalb von Eingabefeldern öffnen. Escape schließt sie. Sie ist noch keine Volltextsuche über zukünftige Artikel.
 
-Die Seiten stehen zusätzlich unter `/en/` vollständig auf Englisch bereit. Der Sprachschalter erhält die entsprechende Seite, Suchparameter und Sprungmarken. Das helle oder dunkle Design lässt sich im Kopfbereich umstellen und bleibt im Browser gespeichert.
+Die Seiten stehen zusätzlich unter `/en/` vollständig auf Englisch bereit. Der Sprachschalter erhält die entsprechende Seite, Suchparameter und Sprungmarken. Jede Themenwelt enthält unter `#uebungseditor` eine passende Aufgabe. Eingaben werden lokal in einem begrenzten Lernmodell geprüft; der Quiz-/Lesefortschritt wird dadurch nicht automatisch geändert.
+
+Das helle oder dunkle Design lässt sich im Kopfbereich umstellen und bleibt im Browser gespeichert.
 
 `/konto/` bietet Registrierung, Anmeldung und Passwort-Zurücksetzen; `/fortschritt/` zeigt freiwillig gespeicherten Lernfortschritt. Die englischen Varianten liegen ebenfalls unter `/en/`. Alle Seiten und Lerninhalte bleiben für Gäste erreichbar.
 
@@ -37,7 +40,7 @@ Lernstufe und Vorwissen werden getrennt angegeben. Beispielsweise ist das vorhan
 
 ## Verfügbare und geplante Inhalte
 
-Verfügbar sind fünf kurze, quellenbasierte Artikelentwürfe und fünf Single-Choice-Fragen. Drei Lernpfade skizzieren mögliche Reihenfolgen: „Deine erste Website“, „APIs & Daten verbinden“ und „Systeme bewusst entwerfen“. Die sichtbaren Verfügbarkeitsangaben „1 von 4“, „2 von 4“ und „0 von 4“ zählen vorhandene Inhalte. Der persönliche Lernstand wird separat aus gelesenen verfügbaren Einstiegen und bearbeiteten Fragen berechnet. Vertiefungs- und Profi-Lektionen sind noch geplant. Fachreview, Glossar, vollständige Kurse und Lernspiele bleiben offen.
+Verfügbar sind zehn kurze, quellenbasierte Artikelentwürfe und zehn Single-Choice-Fragen. Drei Lernpfade skizzieren mögliche Reihenfolgen: „Deine erste Website“, „APIs & Daten verbinden“ und „Systeme bewusst entwerfen“. Die sichtbaren Verfügbarkeitsangaben „1 von 4“, „2 von 4“ und „0 von 4“ zählen vorhandene Inhalte. Der persönliche Lernstand wird separat aus gelesenen verfügbaren Einstiegen und bearbeiteten Fragen berechnet. Vertiefungs- und Profi-Lektionen sind noch geplant. Fachreview, Glossar, vollständige Kurse und Lernspiele bleiben offen.
 
 ## Inhalte erweitern
 

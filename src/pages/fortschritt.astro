@@ -31,6 +31,6 @@ const lessons = topics.filter(topic => topic.lesson);
     </div>
     <h2>{t('Deine Lernpfade', 'Your learning paths')}</h2>
     <div class="path-grid">{paths.map(path => <article class="progress-entry"><a href={localePath(locale, `/lernpfade/${path.id}/`)}><h3>{path.title}</h3></a><p data-path-lesson-ids={JSON.stringify(path.steps.filter(step => step.available).map(step => step.topic))}></p><p class="muted">{t(`${path.steps.length - path.steps.filter(step => step.available).length} weitere Schritte sind geplant.`, `${path.steps.length - path.steps.filter(step => step.available).length} further steps are planned.`)}</p></article>)}</div>
-    <p class="editorial-note">{t('Der Lernstand zählt nur die fünf verfügbaren Einstiege und fünf Fragen. Markierungen sind deine persönliche Orientierung und kein Zertifikat. Geplante Lektionen zählen nicht als abgeschlossen.', 'Your learning record counts only the five available introductions and five questions. Checkmarks are personal guidance, not a certificate. Planned lessons are not counted as completed.')}</p>
+    <p class="editorial-note">{t('Der Lernstand zählt nur die zehn verfügbaren Einstiege und zehn Fragen. Markierungen sind deine persönliche Orientierung und kein Zertifikat. Geplante Lektionen zählen nicht als abgeschlossen.', 'Your learning record counts only the ten available introductions and ten questions. Checkmarks are personal guidance, not a certificate. Planned lessons are not counted as completed.')}</p>
   </section>
 </Layout>

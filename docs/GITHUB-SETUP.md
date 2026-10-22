@@ -6,11 +6,11 @@ Der About-Bereich beschreibt den tatsächlichen Funktionsumfang. Mit „Tags“ 
 
 ## Beschreibung
 
-> Deutsch-englische IT-Lernplattform mit zehn Themenwelten, quellenbasierten Einstiegen, Quiz, optionalen Accounts und gespeichertem Lernfortschritt. Astro, TypeScript, Neon und Cloudflare Workers.
+> Deutsch-englische IT-Lernplattform mit zehn Themenwelten, quellenbasierten Einstiegen, Quiz und Übungseditoren. Freiwillige Accounts speichern den Lernfortschritt. Astro, TypeScript, Neon und Cloudflare Workers.
 
 ## Topics
 
-`astro`, `typescript`, `neon`, `postgresql`, `cloudflare-workers`, `education`, `learning-platform`, `learning-progress`, `quiz`, `bilingual`, `dark-mode`, `programming`, `information-technology`.
+`astro`, `typescript`, `neon`, `postgresql`, `cloudflare-workers`, `education`, `learning-platform`, `learning-progress`, `quiz`, `bilingual`, `dark-mode`, `programming`, `information-technology`, `coding-exercises`, `interactive-learning`, `sitemap`.
 
 Beschreibung, Homepage und Topics lassen sich mit der vorhandenen GitHub-Anmeldung pflegen. Vorhandene passende Topics erhalten und den gesetzten Stand anschließend zurücklesen. Keine vollständigen Kurse, Zertifizierung oder offene Lizenz behaupten.
 

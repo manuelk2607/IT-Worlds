@@ -7,14 +7,17 @@ Die Reihenfolge beschreibt vorgeschlagene Ausbaustufen, keine zugesagten Termine
 - [x] Zehn Themenwelten mit Einstieg, Vertiefung und Profi-Themen strukturieren.
 - [x] Startseite, Themen- und Lernpfadseiten mit responsivem Layout umsetzen.
 - [x] Themen- und Lernpfadsuche sowie Themen- und Stufenfilter bereitstellen.
-- [x] Fünf kurze Einstiegsartikel und fünf passende Quizfragen mit Primärquellen hinterlegen.
-- [x] 14 Originalquellen mit Herausgeber, Version, Abschnitt und Lesedatum dokumentieren.
+- [x] Zehn kurze Einstiegsartikel und zehn passende Quizfragen mit Primärquellen hinterlegen.
+- [x] 19 Originalquellen mit Herausgeber, Version, Abschnitt und Lesedatum dokumentieren.
 - [x] LaTeX, Typst und Markdown als Unterbereich von Programmiersprachen einordnen.
 - [x] Projektcode einschließlich Tests, Hilfsskripten und Astro-Konfiguration auf TypeScript vereinheitlichen.
 - [ ] Unabhängiges Fachreview der Einstiege und Quizfragen durchführen.
 - [ ] Lernpfade vollständig ausarbeiten und für Vertiefung/Profi passende Belege recherchieren.
 
 Der frühere Vorschlag „Vom Browser zur Website“ bleibt eine mögliche spätere inhaltliche Ausbaustufe. Die drei derzeit sichtbaren Lernpfade sind Skizzen, keine abgeschlossenen Kurse. Details im [Website-Aufbau](WEBSITE-AUFBAU.md).
+
+- [x] Zehn lokale Übungseditoren mit Hinweisen und Musterlösungen ergänzen.
+- [x] Sitemap, Canonicals, Sprachbezüge und Social-Metadaten ergänzen.
 
 ## Phase 0: Konzept und Repository
 
@@ -83,4 +86,4 @@ Der Einstieg braucht noch keine Anmeldung, öffentliche Rangliste, automatische 
 | Wie werden Inhalte gepflegt? | Markdown und Review im Repository | Redaktion benötigt eine andere Oberfläche |
 | Wie lizenzieren wir das Projekt? | Code, Lerntexte und Fremdmaterial getrennt beurteilen | vor entsprechenden externen Beiträgen und Veröffentlichung |
 
-Konkrete nächste Arbeitspakete: die fünf Einstiege und Fragen fachlich gegenlesen lassen, einen Lernpfad vollständig ausarbeiten und die Beleglage für Vertiefungs- und Profi-Inhalte aufbauen.
+Konkrete nächste Arbeitspakete: die zehn Einstiege und Fragen fachlich gegenlesen lassen, einen Lernpfad vollständig ausarbeiten und die Beleglage für Vertiefungs- und Profi-Inhalte aufbauen.

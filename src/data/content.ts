@@ -1,3 +1,4 @@
+import { additionalSources, additionalLessons, additionalQuestions } from './expansion.ts';
 export const levels = [
   {
     id: "einstieg",
@@ -114,17 +115,7 @@ export const sources = {
     description:
       "Daten und Befehle trennen; parametrisierte Schnittstellen gegen Injection. Historische Ausgabe, keine Aussage zur aktuellen Rangfolge.",
   },
-  docker: {
-    title: "What is Docker?",
-    publisher: "Docker",
-    url: "https://docs.docker.com/get-started/docker-overview/",
-    evidenceUrl:
-      "https://raw.githubusercontent.com/docker/docs/main/content/get-started/docker-overview.md",
-    version: "Fortlaufende Dokumentation",
-    section: "The Docker platform",
-    reviewedAt: "2026-10-20",
-    description: "Einordnung von Images, Containern und der Docker-Plattform.",
-  },
+  docker: additionalSources.docker,
   linux: {
     title: "Linux kernel release 6.x",
     publisher: "Linux-Kernel-Projekt",
@@ -196,10 +187,16 @@ export const sources = {
     description:
       "Markdown als Klartextformat für strukturierte Dokumente und die präzisierte CommonMark-Syntax.",
   },
+  utf8: additionalSources.utf8,
+  encoder: additionalSources.encoder,
+  dns: additionalSources.dns,
+  mfa: additionalSources.mfa,
+  coreutils: additionalSources.coreutils,
 } satisfies Record<string, Source>;
 export type SourceId = keyof typeof sources;
 
 export type Lesson = {
+  curriculumIndex?: number;
   title: string;
   goal: string;
   paragraphs: string[];
@@ -228,7 +225,7 @@ export type Topic = {
   }[];
   lesson?: Lesson;
 };
-export const topics: Topic[] = [
+const baseTopics: Topic[] = [
   {
     id: "programmiersprachen",
     title: "Programmiersprachen",
@@ -616,6 +613,11 @@ export const topics: Topic[] = [
   },
 ];
 
+export const topics: Topic[] = baseTopics.map(topic => {
+  const lesson = additionalLessons[topic.id];
+  return lesson ? { ...topic, lesson, sources: [...new Set([...topic.sources, ...lesson.sources])] } : topic;
+});
+
 export type Question = {
   id: string;
   topic: string;
@@ -765,6 +767,8 @@ export type LearningPath = {
   prerequisites: string;
   steps: { topic: string; title: string; available: boolean }[];
 };
+questions.push(...additionalQuestions);
+
 export const paths: LearningPath[] = [
   {
     id: "erste-website",

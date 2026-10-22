@@ -17,7 +17,7 @@ flowchart LR
 
 | Bereich | Dateien |
 | --- | --- |
-| Inhalte und Übersetzungen | `src/data/content.ts`, `src/data/content.en.ts` |
+| Inhalte und Übersetzungen | `src/data/content.ts`, `src/data/content.en.ts`, `src/data/expansion.ts`, `src/data/expansion.en.ts` |
 | Seiten und Layout | `src/pages/`, `src/components/`, `src/layouts/` |
 | Englische statische Routen | `src/pages/en/[...page].astro` |
 | Sprache und Routen | `src/lib/locale.ts`, `src/lib/i18n.ts` |
@@ -43,8 +43,10 @@ Ein Ausfall von Auth oder Datenbank beeinträchtigt persönliche Funktionen. Sta
 
 ## Prüfen und erweitern
 
-`npm test` prüft Inhalt, Quellenverknüpfungen, Sprachparität, Fortschrittsvalidierung und Account-Fehlermeldungen. `npm run check` prüft strikt sämtliche TypeScript- und Astro-Quellen einschließlich Worker und Skripten. `npm run build` erzeugt 40 HTML-Seiten. `npm run deploy:check` prüft das Worker-Paket ohne Veröffentlichung.
+`npm test` prüft Inhalt, Quellenverknüpfungen, Sprachparität, Fortschrittsvalidierung und Account-Fehlermeldungen. `npm run check` prüft strikt sämtliche TypeScript- und Astro-Quellen einschließlich Worker und Skripten. `npm run build` erzeugt 42 HTML-Seiten. `npm run deploy:check` prüft das Worker-Paket ohne Veröffentlichung.
 
 Mehrere Nutzer und RLS zusätzlich auf einem Entwicklungsbranch testen. Neue Migrationen werden mit Prüfsumme registriert und transaktional angewendet; bereits angewendete Migrationen bleiben unverändert.
+
+Die zehn [Übungseditoren](EDITOR.md) verwenden eigene lokale Prüfer für klar begrenzte Aufgaben. Sie führen keine Nutzereingaben aus und senden sie nicht an einen Server. Ihre Ergebnisse zählen nicht zusätzlich im Account-Lernstand. [SEO](SEO.md) ergänzt Sitemap, Robots-Regeln, Canonicals, Sprachbezüge und Vorschau-Metadaten.
 
 Weitere Artikel, Lernspiele, ein CMS und isolierte Codeausführung sind spätere Erweiterungen. Angezeigte SQL-, Python- und PyTorch-Beispiele werden nicht im Browser ausgeführt. Das unabhängige Fachreview bleibt offen.

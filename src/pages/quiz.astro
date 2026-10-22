@@ -19,14 +19,14 @@ import Icon from "../components/Icon.astro";
       {t("Ein neues", "A new")} <span>{t("Aha.", "discovery.")}</span>
     </h1>
     <p class="page-lead">
-      {t("Teste dein Verständnis mit fünf ersten Fragen. Mit einem freiwilligen Account werden bearbeitete Fragen und richtige Antworten gespeichert. Ohne Account bleibt das Quiz frei nutzbar.", "Test your understanding with five first questions. An optional account saves practised questions and correct answers. The quiz remains freely available without an account.")}
+      {t("Teste dein Verständnis mit zehn Fragen. Mit einem freiwilligen Account werden bearbeitete Fragen und richtige Antworten gespeichert. Ohne Account bleibt das Quiz frei nutzbar.", "Test your understanding with ten questions. An optional account saves practised questions and correct answers. The quiz remains freely available without an account.")}
     </p>
   </section>
   <section class="container narrow quiz-section">
     <div class="quiz-controls">
       <label for="quiz-topic">{t("Deine Themenwahl", "Your topic")}</label>
       <select id="quiz-topic">
-        <option value="alle">{t("Alle fünf Themen", "All five topics")}</option>
+        <option value="alle">{t("Alle zehn Themen", "All ten topics")}</option>
         {questions.map((question) => (
           <option value={question.topic}>
             {topicById(question.topic)!.title}
@@ -141,7 +141,7 @@ import Icon from "../components/Icon.astro";
     </div>
     <p class="quiz-note">
       <Icon name="book" size={17} />
-      {t("Fünf quellenbasierte Entwurfsfragen. Kein Zertifikat und keine Einstufung deiner gesamten IT-Kompetenz.", "Five draft questions based on sources. No certificate or overall assessment of your IT skills.")}
+      {t("Zehn quellenbasierte Entwurfsfragen. Kein Zertifikat und keine Einstufung deiner gesamten IT-Kompetenz.", "Ten draft questions based on sources. No certificate or overall assessment of your IT skills.")}
     </p>
     <noscript>
       <style>

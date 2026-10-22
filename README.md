@@ -2,11 +2,11 @@
 
 **IT verstehen. Zusammenhänge entdecken. Wissen spielerisch testen.**
 
-[Website auf Deutsch](https://it-worlds.maki26.workers.dev) · [Website in English](https://it-worlds.maki26.workers.dev/en/) · [English README](README.en.md)
+[Website auf Deutsch](https://it-worlds.maki26.workers.dev) · [Website in English](https://it-worlds.maki26.workers.dev/en/) · [Übungseditoren](https://it-worlds.maki26.workers.dev/uebungen/) · [English README](README.en.md)
 
 IT-Worlds ist eine deutsch-englische IT-Lernplattform mit zehn Themenwelten. Alle Inhalte, Quellen und Quizfragen sind ohne Anmeldung zugänglich. Ein freiwilliger Account speichert gelesene Einstiege, bearbeitete Fragen und richtig beantwortete Fragen geräteübergreifend. Ein optionales dunkles Design ergänzt das helle Design; die Auswahl bleibt im Browser gespeichert.
 
-**Stand:** Zehn Themenpläne für Einstieg, Vertiefung und Profi, drei Lernpfad-Skizzen, fünf kurze Einstiegsartikel, fünf interaktive Fragen mit Erklärung jeder Antwort und 14 offizielle Quellen. Weitere Lektionen sind als geplant gekennzeichnet. Vollständige Profi-Kurse und ein unabhängiges Fachreview stehen aus.
+**Stand:** Zehn Themenpläne für Einstieg, Vertiefung und Profi, drei Lernpfad-Skizzen, zehn kurze Einstiegsartikel, zehn interaktive Fragen mit Erklärung jeder Antwort und 19 offizielle Quellen. Zehn lokale Übungseditoren ergänzen die Artikel mit Hinweisen und Musterlösungen. Weitere Lektionen sind als geplant gekennzeichnet. Vollständige Profi-Kurse und ein unabhängiges Fachreview stehen aus.
 
 ## Themenwelten
 
@@ -54,13 +54,15 @@ Astro erzeugt statische Seiten mit TypeScript und CSS. Ein kleiner TypeScript-Wo
 | [Technik](docs/TECHNIK.md) | Architektur, Datenfluss und Projektdateien |
 | [Accounts](docs/ACCOUNTS.md) | Neon, Rollen, Migrationen, Sessions und Mailkonfiguration |
 | [Cloudflare](docs/CLOUDFLARE.md) | Bestandsprüfung, Secrets und Veröffentlichung |
+| [Übungseditoren](docs/EDITOR.md) | Aufgabenformate, Bedienung und Grenzen |
+| [SEO](docs/SEO.md) | Sitemap, Indexierbarkeit und Suchmaschinen |
 | [Quellen](docs/QUELLEN.md) | Tatsächlich gelesene Primärquellen und Grenzen des Reviews |
 | [Validierung](docs/VALIDIERUNG.md) | Durchgeführte Prüfungen und Deployment-Nachweis |
 | [Roadmap](docs/ROADMAP.md) | Inhaltlicher Ausbau und offene Entscheidungen |
 | [GitHub](docs/GITHUB-SETUP.md) | Beschreibung, Website-Link und Topics |
 | [Mitwirken](CONTRIBUTING.md) | Beiträge, Übersetzungen und Quellenregeln |
 
-Inhaltsdaten liegen in `src/data/content.ts` und `src/data/content.en.ts`; stabile IDs verbinden beide Sprachen mit demselben Lernstand. Eigener Code, Tests, Skripte und unterstützte Konfigurationen verwenden strikt geprüftes TypeScript. Python-, SQL- und LaTeX-Beispiele behalten ihre Sprache. Verbindliche Regeln: [AGENTS.md](AGENTS.md).
+Inhaltsdaten liegen in `src/data/content.ts` und `src/data/content.en.ts`; die neuen Blöcke werden aus `expansion.ts` und `expansion.en.ts` ergänzt; stabile IDs verbinden beide Sprachen mit demselben Lernstand. Eigener Code, Tests, Skripte und unterstützte Konfigurationen verwenden strikt geprüftes TypeScript. Python-, SQL- und LaTeX-Beispiele behalten ihre Sprache. Verbindliche Regeln: [AGENTS.md](AGENTS.md).
 
 ## Mitwirken und Rechte
 

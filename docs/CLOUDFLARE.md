@@ -4,7 +4,7 @@ Ziel ist der bereits vorhandene Worker **it-worlds** unter **https://it-worlds.m
 
 ## Konfiguration und Bestand
 
-`wrangler.jsonc` liefert Astro-Dateien aus `dist/` als Static Assets aus. `auto-trailing-slash` erzeugt HTML-Verzeichnisrouten; `404-page` nutzt die eigene deutsche Fehlerseite. `worker/index.ts` behandelt `/api/*` sowie `/en/*`, damit englische unbekannte Routen die englische Fehlerseite mit HTTP 404 erhalten. Reguläre Lerninhalte bleiben statisch.
+`wrangler.jsonc` liefert Astro-Dateien aus `dist/` als Static Assets aus. `auto-trailing-slash` erzeugt HTML-Verzeichnisrouten; `404-page` nutzt die eigene deutsche Fehlerseite. `worker/index.ts` wird für API- und HTML-Routen zuerst aufgerufen. Reguläre HTTP-Lernseiten und APIs werden mit 308 auf HTTPS umgeleitet; englische unbekannte Routen erhalten die englische Fehlerseite mit HTTP 404. Statische Dateien bleiben im Asset-Pfad. Reguläre Lerninhalte bleiben statisch.
 
 Vor jedem Deployment Account, Workers-Subdomain, vorhandene Bindings und Einstellungen prüfen. Das ursprüngliche Compatibility-Datum `2026-10-19`, Flags, Nutzungsmodell `standard`, Placement, Tags, Tail Consumers und deaktiviertes Logpush werden erhalten. Preview-URLs bleiben deaktiviert; `keep_vars` bleibt aktiviert. Die workers.dev-Adresse wurde für die beauftragte Website aktiviert.
 
@@ -42,7 +42,7 @@ npm run deploy
 IT_WORLDS_URL=https://it-worlds.maki26.workers.dev npm run ready
 ```
 
-Ein Dry-Run bestätigt keine Veröffentlichung. Danach aktive Version und erhaltene Einstellungen auslesen, gebaute Dateien mit öffentlicher Auslieferung vergleichen und DE/EN-404 mit Status 404 prüfen. Im öffentlichen Browser zusätzlich Suche, Filter, mobiles Menü, Quiz mit falschen Antworten, Erklärungen, Ergebnis, Neustart, Quellenlinks, Sprachwechsel und beide Designs prüfen. Einen Testaccount registrieren, Fortschritt speichern, abmelden, erneut anmelden und Wiederherstellung prüfen.
+Ein Dry-Run bestätigt keine Veröffentlichung. Danach aktive Version und erhaltene Einstellungen auslesen, gebaute Dateien mit öffentlicher Auslieferung vergleichen und DE/EN-404 mit Status 404 prüfen. Im öffentlichen Browser zusätzlich Suche, Filter, mobiles Menü, Übungseditoren mit Hinweis/Lösung/Reset, Quiz mit falschen Antworten, Erklärungen, Ergebnis, Neustart, Quellenlinks, Sprachwechsel und beide Designs prüfen. Einen Testaccount registrieren, Fortschritt speichern, abmelden, erneut anmelden und Wiederherstellung prüfen.
 
 ## Historischer Cloud-Stand
 

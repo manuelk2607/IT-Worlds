@@ -1,68 +1,48 @@
 # Validierung und Veröffentlichung
 
-Prüfstand: **21. Oktober 2026**, Europe/Stockholm.
+Prüfstand: **22. Oktober 2026**, Europe/Stockholm.
 
-## Tatsächliche Übernahme und Erhalt lokaler Dateien
+## Umfang
 
-Das ZIP enthielt vollständigen Quellcode und `it-worlds-changes.patch`. Nach Prüfung von Vorgaben, Dateien, Remote und Arbeitsbaum wurde `git apply --check` erfolgreich ausgeführt und der Patch auf `codex/cloudstand-lokal` angewendet. Direkt danach stimmten die Projektdateien mit dem ZIP-Quellstand überein. Basis war `cab9f38864d090591878da130430443fe7480a77`.
+- Fünf neue Einstiege: UTF-8 und Byteanzahl, DNS-Rollen und TTL, MFA-Faktoren, Docker-Images/Container sowie einfache Linux-Dateirechte. Insgesamt zehn Einstiege und zehn Quizfragen für alle zehn Themenwelten.
+- Zehn editierbare Aufgaben mit lokaler Modellprüfung, Hinweisen, Musterlösung, Ausgabe und Reset. Alle Inhalte und Bedienoberflächen auf Deutsch und Englisch, ohne Anmeldung nutzbar.
+- 19 offizielle Quellen. Fünf Quellen neu gelesen und Docker erneut abgeglichen; Versionen, Abschnitte, Lesedatum, feste Beleg-URLs und SHA-256 stehen in [QUELLEN.md](QUELLEN.md). Neue Texte und Übungsdaten sind eigene Formulierungen.
+- Sitemap für 36 öffentliche Sprachseiten, robots.txt, Canonicals, hreflang/x-default, Titel/Beschreibungen, JSON-LD, zwei PNG-Vorschaubilder und permanente HTTPS-Weiterleitung regulärer HTML-/API-Routen.
 
-Der ursprüngliche Checkout wurde wiederverwendet. Die späteren Account-, Sprach- und Designänderungen wurden vor der Übernahme gegen die jeweiligen Ausgangsdateien geprüft. Die zwischenzeitlich vorhandene Nutzerdatei `.clinerules` blieb erhalten und wird nicht in unseren Commit aufgenommen. Secrets und generierte Verzeichnisse bleiben außerhalb der Versionsverwaltung.
-
-## Umgesetzter Umfang
-
-Zehn Themenwelten, jeweils drei Themenstufen, drei Lernpfad-Skizzen, fünf Einstiege, fünf Fragen und 14 Quellen. LaTeX, Typst und Markdown bleiben ein Unterbereich der Programmiersprachen. Die vorhandenen Inhalte und sämtliche sichtbaren UI-Texte stehen auf Deutsch und Englisch bereit. Beide Sprachen verwenden dieselben Inhaltskennungen und denselben Lernstand.
-
-Freiwillige Accounts ergänzen gelesene Einstiege, bearbeitete Fragen, jemals richtig beantwortete Fragen und eine persönliche Übersicht. Alle Inhalte bleiben für Gäste zugänglich. Helles und dunkles Design sind umschaltbar und im Browser gespeichert. Geplante Lektionen bleiben als geplant gekennzeichnet und sind nicht abhackbar. Eigener Code, Tests, Skripte und Konfiguration bleiben strikt geprüftes TypeScript.
-
-## Automatisierte Prüfungen
+## Prüfungen
 
 | Prüfung | Ergebnis |
 | --- | --- |
-| `npm ci` | Lockfile-Installation erfolgreich, Node.js 26.8.1; Audit meldet 0 bekannte Schwachstellen |
-| `npm test` | 10 Tests bestanden: Inhalte/Quellen, Sprachparität, Fortschrittsvalidierung und Auth-Fehlermeldungen |
-| `npm run check` | 41 Dateien, 0 Fehler, 0 Warnungen, 0 Hinweise |
-| `npm run build` | 40 HTML-Seiten erzeugt |
-| `npm run deploy:check` | Worker-Dry-Run erfolgreich, 488,46 KiB / gzip 115,50 KiB |
-| API-/Datenbank-Integration | 11 Prüfungen auf isoliertem development bestanden |
-| Öffentliche HTTP-Prüfung | 48 reguläre HTML-/CSS-/JS-/Asset-Antworten bytegleich zum Build; beide Fehlerseiten zusätzlich bytegleich mit HTTP 404 |
-| Verzeichnisrouten | HTTP 307 für URLs ohne abschließenden Slash |
-| `npm run ready` öffentlich | Startseite, Quiz und Quellen erfolgreich |
+| npm test | 16 Tests bestanden |
+| npm run check | 56 Dateien; 0 Fehler, Warnungen und Hinweise |
+| npm run build | 42 HTML-Seiten, robots.txt und sitemap.xml erzeugt |
+| npm run deploy:check | Erfolgreich; 511,54 KiB / gzip 122,15 KiB |
+| npm run seo:check | 36 öffentliche URLs und ihre Metadaten geprüft |
+| npm run seo:check -- --live | 36 öffentliche Crawler-Antworten bytegleich, Status 200, kein blockierender X-Robots-Tag; HTTP-Startseite leitet mit 308 auf HTTPS |
+| Öffentliche Auslieferung | 55 reguläre HTML-/CSS-/JS-/Asset-Antworten bytegleich; DE/EN-Fehlerseiten zusätzlich bytegleich mit HTTP 404 |
+| API/RLS auf development | 11 Integrationsprüfungen bestanden; keine Schemaänderung erforderlich |
 
-npm meldet Peer-Dependency-Konflikte und veraltete transitive Mail-/UI-Pakete aus dem Neon-SDK. Die Lockfile-Installation, Typprüfung und getesteten Auth-Laufwege funktionieren. Optionale Installationsskripte von core-js, esbuild, fsevents und workerd bleiben blockiert; vorhandene Plattformpakete reichen für Build und lokale Worker-Laufzeit. Keine Abhängigkeiten oder generierten JavaScript-Dateien wurden manuell umgeschrieben.
+Die Inhaltstests prüfen Quellenverknüpfungen und Sprachparität. Editortests prüfen alle Musterlösungen, unvollständige Vorlagen, alternative SQL-/HTML-/chmod-Formate sowie ungültige und schädliche Eingaben. Die Transportprüfung erhält Pfad/Query und lässt localhost unverändert.
 
-Die 11 Integrationsprüfungen umfassen: nicht angemeldeten Zugriff ablehnen, Cross-Origin-POST ablehnen, geplante Inhalte und ungültigen Antwortindex ablehnen, vom Browser behauptete Nutzer-ID ignorieren, zwei Nutzer in der API isolieren, ohne RLS-Kontext keine Zeilen, mit Kontext nur eigene Zeilen, fremden Insert ablehnen, Auth-Nutzertabelle für die Runtime-Rolle sperren und widerrufene Session ablehnen.
+Im Browser: alle zehn Editoren in beiden Sprachen (20 Abläufe) mit Fehlerfeedback, Hinweis, Lösung, Prüfung und Reset. Alle 15 neuen Antwortmöglichkeiten jeweils auf Deutsch und Englisch (30 Abläufe) mit Erklärung und Beleglink. Mobilansicht 390 × 844, Desktop 1280 × 1000, neue Navigation, Sprachwechsel und dunkles Design geprüft.
 
-## Browserprüfung
-
-Lokal und nach Veröffentlichung wurden relevante Abläufe im Browser geprüft:
-
-- Registrierung ohne Verifizierungsmail, Anmeldung, falsches Passwort mit passender Fehlermeldung, Abmeldung und erneute Anmeldung.
-- Gelesenen Einstieg und richtige/falsche Frage speichern; Wiederherstellung nach Navigation, Neuladen und Sprachwechsel. Auf der öffentlichen Website nach erneuter Anmeldung 1 Einstieg, 1 bearbeitete und 1 richtige Frage wiederhergestellt.
-- Alle 15 englischen Antwortmöglichkeiten mit ihrer jeweiligen Erklärung und ihrem Originalbeleg. Die 15 deutschen Varianten waren bereits beim ursprünglichen Import geprüft.
-- Öffentlicher vollständiger Fünf-Fragen-Gastdurchlauf mit einer falschen Antwort: 4 von 5, Ergebnis, Neustart und Neuladen erfolgreich.
-- Globale Suche nach Typst, Themenfilter, leere Ergebnisse und mobile Navigation bei 390 × 844. Desktop bei 1280 × 900 geprüft.
-- Sprachwechsel erhält die entsprechende Seite, Query und Sprungmarke; Designwechsel bleibt nach Neuladen und Navigation erhalten. Beide Designs und Sprachen visuell geprüft.
-- Quellenverzeichnis mit 14 ausklappbaren Belegangaben, Quellenlinks sowie deutsche/englische 404-Seiten und Rückkehr zur Startseite.
-- Gäste können Lerntexte und Quiz weiterhin vollständig nutzen.
+Auf der öffentlichen Website: SQL-Editor liefert beide Beginner-Kurse; UTF-8-Editor liefert [65, 226, 130, 172] und vier Bytes. Neuer Einstieg und neue Quizfrage lassen sich mit Account speichern. Nach Sprachwechsel und erneuter Anmeldung wurden 1/10 Einstiege, 1/10 Fragen und eine richtige Antwort wiederhergestellt. Testaccount am Ende abgemeldet. Alle bisherigen Inhaltskennungen bleiben erhalten; bestehende Fortschrittsdaten wurden nicht migriert oder gelöscht.
 
 ## Tatsächliches Deployment
 
-- Worker: **it-worlds**, Subdomain **maki26**.
 - URL: **https://it-worlds.maki26.workers.dev**
-- Veröffentlichung: **21. Oktober 2026, 09:04 Uhr (Europe/Stockholm)**.
-- Aktive Version: **`16cdffb6-c708-4fa8-893c-66a9ba78e6c0`**, Traffic **100 %**.
-- Deployment-ID: `e43642cf-0a94-4375-901e-6b58127dffa2`.
-- Bestehende lokale Wrangler-OAuth-Anmeldung genutzt. Kein Cloud-Chat-Token erforderlich.
-- Einstellungen vor/nach Deploy verglichen: Compatibility-Datum, Flags, Nutzungsmodell standard, Placement, Tags, Tail Consumers, Logpush und Preview-Einstellung erhalten.
-- Gezielt ergänzt: ASSETS-Binding sowie DATABASE_URL, NEON_AUTH_BASE_URL und NEON_AUTH_COOKIE_SECRET als geheime Bindings. Ihre Werte stehen nicht im Repository.
-- Neon-Projekt **IT-Worlds** in Frankfurt mit getrennten main-/development-Branches. Rollen-Einrichtung und Migration zuerst auf development geprüft, danach auf main angewendet. Worker nutzt ausschließlich die eingeschränkte Anwendungsrolle.
+- Worker: **it-worlds**, Subdomain **maki26**.
+- Zeitpunkt: **22.10.2026, 19:56:43 (Europe/Stockholm)**.
+- Aktive Version: **`fa8de230-b8fb-4a06-8337-be4b09193b33`**, 100 % Traffic.
+- Deployment-ID: `2e582bc2-999d-4159-960b-a45acbe85014`.
+- Vorhandene lokale Wrangler-Anmeldung genutzt. Bestehende Bindings, Secrets, Compatibility-Datum/Flags, Nutzungsmodell, Placement, Tags, Tail Consumers, Logpush und workers.dev-/Preview-Einstellungen erhalten und verglichen. Gezielt geändert wurde die Worker-Ausführung vor regulären HTML-Routen für HTTPS. Statische Dateien bleiben Assets.
 
-Die vorherige Version `a653c29f-e503-4b03-96a3-029e14032181` vom 20. Oktober 2026 war der erste statische Deploy. Der Cloud-Chat selbst hatte zuvor noch nicht veröffentlicht.
+README, Editor-/SEO-/Quellen-/Betriebsdokumentation und GitHub-Beschreibung/Topics sind auf den neuen Stand angepasst. Der lokale Checkout wird weiterverwendet; die vorhandene Nutzerdatei .clinerules bleibt unangetastet und wird nicht committed.
 
-## Quellen, GitHub und offene Punkte
+## Grenzen
 
-Alle 14 kanonischen Quellen und offiziellen Dokumentationsquelltexte wurden bei der lokalen Übernahme per HTTPS geladen; ihre SHA-256-Summen stimmten mit `QUELLEN.md` überein. Relevante Abschnitte wurden gelesen und mit Artikeln und Quizlösungen abgeglichen. Die Übersetzung erhält Quellen, Lesedaten und Lösungen. **Das ersetzt kein unabhängiges Fachreview; dieses bleibt offen.** Vollständige Vertiefungs-/Profi-Kurse bleiben geplant.
+Die Editor-Prüfer sind begrenzte Lernmodelle, keine vollständigen Interpreter oder Compiler. Nutzereingaben werden nicht als Programm ausgeführt und nicht an Server gesendet. Editor-Ergebnisse zählen nicht zusätzlich im Account-Lernstand.
 
-Auf GitHub wurden Beschreibung, Homepage und 13 passende Topics gesetzt und per API zurückgelesen. Deutsche/englische README sowie Betriebs-, Aufbau- und Accountdokumentation gehören zum veröffentlichten Quellstand. „Tags“ meint hier Topics, keine Release-Tags.
+Ein unabhängiges Fachreview und vollständige Vertiefungs-/Profi-Kurse stehen weiterhin aus. Die Suchseiten sind technisch öffentlich crawlbar; die externe site:-Suchabfrage lieferte am Prüftag noch keinen Indexierungsnachweis. Es wurde keine Search-Console-Property verifiziert und keine Rankingposition versprochen. Details: [SEO.md](SEO.md). Die tatsächliche Passwort-Reset-Mailzustellung wurde weiterhin nicht geprüft.
 
-E-Mail-Verifizierung ist auf ausdrücklichen Wunsch deaktiviert. Ein eigener SMTP-Anbieter ist keine Voraussetzung für die getestete Registrierung/Anmeldung. Passwort-Zurücksetzen verwendet den gemeinsamen Neon-Maildienst und dessen Limits; tatsächlicher E-Mail-Empfang und vollständiger Wiederherstellungsablauf wurden nicht geprüft.
+Der [vorherige Prüfstand vom 21. Oktober](https://github.com/manuelk2607/IT-Worlds/blob/0e6e9cbe2ce33ab407bb6fc6a36c564a1903181e/docs/VALIDIERUNG.md) dokumentiert ZIP-/Patch-Übernahme, ursprüngliche Quellenlektüre und Account-Einrichtung.

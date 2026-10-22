@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { parseProgressChange, isCorrectAnswer } from '../src/lib/progress.ts';
 
 test('only available lessons and known questions can become progress', () => {
-  assert.equal(parseProgressChange({kind:'lesson',contentId:'cloud-devops',completed:true}),null);
+  assert.equal(parseProgressChange({kind:'lesson',contentId:'planned-future-lesson',completed:true}),null);
   assert.equal(parseProgressChange({kind:'question',contentId:'unknown',completed:true}),null);
   assert.equal(parseProgressChange({kind:'lesson',contentId:'datenbanken',completed:'true'}),null);
   assert.ok(parseProgressChange({kind:'lesson',contentId:'datenbanken',completed:true}));

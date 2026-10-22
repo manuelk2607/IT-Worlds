@@ -31,11 +31,7 @@ test("all requested areas exist with three meaningful curriculum levels", () => 
 test("all published introductory claims have traceable primary-source metadata", () => {
   for (const [id, source] of Object.entries(sources)) {
     assert.equal(new URL(source.url).protocol, "https:", id);
-    assert.equal(
-      new URL(source.evidenceUrl).hostname,
-      "raw.githubusercontent.com",
-      id,
-    );
+    assert.ok(["raw.githubusercontent.com", "www.rfc-editor.org"].includes(new URL(source.evidenceUrl).hostname), id);
     for (const field of [
       "publisher",
       "version",

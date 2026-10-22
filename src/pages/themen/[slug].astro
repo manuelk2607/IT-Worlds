@@ -3,6 +3,7 @@ import { getContent, translate, localePath, type Locale } from "../../lib/i18n";
 const locale: Locale = Astro.props.locale ?? "de";
 const t = translate(locale);
 const { levels, questions, sources } = getContent(locale);
+import ExerciseEditor from "../../components/ExerciseEditor.astro";
 import ProgressToggle from "../../components/ProgressToggle.astro";
 import Layout from "../../layouts/Layout.astro";
 import Icon from "../../components/Icon.astro";
@@ -17,9 +18,10 @@ export function getStaticPaths() {
 interface Props { locale?: Locale; topic: Topic }
 const { topic } = Astro.props;
 const question = questions.find((question) => question.topic === topic.id);
+const reviewDates = [...new Set(topic.lesson?.sources.map(id=>sources[id].reviewedAt))].sort().map(date=>new Intl.DateTimeFormat(locale,{dateStyle:"medium",timeZone:"UTC"}).format(new Date(date))).join(" · ");
 ---
 
-<Layout locale={locale} title={topic.title} description={topic.description} active="themen">
+<Layout locale={locale} title={`${topic.title} – ${t("Einstieg & Übungen", "Introduction & practice")}`} description={topic.description} active="themen">
   <div class="container page-top">
     <a class="back-link" href={localePath(locale, "/#themenwelten")}>
       {t("← Alle Themenwelten", "← All topics")}
@@ -104,13 +106,13 @@ const question = questions.find((question) => question.topic === topic.id);
                     <small>
                       {level.id === "einstieg" &&
                       topic.lesson &&
-                      ((topic.id === "datenbanken" && index === 1) ||
+                      (topic.lesson.curriculumIndex !== undefined ? index === topic.lesson.curriculumIndex : ((topic.id === "datenbanken" && index === 1) ||
                         (topic.id !== "datenbanken" &&
                           index ===
                             (topic.id === "apis" ||
                             topic.id === "ki-neuronale-netze"
                               ? 2
-                              : 0))) ? (
+                              : 0)))) ? (
                         <a href="#einstiegsartikel">{t("Einstieg lesen ↓", "Read introduction ↓")}</a>
                       ) : (
                         t("Geplant", "Planned")
@@ -152,7 +154,7 @@ const question = questions.find((question) => question.topic === topic.id);
           <ProgressToggle locale={locale} kind="lesson" contentId={topic.id} />
           <h3>{t("Worauf sich dieser Einstieg stützt", "What this introduction is based on")}</h3>
           <p class="article-review">
-            {t("Dokumentationsquellen am 20.10.2026 abgeglichen. Ein unabhängiges Fachreview steht noch aus.", "Documentation sources checked on 20 October 2026. An independent expert review is still pending.")}
+            {t("Gelesene Quellenstände:", "Source reading dates:")} {reviewDates}. {t("Ein unabhängiges Fachreview steht noch aus.", "An independent expert review is still pending.")}
           </p>
           {topic.lesson.sources.map((id) => (
             <SourceCard locale={locale} id={id} compact />
@@ -175,6 +177,7 @@ const question = questions.find((question) => question.topic === topic.id);
           </a>
         </div>
       )}
+      <ExerciseEditor topic={topic.id} locale={locale} />
       <section id="quellen" class="detail-sources">
         <p class="eyebrow">{t("WEITERLESEN & NACHPRÜFEN", "READ MORE & CHECK THE SOURCES")}</p>
         <h2>{t("Quellen für diese Themenwelt", "Sources for this topic")}</h2>
@@ -200,6 +203,7 @@ const question = questions.find((question) => question.topic === topic.id);
           {topic.lesson && (
             <a href="#einstiegsartikel">{t("Ersten Einstieg lesen", "Read the first introduction")}</a>
           )}
+          <a href="#uebungseditor">{t("Im Editor üben", "Practice in the editor")}</a>
           <a href="#quellen">{t("Quellen & Belege", "Sources & evidence")}</a>
         </nav>
         <div class="sidebar-note">

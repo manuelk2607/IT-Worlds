@@ -39,7 +39,7 @@ Für Wrangler lokal diese drei Werte als `NAME="WERT"` in `.dev.vars` hinterlege
 
 `learning_progress` enthält pro Nutzer, Inhaltsart und Inhaltskennung eine Zeile. `completed` bedeutet gelesen bzw. bearbeitet; `solved` bedeutet mindestens einmal richtig beantwortet. Manuelles Abhaken einer Frage erzeugt keine richtige Quizantwort. Entfernen der Markierung setzt auch `solved` zurück. Quiz-Neustart ändert nur den aktuellen Durchlauf.
 
-Nur fünf verfügbare Einstiege und fünf Fragen sind speicherbar. Geplante Pfadschritte sind nicht freischaltbar. Der Worker prüft Kennungen, Datentypen und Antwortindex; die Lösung stammt aus den Inhaltsdaten. Nutzer-IDs stammen ausschließlich aus der live validierten Session.
+Nur zehn verfügbare Einstiege und zehn Fragen sind speicherbar. Geplante Pfadschritte sind nicht freischaltbar. Der Worker prüft Kennungen, Datentypen und Antwortindex; die Lösung stammt aus den Inhaltsdaten. Nutzer-IDs stammen ausschließlich aus der live validierten Session.
 
 Die Rolle hat SELECT/INSERT/UPDATE/DELETE auf Fortschrittsdaten, keinen Zugriff auf die Auth-Nutzertabelle und kein `BYPASSRLS`. Erzwungene RLS bindet Zeilen an den transaktionslokalen Kontext `app.user_id`. Ohne Kontext sind keine Fortschrittsdaten sichtbar. Der Fremdschlüssel entfernt Fortschrittszeilen bei einer vom Betreiber veranlassten Nutzerlöschung mit.
 

@@ -5,6 +5,7 @@ const t = translate(locale);
 const { topics, paths } = getContent(locale);
 import "../styles/global.css";
 import "../styles/preferences.css";
+import { pageSeo } from "../lib/seo";
 import Icon from "../components/Icon.astro";
 import ts from "typescript";
 import themeInit from "../scripts/theme-init.ts?raw";
@@ -17,15 +18,23 @@ interface Props {
   description?: string;
   active?: string;
 }
+const pageDescriptions: Record<string,string> = {
+  '/quiz/': t('Zehn IT-Quizfragen mit Erklärungen zu jeder Antwort und offiziellen Quellen. Teste dein Wissen ohne Anmeldung und ohne Zeitdruck.', 'Ten IT quiz questions with explanations for every answer and official sources. Test your knowledge without an account or time pressure.'),
+  '/quellen/': t('19 offizielle IT-Quellen mit Herausgeber, Version, Abschnitt und Lesedatum. Prüfe die Belege hinter unseren Lerntexten und Übungen.', '19 official IT sources with publisher, version, section and reading date. Check the evidence behind our articles and exercises.'),
+  '/lernpfade/': t('Drei IT-Lernpfad-Skizzen mit Voraussetzungen und ehrlicher Kennzeichnung verfügbarer und geplanter Inhalte.', 'Three IT learning-path sketches with prerequisites and clear labels for available and planned content.'),
+};
+const basePath = Astro.url.pathname.replace(/^\/en(?=\/|$)/, '') || '/';
 const {
   title = t("IT verstehen. Deine Welt erweitern.", "Understand IT. Expand your world."),
-  description = t("Entdecke zehn IT-Themenwelten, Lernwege vom Einstieg bis zum Profi und erste Quizfragen mit nachvollziehbaren Primärquellen.", "Explore ten IT topics, learning paths from beginner to advanced and introductory quizzes with traceable primary sources."),
+  description = pageDescriptions[basePath] ?? t("Entdecke zehn IT-Themenwelten, Lernwege vom Einstieg bis zum Profi und erste Quizfragen mit nachvollziehbaren Primärquellen.", "Explore ten IT topics, learning paths from beginner to advanced and introductory quizzes with traceable primary sources."),
   active = "",
 } = Astro.props;
+const seo = pageSeo(Astro.url.pathname,locale,title,description);
 const nav = [
   { label: t("Entdecken", "Explore"), href: "/", id: "home" },
   { label: t("Themenwelten", "Topics"), href: "/#themenwelten", id: "themen" },
   { label: t("Lernpfade", "Learning paths"), href: "/lernpfade/", id: "pfade" },
+  { label: t("Übungen", "Practice"), href: "/uebungen/", id: "uebungen" },
   { label: t("Wissensquiz", "Quiz"), href: "/quiz/", id: "quiz" },
   { label: t("Quellen", "Sources"), href: "/quellen/", id: "quellen" },
 ];
@@ -34,12 +43,32 @@ const nav = [
 <!doctype html>
 <html lang={locale}>
   <head>
+    <meta charset="utf-8" />
     <script is:inline set:html={themeBoot}></script>
     <link rel="alternate" hreflang="de" href={new URL(Astro.url.pathname.replace(/^\/en(?=\/|$)/, "") || "/", "https://it-worlds.maki26.workers.dev").href} />
     <link rel="alternate" hreflang="en" href={new URL(locale === "en" ? Astro.url.pathname : `/en${Astro.url.pathname}`, "https://it-worlds.maki26.workers.dev").href} />
-    <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
+    <link rel="canonical" href={seo.canonical} />
+    <link rel="alternate" hreflang="x-default" href={seo.languages.de} />
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+    <meta name="robots" content={seo.noindex ? "noindex, follow" : "index, follow, max-image-preview:large"} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="IT-Worlds" />
+    <meta property="og:title" content={title + " | IT-Worlds"} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={seo.canonical} />
+    <meta property="og:locale" content={locale === 'de' ? 'de_DE' : 'en_GB'} />
+    <meta property="og:locale:alternate" content={locale === 'de' ? 'en_GB' : 'de_DE'} />
+    <meta property="og:image" content={seo.image} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={t('IT-Worlds: IT verstehen und selbst ausprobieren', 'IT-Worlds: understand IT and try it yourself')} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title + " | IT-Worlds"} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={seo.image} />
+    {!seo.noindex && <script is:inline type="application/ld+json" set:html={seo.structuredData}></script>}
     <meta name="theme-color" content="#f7f8fc" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title} | IT-Worlds</title>

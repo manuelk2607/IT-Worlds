@@ -1,3 +1,4 @@
+import { redirectToHttps } from '../src/lib/transport.ts';
 import { handleAuthProxyRequest, parseSessionData } from '@neondatabase/auth/server';
 import { neon } from '@neondatabase/serverless';
 import { isCorrectAnswer, parseProgressChange, type ProgressItem } from '../src/lib/progress.ts';
@@ -73,6 +74,8 @@ async function getProgress(request: Request, env: Env) {
 }
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
+    const redirect = redirectToHttps(request);
+    if (redirect) return redirect;
     const url = new URL(request.url);
     if (!url.pathname.startsWith('/api/')) {
       const response = await env.ASSETS.fetch(request);

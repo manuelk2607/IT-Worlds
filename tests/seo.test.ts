@@ -1,0 +1,28 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { SITE_URL, publicUrls, pageSeo } from '../src/lib/seo.ts';
+import { GET as sitemap } from '../src/pages/sitemap.xml.ts';
+import { GET as robots } from '../src/pages/robots.txt.ts';
+test('sitemap pairs every public page and excludes personal/error routes',async()=>{
+  assert.equal(publicUrls.length,36);
+  assert.equal(new Set(publicUrls).size,publicUrls.length);
+  assert(!publicUrls.some(url=>/konto|fortschritt|404|api\//.test(url)));
+  const xml=await sitemap().text();
+  for(const url of publicUrls)assert(xml.includes(`<loc>${url}</loc>`));
+  assert.equal((xml.match(/<url>/g)??[]).length,publicUrls.length);
+  assert.match(xml,/hreflang="x-default"/);
+  const txt=await robots().text();
+  assert(txt.includes(`Sitemap: ${SITE_URL}/sitemap.xml`));
+  assert(!txt.includes('Disallow: /\n'));
+});
+test('each language canonicalises itself and only personal/error pages are noindex',()=>{
+  const de=pageSeo('/themen/netzwerke/','de','Netzwerke','DNS verstehen');
+  const en=pageSeo('/en/themen/netzwerke/','en','Networks','Understand DNS');
+  assert.equal(en.canonical,`${SITE_URL}/en/themen/netzwerke/`);
+  assert.deepEqual(de.languages,en.languages);
+  assert.equal(en.noindex,false);
+  for(const pathname of ['/konto/','/en/fortschritt/','/404/','/en/404/'])assert.equal(pageSeo(pathname,'de','','').noindex,true);
+  const graph=JSON.parse(en.structuredData)['@graph'];
+  assert(graph.some((entry:{'@type':string[]|string})=>Array.isArray(entry['@type'])&&entry['@type'].includes('LearningResource')));
+  assert.equal(graph.at(-1).itemListElement[0].item,`${SITE_URL}/en/`);
+});

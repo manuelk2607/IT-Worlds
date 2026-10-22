@@ -1,3 +1,4 @@
+import { additionalEnglishLessons, additionalSourceDescriptions, additionalEnglishQuestions } from './expansion.en.ts';
 import { topics as originalTopics, sources as originalSources, questions as originalQuestions, paths as originalPaths, levels as originalLevels, type Topic, type Lesson, type SourceId } from './content.ts';
 
 type TopicText = Pick<Topic, 'title' | 'short' | 'description' | 'tags' | 'prerequisites' | 'curriculum'> & { lesson?: Omit<Lesson, 'sources'>; subareas?: Topic['subareas'] };
@@ -64,16 +65,18 @@ const text: Record<string, TopicText> = {
   },
 };
 export const topics: Topic[] = originalTopics.map(topic => {
-  const translation = text[topic.id];
+  const base = text[topic.id];
+  const translation = base && { ...base, lesson: additionalEnglishLessons[topic.id] ?? base.lesson };
   if (!translation) throw new Error(`Missing English topic: ${topic.id}`);
   return { ...topic, ...translation, lesson: translation.lesson && topic.lesson ? { ...translation.lesson, sources: topic.lesson.sources } : undefined };
 });
 const sourceDescriptions: Record<SourceId, string> = {
+  ...additionalSourceDescriptions,
   python: 'Numbers, arithmetic operators and variables in the official Python tutorial.',
   postgres: 'SELECT, column selection and filtering rows with WHERE.', html: 'HTML as a markup language and the parts of an HTML element.',
   pytorch: 'Build neural networks from modules: nn.Module, layers and forward.', openapi: 'The language-independent standard for describing HTTP APIs.',
   http: 'The meaning of HTTP methods and the precise definition of safe methods.', owasp: 'Separate data from commands; parameterised interfaces against injection. Historical edition; no claim about the latest ranking.',
-  docker: 'An introduction to images, containers and the Docker platform.', linux: 'Official introduction to the Linux kernel and further documentation.',
+  docker: additionalSourceDescriptions.docker, linux: 'Official introduction to the Linux kernel and further documentation.',
   git: 'Git’s snapshot model, local operations and version control.', typescript: 'An introduction to TypeScript, static type checking and the JavaScript runtime.',
   latex: 'LaTeX as a document-preparation and typesetting system, including equations, cross-references and bibliographies.',
   typst: 'A markup-based typesetting system with functions and integrated scripting; examples of headings, equations and layout rules.',
@@ -88,6 +91,7 @@ const quizText = [
   { prompt: 'Which base class does the neural network in the PyTorch tutorial inherit from?', options: [ ['DataLoader', 'The model shown inherits from nn.Module, not DataLoader.'], ['nn.Module', 'Correct. The NeuralNetwork class inherits from nn.Module and describes its computation in forward.'], ['nn.Softmax', 'Softmax is applied to the model’s output in the tutorial. The network itself inherits from nn.Module.'] ] },
   { prompt: 'What is the purpose of the OpenAPI Specification 3.1.1?', options: [ ['Describe HTTP APIs in a standardised, language-independent way', 'Correct. OpenAPI describes the capabilities of an HTTP API without assuming its implementation language.'], ['Automatically operate an API server', 'The specification describes the interface. It does not operate a server or replace an implementation.'], ['Model databases exclusively', 'OpenAPI describes HTTP APIs. It is not a specification exclusively for database models.'] ] },
 ];
+quizText.push(...additionalEnglishQuestions);
 export const questions = originalQuestions.map((question, index) => ({ ...question, prompt: quizText[index].prompt, options: quizText[index].options.map(([text, explanation]) => ({ text, explanation })) }));
 const pathText = [
   { title: 'Your first website', description: 'From a first HTML element to your own idea in the browser.', prerequisites: 'No programming knowledge required. A browser and curiosity are enough to get started.', steps: ['HTML gives content structure', 'A responsive layout with CSS', 'Interactions with TypeScript', 'Publish your website'] },
