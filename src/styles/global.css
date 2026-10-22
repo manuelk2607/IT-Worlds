@@ -275,7 +275,7 @@ h1 > span {
 .desktop-nav a.active {
   color: var(--ink);
 }
-.desktop-nav a.active:after {
+.desktop-nav:not([data-indicator-ready]) a.active:after {
   content: "";
   position: absolute;
   bottom: 18px;
@@ -285,6 +285,24 @@ h1 > span {
   background: var(--blue);
   border-radius: 2px;
 }
+.desktop-nav { position: relative; }
+.nav-indicator {
+  position: absolute;
+  pointer-events: none;
+  left: 0;
+  bottom: 18px;
+  width: 1px;
+  height: 2px;
+  background: var(--blue);
+  border-radius: 2px;
+  transform-origin: left;
+  opacity: 0;
+}
+.desktop-nav[data-indicator-ready] .nav-indicator {
+  opacity: 1;
+  transition: transform var(--nav-duration, 240ms) cubic-bezier(.333333, 1, .666667, 1), opacity 160ms;
+}
+.mobile-nav a.active { color: var(--blue); }
 .header-actions {
   display: flex;
   align-items: center;

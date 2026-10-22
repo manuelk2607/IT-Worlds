@@ -49,6 +49,7 @@ const nav = [
     <link rel="alternate" hreflang="en" href={new URL(locale === "en" ? Astro.url.pathname : `/en${Astro.url.pathname}`, "https://it-worlds.maki26.workers.dev").href} />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
+    <meta name="google-site-verification" content="9W8XeJ15-XfHaf0VmyCKn7QGze-upbYIM-X3Kk_LPwo" />
     <link rel="canonical" href={seo.canonical} />
     <link rel="alternate" hreflang="x-default" href={seo.languages.de} />
     <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
@@ -93,12 +94,14 @@ const nav = [
           {nav.map((item) => (
             <a
               href={localePath(locale, item.href)}
+              data-nav-id={item.id}
               class:list={{ active: active === item.id }}
               aria-current={active === item.id ? "page" : undefined}
             >
               {item.label}
             </a>
           ))}
+          <span class="nav-indicator" aria-hidden="true"></span>
         </nav>
         <div class="header-actions">
           <button
@@ -130,7 +133,7 @@ const nav = [
         hidden
       >
         {nav.map((item) => (
-          <a href={localePath(locale, item.href)}>{item.label}</a>
+          <a href={localePath(locale, item.href)} data-nav-id={item.id} class:list={{ active: active === item.id }} aria-current={active === item.id ? "page" : undefined}>{item.label}</a>
         ))}
       <a href={localePath(locale, "/fortschritt/")}>{t("Mein Lernstand", "My progress")}</a>
         <a href={localePath(locale, "/konto/")}>{t("Mein Account", "My account")}</a>

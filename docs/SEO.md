@@ -16,6 +16,8 @@ Die Lernseiten sind statisches HTML ohne Anmeldung. Navigation und Themenkarten 
 
 ## Suchmaschinen und Grenzen
 
+Der vom Betreiber bereitgestellte Google-Search-Console-Verifizierungstag ist dauerhaft im gemeinsamen HTML-Head eingebunden. Nach dem Deployment kann die HTML-Tag-Methode in der Search Console bestätigt werden. Das Einbinden allein bestätigt weder die Property noch eine Indexierung; den Tag für spätere Eigentumsprüfungen erhalten.
+
 Die Sitemap wird über robots.txt bekannt gemacht. Ob, wann und mit welcher Platzierung eine Suchmaschine indexiert, liegt beim Suchdienst. Es wurde keine Indexierung oder Rankingposition versprochen und keine verifizierte Search-Console-Property angelegt. Eine bestätigte Property kann später Crawling-/Indexierungsberichte liefern und die direkte Sitemap-Einreichung ermöglichen. Sie ist für öffentlich crawlbare Seiten keine Zugangsvoraussetzung.
 
 Ein unabhängiges Fachreview, vollständiger inhaltlicher Ausbau, hilfreiche eigenständige Inhalte und echte externe Verweise bleiben wichtig. Keine Suchwortlisten, künstlichen Bewertungen oder versteckten Texte ergänzen. Bei einem späteren Domainwechsel müssen Site-URL, Canonicals, Sprachbezüge, Sitemap und Weiterleitungen gemeinsam angepasst werden.

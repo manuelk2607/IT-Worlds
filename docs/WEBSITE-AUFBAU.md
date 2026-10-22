@@ -24,6 +24,8 @@ Das helle oder dunkle Design lässt sich im Kopfbereich umstellen und bleibt im 
 
 ## Themenlandkarte
 
+Die Hauptnavigation wird von `src/scripts/navigation.ts` gesteuert. Auf der Startseite teilen sich „Entdecken“ und „Themenwelten“ einen aktiven Zustand für Desktop, Mobilmenü und `aria-current`. Klicks starten Scrollen und Unterstrich mit gleicher Dauer und Beschleunigung; ein weiterer Klick ersetzt die laufende Animation. Manuelles Scrollen aktualisiert die Markierung, Rad-/Touch-/Tastatureingaben unterbrechen den automatischen Übergang. Hash-Links, Zurück/Vorwärts, Sprachwechsel und die Systemeinstellung für reduzierte Bewegung werden berücksichtigt. Scrollziele verwenden denselben Abstand wie native Ankerlinks, auch bei kleinerem Mobilheader.
+
 Die fünf gewünschten Kernbereiche sind **Programmiersprachen**, **Datenbanken**, **Website bauen**, **KI und neuronale Netze** sowie **APIs und Schnittstellen**. Als ergänzende Grundlagen sind **IT-Grundlagen**, **Internet und Netzwerke**, **IT-Sicherheit**, **Cloud und DevOps** sowie **Betriebssysteme und Linux** angelegt. Git, Testing, Algorithmen, Softwarearchitektur, Datenschutz und Barrierefreiheit sind als Querschnittsthemen eingebunden.
 
 Unter **Programmiersprachen → Auszeichnungs- & Satzsprachen** stehen außerdem LaTeX, Typst und Markdown. LaTeX wird als System zur Dokumentaufbereitung und zum Textsatz eingeordnet; Typst verbindet Markup, Textsatz und Scripting, Markdown strukturiert Dokumente in Klartext. Geplant sind Einstiege, Formelsatz, Literaturverzeichnisse und fortgeschrittene Dokument-Workflows. Eine zusätzliche Themenwelt ist dafür nicht nötig.

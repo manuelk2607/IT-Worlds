@@ -1,4 +1,5 @@
 import { t, locale } from './browser-i18n';
+import { initNavigation } from './navigation';
 const themeButton = document.querySelector<HTMLButtonElement>('[data-theme-toggle]')!;
 const themeMedia = matchMedia('(prefers-color-scheme: dark)');
 function updateThemeButton() {
@@ -36,6 +37,7 @@ const closeMenu = () => {
   menuButton.setAttribute("aria-expanded", "false");
   menuButton.setAttribute("aria-label", t("Menü öffnen", "Open menu"));
 };
+initNavigation(closeMenu);
 menuButton.addEventListener("click", () => {
   const open = menuButton.getAttribute("aria-expanded") !== "true";
   mobileNav.hidden = !open;
