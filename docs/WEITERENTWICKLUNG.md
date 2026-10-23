@@ -19,3 +19,7 @@ Weitere Pakete und Veröffentlichung werden nach Umsetzung ergänzt. Unabhängig
 ## Paket 2 · TypeScript-Kurs
 
 Acht Kapitel ergänzen Programmiergrundlagen, Funktionen, Listen/Objekte, unbekannte Daten und Zustände, asynchrone Ergebnisse, Tests, Generics und einen Aufgabenplaner. Jedes Kapitel hat eine eigene Aufgabe mit begründeter Lösung und zwei Quizfragen. Alle acht veröffentlichten Programme wurden separat strikt typgeprüft und ausgeführt; automatisierte Zusatzfälle prüfen ungültige Zahlen, leere Listen, doppelte IDs und unveränderte Eingaben. Quellen: TypeScript-Handbook, Node-22.22-Testläufer und die konkret verwendeten MDN-Laufzeitfunktionen. Keine JavaScript-Quelldateien oder JavaScript-Lernbeispiele ergänzt.
+
+## Paket 3 · Webkurs
+
+Acht Kapitel verbinden semantisches HTML, CSS-Boxmodell, responsive Raster, Formulare, DOM-Interaktion mit TypeScript, Fehlerzustände, Tastaturzugang und Veröffentlichung. Alle 16 Fragen erklären jede Option. Praktisch geprüft: Boxbreiten 224/200 Pixel, ein-/zweispaltiges Raster bei 390/1280 Pixeln, Label-Zuordnung und ungültige/gültige Formeingabe, Zähler mit Maus und Leertaste, Fehler plus erfolgreicher Wiederholungsversuch, sichtbarer Sprunglink und Fokus auf dem Hauptinhalt. TypeScript-Listings werden jetzt insgesamt automatisiert streng geprüft; Browsercode ist als solcher gekennzeichnet. Der enthaltene Node-Auslieferungstest hat HTML 200 und fehlende Route 404 bestätigt. Die isolierten HTML-Demos senden keine echten persönlichen Daten.

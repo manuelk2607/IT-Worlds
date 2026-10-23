@@ -19,8 +19,9 @@ const next = course.chapters[position + 1];
 const title = chapter ? chapter.title[locale] : course.title[locale] + t(' · Kursübersicht', ' · Course overview');
 const description = chapter ? chapter.goals.map(goal => goal[locale]).join(' ') + ' ' + course.title[locale] + '.' : course.description[locale];
 const quizUrl = localePath(locale, `/quiz/?kurs=${course.id}${chapter ? `&kapitel=${chapter.id}` : ''}`);
-const relatedId = {ki:'latex',latex:'ki',datenbanken:'apis',apis:'datenbanken',typescript:'apis'}[course.id];
-const other = courses.find(item => item.id === relatedId)!;
+const defaults: Partial<Record<Course['id'],Course['id']>>={ki:'latex',latex:'ki',datenbanken:'apis',apis:'datenbanken',typescript:'apis'};
+const related=(course.related ?? (defaults[course.id]?[defaults[course.id]!]:[])).map(id=>courses.find(item=>item.id===id)).filter((item):item is Course=>!!item);
+const other=related[0];
 ---
 <Layout locale={locale} title={title} description={description} active="themen">
   <Breadcrumbs locale={locale} items={[{title:t("Kurse", "Courses"),href:"/lernpfade/"},{title:topicById(course.topic)!.title,href:`/themen/${course.topic}/`}, ...(chapter ? [{title:course.title[locale],href:coursePath(course)},{title:chapter.title[locale]}] : [{title:course.title[locale]}])]} />
@@ -57,7 +58,7 @@ const other = courses.find(item => item.id === relatedId)!;
           <nav class="chapter-toc" aria-label={t('In diesem Kapitel', 'In this chapter')}><strong>{t('In diesem Kapitel', 'In this chapter')}</strong>{chapter.sections.map((section, index) => <a href={`#abschnitt-${index + 1}`}>{section.title[locale]}</a>)}<a href="#aufgabe">{t('Aufgabe & Lösung', 'Exercise & solution')}</a><a href="#belege">{t('Quellen & Vertiefung', 'Sources & further reading')}</a></nav>
           {chapter.sections.map((section, index) => <section class="course-section" id={`abschnitt-${index + 1}`}><h2>{section.title[locale]}</h2>{section.paragraphs.map(paragraph => <p>{paragraph[locale]}</p>)}
             {section.formula && <div class="course-formula" tabindex="0" aria-label={t('Mathematische Formel', 'Mathematical formula')} set:html={katex.renderToString(section.formula, { displayMode: true, throwOnError: true, trust: false, output: 'htmlAndMathml' })} />}
-            {section.code && <div class="code-example"><span>{section.language} · {t('Vollständiges Beispiel', 'Complete example')}</span><pre tabindex="0"><code>{section.code}</code></pre></div>}
+            {section.code && <div class="code-example"><span>{section.language} · {section.runtime==='browser' ? t('Im Browser ausführen', 'Run in a browser') : section.runtime==='node' ? t('Mit Node.js ausführen', 'Run with Node.js') : t('Vollständiges Beispiel', 'Complete example')}</span><pre tabindex="0"><code>{section.code}</code></pre></div>}
           </section>)}
           <section id="aufgabe" class="course-exercise"><p class="eyebrow">{t('SELBST ANWENDEN', 'APPLY IT YOURSELF')}</p><h2>{t('Deine Aufgabe', 'Your exercise')}</h2><p>{chapter.exercise[locale]}</p><details><summary>{t('Lösung & Begründung anzeigen', 'Show solution & reasoning')}</summary><p>{chapter.solution[locale]}</p></details></section>
           <ProgressToggle locale={locale} kind="lesson" contentId={chapterProgressId(course, chapter)} />
@@ -66,7 +67,7 @@ const other = courses.find(item => item.id === relatedId)!;
         </article>
         <nav class="course-pagination" aria-label={t('Weiterlernen', 'Continue learning')}>
           {previous && <a class="button secondary" href={localePath(locale, coursePath(course, previous))}>← {previous.title[locale]}</a>}
-          {next ? <a class="button primary" href={localePath(locale, coursePath(course, next))}>{next.title[locale]} →</a> : <a class="button primary" href={localePath(locale, coursePath(other, course.id === 'ki' || course.id === 'latex' ? other.chapters.at(-1) : undefined))}>{t('Abschlussprojekt verbinden:', 'Connect the final project:')} {other.title[locale]} →</a>}
+          {next ? <a class="button primary" href={localePath(locale, coursePath(course, next))}>{next.title[locale]} →</a> : other ? <a class="button primary" href={localePath(locale, coursePath(other))}>{t('Abschlussprojekt verbinden:', 'Connect the final project:')} {other.title[locale]} →</a> : <a class="button primary" href={localePath(locale,'/lernpfade/')}>{t('Weiteren Kurs wählen →','Choose another course →')}</a>}
         </nav>
       </>}
       <p class="course-review muted">{t('Die Kursfolge behandelt Grundlagen bis zu fortgeschrittenen Entscheidungen und Projekten. Sie ist kein Zertifikat und ersetzt keine eigenständige Praxis oder fachliche Begutachtung.', 'The course sequence covers foundations through advanced decisions and projects. It is not a certificate and does not replace independent practice or expert assessment.')}</p>

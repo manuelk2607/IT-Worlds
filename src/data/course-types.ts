@@ -6,9 +6,10 @@ export const text = (de: string, en: string): Bilingual => ({ de, en });
 export interface CourseSection {
   title: Bilingual;
   paragraphs: Bilingual[];
+  runtime?: 'browser' | 'node';
   formula?: string;
   code?: string;
-  language?: 'Python' | 'LaTeX' | 'BibTeX' | 'Shell' | 'SQL' | 'TypeScript';
+  language?: 'Python' | 'LaTeX' | 'BibTeX' | 'Shell' | 'SQL' | 'TypeScript' | 'HTML' | 'CSS' | 'JSON' | 'YAML' | 'Dockerfile';
 }
 export interface CourseQuestion {
   prompt: Bilingual;
@@ -28,12 +29,13 @@ export interface Chapter {
   questions: CourseQuestion[];
 }
 export interface Course {
-  id: 'ki' | 'latex' | 'datenbanken' | 'apis' | 'typescript';
+  id: 'ki' | 'latex' | 'datenbanken' | 'apis' | 'typescript' | 'web' | 'grundlagen' | 'linux' | 'netzwerke' | 'sicherheit' | 'devops';
   topic: string;
   slug: string;
   title: Bilingual;
   description: Bilingual;
   prerequisites: Bilingual;
+  related?: Course['id'][];
   chapters: Chapter[];
 }
 export const option = (de: string, en: string, reasonDe: string, reasonEn: string) => ({ text: text(de, en), explanation: text(reasonDe, reasonEn) });

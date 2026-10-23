@@ -847,3 +847,95 @@ Die folgenden Originalabschnitte wurden für die acht neuen Kapitel und 16 Frage
 - Abschnitt: Synchronous and asynchronous tests; assertions
 - [Gelesener Originalbeleg](https://raw.githubusercontent.com/nodejs/node/v22.22.0/doc/api/test.md)
 - Lesedatum: 2026-10-23
+
+## Webkurs · 23. Oktober 2026
+
+Gelesene Abschnitte für die acht Webkapitel: HTML-Struktur, Boxmodell, responsive Darstellung, Labels, DOM und Tastaturbedienung sowie Auslieferung und Performance. HTML/CSS-Beispiele sind Dokument- beziehungsweise Stilcode; ausführbare Browserlogik verwendet TypeScript.
+
+### Disclosure pattern (webDisclosure)
+
+- Herausgeber: W3C WAI · ARIA Authoring Practices
+- Version: Living documentation · accessed 2026-10-23
+- Abschnitt: Keyboard interaction; aria-expanded and aria-controls
+- [Gelesener Originalbeleg](https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/)
+- Lesedatum: 2026-10-23
+
+### Structuring documents (webStructure)
+
+- Herausgeber: MDN Web Docs
+- Version: Living documentation · accessed 2026-10-23
+- Abschnitt: Basic sections; HTML layout elements
+- [Gelesener Originalbeleg](https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Structuring_content/Structuring_documents)
+- Lesedatum: 2026-10-23
+
+### The box model (webBox)
+
+- Herausgeber: MDN Web Docs
+- Version: Living documentation · accessed 2026-10-23
+- Abschnitt: Standard and alternative box models; padding; border
+- [Gelesener Originalbeleg](https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Styling_basics/Box_model)
+- Lesedatum: 2026-10-23
+
+### Responsive web design (webResponsive)
+
+- Herausgeber: MDN Web Docs
+- Version: Living documentation · accessed 2026-10-23
+- Abschnitt: Media queries; flexible layouts; viewport meta
+- [Gelesener Originalbeleg](https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/CSS_layout/Responsive_Design)
+- Lesedatum: 2026-10-23
+
+### Your first form (webForm)
+
+- Herausgeber: MDN Web Docs
+- Version: Living documentation · accessed 2026-10-23
+- Abschnitt: Label, input and textarea; sending form data
+- [Gelesener Originalbeleg](https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Forms/Your_first_form)
+- Lesedatum: 2026-10-23
+
+### Labeling controls (webLabels)
+
+- Herausgeber: W3C Web Accessibility Initiative
+- Version: Living documentation · accessed 2026-10-23
+- Abschnitt: Associating labels explicitly; labeling buttons
+- [Gelesener Originalbeleg](https://www.w3.org/WAI/tutorials/forms/labels/)
+- Lesedatum: 2026-10-23
+
+### Headings (webHeadings)
+
+- Herausgeber: W3C Web Accessibility Initiative
+- Version: Living documentation · accessed 2026-10-23
+- Abschnitt: Heading ranks; organizing content
+- [Gelesener Originalbeleg](https://www.w3.org/WAI/tutorials/page-structure/headings/)
+- Lesedatum: 2026-10-23
+
+### Keyboard accessible (webKeyboard)
+
+- Herausgeber: MDN Web Docs
+- Version: Living documentation · accessed 2026-10-23
+- Abschnitt: Interactive semantics; focus order; focus styling
+- [Gelesener Originalbeleg](https://developer.mozilla.org/en-US/docs/Web/Accessibility/Guides/Understanding_WCAG/Keyboard)
+- Lesedatum: 2026-10-23
+
+### Document Object Model (webDom)
+
+- Herausgeber: MDN Web Docs
+- Version: Living documentation · accessed 2026-10-23
+- Abschnitt: Concepts; tree structure; creating nodes and events
+- [Gelesener Originalbeleg](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model)
+- Lesedatum: 2026-10-23
+
+### Web Vitals (webVitals)
+
+- Herausgeber: Google · web.dev · Philip Walton
+- Version: Living documentation · accessed 2026-10-23
+- Abschnitt: LCP, INP and CLS; lab versus field measurements
+- [Gelesener Originalbeleg](https://web.dev/articles/vitals)
+- Lesedatum: 2026-10-23
+
+### Workers Static Assets (webAssets)
+
+- Herausgeber: Cloudflare
+- Version: Living documentation · accessed 2026-10-23
+- Abschnitt: How it works; routing; custom 404 pages
+- [Gelesener Originalbeleg](https://developers.cloudflare.com/workers/static-assets/)
+- Lesedatum: 2026-10-23
