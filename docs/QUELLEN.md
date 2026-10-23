@@ -747,3 +747,103 @@ Die folgenden Originalabschnitte wurden für die 15 neuen Kapitel und 30 Fragen 
 - Abschnitt: 9.2–9.3 · method semantics; 13.1.1 · If-Match; 15 · status codes
 - [Gelesener Originalbeleg](https://www.rfc-editor.org/rfc/rfc9110.html)
 - Lesedatum: 2026-10-23
+
+## TypeScript-Ausbau · 23. Oktober 2026
+
+Die folgenden Originalabschnitte wurden für die acht neuen Kapitel und 16 Fragen gelesen. TypeScript-Handbook und MDN-Referenzen sind fortlaufende Dokumentationen mit Lesedatum; der Node-Testläufer ist auf 22.22.0 festgelegt.
+
+### Number.isFinite (tsFinite)
+
+- Herausgeber: MDN Web Docs
+- Version: Living reference · accessed 2026-10-23
+- Abschnitt: Return value; non-coercing finite-number checks
+- [Gelesener Originalbeleg](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/isFinite)
+- Lesedatum: 2026-10-23
+
+### Number.isInteger (tsInteger)
+
+- Herausgeber: MDN Web Docs
+- Version: Living reference · accessed 2026-10-23
+- Abschnitt: Return value; integer checks
+- [Gelesener Originalbeleg](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/isInteger)
+- Lesedatum: 2026-10-23
+
+### Array.prototype.filter (tsFilter)
+
+- Herausgeber: MDN Web Docs
+- Version: Living reference · accessed 2026-10-23
+- Abschnitt: Return value; shallow copy; callback
+- [Gelesener Originalbeleg](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter)
+- Lesedatum: 2026-10-23
+
+### Array.prototype.map (tsMap)
+
+- Herausgeber: MDN Web Docs
+- Version: Living reference · accessed 2026-10-23
+- Abschnitt: Return value; mapping elements
+- [Gelesener Originalbeleg](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map)
+- Lesedatum: 2026-10-23
+
+### Array.prototype.find (tsFind)
+
+- Herausgeber: MDN Web Docs
+- Version: Living reference · accessed 2026-10-23
+- Abschnitt: Return value; undefined when no match
+- [Gelesener Originalbeleg](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find)
+- Lesedatum: 2026-10-23
+
+### Set (tsSet)
+
+- Herausgeber: MDN Web Docs
+- Version: Living reference · accessed 2026-10-23
+- Abschnitt: Description; unique values; size
+- [Gelesener Originalbeleg](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set)
+- Lesedatum: 2026-10-23
+
+### TypeScript · Everyday Types (tsEveryday)
+
+- Herausgeber: Microsoft · TypeScript
+- Version: Handbook · accessed 2026-10-23
+- Abschnitt: Primitives; arrays; object types; unions; type aliases
+- [Gelesener Originalbeleg](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html)
+- Lesedatum: 2026-10-23
+
+### TypeScript · More on Functions (tsFunctions)
+
+- Herausgeber: Microsoft · TypeScript
+- Version: Handbook · accessed 2026-10-23
+- Abschnitt: Function types; optional parameters; generic functions
+- [Gelesener Originalbeleg](https://www.typescriptlang.org/docs/handbook/2/functions.html)
+- Lesedatum: 2026-10-23
+
+### TypeScript · Object Types (tsObjects)
+
+- Herausgeber: Microsoft · TypeScript
+- Version: Handbook · accessed 2026-10-23
+- Abschnitt: Optional and readonly properties; arrays; readonly arrays
+- [Gelesener Originalbeleg](https://www.typescriptlang.org/docs/handbook/2/objects.html)
+- Lesedatum: 2026-10-23
+
+### TypeScript · Narrowing (tsNarrowing)
+
+- Herausgeber: Microsoft · TypeScript
+- Version: Handbook · accessed 2026-10-23
+- Abschnitt: typeof; discriminated unions; never; exhaustiveness
+- [Gelesener Originalbeleg](https://www.typescriptlang.org/docs/handbook/2/narrowing.html)
+- Lesedatum: 2026-10-23
+
+### Promise (tsPromises)
+
+- Herausgeber: MDN Web Docs
+- Version: Living reference · accessed 2026-10-23
+- Abschnitt: Description · states; then/catch; error propagation
+- [Gelesener Originalbeleg](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)
+- Lesedatum: 2026-10-23
+
+### Node.js · Test runner (nodeTests)
+
+- Herausgeber: Node.js contributors
+- Version: Node.js 22.22.0
+- Abschnitt: Synchronous and asynchronous tests; assertions
+- [Gelesener Originalbeleg](https://raw.githubusercontent.com/nodejs/node/v22.22.0/doc/api/test.md)
+- Lesedatum: 2026-10-23

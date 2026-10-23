@@ -28,7 +28,7 @@ export interface Chapter {
   questions: CourseQuestion[];
 }
 export interface Course {
-  id: 'ki' | 'latex' | 'datenbanken' | 'apis';
+  id: 'ki' | 'latex' | 'datenbanken' | 'apis' | 'typescript';
   topic: string;
   slug: string;
   title: Bilingual;

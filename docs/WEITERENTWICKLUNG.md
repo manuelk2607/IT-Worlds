@@ -15,3 +15,7 @@ Commit 61810f3: zehn Themenwelten, vier Kursfolgen mit 42 Kapiteln, 94 Fragen un
 - 24 Tests, strikte Prüfung und Build erfolgreich. Lokal geprüft: Kapitelsuche, Enter-Navigation, Kursfilter samt Leerzustand und Reset, Mobilmenü, geschlossene mobile Kapitelübersicht, Dark Mode und Seitenbreite.
 
 Weitere Pakete und Veröffentlichung werden nach Umsetzung ergänzt. Unabhängiges Fachreview bleibt eine gesonderte Aufgabe.
+
+## Paket 2 · TypeScript-Kurs
+
+Acht Kapitel ergänzen Programmiergrundlagen, Funktionen, Listen/Objekte, unbekannte Daten und Zustände, asynchrone Ergebnisse, Tests, Generics und einen Aufgabenplaner. Jedes Kapitel hat eine eigene Aufgabe mit begründeter Lösung und zwei Quizfragen. Alle acht veröffentlichten Programme wurden separat strikt typgeprüft und ausgeführt; automatisierte Zusatzfälle prüfen ungültige Zahlen, leere Listen, doppelte IDs und unveränderte Eingaben. Quellen: TypeScript-Handbook, Node-22.22-Testläufer und die konkret verwendeten MDN-Laufzeitfunktionen. Keine JavaScript-Quelldateien oder JavaScript-Lernbeispiele ergänzt.

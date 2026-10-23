@@ -19,7 +19,7 @@ const next = course.chapters[position + 1];
 const title = chapter ? chapter.title[locale] : course.title[locale] + t(' · Kursübersicht', ' · Course overview');
 const description = chapter ? chapter.goals.map(goal => goal[locale]).join(' ') + ' ' + course.title[locale] + '.' : course.description[locale];
 const quizUrl = localePath(locale, `/quiz/?kurs=${course.id}${chapter ? `&kapitel=${chapter.id}` : ''}`);
-const relatedId = {ki:'latex',latex:'ki',datenbanken:'apis',apis:'datenbanken'}[course.id];
+const relatedId = {ki:'latex',latex:'ki',datenbanken:'apis',apis:'datenbanken',typescript:'apis'}[course.id];
 const other = courses.find(item => item.id === relatedId)!;
 ---
 <Layout locale={locale} title={title} description={description} active="themen">
