@@ -5,7 +5,7 @@ import { GET as sitemap } from '../src/pages/sitemap.xml.ts';
 import { GET as robots } from '../src/pages/robots.txt.ts';
 import { courseChapters, courses } from '../src/data/courses.ts';
 test('sitemap pairs every public page and excludes personal/error routes',async()=>{
-  assert.equal(publicUrls.length,36 + 2 * (courses.length * 2 + courseChapters.length));
+  assert.equal(publicUrls.length,38 + 2 * (courses.length * 2 + courseChapters.length));
   assert.equal(new Set(publicUrls).size,publicUrls.length);
   assert(!publicUrls.some(url=>/konto|fortschritt|404|api\//.test(url)));
   const xml=await sitemap().text();

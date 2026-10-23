@@ -6,6 +6,7 @@ const { levels, questions, sources } = getContent(locale);
 import ExerciseEditor from "../../components/ExerciseEditor.astro";
 import ProgressToggle from "../../components/ProgressToggle.astro";
 import Layout from "../../layouts/Layout.astro";
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
 import Icon from "../../components/Icon.astro";
 import SourceCard from "../../components/SourceCard.astro";
 import { topics as staticTopics, type Topic } from "../../data/content";
@@ -20,12 +21,13 @@ export function getStaticPaths() {
 interface Props { locale?: Locale; topic: Topic }
 const { topic } = Astro.props;
 const topicCourses = courses.filter(course => course.topic === topic.id);
-const fullCourse = topic.id !== 'programmiersprachen' ? topicCourses[0] : undefined;
+const fullCourse = topicCourses.find(course=>course.id!=='latex');
 const question = questions.find((question) => question.topic === topic.id);
 const reviewDates = [...new Set(topic.lesson?.sources.map(id=>sources[id].reviewedAt))].sort().map(date=>new Intl.DateTimeFormat(locale,{dateStyle:"medium",timeZone:"UTC"}).format(new Date(date))).join(" · ");
 ---
 
 <Layout locale={locale} title={`${topic.title} – ${t("Einstieg & Übungen", "Introduction & practice")}`} description={topic.description} active="themen">
+  <Breadcrumbs locale={locale} items={[{title:t("Themenwelten", "Topics"),href:"/#themenwelten"},{title:topic.title}]} />
   <div class="container page-top">
     <a class="back-link" href={localePath(locale, "/#themenwelten")}>
       {t("← Alle Themenwelten", "← All topics")}
@@ -86,7 +88,7 @@ const reviewDates = [...new Set(topic.lesson?.sources.map(id=>sources[id].review
           ))}
         </section>
       )}
-      {topicCourses.map(course => <section class="course-teaser"><p class="eyebrow">{t('ZUSAMMENHÄNGENDER KURS', 'STRUCTURED COURSE')}</p><h2>{course.title[locale]}</h2><p>{course.description[locale]}</p><p>{t(`${course.chapters.length} ausgearbeitete Kapitel · ${course.chapters.reduce((sum, chapter) => sum + chapter.questions.length, 0)} Quizfragen · Aufgaben mit Lösungen`, `${course.chapters.length} available chapters · ${course.chapters.reduce((sum, chapter) => sum + chapter.questions.length, 0)} quiz questions · exercises with solutions`)}</p><a class="button primary" href={localePath(locale, coursePath(course))}>{t('Kurs öffnen →', 'Open course →')}</a></section>)}
+      <div id="kurse">{topicCourses.map(course => <section class="course-teaser"><p class="eyebrow">{t('ZUSAMMENHÄNGENDER KURS', 'STRUCTURED COURSE')}</p><h2>{course.title[locale]}</h2><p>{course.description[locale]}</p><p>{t(`${course.chapters.length} ausgearbeitete Kapitel · ${course.chapters.reduce((sum, chapter) => sum + chapter.questions.length, 0)} Quizfragen · Aufgaben mit Lösungen`, `${course.chapters.length} available chapters · ${course.chapters.reduce((sum, chapter) => sum + chapter.questions.length, 0)} quiz questions · exercises with solutions`)}</p><a class="button primary" href={localePath(locale, coursePath(course))}>{t('Kurs öffnen →', 'Open course →')}</a></section>)}</div>
       <section id="themenplan">
         <p class="eyebrow">{t("DEIN WEG VOM EINSTIEG BIS ZUM PROFI", "YOUR ROUTE FROM BEGINNER TO ADVANCED")}</p>
         <h2>{t("Eine Richtung. Drei Lernstufen.", "One direction. Three levels.")}</h2>
@@ -198,6 +200,7 @@ const reviewDates = [...new Set(topic.lesson?.sources.map(id=>sources[id].review
       <div class="sidebar-sticky">
         <p class="eyebrow">{t("AUF DIESER SEITE", "ON THIS PAGE")}</p>
         <nav aria-label={t("Inhaltsverzeichnis", "Table of contents")}>
+          {topicCourses.length>0 && <a href="#kurse">{t("Verfügbare Kurse", "Available courses")}</a>}
           {topic.subareas && <a href="#teilbereiche">{t("Dokumente & Textsatz", "Documents & typesetting")}</a>}
           <a href="#themenplan">{t("Themenplan", "Topic outline")}</a>
           {levels.map((level) => (

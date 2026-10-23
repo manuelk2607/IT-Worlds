@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Breadcrumbs from './Breadcrumbs.astro';
 import SourceCard from './SourceCard.astro';
 import ProgressToggle from './ProgressToggle.astro';
 import { courses, coursePath, chapterProgressId } from '../data/courses.ts';
@@ -22,6 +23,7 @@ const relatedId = {ki:'latex',latex:'ki',datenbanken:'apis',apis:'datenbanken'}[
 const other = courses.find(item => item.id === relatedId)!;
 ---
 <Layout locale={locale} title={title} description={description} active="themen">
+  <Breadcrumbs locale={locale} items={[{title:t("Kurse", "Courses"),href:"/lernpfade/"},{title:topicById(course.topic)!.title,href:`/themen/${course.topic}/`}, ...(chapter ? [{title:course.title[locale],href:coursePath(course)},{title:chapter.title[locale]}] : [{title:course.title[locale]}])]} />
   <header class="container page-top course-header">
     <a class="back-link" href={localePath(locale, chapter ? coursePath(course) : `/themen/${course.topic}/`)}>{t('← Zur Übersicht', '← Back to overview')}</a>
     <p class="eyebrow">{topicById(course.topic)!.title} · {course.id === 'latex' ? t('AUSZEICHNUNGS- & SATZSPRACHEN', 'MARKUP & TYPESETTING') : t('LERNKURS', 'LEARNING COURSE')}</p>
@@ -35,7 +37,7 @@ const other = courses.find(item => item.id === relatedId)!;
   </header>
   <div class="container course-layout">
     <aside class="course-sidebar">
-      <details open>
+      <details open data-course-outline>
         <summary>{t('Kursinhalt', 'Course contents')}</summary>
         <nav aria-label={t('Kapitelnavigation', 'Chapter navigation')}>
           <a href={localePath(locale, coursePath(course))} aria-current={!chapter ? 'page' : undefined}>{t('Überblick & Voraussetzungen', 'Overview & prerequisites')}</a>
@@ -70,5 +72,6 @@ const other = courses.find(item => item.id === relatedId)!;
       <p class="course-review muted">{t('Die Kursfolge behandelt Grundlagen bis zu fortgeschrittenen Entscheidungen und Projekten. Sie ist kein Zertifikat und ersetzt keine eigenständige Praxis oder fachliche Begutachtung.', 'The course sequence covers foundations through advanced decisions and projects. It is not a certificate and does not replace independent practice or expert assessment.')}</p>
     </div>
   </div>
+  <script src="../scripts/course.ts"></script>
 </Layout>
 

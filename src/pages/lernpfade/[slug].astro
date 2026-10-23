@@ -43,9 +43,9 @@ const available = path.steps.filter((step) => step.available).length;
         <p>{path.prerequisites}</p>
       </div>
     </section>
-    <h2>{t("So könnte dein Weg aussehen.", "Here is a possible route.")}</h2>
+    <h2>{t("Dein Lernweg Schritt für Schritt.", "Your learning route step by step.")}</h2>
     <p class="muted">
-      {t("Verfügbare Einstiege kannst du direkt öffnen. Die übrigen Schritte zeigen den geplanten Ausbau.", "Open the available introductions directly. The remaining steps show planned additions.")}
+      {path.course ? t("Alle Kapitel sind verfügbar. Starte mit dem ersten Schritt oder öffne gezielt ein Kapitel.", "Every chapter is available. Begin at the first step or open a specific chapter.") : t("Verfügbare Einstiege kannst du direkt öffnen. Die übrigen Schritte zeigen den geplanten Ausbau.", "Open the available introductions directly. The remaining steps show planned additions.")}
     </p>
     <ol class="path-steps">
       {path.steps.map((step, index) => (

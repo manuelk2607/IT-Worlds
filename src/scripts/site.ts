@@ -1,4 +1,4 @@
-import { t, locale } from './browser-i18n';
+import { t } from './browser-i18n';
 import { initNavigation } from './navigation';
 const themeButton = document.querySelector<HTMLButtonElement>('[data-theme-toggle]')!;
 const themeMedia = matchMedia('(prefers-color-scheme: dark)');
@@ -53,56 +53,7 @@ mobileNav
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") closeMenu();
 });
-const dialog = document.querySelector<HTMLDialogElement>("#search-dialog")!;
-const input = document.querySelector<HTMLInputElement>("#global-search")!;
-const items = [...document.querySelectorAll<HTMLElement>("[data-search-item]")];
-const openSearch = () => {
-  dialog.showModal();
-  input.focus();
-};
-document
-  .querySelectorAll("[data-open-search]")
-  .forEach((button) => button.addEventListener("click", openSearch));
-document
-  .querySelector("[data-close-search]")!
-  .addEventListener("click", () => dialog.close());
-dialog.addEventListener("click", (e) => {
-  if (
-    e.target === dialog &&
-    (e.clientX < dialog.getBoundingClientRect().left ||
-      e.clientX > dialog.getBoundingClientRect().right ||
-      e.clientY < dialog.getBoundingClientRect().top ||
-      e.clientY > dialog.getBoundingClientRect().bottom)
-  )
-    dialog.close();
-});
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape" && dialog.open) {
-    e.preventDefault();
-    dialog.close();
-    return;
-  }
-  if (
-    e.key === "/" &&
-    !dialog.open &&
-    !(
-      e.target instanceof HTMLInputElement ||
-      e.target instanceof HTMLTextAreaElement ||
-      (e.target instanceof HTMLElement && e.target.isContentEditable)
-    )
-  ) {
-    e.preventDefault();
-    openSearch();
-  }
-});
-input.addEventListener("input", () => {
-  const query = input.value.trim().toLocaleLowerCase(locale);
-  let count = 0;
-  items.forEach((item) => {
-    item.hidden = !item.dataset.searchText!.includes(query);
-    if (!item.hidden) count++;
-  });
-  document.querySelector<HTMLElement>("#search-empty")!.hidden = count > 0;
-});
 
+matchMedia('(min-width: 901px)').addEventListener('change',closeMenu);
+document.addEventListener('click',event=>{if(event.target instanceof Node&&!mobileNav.contains(event.target)&&!menuButton.contains(event.target))closeMenu();});
 export {};

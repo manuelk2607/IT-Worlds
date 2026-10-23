@@ -43,7 +43,7 @@ Ein Ausfall von Auth oder Datenbank beeinträchtigt persönliche Funktionen. Sta
 
 ## Prüfen und erweitern
 
-`npm test` prüft Inhalt, Quellenverknüpfungen, Sprachparität, Fortschrittsvalidierung und Account-Fehlermeldungen. `npm run check` prüft strikt sämtliche TypeScript- und Astro-Quellen einschließlich Worker und Skripten. `npm run build` erzeugt 42 HTML-Seiten. `npm run deploy:check` prüft das Worker-Paket ohne Veröffentlichung.
+`npm test` prüft Inhalt, Quellenverknüpfungen, Sprachparität, Fortschrittsvalidierung und Account-Fehlermeldungen. `npm run check` prüft strikt sämtliche TypeScript- und Astro-Quellen einschließlich Worker und Skripten. `npm run build` erzeugt die öffentlichen Lernseiten beider Sprachen; aktuelle Zahlen stehen im Prüfprotokoll. `npm run deploy:check` prüft das Worker-Paket ohne Veröffentlichung.
 
 Mehrere Nutzer und RLS zusätzlich auf einem Entwicklungsbranch testen. Neue Migrationen werden mit Prüfsumme registriert und transaktional angewendet; bereits angewendete Migrationen bleiben unverändert.
 
@@ -53,4 +53,8 @@ Weitere Artikel, Lernspiele, ein CMS und isolierte Codeausführung sind spätere
 
 ## Kursinhalte
 
-Die zweisprachigen Kursdaten und ihre 50 zusätzlichen Quellen liegen in `src/data/course-*.ts`. `courses.ts` aggregiert 27 Kapitel, 54 Fragen und zwei Lernpfade; `CourseView.astro` rendert beide Sprachen. KaTeX erzeugt Formeln beim Build, einschließlich MathML. Bestehende Suche, SEO, Quiz und Lernstand verwenden dieselben IDs. Details: [KURSE.md](KURSE.md).
+Die zweisprachigen Kursdaten und ihre 50 zusätzlichen Quellen liegen in `src/data/course-*.ts`. `courses.ts` aggregiert die verfügbaren Kurskapitel, Fragen und Kurslernwege; `CourseView.astro` rendert beide Sprachen. KaTeX erzeugt Formeln beim Build, einschließlich MathML. Bestehende Suche, SEO, Quiz und Lernstand verwenden dieselben IDs. Details: [KURSE.md](KURSE.md).
+
+## Orientierung und Suche
+
+`/lernen/` bietet den Lernstart; `/lernpfade/` trennt verfügbare Kurse von teilweise geplanten Lernwegen. `CourseCard.astro` und `Breadcrumbs.astro` werden gemeinsam verwendet. Die Suche lädt `/suche.json` beziehungsweise `/en/suche.json` erst beim Öffnen. `search-index.ts` erzeugt den öffentlichen Index aus den Inhaltsdaten; `search.ts` gewichtet Mehrwortabfragen. Browsertexte werden mit DOM-Textknoten erzeugt. Details und Paketprüfungen: [WEITERENTWICKLUNG.md](WEITERENTWICKLUNG.md).

@@ -1,8 +1,9 @@
+import {getContent} from './i18n.ts';
 import { topics, paths, sources } from '../data/content.ts';
 import { courses, courseChapters, coursePath } from '../data/courses.ts';
 import { localePath, type Locale } from './locale.ts';
 export const SITE_URL = 'https://it-worlds.maki26.workers.dev';
-export const publicPaths = ['/', '/lernpfade/', '/quiz/', '/quellen/', '/uebungen/',
+export const publicPaths = ['/', '/lernen/', '/lernpfade/', '/quiz/', '/quellen/', '/uebungen/',
   ...topics.map(topic=>`/themen/${topic.id}/`), ...paths.map(path=>`/lernpfade/${path.id}/`), ...courses.map(course => coursePath(course)), ...courseChapters.map(chapter => chapter.url)];
 export const publicUrls = publicPaths.flatMap(path=>(['de','en'] as const).map(locale=>new URL(localePath(locale,path),SITE_URL).href));
 export function pageSeo(pathname: string, locale: Locale, title: string, description: string) {
@@ -11,21 +12,26 @@ export function pageSeo(pathname: string, locale: Locale, title: string, descrip
   const noindex = /^\/(konto|fortschritt|404)(\/|\.html|$)/.test(germanPath);
   const languages = {de:new URL(germanPath,SITE_URL).href,en:new URL(`/en${germanPath}`,SITE_URL).href};
   const topic = topics.find(item=>germanPath===`/themen/${item.id}/`);
-  const chapter = courseChapters.find(item => item.url === germanPath)?.chapter;
+  const chapterEntry = courseChapters.find(item => item.url === germanPath);
+  const chapter = chapterEntry?.chapter;
+  const course = chapterEntry?.course ?? courses.find(item=>coursePath(item)===germanPath);
+  const localized = getContent(locale);
+  const breadcrumbItems = [{name:locale==='de'?'Startseite':'Home',path:'/'}];
+  if(course){breadcrumbItems.push({name:locale==='de'?'Kurse':'Courses',path:'/lernpfade/'},{name:localized.topicById(course.topic)!.title,path:`/themen/${course.topic}/`});if(chapter)breadcrumbItems.push({name:course.title[locale],path:coursePath(course)});}
+  if(germanPath!=='/')breadcrumbItems.push({name:title,path:germanPath});
   const webPage = {
     '@type': topic?.lesson || chapter ? ['WebPage','LearningResource'] : ['WebPage'],
     '@id':`${canonical}#page`,url:canonical,name:title,description,inLanguage:locale,
     isPartOf:{'@id':`${SITE_URL}/#website`},isAccessibleForFree:true,
     ...(topic?.lesson ? {learningResourceType:'Introductory article',educationalLevel:'Beginner',citation:topic.lesson.sources.map(id=>sources[id].url)} : {}),
-    ...(chapter ? {learningResourceType:'Lesson',educationalLevel:chapter.level,citation:chapter.sources.map(id=>sources[id].url)} : {}),
+    ...(chapter ? {learningResourceType:'Lesson',educationalLevel:localized.levelName(chapter.level),citation:chapter.sources.map(id=>sources[id].url)} : {}),
   };
   const graph = [
     {'@type':'WebSite','@id':`${SITE_URL}/#website`,url:`${SITE_URL}/`,name:'IT-Worlds',inLanguage:['de','en'],publisher:{'@id':`${SITE_URL}/#organization`}},
     {'@type':'Organization','@id':`${SITE_URL}/#organization`,name:'IT-Worlds',url:`${SITE_URL}/`,sameAs:['https://github.com/manuelk2607/IT-Worlds']},
     webPage,
     ...(germanPath==='/' ? [] : [{'@type':'BreadcrumbList',itemListElement:[
-      {'@type':'ListItem',position:1,name:locale==='de'?'Startseite':'Home',item:new URL(localePath(locale,'/'),SITE_URL).href},
-      {'@type':'ListItem',position:2,name:title,item:canonical},
+      ...breadcrumbItems.map((item,index)=>({'@type':'ListItem',position:index+1,name:item.name,item:new URL(localePath(locale,item.path),SITE_URL).href})),
     ]}]),
   ];
   return {canonical,languages,noindex,image:`${SITE_URL}/images/social-${locale}.png`,

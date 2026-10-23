@@ -1,0 +1,6 @@
+---
+import {translate,localePath,type Locale} from '../lib/locale.ts';
+interface Props {locale?:Locale;items:{title:string;href?:string}[]}
+const {locale='de',items}=Astro.props;const t=translate(locale);
+---
+<nav class="breadcrumbs container" aria-label={t('Brotkrümelnavigation','Breadcrumb')}><ol><li><a href={localePath(locale,'/')}>{t('Start','Home')}</a></li>{items.map(item=><li>{item.href?<a href={localePath(locale,item.href)}>{item.title}</a>:<span aria-current="page">{item.title}</span>}</li>)}</ol></nav>

@@ -16,6 +16,7 @@
       "/",
       "/themen/*",
       "/lernpfade/*",
+      "/lernen/*",
       "/uebungen/*",
       "/quiz/*",
       "/quellen/*",

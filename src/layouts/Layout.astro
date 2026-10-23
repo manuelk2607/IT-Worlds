@@ -2,10 +2,10 @@
 import { getContent, translate, localePath, type Locale } from "../lib/i18n";
 const locale: Locale = Astro.props.locale ?? "de";
 const t = translate(locale);
-const { topics, paths, questions, sources } = getContent(locale);
-import { courseChapters } from '../data/courses.ts';
+const { questions, sources } = getContent(locale);
 import "../styles/global.css";
 import "../styles/preferences.css";
+import "../styles/catalog.css";
 import { pageSeo } from "../lib/seo";
 import Icon from "../components/Icon.astro";
 import ts from "typescript";
@@ -34,10 +34,9 @@ const seo = pageSeo(Astro.url.pathname,locale,title,description);
 const nav = [
   { label: t("Entdecken", "Explore"), href: "/", id: "home" },
   { label: t("Themenwelten", "Topics"), href: "/#themenwelten", id: "themen" },
-  { label: t("Lernpfade", "Learning paths"), href: "/lernpfade/", id: "pfade" },
+  { label: t("Kurse", "Courses"), href: "/lernpfade/", id: "pfade" },
   { label: t("Übungen", "Practice"), href: "/uebungen/", id: "uebungen" },
   { label: t("Wissensquiz", "Quiz"), href: "/quiz/", id: "quiz" },
-  { label: t("Quellen", "Sources"), href: "/quellen/", id: "quellen" },
 ];
 ---
 
@@ -136,6 +135,8 @@ const nav = [
         {nav.map((item) => (
           <a href={localePath(locale, item.href)} data-nav-id={item.id} class:list={{ active: active === item.id }} aria-current={active === item.id ? "page" : undefined}>{item.label}</a>
         ))}
+      <a href={localePath(locale, "/lernen/")}>{t("Hilfe beim Einstieg", "Help getting started")}</a>
+      <a href={localePath(locale, "/quellen/")}>{t("Quellen & Qualität", "Sources & quality")}</a>
       <a href={localePath(locale, "/fortschritt/")}>{t("Mein Lernstand", "My progress")}</a>
         <a href={localePath(locale, "/konto/")}>{t("Mein Account", "My account")}</a>
       </nav>
@@ -152,6 +153,7 @@ const nav = [
           <p>{t("Wissen verbindet. Neugier bringt dich weiter.", "Knowledge connects. Curiosity takes you further.")}</p>
         </div>
         <div class="footer-links">
+          <a href={localePath(locale, "/lernen/")}>{t("Lernstart", "Getting started")}</a>
           <a href={localePath(locale, "/#themenwelten")}>{t("Themenwelten", "Topics")}</a>
           <a href={localePath(locale, "/lernpfade/")}>{t("Lernpfade", "Learning paths")}</a>
           <a href={localePath(locale, "/quellen/")}>{t("Quellen & Qualität", "Sources & quality")}</a>
@@ -181,7 +183,7 @@ const nav = [
         </button>
       </div>
       <label for="global-search" class="sr-only">
-        {t("Themen und Lernpfade durchsuchen", "Search topics and learning paths")}
+        {t("Kurse, Kapitel und Themen durchsuchen", "Search courses, chapters and topics")}
       </label>
       <div class="search-field">
         <Icon name="search" size={21} />
@@ -190,49 +192,17 @@ const nav = [
           type="search"
           placeholder={t("Zum Beispiel Python, SQL oder KI …", "For example Python, SQL or AI …")}
           autocomplete="off"
+          aria-controls="search-results"
         />
       </div>
-      <p class="search-help">{t("Themenwelten & Lernpfade durchsuchen", "Search topics & learning paths")}</p>
-      <div id="search-results" aria-live="polite">
-        {courseChapters.map(({ course, chapter, url }) => <a href={localePath(locale, url)} data-search-item data-search-text={`${course.title[locale]} ${chapter.title[locale]} ${chapter.goals.map(goal => goal[locale]).join(' ')} ${chapter.sections.map(section => section.title[locale]).join(' ')}`.toLocaleLowerCase(locale)}><span class="search-result-icon"><Icon name="book" size={19} /></span><span>{chapter.title[locale]}<small>{course.title[locale]} · {t('Kapitel', 'Chapter')}</small></span><Icon name="arrow" size={17} /></a>)}
-        {topics.map((topic) => (
-          <a
-            href={localePath(locale, `/themen/${topic.id}/`)}
-            data-search-item
-            data-search-text={`${topic.title} ${topic.tags.join(" ")} ${Object.values(topic.curriculum).flat().join(" ")}`.toLocaleLowerCase(locale)}
-          >
-            <span class={`search-result-icon color-${topic.color}`}>
-              <Icon name={topic.icon} size={19} />
-            </span>
-            <span>
-              {topic.title}
-              <small>{t("Themenwelt · Einstieg bis Profi", "Topic · Beginner to advanced")}</small>
-            </span>
-            <Icon name="arrow" size={17} />
-          </a>
-        ))}
-        {paths.map((path) => (
-          <a
-            href={localePath(locale, `/lernpfade/${path.id}/`)}
-            data-search-item
-            data-search-text={`${t("lernpfad", "learning path")} ${path.title} ${path.description}`.toLocaleLowerCase(locale)}
-          >
-            <span class="search-result-icon">
-              <Icon name="book" size={19} />
-            </span>
-            <span>
-              {path.title}
-              <small>{t("Lernpfad", "Learning path")}</small>
-            </span>
-            <Icon name="arrow" size={17} />
-          </a>
-        ))}
-      </div>
-      <p id="search-empty" hidden>
-        {t("Keine Treffer. Versuche einen Begriff wie „Python“, „Linux“ oder „Website“.", "No results. Try a term such as “Python”, “Linux” or “website”.")}
-      </p>
+      <div class="search-options"><label for="search-kind">{t('Inhaltstyp', 'Content type')}</label><select id="search-kind"><option value="all">{t('Alles', 'Everything')}</option><option value="course">{t('Kurse', 'Courses')}</option><option value="chapter">{t('Kapitel', 'Chapters')}</option><option value="topic">{t('Themenwelten', 'Topics')}</option><option value="path">{t('Lernpfade', 'Learning paths')}</option><option value="exercise">{t('Editor-Aufgaben', 'Editor exercises')}</option></select></div>
+      <p id="search-status" class="search-help" role="status"></p>
+      <button class="button secondary" data-search-retry hidden>{t('Erneut laden', 'Retry')}</button>
+      <div id="search-results"></div>
+      <p class="search-help"><a href={localePath(locale, '/#themenwelten')}>{t('Zur Themenübersicht →', 'Browse all topics →')}</a> · {t('↑ ↓ auswählen · Enter öffnen · Esc schließen', '↑ ↓ select · Enter open · Esc close')}</p>
     </dialog>
     <script src="../scripts/site.ts"></script>
+    <script src="../scripts/search.ts"></script>
     <script src="../scripts/progress-client.ts"></script>
   </body>
 </html>

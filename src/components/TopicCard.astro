@@ -4,12 +4,14 @@ const locale: Locale = Astro.props.locale ?? "de";
 const t = translate(locale);
 import type { Topic } from "../data/content";
 import Icon from "./Icon.astro";
+import { courses } from "../data/courses.ts";
 interface Props {
   locale?: Locale;
   topic: Topic;
   index?: number;
 }
 const { topic, index = 0 } = Astro.props;
+const chapters=courses.filter(course=>course.topic===topic.id).reduce((sum,course)=>sum+course.chapters.length,0);
 ---
 
 <a
@@ -34,7 +36,7 @@ const { topic, index = 0 } = Astro.props;
   </div>
   <div class="card-bottom">
     <span>
-      {topic.lesson ? t("Einstieg verfügbar", "Introduction available") : t("Themenplan entdecken", "Explore the outline")}
+      {chapters ? t(`${chapters} Kapitel verfügbar`,`${chapters} chapters available`) : topic.lesson ? t("Einstieg verfügbar", "Introduction available") : t("Themenplan entdecken", "Explore the outline")}
       <span class="dot-separator">·</span>{t("3 Lernstufen", "3 levels")}
     </span>
     <Icon name="arrow" size={19} />
