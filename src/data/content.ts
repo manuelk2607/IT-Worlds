@@ -1,3 +1,4 @@
+import {basicsSources} from './course-basics-sources.ts';
 import {webSources} from './course-web-sources.ts';
 import {programmingSources} from './course-programming-sources.ts';
 import { foundationSources } from './course-foundation-sources.ts';
@@ -41,6 +42,7 @@ export const sources = {
   ...foundationSources,
   ...programmingSources,
   ...webSources,
+  ...basicsSources,
   python: {
     title: "An Informal Introduction to Python",
     publisher: "Python Software Foundation",

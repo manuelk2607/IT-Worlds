@@ -939,3 +939,7 @@ Gelesene Abschnitte für die acht Webkapitel: HTML-Struktur, Boxmodell, responsi
 - Abschnitt: How it works; routing; custom 404 pages
 - [Gelesener Originalbeleg](https://developers.cloudflare.com/workers/static-assets/)
 - Lesedatum: 2026-10-23
+
+## IT-Grundlagen · Abgleich 23. Oktober 2026
+
+Neun neue Quellen in `course-basics-sources.ts`: IETF RFC 8259, §§1–5 (Objekte, Arrays und Werte); MDN JSON.parse (Syntaxprüfung), Number.toString (Radix) und Number.isSafeInteger (Darstellungsgrenzen); Node.js 22.22.0 File system (mkdtempSync, writeFileSync, readFileSync, rmSync); Pro Git, zweite Ausgabe (Staging und Commit); NIST DADS, Stand 21.04.2022 (lineare und binäre Suche); Google SRE, Kapitel 12, Chris Jones, 2016 (kontrollierte Fehlersuche). URLs, Herausgeber, Version und Lesedatum sind pro Eintrag hinterlegt. UTF-8 und TextEncoder nutzen die bereits gelesenen Belege. Quellenabgleich erfolgt; unabhängiges Fachreview weiterhin offen.

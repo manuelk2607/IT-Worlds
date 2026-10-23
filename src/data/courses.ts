@@ -1,3 +1,4 @@
+import {basicsCourse} from './course-basics.ts';
 import {webCourse} from './course-web.ts';
 import {typescriptCourse} from './course-typescript.ts';
 import { databaseCourse } from './course-databases.ts';
@@ -14,7 +15,7 @@ import type { Locale } from '../lib/locale.ts';
 export { coursePath, chapterProgressId } from './course-types.ts';
 
 export const courses: Course[] = [
-  typescriptCourse, webCourse, databaseCourse, apiCourse,
+  basicsCourse, typescriptCourse, webCourse, databaseCourse, apiCourse,
   { ...aiCourse, chapters: [...aiCourse.chapters, ...aiAdvanced, ...aiArchitectures] },
   { ...latexCourse, chapters: [...latexCourse.chapters, ...latexTechnical, ...latexAdvanced] },
 ];

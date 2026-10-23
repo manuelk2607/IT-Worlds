@@ -61,3 +61,45 @@ const before=JSON.stringify(tasks);summarise(tasks);assert.equal(JSON.stringify(
   }
  } finally {rmSync(dir,{recursive:true,force:true});}
 });
+
+test('published fundamentals examples preserve parsing and search boundaries',async()=>{
+ const {basicsCourse}=await import('../src/data/course-basics.ts');
+ const dir=mkdtempSync(join(tmpdir(),'it-worlds-basics-'));
+ try {
+  writeFileSync(join(dir,'package.json'),'{"type":"module"}');
+  for(const chapter of basicsCourse.chapters){
+   const code=chapter.sections.find(section=>section.language==='TypeScript')?.code;
+   if(!code)continue;
+   let extra='';
+   if(chapter.id==='json')extra=`
+import assert from 'node:assert/strict';
+for(const raw of ['null','42','{}','{"title":42}','{"title":" "}'])assert.throws(()=>readTitle(raw),/Invalid title/);
+assert.throws(()=>readTitle('{broken'),SyntaxError);
+`;
+   if(chapter.id==='algorithmen')extra=`
+import assert from 'node:assert/strict';
+assert.equal(search([],1),-1);assert.equal(search([1],1),0);assert.equal(search([1],0),-1);
+const input=[-2,0,3,7,19];
+for(let target=-3;target<=20;target++)assert.equal(search(input,target),input.indexOf(target));
+`;
+   if(chapter.id==='abschluss')extra=`
+assert.throws(()=>total('null'),/Expected array/);
+for(const raw of ['["15"]','[1.5]','[-1]'])assert.throws(()=>total(raw),/Invalid duration/);
+assert.throws(()=>total('[9007199254740991,1]'),/Total overflow/);
+assert.equal(total('[0]'),0);
+`;
+   const filename=join(dir,chapter.id+'.ts');writeFileSync(filename,code+'\n'+extra);
+   const output=execFileSync(process.execPath,['--experimental-strip-types',filename],{encoding:'utf8',timeout:10000});
+   if(chapter.id==='daten')assert.match(output,/1101\n\[ 65, 226, 130, 172 \] 4/);
+   if(chapter.id==='dateien'||chapter.id==='json')assert.equal(output.trim(),'SQL');
+  }
+  const gitDir=join(dir,'git');
+  execFileSync('git',['init','-q',gitDir]);
+  writeFileSync(join(gitDir,'notes.txt'),'First lesson\n');
+  execFileSync('git',['add','notes.txt'],{cwd:gitDir});
+  writeFileSync(join(gitDir,'notes.txt'),'Second lesson\n');
+  execFileSync('git',['-c','user.name=Learning Example','-c','user.email=learner@example.test','commit','-qm','Add first note'],{cwd:gitDir});
+  assert.equal(execFileSync('git',['show','HEAD:notes.txt'],{cwd:gitDir,encoding:'utf8'}),'First lesson\n');
+  assert.equal(execFileSync('git',['status','--short'],{cwd:gitDir,encoding:'utf8'}).trim(),'M notes.txt');
+ }finally{rmSync(dir,{recursive:true,force:true});}
+});

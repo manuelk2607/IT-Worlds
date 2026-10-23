@@ -23,3 +23,7 @@ Acht Kapitel ergänzen Programmiergrundlagen, Funktionen, Listen/Objekte, unbeka
 ## Paket 3 · Webkurs
 
 Acht Kapitel verbinden semantisches HTML, CSS-Boxmodell, responsive Raster, Formulare, DOM-Interaktion mit TypeScript, Fehlerzustände, Tastaturzugang und Veröffentlichung. Alle 16 Fragen erklären jede Option. Praktisch geprüft: Boxbreiten 224/200 Pixel, ein-/zweispaltiges Raster bei 390/1280 Pixeln, Label-Zuordnung und ungültige/gültige Formeingabe, Zähler mit Maus und Leertaste, Fehler plus erfolgreicher Wiederholungsversuch, sichtbarer Sprunglink und Fokus auf dem Hauptinhalt. TypeScript-Listings werden jetzt insgesamt automatisiert streng geprüft; Browsercode ist als solcher gekennzeichnet. Der enthaltene Node-Auslieferungstest hat HTML 200 und fehlende Route 404 bestätigt. Die isolierten HTML-Demos senden keine echten persönlichen Daten.
+
+## Paket 4 · IT-Grundlagen
+
+Sieben Kapitel führen von Binärdarstellung und UTF-8 über JSON, isolierte Dateioperationen und Git zu Suchalgorithmen, kontrollierter Fehlersuche und einem validierten Datenprojekt. 14 Fragen erklären alle Antwortmöglichkeiten. Die Programme werden ausgeführt und streng geprüft; Zusatztests prüfen JSON-Syntax und Fachvertrag, binäre Suche über leere/einzelne/mehrere Einträge, Zahlenüberlauf sowie den Unterschied zwischen vorgemerkter Git-Version und späterer Arbeitsänderung. Dateien und Git-Repository der Beispiele bleiben strikt temporär.
