@@ -46,3 +46,7 @@ Sachlich und respektvoll zusammenarbeiten, Kritik konkret begründen und keine p
 ## Kurskapitel
 
 Neue Kursinhalte in den typisierten zweisprachigen Daten unter `src/data/course-*.ts` pflegen. Kapitel- und Frage-IDs nach Veröffentlichung stabil halten. Lernziele, Voraussetzungen, Aufgabe mit Lösung, Quellen und Erklärungen jeder Quizoption ergänzen. Ausführbare Beispiele separat mit der angegebenen Umgebung prüfen und nicht ausgeführte Teile ausdrücklich dokumentieren. Struktur und Prüfverfahren: [KURSE.md](docs/KURSE.md).
+
+## Automatische Prüfung
+
+Der GitHub-Workflow `Quality` prüft Pull Requests und Änderungen auf `main` sowie `codex/cloudstand-lokal` mit Node.js 22.22.0 (unterstützte Mindestversion) und Node.js 24. Die Installation verwendet die eingecheckte Lockdatei; danach folgen Tests, strikte Typprüfung, statischer Build, SEO- und interner Linkaudit. Der Workflow besitzt nur Leserechte, erhält keine Produktions-Secrets und veröffentlicht nichts. Änderungen an Actions mit dem offiziellen Repository/Release abgleichen und auf den überprüften Commit festlegen.

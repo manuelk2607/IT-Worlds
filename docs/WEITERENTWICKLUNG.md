@@ -53,3 +53,7 @@ Sieben Kapitel mit 14 Fragen zu Bedrohungsmodell, Authentifizierung/MFA, Eingabe
 - Unabhängiges Fachreview sämtlicher Kurse und Fragen bleibt ausstehend. Der dokumentierte Quellenabgleich ist davon getrennt.
 - systemd-Beispiele auf einer laufenden Linux-Testumgebung praktisch prüfen. Portable Shellfälle sind lokal getestet; Docker ist vorhanden, aber sein Dienst läuft nicht.
 - Felddaten zu Ladezeit, Interaktionszeit und Layoutstabilität erfassen; aus lokalen Funktionsprüfungen keine echten Core-Web-Vitals-Werte ableiten.
+
+## Wiederaufnahme · 24. Oktober 2026
+
+Die wegen des früheren Kontingentlimits unterbliebene GitHub-Sicherung wurde nach erfolgreicher Wiederholungsprüfung abgeschlossen (ee175c6). Öffentlicher SEO-Abgleich: 246 URLs, HTTP 200, passende Indexierungsdaten und bytegleich zum Build; HTTPS-Weiterleitung bestätigt. Der Audit liest den lokalen Stand vor den Netzwerkanfragen vollständig ein und begrenzt die Parallelität auf vier. Die automatische GitHub-Prüfung ergänzt Mindestversion Node 22.22.0 und Node 24 mit Lockdateiinstallation, Tests, Typprüfung, Build, SEO und internen Links. Kein automatischer Produktionsdeploy und keine Produktionszugangsdaten im Workflow.
