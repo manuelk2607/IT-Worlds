@@ -53,3 +53,16 @@ test('worked arithmetic agrees with stated learning examples', () => {
   assert.equal(8*3*3*3+8,224);
   assert.equal(Math.sqrt(0.64)*2+Math.sqrt(0.36)*-1,1);
 });
+
+test('changing quiz scope removes conflicting descendants and preserves explicit level choices',async()=>{
+ const {reconcileQuizFilter}=await import('../src/lib/quiz-filter.ts');
+ const catalog=[{id:'ki',topic:'ki-neuronale-netze'},{id:'latex',topic:'programmiersprachen'}];
+ const chapters=[{id:'ki-transformer',course:'ki',level:'profi'},{id:'latex-start',course:'latex',level:'einstieg'}];
+ const current={topic:'ki-neuronale-netze',course:'ki',level:'profi',chapter:'ki-transformer',question:'ki-transformer-1'};
+ assert.deepEqual(reconcileQuizFilter({...current,topic:'programmiersprachen'},'topic',catalog,chapters),{topic:'programmiersprachen',course:'alle',level:'profi',chapter:'alle',question:''});
+ assert.equal(reconcileQuizFilter({...current,course:'latex'},'course',catalog,chapters).topic,'programmiersprachen');
+ const selected=reconcileQuizFilter({...current,chapter:'latex-start'},'chapter',catalog,chapters);
+ assert.equal(selected.course,'latex');assert.equal(selected.level,'einstieg');
+ assert.equal(reconcileQuizFilter({...current,level:'einstieg'},'level',catalog,chapters).chapter,'alle');
+ assert.equal(reconcileQuizFilter({...current,level:'alle'},'level',catalog,chapters).chapter,'ki-transformer');
+});

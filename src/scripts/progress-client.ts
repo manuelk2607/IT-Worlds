@@ -1,3 +1,4 @@
+import {renderProgressDashboard} from './progress-dashboard.ts';
 import { createAuthClient } from '@neondatabase/auth';
 import { t, locale, pagePath } from './browser-i18n';
 import type { ProgressItem, ProgressChange } from '../lib/progress';
@@ -42,6 +43,7 @@ function render() {
   });
   const latest = completed.map(item => item.updatedAt).sort().at(-1);
   document.querySelectorAll<HTMLElement>('[data-last-activity]').forEach(element => element.textContent = latest ? new Intl.DateTimeFormat(locale, { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(latest)) : t('Noch kein gespeicherter Fortschritt.', 'No saved progress yet.'));
+  renderProgressDashboard(learningState.items);
 }
 export async function loadLearningState() {
   try {
@@ -83,7 +85,9 @@ export async function recordQuestion(contentId: string, selectedOption: number) 
 }
 for (const control of controls) {
   const input = control.querySelector<HTMLInputElement>('[data-progress-toggle]')!;
-  control.querySelector<HTMLAnchorElement>('[data-progress-login]')!.href = `${pagePath('/konto/')}?next=${encodeURIComponent(location.pathname + location.search + (location.hash || (control.dataset.kind === 'lesson' ? '#einstiegsartikel' : '')))}`;
+  const login=control.querySelector<HTMLAnchorElement>('[data-progress-login]')!;
+  const updateReturnLink=()=>{login.href=`${pagePath('/konto/')}?next=${encodeURIComponent(control.dataset.kind==='question'?`${pagePath('/quiz/')}?frage=${encodeURIComponent(control.dataset.contentId!)}`:location.pathname+location.search+(location.hash||'#einstiegsartikel'))}`;};
+  updateReturnLink();login.addEventListener('click',updateReturnLink);
   input.addEventListener('change', async () => {
     const message = control.querySelector<HTMLElement>('[data-progress-message]')!;
     control.dataset.saving = 'true';

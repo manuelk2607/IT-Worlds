@@ -74,3 +74,23 @@ html[data-theme="dark"] ::selection { background: #425a9a; color: #fff; }
 @media (max-width: 1240px) { .search-trigger span, .search-trigger kbd { display: none; } .desktop-nav { gap: 19px; } .header-actions { gap: 8px; } }
 @media (max-width: 700px) { .progress-stats { gap: 10px; } .progress-stats article { padding: 16px; } .progress-stats strong { font-size: 1.5rem; } .progress-columns { grid-template-columns: 1fr; } .account-panel { padding: 22px; } }
 @media (max-width: 480px) { .header-inner { gap: 8px; } .header-actions { gap: 3px; } .header-cta { display: none; } .progress-stats { grid-template-columns: 1fr; } .progress-stats article { display: flex; align-items: center; gap: 16px; } .progress-welcome { flex-wrap: wrap; } }
+.dashboard-filters { display:flex;flex-wrap:wrap;gap:20px;align-items:end;margin-block:24px; }
+.dashboard-filters label { display:grid;gap:7px;font-weight:600; }
+.dashboard-filters select { max-width:100%;padding:12px;border:1px solid var(--line);border-radius:9px;background:var(--white);color:var(--ink); }
+.dashboard-filters .unfinished-filter { display:flex;gap:10px;align-items:center;min-height:46px; }
+.unfinished-filter input { width:20px;height:20px;accent-color:var(--blue); }
+.progress-groups { display:grid;gap:15px;margin-bottom:50px; }
+.progress-group { border:1px solid var(--line);border-radius:12px;background:var(--white); }
+.progress-group > summary { display:flex;align-items:center;justify-content:space-between;gap:20px;padding:22px;cursor:pointer; }
+.progress-group > summary::before { content:'+';font-weight:700;font-size:1.3rem; }
+.progress-group[open] > summary::before { content:'−'; }
+.progress-group > summary strong { flex:1; }
+.progress-group > summary > span { color:var(--muted);font-size:.85rem; }
+.progress-group-content { padding:0 22px 22px; }
+.progress-group-content > progress { display:block;width:100%;margin-block:0 15px;accent-color:var(--blue); }
+.progress-group-content > a { display:inline-block;margin-bottom:20px; }
+.progress-group .progress-entry { background:var(--paper);padding:18px; }
+.progress-group .progress-entry h3 { margin:0; }
+.progress-dashboard .progress-control [data-progress-login] { display:none; }
+html[data-theme="dark"] :is(.is-complete .progress-checkbox,.solved-label) { color:#91d9b8; }
+@media(max-width:600px) { .dashboard-filters {display:grid;} .dashboard-filters label {min-width:0;} .progress-group > summary {padding:16px;flex-wrap:wrap;gap:10px;} .progress-group > summary > span {margin-left:22px;} .progress-group-content {padding:0 16px 16px;} }

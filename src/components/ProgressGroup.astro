@@ -1,0 +1,18 @@
+---
+import ProgressToggle from './ProgressToggle.astro';
+import {translate,localePath,type Locale} from '../lib/locale.ts';
+interface Props {locale:Locale; title:string; topic:string; view:'chapters'|'questions'|'introductions'; kind:'lesson'|'question'; href:string; entries:{id:string;title:string;href:string}[]}
+const {locale,title,topic,view,kind,href,entries}=Astro.props;const t=translate(locale);
+---
+<details class="progress-group" data-progress-group data-topic={topic} data-view={view} data-kind={kind}>
+ <summary><strong>{title}</strong><span data-group-count>0 / {entries.length}</span></summary>
+ <div class="progress-group-content">
+  <progress data-group-progress value="0" max={entries.length} aria-label={t(`Fortschritt: ${title}`,`Progress: ${title}`)}></progress>
+  <a class="text-link" data-group-resume data-overview={localePath(locale,href)} href={localePath(locale,entries[0]!.href)}>{t('Nächsten offenen Schritt öffnen →','Open the next unfinished step →')}</a>
+  <div class="progress-list">{entries.map(entry=><article class="progress-entry" data-progress-entry data-item-id={entry.id} data-kind={kind}>
+   <h3><a href={localePath(locale,entry.href)} data-entry-link>{entry.title}</a></h3>
+   {kind==='question'&&<span class="solved-label" data-question-solved={entry.id}></span>}
+   <ProgressToggle locale={locale} kind={kind} contentId={entry.id}/>
+  </article>)}</div>
+ </div>
+</details>

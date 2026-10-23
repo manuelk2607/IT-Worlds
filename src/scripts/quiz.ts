@@ -1,11 +1,12 @@
 import { t } from './browser-i18n';
 import { recordQuestion } from './progress-client';
-import { matchesQuizFilter } from '../lib/quiz-filter';
+import { matchesQuizFilter, reconcileQuizFilter, type QuizFilter } from '../lib/quiz-filter';
 const sections = [...document.querySelectorAll<HTMLElement>("[data-question]")];
 const selection = document.querySelector<HTMLSelectElement>("#quiz-topic")!;
 const courseSelect = document.querySelector<HTMLSelectElement>('#quiz-course')!;
 const levelSelect = document.querySelector<HTMLSelectElement>('#quiz-level')!;
 const chapterSelect = document.querySelector<HTMLSelectElement>('#quiz-chapter')!;
+const courseOptions=[...courseSelect.options],chapterOptions=[...chapterSelect.options];
 const empty = document.querySelector<HTMLElement>('#quiz-empty')!;
 let exactQuestion = '';
 const progress =
@@ -22,6 +23,7 @@ function resetQuiz(focus = false) {
     topic: selection.value, course: courseSelect.value, level: levelSelect.value,
     chapter: chapterSelect.value, question: exactQuestion,
   }));
+  document.querySelector("#quiz-pool-status")!.textContent = t(`${active.length} ${active.length === 1 ? "Frage in deiner Auswahl" : "Fragen in deiner Auswahl"}. Filteränderungen starten eine neue Runde.`, `${active.length} ${active.length === 1 ? "question" : "questions"} in your selection. Changing filters starts a new round.`);
   position = 0;
   score = 0;
   progress.max = Math.max(1, active.length);
@@ -109,11 +111,17 @@ sections.forEach((section) => {
 });
 const controls = [[selection, 'thema'], [courseSelect, 'kurs'], [levelSelect, 'stufe']] as const;
 function readLocation() {
+  courseSelect.replaceChildren(...courseOptions);chapterSelect.replaceChildren(...chapterOptions);
   const params = new URLSearchParams(location.search);
   for (const [select, key] of controls) select.value = [...select.options].some(option => option.value === params.get(key)) ? params.get(key)! : 'alle';
   const chapter = [...chapterSelect.options].find(option => option.dataset.course === params.get('kurs') && option.dataset.chapter === params.get('kapitel'));
   chapterSelect.value = chapter?.value ?? 'alle';
   exactQuestion = sections.some(section => section.dataset.question === params.get('frage')) ? params.get('frage')! : '';
+  if(exactQuestion) {
+    const item=sections.find(section=>section.dataset.question===exactQuestion)!;
+    selection.value=item.dataset.topic!;courseSelect.value=item.dataset.course||'alle';levelSelect.value=item.dataset.level!;chapterSelect.value=item.dataset.chapter||'alle';
+  }
+  syncOptions();
   resetQuiz();
 }
 function updateLocation() {
@@ -133,15 +141,34 @@ function updateLocation() {
   history.replaceState(null, '', url);
   resetQuiz();
 }
-for (const [select] of controls) select.addEventListener('change', () => {
-  if (select === courseSelect || select === selection) chapterSelect.value = 'alle';
-  updateLocation();
-});
-chapterSelect.addEventListener('change', updateLocation);
+const courseCatalog=[...courseSelect.options].filter(option=>option.value!=='alle').map(option=>({id:option.value,topic:option.dataset.topic!}));
+const chapterCatalog=[...chapterSelect.options].filter(option=>option.value!=='alle').map(option=>({id:option.value,course:option.dataset.course!,level:option.dataset.level!}));
+function syncOptions() {
+ const selectedCourse=courseSelect.value,selectedChapter=chapterSelect.value;
+ courseSelect.replaceChildren(...courseOptions.filter(option=>option.value==='alle'||selection.value==='alle'||option.dataset.topic===selection.value));
+ courseSelect.value=selectedCourse;
+ chapterSelect.replaceChildren(...chapterOptions.filter(option=>{
+  const chapter=chapterCatalog.find(chapter=>chapter.id===option.value);
+  const course=courseCatalog.find(course=>course.id===chapter?.course);
+  return !chapter||((courseSelect.value==='alle'||chapter.course===courseSelect.value)&&(selection.value==='alle'||course?.topic===selection.value)&&(levelSelect.value==='alle'||chapter.level===levelSelect.value));
+ }));
+ chapterSelect.value=selectedChapter;
+}
+
+function changeFilter(changed:'topic'|'course'|'level'|'chapter') {
+ const current:QuizFilter={topic:selection.value,course:courseSelect.value,level:levelSelect.value,chapter:chapterSelect.value,question:exactQuestion};
+ const next=reconcileQuizFilter(current,changed,courseCatalog,chapterCatalog);
+ selection.value=next.topic;courseSelect.value=next.course;levelSelect.value=next.level;chapterSelect.value=next.chapter;
+ syncOptions();updateLocation();
+}
+selection.addEventListener('change',()=>changeFilter('topic'));
+courseSelect.addEventListener('change',()=>changeFilter('course'));
+levelSelect.addEventListener('change',()=>changeFilter('level'));
+chapterSelect.addEventListener('change',()=>changeFilter('chapter'));
 document.querySelector('#clear-quiz-filters')!.addEventListener('click', () => {
   for (const [select] of controls) select.value = 'alle';
   chapterSelect.value = 'alle';
-  updateLocation();
+  syncOptions();updateLocation();
 });
 window.addEventListener('popstate', readLocation);
 document

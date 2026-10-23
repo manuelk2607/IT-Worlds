@@ -35,11 +35,12 @@ import Icon from "../components/Icon.astro";
           </option>
         ))}
       </select></label>
-      <label for="quiz-course">{t('Kurs', 'Course')}<select id="quiz-course"><option value="alle">{t('Alle Kurse & Einstiegsfragen', 'All courses & introductory questions')}</option>{courses.map(course => <option value={course.id}>{course.title[locale]}</option>)}</select></label>
+      <label for="quiz-course">{t('Kurs', 'Course')}<select id="quiz-course"><option value="alle">{t('Alle Kurse & Einstiegsfragen', 'All courses & introductory questions')}</option>{courses.map(course => <option value={course.id} data-topic={course.topic}>{course.title[locale]}</option>)}</select></label>
       <label for="quiz-level">{t('Lernstufe', 'Level')}<select id="quiz-level"><option value="alle">{t('Alle Lernstufen', 'All levels')}</option>{levels.map(level => <option value={level.id}>{level.name}</option>)}</select></label>
-      <label for="quiz-chapter">{t('Kapitel', 'Chapter')}<select id="quiz-chapter"><option value="alle">{t('Alle Kapitel', 'All chapters')}</option>{courseChapters.map(({ course, chapter, id }) => <option value={id} data-course={course.id} data-chapter={chapter.id}>{course.title[locale]} · {chapter.title[locale]}</option>)}</select></label>
+      <label for="quiz-chapter">{t('Kapitel', 'Chapter')}<select id="quiz-chapter"><option value="alle">{t('Alle Kapitel', 'All chapters')}</option>{courseChapters.map(({ course, chapter, id }) => <option value={id} data-course={course.id} data-chapter={chapter.id} data-level={chapter.level}>{course.title[locale]} · {chapter.title[locale]}</option>)}</select></label>
       <button type="button" id="clear-quiz-filters" class="text-link">{t('Filter zurücksetzen', 'Clear filters')}</button>
     </div>
+    <p id="quiz-pool-status" class="muted" role="status"></p>
     <div class="quiz-shell">
       <p id="quiz-empty" role="status" hidden>{t('Keine Fragen für diese Kombination. Ändere die Filter oder setze sie zurück.', 'No questions match this combination. Change or clear the filters.')}</p>
       <div id="quiz-progress">

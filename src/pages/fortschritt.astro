@@ -1,12 +1,12 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import ProgressToggle from '../components/ProgressToggle.astro';
-import { courseChapters } from '../data/courses.ts';
+import ProgressGroup from '../components/ProgressGroup.astro';
+import { courses, coursePath, chapterProgressId, courseChapters } from '../data/courses.ts';
 import { getContent, translate, localePath, type Locale } from '../lib/i18n';
 interface Props { locale?: Locale }
 const locale: Locale = Astro.props.locale ?? 'de';
 const t = translate(locale);
-const { topics, questions, paths, topicById } = getContent(locale);
+const { topics, questions, paths } = getContent(locale);
 const lessons = topics.filter(topic => topic.lesson);
 const lessonCount = lessons.length + courseChapters.length;
 ---
@@ -27,13 +27,21 @@ const lessonCount = lessons.length + courseChapters.length;
     </div>
     <label class="progress-overview-label">{t('Bearbeitete verfügbare Inhalte', 'Available content completed')}<progress data-total-progress value="0" max={lessonCount + questions.length}></progress></label>
     <p class="muted">{t('Zuletzt gespeichert:', 'Last saved:')} <span data-last-activity>{t('Noch kein gespeicherter Fortschritt.', 'No saved progress yet.')}</span></p>
-    <div class="progress-columns">
-      <section><h2>{t('Deine Kurskapitel', 'Your course chapters')}</h2><div class="progress-list">{courseChapters.map(({ course, chapter, id, url }) => <article class="progress-entry"><a href={localePath(locale, url)}><span class="muted">{course.title[locale]}</span><h3>{chapter.title[locale]}</h3></a><ProgressToggle locale={locale} kind="lesson" contentId={id} /></article>)}</div></section>
-      <section><h2>{t('Deine Einstiege', 'Your introductions')}</h2><div class="progress-list">{lessons.map(topic => <article class="progress-entry"><a href={localePath(locale, `/themen/${topic.id}/#einstiegsartikel`)}><span class="muted">{topic.title}</span><h3>{topic.lesson!.title}</h3></a><ProgressToggle locale={locale} kind="lesson" contentId={topic.id} /></article>)}</div></section>
-      <section><h2>{t('Deine Fragen', 'Your questions')}</h2><div class="progress-list">{questions.map(question => <article class="progress-entry"><a href={localePath(locale, `/quiz/?frage=${question.id}`)}><span class="muted">{topicById(question.topic)!.title}</span><h3>{question.prompt}</h3></a><span class="solved-label" data-question-solved={question.id}></span><ProgressToggle locale={locale} kind="question" contentId={question.id} /></article>)}</div></section>
+    <h2>{t('Deine Lerninhalte', 'Your learning content')}</h2>
+    <div class="dashboard-filters">
+      <label for="progress-view">{t('Ansicht','View')}<select id="progress-view" disabled><option value="chapters">{t('Kurskapitel','Course chapters')}</option><option value="questions">{t('Quizfragen','Quiz questions')}</option><option value="introductions">{t('Kurze Einstiege','Short introductions')}</option><option value="all">{t('Alle Inhalte','All content')}</option></select></label>
+      <label for="progress-topic">{t('Thema','Topic')}<select id="progress-topic" disabled><option value="all">{t('Alle Themen','All topics')}</option>{topics.map(topic=><option value={topic.id}>{topic.title}</option>)}</select></label>
+      <label class="unfinished-filter"><input type="checkbox" id="progress-unfinished" disabled/>{t('Nur offene Inhalte','Only unfinished content')}</label>
+    </div>
+    <p id="progress-filter-status" role="status"></p>
+    <div class="progress-groups">
+      {courses.map(course=><ProgressGroup locale={locale} title={course.title[locale]} topic={course.topic} view="chapters" kind="lesson" href={coursePath(course)} entries={course.chapters.map(chapter=>({id:chapterProgressId(course,chapter),title:chapter.title[locale],href:coursePath(course,chapter)}))}/>)}
+      {lessons.map(topic=><ProgressGroup locale={locale} title={topic.title} topic={topic.id} view="introductions" kind="lesson" href={`/themen/${topic.id}/`} entries={[{id:topic.id,title:topic.lesson!.title,href:`/themen/${topic.id}/#einstiegsartikel`}]}/>)}
+      {courses.map(course=><ProgressGroup locale={locale} title={course.title[locale]} topic={course.topic} view="questions" kind="question" href={`/quiz/?kurs=${course.id}`} entries={questions.filter(question=>question.course===course.id).map(question=>({id:question.id,title:question.prompt,href:`/quiz/?frage=${question.id}`}))}/>)}
+      {topics.map(topic=><ProgressGroup locale={locale} title={t(`${topic.title} · Einstiegsfragen`,`${topic.title} · introductory questions`)} topic={topic.id} view="questions" kind="question" href={`/quiz/?thema=${topic.id}`} entries={questions.filter(question=>!question.course&&question.topic===topic.id).map(question=>({id:question.id,title:question.prompt,href:`/quiz/?frage=${question.id}`}))}/>)}
     </div>
     <h2>{t('Deine Lernpfade', 'Your learning paths')}</h2>
-    <div class="path-grid">{paths.map(path => <article class="progress-entry"><a href={localePath(locale, `/lernpfade/${path.id}/`)}><h3>{path.title}</h3></a><p data-path-lesson-ids={JSON.stringify(path.steps.filter(step => step.available).map(step => step.contentId ?? step.topic))}></p><p class="muted">{t(`${path.steps.length - path.steps.filter(step => step.available).length} weitere Schritte sind geplant.`, `${path.steps.length - path.steps.filter(step => step.available).length} further steps are planned.`)}</p></article>)}</div>
+    <div class="path-grid">{paths.map(path => <article class="progress-entry"><a href={localePath(locale, `/lernpfade/${path.id}/`)}><h3>{path.title}</h3></a><p data-path-lesson-ids={JSON.stringify(path.steps.filter(step => step.available).map(step => step.contentId ?? step.topic))}></p>{path.steps.some(step=>!step.available)&&<p class="muted">{t(`${path.steps.filter(step=>!step.available).length} weitere Schritte sind geplant.`, `${path.steps.filter(step=>!step.available).length} further steps are planned.`)}</p>}</article>)}</div>
     <p class="editorial-note">{t('Der Lernstand zählt verfügbare Einstiege, Kurskapitel und Quizfragen. Markierungen sind deine persönliche Orientierung und kein Zertifikat. Geplante Lektionen zählen nicht als abgeschlossen.', 'Your learning record counts available introductions, course chapters and quiz questions. Checkmarks are personal guidance, not a certificate. Planned lessons are not counted as completed.')}</p>
   </section>
 </Layout>

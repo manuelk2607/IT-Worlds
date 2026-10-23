@@ -27,3 +27,9 @@ Acht Kapitel verbinden semantisches HTML, CSS-Boxmodell, responsive Raster, Form
 ## Paket 4 · IT-Grundlagen
 
 Sieben Kapitel führen von Binärdarstellung und UTF-8 über JSON, isolierte Dateioperationen und Git zu Suchalgorithmen, kontrollierter Fehlersuche und einem validierten Datenprojekt. 14 Fragen erklären alle Antwortmöglichkeiten. Die Programme werden ausgeführt und streng geprüft; Zusatztests prüfen JSON-Syntax und Fachvertrag, binäre Suche über leere/einzelne/mehrere Einträge, Zahlenüberlauf sowie den Unterschied zwischen vorgemerkter Git-Version und späterer Arbeitsänderung. Dateien und Git-Repository der Beispiele bleiben strikt temporär.
+
+## Paket 5 · Quiz und persönlicher Lernstand
+
+Quizfilter begrenzen nach Themen-/Kurswahl die tatsächlich angebotenen Kurse und Kapitel; ein Kapitel setzt Kurs, Thema und Lernstufe konsistent. Ein Themenwechsel entfernt unpassende Unterfilter, ein Stufenwechsel entfernt unpassende Kapitel. Exakte Fragenlinks bleiben möglich. Die Auswahl nennt ihre Fragenzahl und erklärt den Rundenneustart. Die Filterlogik ist mit Konflikt- und Grenzfällen getestet; zwei Fragen, alle Erklärungen, Ergebnis und Neustart wurden im Browser geprüft.
+
+Der Lernstand gruppiert Kapitel und Fragen in zugänglichen aufklappbaren Kursgruppen. Ansicht, Thema und „Nur offene Inhalte“ reduzieren die Übersicht. Jede Gruppe nennt ihren Fortschritt und verlinkt den nächsten offenen Schritt. Einstiege bleiben separat erreichbar; alle Inhalte auch ohne erreichbaren Account-Dienst lesbar. Suche normalisiert den bereits geladenen Index nur einmal pro Eintrag, sodass weitere Tastatureingaben die langen Kapiteltexte nicht wiederholt aufbereiten.
