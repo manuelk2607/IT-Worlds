@@ -8,7 +8,7 @@ Die Reihenfolge beschreibt vorgeschlagene Ausbaustufen, keine zugesagten Termine
 - [x] Startseite, Themen- und Lernpfadseiten mit responsivem Layout umsetzen.
 - [x] Themen- und Lernpfadsuche sowie Themen- und Stufenfilter bereitstellen.
 - [x] Zehn kurze Einstiegsartikel und zehn passende Quizfragen mit Primärquellen hinterlegen.
-- [x] 86 Originalquellen mit Herausgeber, Version, Abschnitt und Lesedatum dokumentieren.
+- [x] 139 Originalquellen mit Herausgeber, Version, Abschnitt und Lesedatum dokumentieren.
 - [x] LaTeX, Typst und Markdown als Unterbereich von Programmiersprachen einordnen.
 - [x] Projektcode einschließlich Tests, Hilfsskripten und Astro-Konfiguration auf TypeScript vereinheitlichen.
 - [ ] Unabhängiges Fachreview der Einstiege und Quizfragen durchführen.
@@ -90,3 +90,5 @@ Der Einstieg braucht noch keine Anmeldung, öffentliche Rangliste, automatische 
 Konkrete nächste Arbeitspakete: die Einstiege, 27 Kapitel und 64 Fragen unabhängig fachlich gegenlesen lassen, die Kurse mit Lernenden erproben und die weiteren Lernpfad-Skizzen ausarbeiten.
 
 Aktuelle Prioritäten, abgeschlossene Teilbereiche und verbleibende fachliche Lücken: [AUSBAU.md](AUSBAU.md).
+
+Aktuell: zehn Kursfolgen/84 Kapitel/178 Fragen. Lernstart, Kursfilter, Kapitelsuche, synchronisierte Quizfilter und gruppierter Lernstand umgesetzt. Cloud-&-DevOps-Kurs, durchgängige Querverbindungspfade und unabhängiges Fachreview bleiben offen.

@@ -1,6 +1,6 @@
 # Quellenprotokoll
 
-Stand der Erweiterung: **23. Oktober 2026**. Das Verzeichnis umfasst 86 Primärquellen: 19 ursprüngliche Quellen, 50 KI-/LaTeX-Belege und 17 Datenbank-/API-Belege. Die ursprünglichen 14 wurden am 20. Oktober gelesen; fünf weitere Quellen und der Docker-Stand wurden am 22. Oktober anhand der unten festgehaltenen Originale gelesen. Die HTML-Zielseiten sind die kanonischen Lesefassungen; abgerufen wurden die explizit verlinkten Quelltexte aus den offiziellen Repositories beziehungsweise die RFC-Originale. Es wurden keine fremden Artikeltexte oder Bilder übernommen. Die Lerntexte sind eigenständige Zusammenfassungen.
+Stand der Erweiterung: **23. Oktober 2026**. Das Verzeichnis umfasst 139 Primärquellen: die bisherigen 86 sowie 53 neue Belege für TypeScript, Web, Grundlagen, Linux, Netzwerke und Sicherheit. Die ursprünglichen 14 wurden am 20. Oktober gelesen; fünf weitere Quellen und der Docker-Stand wurden am 22. Oktober anhand der unten festgehaltenen Originale gelesen. Die HTML-Zielseiten sind die kanonischen Lesefassungen; abgerufen wurden die explizit verlinkten Quelltexte aus den offiziellen Repositories beziehungsweise die RFC-Originale. Es wurden keine fremden Artikeltexte oder Bilder übernommen. Die Lerntexte sind eigenständige Zusammenfassungen.
 
 Die zehn bisherigen Quizfragen beziehen sich auf Python, SQL, HTML, PyTorch, OpenAPI, UTF-8, DNS-TTL, MFA-Faktoren, Image/Container und Dateirechte. Zehn eigene Editor-Aufgaben üben dieselben Grundlagen mit begrenzten lokalen Lernmodellen. Sie belegen nicht automatisch alle geplanten Profi-Lektionen. OWASP wird ausdrücklich als Ausgabe 2021 verwendet, ohne Behauptung über die aktuelle Rangfolge.
 
@@ -951,3 +951,7 @@ Acht ergänzte Belege in `course-linux-sources.ts`: die von man7 wiedergegebenen
 ## Netzwerke · Abgleich 23. Oktober 2026
 
 Sechs neue Einträge in `course-network-sources.ts`: IETF RFC 4632 §3.1 (CIDR-Präfixnotation), RFC 9293 §2.2 (zuverlässiger geordneter Bytestrom), RFC 768 (UDP-Vertrag und Ports); MDN URL-Schnittstelle (strukturierte Bestandteile), TLS (Verschlüsselung, Integrität, Serverauthentifizierung), HTTP caching (Frische, ETag, no-cache/no-store). Der vorhandene RFC-1034-Beleg stützt DNS/TTL. Die konkreten Abschnitte wurden gelesen; Metadaten einschließlich Lesedatum sind im Register hinterlegt.
+
+## Sicherheit · Abgleich 23. Oktober 2026
+
+Sieben aktuelle OWASP-Cheat-Sheets in `course-security-sources.ts`: Threat Modeling (vier Leitfragen, Systemmodell/Vertrauensgrenzen), Authentication (Identitätsnachweis, Passwortmanager), Input Validation (Syntax/Semantik und Grenzen anderer Schutzmechanismen), Authorization (Least privilege, Deny by default, jede Anfrage), XSS Prevention (textContent und Ausgabekontexte), CSRF Prevention (bestehende Framework-Abwehr, Tokens, SameSite-Grenzen, Origin) und Logging (Ereignisse, ausgeschlossene Geheimnisse, Steuerzeichen und Zugriff). Die bestehenden MFA- und BOLA-Belege ergänzen diese. Quellenabgleich ist dokumentiert; unabhängiges Fachreview steht weiterhin aus.

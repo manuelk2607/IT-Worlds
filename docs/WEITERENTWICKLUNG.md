@@ -41,3 +41,15 @@ Sechs Kapitel mit zwölf Fragen erklären Quoting, Pfade und Rechte, Pipes und R
 ## Paket 7 · Netzwerke
 
 Sechs Kapitel und zwölf Fragen verbinden URL-Bestandteile, IPv4/CIDR, DNS/TTL, TCP/UDP, TLS und HTTP-Caches. Lokale Modelle sind ausdrücklich keine Live-Netztests. Alle TypeScript-Listings werden ausgeführt und streng geprüft; Zusatzfälle decken Präfixgrenzen, ungültige Zeiten, exakte Origins einschließlich Port/Benutzerinformationen sowie aktuelle und veraltete ETags ab. Geteilte Nachrichten werden anhand eines klar begrenzten ASCII-Modells erklärt, ohne TCP-Nachrichtengrenzen oder einen vollständigen DNS-Resolver zu behaupten.
+
+## Paket 8 · Sicherheit
+
+Sieben Kapitel mit 14 Fragen zu Bedrohungsmodell, Authentifizierung/MFA, Eingaben, Eigentümerregeln, sicherer Textausgabe, CSRF und Auditdaten. Alle Modelle benennen ihren begrenzten Umfang; sie ersetzen keine produktive Authentifizierungs- oder CSRF-Bibliothek. Automatisierte Beispiele prüfen Wertebereiche und Auswahllisten, getrennte Identitäten, fehlenden/fremden Origin und Auditkennungen einschließlich Zeilenumbrüchen und Längengrenzen. Kein Schema oder Account-Verfahren geändert.
+
+## Verbleibende priorisierte Arbeiten
+
+- Cloud & DevOps besitzt weiterhin den kurzen belegten Einstieg, aber noch keine vollständige Kursfolge. Nächstes Inhaltspaket: reproduzierbarer Build/CI, Container und persistente Daten, Konfiguration/Secrets, Auslieferung, Beobachtbarkeit und kontrollierter Rollback.
+- Drei ältere themenübergreifende Lernpfade enthalten weiterhin ausdrücklich geplante Schritte. Diese gezielt auf jetzt verfügbare Kapitel umstellen und als durchgehende Lernwege überarbeiten; keine automatischen Ersatzlinks mit unpassenden Inhalten.
+- Unabhängiges Fachreview sämtlicher Kurse und Fragen bleibt ausstehend. Der dokumentierte Quellenabgleich ist davon getrennt.
+- systemd-Beispiele auf einer laufenden Linux-Testumgebung praktisch prüfen. Portable Shellfälle sind lokal getestet; Docker ist vorhanden, aber sein Dienst läuft nicht.
+- Felddaten zu Ladezeit, Interaktionszeit und Layoutstabilität erfassen; aus lokalen Funktionsprüfungen keine echten Core-Web-Vitals-Werte ableiten.

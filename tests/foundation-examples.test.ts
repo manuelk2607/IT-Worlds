@@ -161,3 +161,37 @@ assert.equal(serve('/lesson').headers.get('cache-control'),'no-cache');
   }
  }finally{rmSync(dir,{recursive:true,force:true});}
 });
+
+test('security models reject invalid plans, foreign identities and injected audit IDs',async()=>{
+ const {securityCourse}=await import('../src/data/course-security.ts');
+ const dir=mkdtempSync(join(tmpdir(),'it-worlds-security-'));
+ try{
+  writeFileSync(join(dir,'package.json'),'{"type":"module"}');
+  for(const chapter of securityCourse.chapters){
+   const section=chapter.sections.find(section=>section.language==='TypeScript')!;
+   if(section.runtime==='browser')continue;
+   let extra='';
+   if(chapter.id==='eingaben')extra=`
+import assert from 'node:assert/strict';
+for(const minutes of [0,61,1.5,NaN,Infinity,'15'])assert.throws(()=>parsePlan({level:'beginner',minutes}));
+for(const minutes of [1,60])assert.equal(parsePlan({level:'advanced',minutes}).minutes,minutes);
+for(const value of [null,{}, {level:'admin',minutes:15}])assert.throws(()=>parsePlan(value));
+`;
+   if(chapter.id==='berechtigungen')extra=`
+import assert from 'node:assert/strict';
+assert.equal(mayEditProgress('a','a'),true);assert.equal(mayEditProgress('a','b'),false);assert.equal(mayEditProgress('b','a'),false);assert.equal(mayEditProgress(null,'a'),false);
+`;
+   if(chapter.id==='anfragen')extra=`
+import assert from 'node:assert/strict';
+assert.equal(sameOrigin('https://other.invalid','https://example.test'),false);
+assert.equal(sameOrigin('https://example.test.evil.invalid','https://example.test'),false);
+`;
+   if(chapter.id==='abschluss')extra=`
+for(const id of ['', 'a'.repeat(33),'with spaces','line\\rbreak'])assert.throws(()=>audit(id,'denied'));
+assert.equal(audit('a'.repeat(32),'allowed').requestId.length,32);
+`;
+   const filename=join(dir,chapter.id+'.ts');writeFileSync(filename,section.code+'\n'+extra);
+   execFileSync(process.execPath,['--experimental-strip-types',filename],{encoding:'utf8',timeout:10000});
+  }
+ }finally{rmSync(dir,{recursive:true,force:true});}
+});

@@ -6,7 +6,7 @@
 
 A German/English learning platform covering ten IT topics, from programming and databases to AI, networks, security and Linux. All learning content and quizzes remain accessible without signing in. An optional account synchronises read introductions and chapters, practised questions and correct answers across devices. Light and dark modes are available, with the choice saved in your browser.
 
-The site contains ten topic outlines, ten introductions and ten local practice editors, plus four complete chapter sequences: 8 database, 7 API, 14 AI and 13 LaTeX chapters, progressing from foundations to advanced projects. There are 94 quiz questions with explanations for every option and 86 primary sources. Four course learning paths are available in full; three other paths remain sketches. An independent subject review is still pending.
+The site contains ten topics, ten introductions, ten local editors and ten available courses with 84 chapters, 178 explained quiz questions and 139 primary sources. New courses cover IT foundations, TypeScript, web development, Linux, networks and security. Cloud & DevOps currently has a short introduction; three cross-topic paths remain sketches. Independent expert review is pending. A new learning start, filtered catalogue, chapter-text search, synchronised quiz filters and grouped progress improve orientation.
 
 [SQL course](https://it-worlds.maki26.workers.dev/en/themen/datenbanken/kurs/) · [API course](https://it-worlds.maki26.workers.dev/en/themen/apis/kurs/) · [AI course](https://it-worlds.maki26.workers.dev/en/themen/ki-neuronale-netze/kurs/) · [LaTeX course](https://it-worlds.maki26.workers.dev/en/themen/programmiersprachen/latex/) · [Course architecture](docs/KURSE.md)
 

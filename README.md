@@ -6,7 +6,9 @@
 
 IT-Worlds ist eine deutsch-englische IT-Lernplattform mit zehn Themenwelten. Alle Inhalte, Quellen und Quizfragen sind ohne Anmeldung zugänglich. Ein freiwilliger Account speichert gelesene Einstiege und Kapitel, bearbeitete Fragen und richtig beantwortete Fragen geräteübergreifend. Ein optionales dunkles Design ergänzt das helle Design; die Auswahl bleibt im Browser gespeichert.
 
-**Stand:** Zehn Themenwelten, zehn Einstiegsartikel und zehn lokale Übungseditoren. Vier ausgearbeitete Kursfolgen ergänzen 8 Datenbank-, 7 API-, 14 KI- und 13 LaTeX-Kapitel vom Einstieg bis zu fortgeschrittenen Projekten. Insgesamt 94 Quizfragen erklären jede Antwortmöglichkeit; 86 Primärquellen belegen die Inhalte. Die vier Kurslernwege sind vollständig verfügbar, drei weitere Lernpfade bleiben Skizzen. Ein unabhängiges Fachreview steht aus.
+**Stand (23.10.2026):** Zehn Themenwelten, zehn Einstiegsartikel, zehn lokale Übungseditoren und zehn verfügbare Kursfolgen mit **84 Kapiteln, 178 erklärten Quizfragen und 139 Primärquellen**. Neue Folgen: IT-Grundlagen, TypeScript, Webentwicklung, Linux, Netzwerke und Sicherheit. SQL, APIs, KI und LaTeX bleiben integriert. Cloud & DevOps besitzt bisher einen kurzen Einstieg; drei themenübergreifende Lernpfade bleiben ausdrücklich Skizzen. Ein unabhängiges Fachreview steht aus.
+
+**Orientierung:** [Lernstart](https://it-worlds.maki26.workers.dev/lernen/) → [Kurskatalog](https://it-worlds.maki26.workers.dev/lernpfade/) → Kapitel mit Aufgaben, Lösungen und Quiz. Die Suche durchsucht auch Kapiteltexte und lädt ihren Index erst bei Bedarf. Quizfilter grenzen passende Kurse/Kapitel ein; der persönliche Lernstand gruppiert Inhalte und führt zum nächsten offenen Schritt.
 
 [SQL-Kurs](https://it-worlds.maki26.workers.dev/themen/datenbanken/kurs/) · [API-Kurs](https://it-worlds.maki26.workers.dev/themen/apis/kurs/) · [KI-Kurs](https://it-worlds.maki26.workers.dev/themen/ki-neuronale-netze/kurs/) · [LaTeX-Kurs](https://it-worlds.maki26.workers.dev/themen/programmiersprachen/latex/) · [Kursarchitektur](docs/KURSE.md) · [Prioritäten und offene Inhalte](docs/AUSBAU.md)
 
@@ -40,6 +42,8 @@ npm test
 npm run check
 npm run build
 npm run deploy:check
+npm run seo:check
+npm run links:check
 ```
 
 `npm run ready` prüft HTTP-Seiten eines laufenden Servers; die Adresse lässt sich mit `IT_WORLDS_URL` setzen. Accounts mit getrennten Testnutzern prüfen. Suche, Filter, mobiles Menü, Quiz samt Erklärungen und Neustart, Quellenlinks, Designs, Sprachwechsel und 404-Seiten zusätzlich im Browser prüfen.

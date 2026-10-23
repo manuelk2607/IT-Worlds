@@ -1,4 +1,23 @@
-# Validierung und Veröffentlichung
+# Validierung
+
+## Aktuelle iterative Erweiterung · 23. Oktober 2026
+
+Zehn Kursfolgen, 84 Kapitel, 178 Fragen und 139 Quellen. Neu: Grundlagen 7, TypeScript 8, Web 8, Linux 6, Netzwerke 6, Sicherheit 7. Bestehende SQL-/API-/KI-/LaTeX-IDs erhalten. KI und LaTeX inhaltlich unverändert. UX: Lernstart, Kurskatalog, Breadcrumbs, verzögert geladene Kapitelsuche, passende Quiz-Auswahllisten und gruppierter Lernstand mit Fortsetzen.
+
+- 31 Tests bestanden; 100 Dateien strikt geprüft, keine Fehler/Warnungen/Hinweise.
+- Build: 252 HTML-Seiten. SEO-Audit: 246 öffentliche Sprachseiten mit Canonicals, hreflang, Metadaten, Sitemap und strukturierten Daten.
+- Interner Audit: 16.254 Links, Assets und Sprungmarken in allen 252 HTML-Seiten geprüft. Wiederholbar mit npm run links:check.
+- Deployment-Vorschau erfolgreich: 965,48 KiB, gzip 275,04 KiB. Keine zusätzlichen Abhängigkeiten.
+- Alle neuen TypeScript-Listings strikt geprüft; lokale Node-Modelle ausgeführt. Zusätzliche Fälle für Wertebereiche, unbekannte Daten, Suche, Summenüberlauf, Origins, ETags, Eigentümerregeln und Auditkennungen.
+- Portable Shellfälle in isolierten temporären Ordnern ausgeführt: Quoting/Leerzeichen, Rechte, Pipe-Status, eigener Prozess und korrekte/beschädigte Wiederherstellung. Linux-systemd-Liveprüfung offen; lokaler Docker-Dienst läuft nicht.
+- Browser lokal: Suche/Enter, Kurs- und Quizfilter, Fragen samt sämtlichen Erklärungen, Ergebnis und Neustart; gruppierte Fortschrittsansicht und Themenfilter; mobile Navigation/Kapitelübersicht; Webbeispiele (Formular, Grid, Boxmodell, Tastatur, Zähler, Fehler/Wiederholung). Sicherheitsbeispiel zeigt Markup als Text und erzeugt kein strong-Element.
+
+Grenzen: Kein neuer angemeldeter Ende-zu-Ende-Test; Auth und Datenbankschema wurden nicht verändert. Quellenabgleich ist kein unabhängiges Fachreview. Keine Core-Web-Vitals-Feldmessung behauptet. Cloud & DevOps und drei themenübergreifende Pfadskizzen bleiben nächste priorisierte Aufgaben, siehe AUSBAU.md.
+
+Veröffentlichung: 23.10.2026 22:22:53 Europe/Stockholm, Version 51a5ae9c-3253-4d71-873f-db912367cf55, Deployment 2c0d7304-78a5-4405-aa2c-cd9d771c63bb, 100 % Traffic. Vorhandener Account, Subdomain, vier Bindings und Einstellungen vor/nach Veröffentlichung identisch. Der am 24.10. wiederholte öffentliche SEO-Abgleich bestätigt alle 246 URLs samt bytegleicher Auslieferung und HTTPS-Weiterleitung. Der Audit liest den lokalen Buildstand jetzt vor den Netzwerkprüfungen ein und verwendet höchstens vier parallele Anfragen; ein nachfolgender Build vermischt dadurch nicht mehr die geprüften Stände.
+
+## Vorherige Prüfstände
+
 
 ## Datenbank-/API-Ausbau · 23. Oktober 2026
 
