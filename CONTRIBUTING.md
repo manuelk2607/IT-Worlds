@@ -42,3 +42,7 @@ Accounts sind freiwillig; Gäste behalten Zugriff auf alle Inhalte. Für persön
 Eine Projektlizenz ist noch nicht ausgewählt. Vor größeren externen Text-, Bild- oder Codebeiträgen wird das Lizenzmodell geklärt; Beiträge sollen keine pauschale Rechteübertragung voraussetzen. Für kleine Vorschläge und Korrekturen bitte nur eigene Formulierungen und zulässige Quellenangaben verwenden.
 
 Sachlich und respektvoll zusammenarbeiten, Kritik konkret begründen und keine privaten Daten oder Zugangsdaten in Issues oder Pull Requests einstellen.
+
+## Kurskapitel
+
+Neue Kursinhalte in den typisierten zweisprachigen Daten unter `src/data/course-*.ts` pflegen. Kapitel- und Frage-IDs nach Veröffentlichung stabil halten. Lernziele, Voraussetzungen, Aufgabe mit Lösung, Quellen und Erklärungen jeder Quizoption ergänzen. Ausführbare Beispiele separat mit der angegebenen Umgebung prüfen und nicht ausgeführte Teile ausdrücklich dokumentieren. Struktur und Prüfverfahren: [KURSE.md](docs/KURSE.md).

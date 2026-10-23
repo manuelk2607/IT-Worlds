@@ -1,0 +1,73 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SourceCard from './SourceCard.astro';
+import ProgressToggle from './ProgressToggle.astro';
+import { courses, coursePath, chapterProgressId } from '../data/courses.ts';
+import type { Course, Chapter } from '../data/course-types.ts';
+import { getContent, translate, localePath, type Locale } from '../lib/i18n.ts';
+import katex from 'katex';
+import 'katex/dist/katex.min.css';
+import '../styles/courses.css';
+interface Props { locale?: Locale; course: Course; chapter?: Chapter }
+const { course, chapter, locale = 'de' } = Astro.props;
+const t = translate(locale);
+const { levels, levelName, topicById } = getContent(locale);
+const position = chapter ? course.chapters.findIndex(item => item.id === chapter.id) : -1;
+const previous = course.chapters[position - 1];
+const next = course.chapters[position + 1];
+const title = chapter ? chapter.title[locale] : course.title[locale] + t(' · Kursübersicht', ' · Course overview');
+const description = chapter ? chapter.goals.map(goal => goal[locale]).join(' ') + ' ' + course.title[locale] + '.' : course.description[locale];
+const quizUrl = localePath(locale, `/quiz/?kurs=${course.id}${chapter ? `&kapitel=${chapter.id}` : ''}`);
+const other = courses.find(item => item.id !== course.id)!;
+---
+<Layout locale={locale} title={title} description={description} active="themen">
+  <header class="container page-top course-header">
+    <a class="back-link" href={localePath(locale, chapter ? coursePath(course) : `/themen/${course.topic}/`)}>{t('← Zur Übersicht', '← Back to overview')}</a>
+    <p class="eyebrow">{topicById(course.topic)!.title} · {course.id === 'latex' ? t('AUSZEICHNUNGS- & SATZSPRACHEN', 'MARKUP & TYPESETTING') : t('LERNKURS', 'LEARNING COURSE')}</p>
+    <h1>{title}</h1>
+    <p class="page-lead">{description}</p>
+    <div class="course-meta">
+      <span>{chapter ? levelName(chapter.level) : t('Einstieg → Vertiefung → Profi', 'Beginner → Intermediate → Advanced')}</span>
+      <span>{t(`${course.chapters.length} Kapitel`, `${course.chapters.length} chapters`)}</span>
+      <span>{t('Ohne Anmeldung zugänglich', 'Accessible without signing in')}</span>
+    </div>
+  </header>
+  <div class="container course-layout">
+    <aside class="course-sidebar">
+      <details open>
+        <summary>{t('Kursinhalt', 'Course contents')}</summary>
+        <nav aria-label={t('Kapitelnavigation', 'Chapter navigation')}>
+          <a href={localePath(locale, coursePath(course))} aria-current={!chapter ? 'page' : undefined}>{t('Überblick & Voraussetzungen', 'Overview & prerequisites')}</a>
+          {course.chapters.map(item => <a href={localePath(locale, coursePath(course, item))} aria-current={chapter?.id === item.id ? 'page' : undefined}>{item.title[locale]}<small>{levelName(item.level)}</small></a>)}
+        </nav>
+      </details>
+    </aside>
+    <div class="course-content">
+      {!chapter ? <>
+        <section class="prerequisite"><div><h2>{t('Dein Einstieg', 'Your starting point')}</h2><p>{course.prerequisites[locale]}</p><p>{t('Arbeite die Kapitel in Reihenfolge durch. Lies die Erklärung, rechne oder führe das Beispiel aus und löse die Aufgabe vor dem Öffnen der Lösung. Die Quizfragen prüfen anschließend dein Verständnis.', 'Work through the chapters in order. Read the explanation, calculate or run the example, and solve the exercise before opening its solution. The quiz then checks your understanding.')}</p></div></section>
+        {levels.map(level => <section class="course-stage"><h2>{level.name}</h2><ol class="course-chapters">{course.chapters.filter(item => item.level === level.id).map(item => <li><a href={localePath(locale, coursePath(course, item))}><h3>{item.title[locale]}</h3><p>{item.goals.map(goal => goal[locale]).join(' ')}</p><span class="text-link">{t('Kapitel öffnen →', 'Open chapter →')}</span></a></li>)}</ol></section>)}
+        <a class="button primary" href={quizUrl}>{t('Kursquiz starten', 'Start course quiz')}</a>
+      </> : <>
+        <article id="einstiegsartikel" class="course-article">
+          <div class="course-prerequisite"><strong>{t('Voraussetzung:', 'Prerequisite:')}</strong> {previous ? <a href={localePath(locale, coursePath(course, previous))}>{previous.title[locale]}</a> : course.prerequisites[locale]}</div>
+          <section class="course-goals"><h2>{t('Nach diesem Kapitel kannst du …', 'After this chapter you can …')}</h2><ul>{chapter.goals.map(goal => <li>{goal[locale]}</li>)}</ul></section>
+          <nav class="chapter-toc" aria-label={t('In diesem Kapitel', 'In this chapter')}><strong>{t('In diesem Kapitel', 'In this chapter')}</strong>{chapter.sections.map((section, index) => <a href={`#abschnitt-${index + 1}`}>{section.title[locale]}</a>)}<a href="#aufgabe">{t('Aufgabe & Lösung', 'Exercise & solution')}</a><a href="#belege">{t('Quellen & Vertiefung', 'Sources & further reading')}</a></nav>
+          {chapter.sections.map((section, index) => <section class="course-section" id={`abschnitt-${index + 1}`}><h2>{section.title[locale]}</h2>{section.paragraphs.map(paragraph => <p>{paragraph[locale]}</p>)}
+            {section.formula && <div class="course-formula" tabindex="0" aria-label={t('Mathematische Formel', 'Mathematical formula')} set:html={katex.renderToString(section.formula, { displayMode: true, throwOnError: true, trust: false, output: 'htmlAndMathml' })} />}
+            {section.code && <div class="code-example"><span>{section.language} · {t('Vollständiges Beispiel', 'Complete example')}</span><pre tabindex="0"><code>{section.code}</code></pre></div>}
+          </section>)}
+          <section id="aufgabe" class="course-exercise"><p class="eyebrow">{t('SELBST ANWENDEN', 'APPLY IT YOURSELF')}</p><h2>{t('Deine Aufgabe', 'Your exercise')}</h2><p>{chapter.exercise[locale]}</p><details><summary>{t('Lösung & Begründung anzeigen', 'Show solution & reasoning')}</summary><p>{chapter.solution[locale]}</p></details></section>
+          <ProgressToggle locale={locale} kind="lesson" contentId={chapterProgressId(course, chapter)} />
+          <a class="button primary" href={quizUrl}>{t('Dieses Kapitel im Quiz prüfen', 'Test this chapter in the quiz')} →</a>
+          <section id="belege" class="course-sources"><h2>{t('Quellen & Vertiefung', 'Sources & further reading')}</h2><p class="muted">{t('Die angegebenen Abschnitte dienen als Belege und als weiterführende Lektüre. Quellenabgleich: 23.10.2026. Ein unabhängiges Fachreview steht aus.', 'The listed sections provide evidence and further reading. Sources checked: 23 October 2026. Independent expert review is pending.')}</p>{chapter.sources.map(id => <SourceCard locale={locale} id={id} compact />)}</section>
+        </article>
+        <nav class="course-pagination" aria-label={t('Weiterlernen', 'Continue learning')}>
+          {previous && <a class="button secondary" href={localePath(locale, coursePath(course, previous))}>← {previous.title[locale]}</a>}
+          {next ? <a class="button primary" href={localePath(locale, coursePath(course, next))}>{next.title[locale]} →</a> : <a class="button primary" href={localePath(locale, coursePath(other, other.chapters.at(-1)))}>{t('Abschlussprojekt verbinden:', 'Connect the final project:')} {other.title[locale]} →</a>}
+        </nav>
+      </>}
+      <p class="course-review muted">{t('Die Kursfolge behandelt Grundlagen bis zu fortgeschrittenen Entscheidungen und Projekten. Sie ist kein Zertifikat und ersetzt keine eigenständige Praxis oder fachliche Begutachtung.', 'The course sequence covers foundations through advanced decisions and projects. It is not a certificate and does not replace independent practice or expert assessment.')}</p>
+    </div>
+  </div>
+</Layout>
+

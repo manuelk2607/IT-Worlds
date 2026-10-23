@@ -6,7 +6,7 @@ import { checkExercise } from '../src/lib/exercise-checker.ts';
 
 test('every topic has a sourced introduction, question and bilingual editor task',()=>{
   assert.equal(topics.filter(topic=>topic.lesson).length,10);
-  assert.equal(questions.length,10);
+  assert.equal(questions.filter(question=>!question.course).length,10);
   assert.equal(new Set(exercises.map(exercise=>exercise.topic)).size,10);
   for(const topic of topics){
     assert.ok(topic.lesson);

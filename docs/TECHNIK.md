@@ -50,3 +50,7 @@ Mehrere Nutzer und RLS zusätzlich auf einem Entwicklungsbranch testen. Neue Mig
 Die zehn [Übungseditoren](EDITOR.md) verwenden eigene lokale Prüfer für klar begrenzte Aufgaben. Sie führen keine Nutzereingaben aus und senden sie nicht an einen Server. Ihre Ergebnisse zählen nicht zusätzlich im Account-Lernstand. [SEO](SEO.md) ergänzt Sitemap, Robots-Regeln, Canonicals, Sprachbezüge und Vorschau-Metadaten.
 
 Weitere Artikel, Lernspiele, ein CMS und isolierte Codeausführung sind spätere Erweiterungen. Angezeigte SQL-, Python- und PyTorch-Beispiele werden nicht im Browser ausgeführt. Das unabhängige Fachreview bleibt offen.
+
+## Kursinhalte
+
+Die zweisprachigen Kursdaten und ihre 50 zusätzlichen Quellen liegen in `src/data/course-*.ts`. `courses.ts` aggregiert 27 Kapitel, 54 Fragen und zwei Lernpfade; `CourseView.astro` rendert beide Sprachen. KaTeX erzeugt Formeln beim Build, einschließlich MathML. Bestehende Suche, SEO, Quiz und Lernstand verwenden dieselben IDs. Details: [KURSE.md](KURSE.md).

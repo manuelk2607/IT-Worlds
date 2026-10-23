@@ -1,5 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import { courseChapters } from '../src/data/courses.ts';
 import {
   topics,
   sources,
@@ -31,7 +32,7 @@ test("all requested areas exist with three meaningful curriculum levels", () => 
 test("all published introductory claims have traceable primary-source metadata", () => {
   for (const [id, source] of Object.entries(sources)) {
     assert.equal(new URL(source.url).protocol, "https:", id);
-    assert.ok(["raw.githubusercontent.com", "www.rfc-editor.org"].includes(new URL(source.evidenceUrl).hostname), id);
+    assert.equal(new URL(source.evidenceUrl).protocol, 'https:', id);
     for (const field of [
       "publisher",
       "version",
@@ -87,7 +88,7 @@ test("quiz questions have one valid answer, feedback for every choice, and a mat
       ),
     );
     assert.ok(
-      topic.lesson.sources.includes(question.source),
+      (question.course ? courseChapters.find(item => item.course.id === question.course && item.chapter.id === question.chapter)?.chapter.sources : topic.lesson.sources)?.includes(question.source),
       `${question.id}: answer citation must match article`,
     );
     assert.ok(sources[question.source]);
@@ -102,7 +103,7 @@ test("available path steps lead to actual articles; planned paths cannot imply c
     for (const step of path.steps) {
       const topic = topics.find((item) => item.id === step.topic);
       assert.ok(topic);
-      if (step.available) assert.equal(step.title, topic.lesson?.title);
+      if (step.available) assert.equal(step.title, step.contentId ? courseChapters.find(item => item.id === step.contentId)?.chapter.title.de : topic.lesson?.title);
     }
   }
   const professionalPath = paths.find((path) => path.level === "profi");

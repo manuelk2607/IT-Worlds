@@ -8,13 +8,14 @@ Die Reihenfolge beschreibt vorgeschlagene Ausbaustufen, keine zugesagten Termine
 - [x] Startseite, Themen- und Lernpfadseiten mit responsivem Layout umsetzen.
 - [x] Themen- und Lernpfadsuche sowie Themen- und Stufenfilter bereitstellen.
 - [x] Zehn kurze Einstiegsartikel und zehn passende Quizfragen mit Primärquellen hinterlegen.
-- [x] 19 Originalquellen mit Herausgeber, Version, Abschnitt und Lesedatum dokumentieren.
+- [x] 69 Originalquellen mit Herausgeber, Version, Abschnitt und Lesedatum dokumentieren.
 - [x] LaTeX, Typst und Markdown als Unterbereich von Programmiersprachen einordnen.
 - [x] Projektcode einschließlich Tests, Hilfsskripten und Astro-Konfiguration auf TypeScript vereinheitlichen.
 - [ ] Unabhängiges Fachreview der Einstiege und Quizfragen durchführen.
-- [ ] Lernpfade vollständig ausarbeiten und für Vertiefung/Profi passende Belege recherchieren.
+- [x] KI- und LaTeX-Kursfolgen mit 27 Kapiteln, 54 zusätzlichen Fragen und Belegen ausarbeiten.
+- [ ] Die weiteren drei Lernpfad-Skizzen vollständig ausarbeiten.
 
-Der frühere Vorschlag „Vom Browser zur Website“ bleibt eine mögliche spätere inhaltliche Ausbaustufe. Die drei derzeit sichtbaren Lernpfade sind Skizzen, keine abgeschlossenen Kurse. Details im [Website-Aufbau](WEBSITE-AUFBAU.md).
+Der frühere Vorschlag „Vom Browser zur Website“ bleibt eine mögliche spätere inhaltliche Ausbaustufe. Neben zwei verfügbaren Kursfolgen bestehen weiterhin drei Lernpfad-Skizzen. Details im [Website-Aufbau](WEBSITE-AUFBAU.md).
 
 - [x] Zehn lokale Übungseditoren mit Hinweisen und Musterlösungen ergänzen.
 - [x] Sitemap, Canonicals, Sprachbezüge und Social-Metadaten ergänzen.
@@ -86,4 +87,4 @@ Der Einstieg braucht noch keine Anmeldung, öffentliche Rangliste, automatische 
 | Wie werden Inhalte gepflegt? | Markdown und Review im Repository | Redaktion benötigt eine andere Oberfläche |
 | Wie lizenzieren wir das Projekt? | Code, Lerntexte und Fremdmaterial getrennt beurteilen | vor entsprechenden externen Beiträgen und Veröffentlichung |
 
-Konkrete nächste Arbeitspakete: die zehn Einstiege und Fragen fachlich gegenlesen lassen, einen Lernpfad vollständig ausarbeiten und die Beleglage für Vertiefungs- und Profi-Inhalte aufbauen.
+Konkrete nächste Arbeitspakete: die Einstiege, 27 Kapitel und 64 Fragen unabhängig fachlich gegenlesen lassen, die Kurse mit Lernenden erproben und die weiteren Lernpfad-Skizzen ausarbeiten.

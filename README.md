@@ -4,9 +4,11 @@
 
 [Website auf Deutsch](https://it-worlds.maki26.workers.dev) · [Website in English](https://it-worlds.maki26.workers.dev/en/) · [Übungseditoren](https://it-worlds.maki26.workers.dev/uebungen/) · [English README](README.en.md)
 
-IT-Worlds ist eine deutsch-englische IT-Lernplattform mit zehn Themenwelten. Alle Inhalte, Quellen und Quizfragen sind ohne Anmeldung zugänglich. Ein freiwilliger Account speichert gelesene Einstiege, bearbeitete Fragen und richtig beantwortete Fragen geräteübergreifend. Ein optionales dunkles Design ergänzt das helle Design; die Auswahl bleibt im Browser gespeichert.
+IT-Worlds ist eine deutsch-englische IT-Lernplattform mit zehn Themenwelten. Alle Inhalte, Quellen und Quizfragen sind ohne Anmeldung zugänglich. Ein freiwilliger Account speichert gelesene Einstiege und Kapitel, bearbeitete Fragen und richtig beantwortete Fragen geräteübergreifend. Ein optionales dunkles Design ergänzt das helle Design; die Auswahl bleibt im Browser gespeichert.
 
-**Stand:** Zehn Themenpläne für Einstieg, Vertiefung und Profi, drei Lernpfad-Skizzen, zehn kurze Einstiegsartikel, zehn interaktive Fragen mit Erklärung jeder Antwort und 19 offizielle Quellen. Zehn lokale Übungseditoren ergänzen die Artikel mit Hinweisen und Musterlösungen. Weitere Lektionen sind als geplant gekennzeichnet. Vollständige Profi-Kurse und ein unabhängiges Fachreview stehen aus.
+**Stand:** Zehn Themenwelten, zehn Einstiegsartikel und zehn lokale Übungseditoren. Zwei ausgearbeitete Kursfolgen ergänzen 14 KI-Kapitel und 13 LaTeX-Kapitel vom Einstieg bis zu fortgeschrittenen Projekten. Insgesamt 64 Quizfragen erklären jede Antwortmöglichkeit; 69 Primärquellen belegen die Inhalte. Die zwei Kurslernwege sind vollständig verfügbar, drei weitere Lernpfade bleiben Skizzen. Ein unabhängiges Fachreview steht aus.
+
+[KI-Kurs](https://it-worlds.maki26.workers.dev/themen/ki-neuronale-netze/kurs/) · [LaTeX-Kurs](https://it-worlds.maki26.workers.dev/themen/programmiersprachen/latex/) · [Kursarchitektur](docs/KURSE.md)
 
 ## Themenwelten
 
@@ -62,7 +64,7 @@ Astro erzeugt statische Seiten mit TypeScript und CSS. Ein kleiner TypeScript-Wo
 | [GitHub](docs/GITHUB-SETUP.md) | Beschreibung, Website-Link und Topics |
 | [Mitwirken](CONTRIBUTING.md) | Beiträge, Übersetzungen und Quellenregeln |
 
-Inhaltsdaten liegen in `src/data/content.ts` und `src/data/content.en.ts`; die neuen Blöcke werden aus `expansion.ts` und `expansion.en.ts` ergänzt; stabile IDs verbinden beide Sprachen mit demselben Lernstand. Eigener Code, Tests, Skripte und unterstützte Konfigurationen verwenden strikt geprüftes TypeScript. Python-, SQL- und LaTeX-Beispiele behalten ihre Sprache. Verbindliche Regeln: [AGENTS.md](AGENTS.md).
+Inhaltsdaten liegen in `src/data/content.ts` und `src/data/content.en.ts`; die neuen Blöcke werden aus `expansion.ts` und `expansion.en.ts` ergänzt; Die Kursdaten liegen in `src/data/course-*.ts`, zusammengeführt in `courses.ts`; stabile IDs verbinden beide Sprachen mit demselben Lernstand. Eigener Code, Tests, Skripte und unterstützte Konfigurationen verwenden strikt geprüftes TypeScript. Python-, SQL- und LaTeX-Beispiele behalten ihre Sprache. Verbindliche Regeln: [AGENTS.md](AGENTS.md).
 
 ## Mitwirken und Rechte
 

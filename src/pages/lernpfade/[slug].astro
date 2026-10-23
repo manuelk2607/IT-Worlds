@@ -25,7 +25,7 @@ const available = path.steps.filter((step) => step.available).length;
         <Icon name={path.icon} size={36} />
       </span>
       <p class="eyebrow">
-        DEIN LERNPFAD · {levelName(path.level).toLocaleUpperCase(locale)}
+        {t('DEIN LERNPFAD', 'YOUR LEARNING PATH')} · {path.course ? t('EINSTIEG BIS PROFI', 'BEGINNER TO ADVANCED') : levelName(path.level).toLocaleUpperCase(locale)}
       </p>
       <h1>{path.title}</h1>
       <p class="page-lead">{path.description}</p>
@@ -57,11 +57,11 @@ const available = path.steps.filter((step) => step.available).length;
             {step.available ? (
               <a
                 class="text-link"
-                href={localePath(locale, `/themen/${step.topic}/#einstiegsartikel`)}
+                href={localePath(locale, step.href ?? `/themen/${step.topic}/#einstiegsartikel`)}
               >
-                {t("Einstieg lesen", "Read introduction")} <Icon name="arrow" size={17} />
+                {t("Lektion lesen", "Read lesson")} <Icon name="arrow" size={17} />
               </a>
-              <ProgressToggle locale={locale} kind="lesson" contentId={step.topic} />
+              <ProgressToggle locale={locale} kind="lesson" contentId={step.contentId ?? step.topic} />
             ) : (
               <>
                 <span class="planned-badge">{t("In Planung", "Planned")}</span>
@@ -77,10 +77,10 @@ const available = path.steps.filter((step) => step.available).length;
     <div class="editorial-note">
       <Icon name="book" />
       <p>
-        {t("Das ist eine Lernweg-Skizze und noch kein vollständiger Kurs. Verfügbare Einstiege kannst du mit einem freiwilligen Account abhaken. Geplante Schritte zählen nicht als abgeschlossen.", "This is a learning-path outline, not a complete course. An optional account lets you mark available introductions as read. Planned steps are not counted as completed.")}
+        {path.course ? t('Alle Kapitel dieses Kurses sind verfügbar, einschließlich Aufgaben, Lösungen und Quiz. Der freiwillige Account speichert deinen Fortschritt.', 'All chapters of this course are available, including exercises, solutions and quizzes. The optional account saves your progress.') : t('Dies ist eine Lernweg-Skizze mit verfügbaren Einstiegen und geplanten Schritten. Geplante Inhalte zählen nicht als abgeschlossen.', 'This is a learning-path outline with available introductions and planned steps. Planned content is not counted as completed.')}
       </p>
     </div>
-    <a href={localePath(locale, "/quiz/")} class="button primary">
+    <a href={localePath(locale, path.course ? `/quiz/?kurs=${path.course}` : '/quiz/')} class="button primary">
       {t("Erste Quizfragen ausprobieren", "Try the first quiz questions")} <Icon name="arrow" size={18} />
     </a>
   </div>

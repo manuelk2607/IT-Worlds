@@ -8,13 +8,13 @@ Der erste Rahmen macht die breite Themenlandkarte benutzbar. Das Ziel ist Wissen
 | -------------------- | --------------------------------------------------------------------------------------------------------- |
 | `/`                  | Einstieg, zehn durchsuchbare Themenwelten, Gruppenfilter, Lernpfade, Quellenanspruch, Quiz-Einstieg       |
 | `/themen/[slug]/`    | Beschreibung, Voraussetzungen, drei Lernstufen, gegebenenfalls erster Artikel, passende Quellen           |
-| `/lernpfade/`        | Drei Lernweg-Skizzen, nach Lernstufe filterbar                                                            |
+| `/lernpfade/`        | Zwei verfügbare Kursfolgen und drei Lernweg-Skizzen, nach Lernstufe filterbar                                                            |
 | `/lernpfade/[slug]/` | Voraussetzungen, Schritte, tatsächliche Verfügbarkeit und Verknüpfung zur Themenwelt                      |
 | `/uebungen/` | Zehn Editor-Aufgaben mit lokalem Prüfer, Hinweisen und Musterlösungen |
-| `/quiz/`             | Zehn Fragen, Themenauswahl, Erklärung zu jeder Antwort, Beleg, Ergebnis und Neustart                      |
-| `/quellen/`          | 19 Originalquellen mit Herausgeber, Version, Abschnitt, Lesedatum und gelesenem Dokumentationsquelltext |
+| `/quiz/`             | 64 Fragen, Themen-, Kurs-, Kapitel- und Stufenwahl, Erklärung zu jeder Antwort, Beleg, Ergebnis und Neustart                      |
+| `/quellen/`          | 69 Originalquellen mit Herausgeber, Version, Abschnitt, Lesedatum und gelesenem Dokumentationsquelltext |
 
-Die globale Suche findet Themen und Lernpfade, auch über zugeordnete Unterthemen. Sie lässt sich über die Suchschaltfläche oder `/` außerhalb von Eingabefeldern öffnen. Escape schließt sie. Sie ist noch keine Volltextsuche über zukünftige Artikel.
+Die globale Suche findet Themen, Lernpfade und die 27 Kurskapitel anhand ihrer Titel, Lernziele und Abschnittstitel, auch über zugeordnete Unterthemen. Sie lässt sich über die Suchschaltfläche oder `/` außerhalb von Eingabefeldern öffnen. Escape schließt sie. Sie ist noch keine Volltextsuche über zukünftige Artikel.
 
 Die Seiten stehen zusätzlich unter `/en/` vollständig auf Englisch bereit. Der Sprachschalter erhält die entsprechende Seite, Suchparameter und Sprungmarken. Jede Themenwelt enthält unter `#uebungseditor` eine passende Aufgabe. Eingaben werden lokal in einem begrenzten Lernmodell geprüft; der Quiz-/Lesefortschritt wird dadurch nicht automatisch geändert.
 
@@ -28,7 +28,7 @@ Die Hauptnavigation wird von `src/scripts/navigation.ts` gesteuert. Auf der Star
 
 Die fünf gewünschten Kernbereiche sind **Programmiersprachen**, **Datenbanken**, **Website bauen**, **KI und neuronale Netze** sowie **APIs und Schnittstellen**. Als ergänzende Grundlagen sind **IT-Grundlagen**, **Internet und Netzwerke**, **IT-Sicherheit**, **Cloud und DevOps** sowie **Betriebssysteme und Linux** angelegt. Git, Testing, Algorithmen, Softwarearchitektur, Datenschutz und Barrierefreiheit sind als Querschnittsthemen eingebunden.
 
-Unter **Programmiersprachen → Auszeichnungs- & Satzsprachen** stehen außerdem LaTeX, Typst und Markdown. LaTeX wird als System zur Dokumentaufbereitung und zum Textsatz eingeordnet; Typst verbindet Markup, Textsatz und Scripting, Markdown strukturiert Dokumente in Klartext. Geplant sind Einstiege, Formelsatz, Literaturverzeichnisse und fortgeschrittene Dokument-Workflows. Eine zusätzliche Themenwelt ist dafür nicht nötig.
+Unter **Programmiersprachen → Auszeichnungs- & Satzsprachen** stehen außerdem LaTeX, Typst und Markdown. LaTeX wird als System zur Dokumentaufbereitung und zum Textsatz eingeordnet; Typst verbindet Markup, Textsatz und Scripting, Markdown strukturiert Dokumente in Klartext. LaTeX besitzt 13 verfügbare Kapitel zu Einrichtung, Text- und Formelsatz, Tabellen, Grafiken, Literatur und komplexen Dokumenten. Eine zusätzliche Themenwelt ist dafür nicht nötig.
 
 Die Web-Lernwege verwenden TypeScript. JavaScript wird dort nur bei Bedarf als zugrunde liegende Browser-Laufzeit oder zum Vergleich erklärt. Astro baut die Website; TypeScript bleibt die Sprache für Anwendungslogik, Tests, Hilfsskripte und Konfiguration.
 
@@ -42,7 +42,9 @@ Lernstufe und Vorwissen werden getrennt angegeben. Beispielsweise ist das vorhan
 
 ## Verfügbare und geplante Inhalte
 
-Verfügbar sind zehn kurze, quellenbasierte Artikelentwürfe und zehn Single-Choice-Fragen. Drei Lernpfade skizzieren mögliche Reihenfolgen: „Deine erste Website“, „APIs & Daten verbinden“ und „Systeme bewusst entwerfen“. Die sichtbaren Verfügbarkeitsangaben „1 von 4“, „2 von 4“ und „0 von 4“ zählen vorhandene Inhalte. Der persönliche Lernstand wird separat aus gelesenen verfügbaren Einstiegen und bearbeiteten Fragen berechnet. Vertiefungs- und Profi-Lektionen sind noch geplant. Fachreview, Glossar, vollständige Kurse und Lernspiele bleiben offen.
+Verfügbar sind zehn kurze Einstiegsartikel sowie 27 Kurskapitel mit Aufgaben und Lösungen. KI umfasst 14, LaTeX 13 Kapitel; insgesamt gibt es 64 Quizfragen. Zwei vollständige Kursfolgen führen durch die Kapitel. Drei weitere Lernpfade („Deine erste Website“, „APIs & Daten verbinden“, „Systeme bewusst entwerfen“) bleiben Skizzen mit 1/4, 2/4 und 0/4 verfügbaren Schritten. Persönlicher Fortschritt umfasst 37 lesbare Inhalte und 64 Fragen; bestehende IDs bleiben erhalten. Weitere Themenlektionen, unabhängiges Fachreview, Glossar und Lernspiele bleiben offen.
+
+Kapitelrouten, Datenmodell und Erweiterung sind in [KURSE.md](KURSE.md) beschrieben.
 
 ## Inhalte erweitern
 

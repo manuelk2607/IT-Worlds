@@ -1,5 +1,29 @@
 # Validierung und Veröffentlichung
 
+## Kursausbau · 23. Oktober 2026
+
+14 KI- und 13 LaTeX-Kapitel in Deutsch und Englisch, 27 Aufgaben mit Lösungen, 54 neue Quizfragen (insgesamt 64), zwei verfügbare Kurslernwege und 69 Primärquellen. Kapitel sind in Themenansichten, Suche, Fortschritt, Quellenverzeichnis und Sitemap eingebunden. Bisherige IDs und lokale Nutzerdateien bleiben erhalten. Keine Änderung am Account-Schema.
+
+| Prüfung | Ergebnis |
+| --- | --- |
+| npm test | 20 Tests bestanden, einschließlich Kurs-IDs, Übersetzungen, Quellen, Formelrendering, Antwortbewertung und Filterkombinationen |
+| npm run check | 70 Dateien, 0 Fehler/Warnungen/Hinweise |
+| npm run build | 104 HTML-Seiten |
+| npm run deploy:check | Erfolgreich; 655,50 KiB / gzip 172,18 KiB |
+| npm run seo:check -- --live | 98 öffentliche URLs mit korrekten Metadaten und bytegleicher öffentlicher Auslieferung; HTTPS-Weiterleitung geprüft |
+| Interne Links | 9.253 Links und Sprungmarken in 104 Seiten geprüft; beabsichtigter Fehlerseitenlink separat als 404 geprüft |
+| Quellenlinks | Alle 69 kanonischen Quellen-URLs liefern HTTP 200 |
+| Python-Beispiele | Alle acht mit Python 3.12 und PyTorch 2.14.1 ausgeführt |
+| LaTeX-Beispiele | Zwölf erfolgreich mit Tectonic/XeTeX kompiliert; Literaturbeispiel benötigt lokal fehlendes Biber |
+
+Browserprüfung: Kapitel-/Abschnittsnavigation, Aufgabenlösung, Suche nach BibLaTeX, Kapitelquiz mit falscher und richtiger Antwort und allen Optionserklärungen, Ergebnis 1/2, Neustart, leere Filterkombination und Zurücksetzen. Der Sprachwechsel erhält Kurs-/Kapitel-/Stufenfilter. Mobile Navigation und Kapitelansicht mit 390 × 844 sowie Desktop mit 1280 × 900 geprüft; kein horizontaler Seitenüberlauf. Helles/dunkles Design und gerenderte Attention-Formel geprüft. Öffentlich zusätzlich deutsches KI- und englisches LaTeX-Quiz sowie beide Fehlerseiten getestet. Die Account-Fortschrittskennungen und serverseitige Antwortbewertung sind automatisiert geprüft; ein erneuter angemeldeter End-to-End-Test ist für diese Erweiterung nicht behauptet.
+
+Tatsächliches Deployment: **23.10.2026, 15:21:02 (Europe/Stockholm)** auf [it-worlds.maki26.workers.dev](https://it-worlds.maki26.workers.dev/). Version **f436f2c9-44b0-4323-b211-e2387777f900**, 100 % Traffic; Deployment **7a2168fe-aab5-4c7f-aca2-4e024265402d**. Lokale Anmeldung verwendet; Account, Subdomain, alle vier Bindings und bisherige Worker-Einstellungen vor/nach Veröffentlichung verglichen und unverändert. GitHub-Beschreibung und Topics um die Kurse ergänzt.
+
+Grenzen: Quellenabgleich ist kein unabhängiges Fachreview. Dieses bleibt offen. Der vollständige BibLaTeX/Biber-Build ist mangels lokalem Biber ungeprüft. Die Kurse vermitteln definierte Grundlagen und fortgeschrittene Anwendungen, keine umfassende fachliche Zertifizierung.
+
+## Historischer Prüfstand vom 22. Oktober 2026
+
 Prüfstand: **22. Oktober 2026**, Europe/Stockholm.
 
 ## Umfang

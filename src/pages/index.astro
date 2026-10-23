@@ -2,7 +2,7 @@
 import { getContent, translate, localePath, type Locale } from "../lib/i18n";
 const locale: Locale = Astro.props.locale ?? "de";
 const t = translate(locale);
-const { topics, paths, levelName } = getContent(locale);
+const { topics, paths, questions, levelName } = getContent(locale);
 interface Props { locale?: Locale }
 import Layout from "../layouts/Layout.astro";
 import Icon from "../components/Icon.astro";
@@ -222,7 +222,7 @@ import KnowledgeMap from "../components/KnowledgeMap.astro";
       <p class="eyebrow">{t("EIN KLEINES AHA FÜR ZWISCHENDURCH", "A SMALL MOMENT OF DISCOVERY")}</p>
       <h2>{t("Was weißt du schon?", "What do you already know?")}</h2>
       <p>
-        {t("Zehn Fragen. Kein Zeitdruck. Dafür eine Erklärung zu jeder Antwort.", "Ten questions. No time pressure. An explanation for every answer.")}
+        {t(`${questions.length} Fragen. Kein Zeitdruck. Eine Erklärung zu jeder Antwort.`, `${questions.length} questions. No time pressure. An explanation for every answer.`)}
       </p>
     </div>
     <a href={localePath(locale, "/quiz/")} class="button light">

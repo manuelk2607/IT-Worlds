@@ -1,0 +1,13 @@
+---
+import CourseView from '../../components/CourseView.astro';
+import { courses } from '../../data/courses.ts';
+import type { Course, Chapter } from '../../data/course-types.ts';
+interface Props { course: Course; chapter?: Chapter }
+export function getStaticPaths() {
+  return courses.flatMap(course => [
+    { params: { course: `${course.topic}/${course.slug}` }, props: { course } },
+    ...course.chapters.map(chapter => ({ params: { course: `${course.topic}/${course.slug}/${chapter.id}` }, props: { course, chapter } })),
+  ]);
+}
+---
+<CourseView {...Astro.props} />

@@ -1,8 +1,8 @@
 # Quellenprotokoll
 
-Stand der Erweiterung: **22. Oktober 2026**. Das Verzeichnis umfasst 19 offizielle Quellen. Die ursprünglichen 14 wurden am 20. Oktober gelesen; fünf weitere Quellen und der Docker-Stand wurden am 22. Oktober anhand der unten festgehaltenen Originale gelesen. Die HTML-Zielseiten sind die kanonischen Lesefassungen; abgerufen wurden die explizit verlinkten Quelltexte aus den offiziellen Repositories beziehungsweise die RFC-Originale. Es wurden keine fremden Artikeltexte oder Bilder übernommen. Die Lerntexte sind eigenständige Zusammenfassungen.
+Stand der Erweiterung: **23. Oktober 2026**. Das Verzeichnis umfasst 69 Primärquellen: 19 bisherige Quellen und 50 neue Kursbelege. Die ursprünglichen 14 wurden am 20. Oktober gelesen; fünf weitere Quellen und der Docker-Stand wurden am 22. Oktober anhand der unten festgehaltenen Originale gelesen. Die HTML-Zielseiten sind die kanonischen Lesefassungen; abgerufen wurden die explizit verlinkten Quelltexte aus den offiziellen Repositories beziehungsweise die RFC-Originale. Es wurden keine fremden Artikeltexte oder Bilder übernommen. Die Lerntexte sind eigenständige Zusammenfassungen.
 
-Die zehn Quizfragen beziehen sich auf Python, SQL, HTML, PyTorch, OpenAPI, UTF-8, DNS-TTL, MFA-Faktoren, Image/Container und Dateirechte. Zehn eigene Editor-Aufgaben üben dieselben Grundlagen mit begrenzten lokalen Lernmodellen. Sie belegen nicht automatisch alle geplanten Profi-Lektionen. OWASP wird ausdrücklich als Ausgabe 2021 verwendet, ohne Behauptung über die aktuelle Rangfolge.
+Die zehn bisherigen Quizfragen beziehen sich auf Python, SQL, HTML, PyTorch, OpenAPI, UTF-8, DNS-TTL, MFA-Faktoren, Image/Container und Dateirechte. Zehn eigene Editor-Aufgaben üben dieselben Grundlagen mit begrenzten lokalen Lernmodellen. Sie belegen nicht automatisch alle geplanten Profi-Lektionen. OWASP wird ausdrücklich als Ausgabe 2021 verwendet, ohne Behauptung über die aktuelle Rangfolge.
 
 Quellenabgleich bedeutet hier: die konkreten Aussagen und Frageantworten mit den gelesenen Abschnitten vergleichen. Ein unabhängiges Fachreview, eine umfassende wissenschaftliche Literaturrecherche und eine erneute Prüfung in einer neuen Cloud-Instanz sind damit nicht behauptet.
 
@@ -203,3 +203,407 @@ Die Prüfsumme dokumentiert die tatsächlich gelesene Datei. Bei fortlaufenden B
 RFC 1034 dient als Grundlage für DNS-Rollen und TTL; spätere Erweiterungen werden damit nicht vollständig erklärt. Die Coreutils-Übung behandelt reguläre Dateien ohne ACLs, Sonderbits oder Verzeichnisregeln. MFA- und Container-JSON sind eigene Lernmodelle, keine echten Konfigurationen. Die Editoren führen weder Python noch SQL, HTML oder Shell-Code aus. Die Beispiele und Prüfer sind eigene Entwicklungen.
 
 Die UTF-8-Beispielbytes und alle zehn Musterlösungen sind automatisiert geprüft. Ein unabhängiges Fachreview steht weiterhin aus.
+
+## Kursbelege vom 23. Oktober 2026
+
+Die 27 Kapitel und 54 zusätzlichen Fragen verknüpfen die folgenden tatsächlich gelesenen Abschnitte. Dokumentationen, Lehrbuch und Originalarbeiten erfüllen unterschiedliche Zwecke: Framework-Verhalten, mathematische Grundlagen und konkrete Modellverfahren. Repository-Quellen verwenden feste Commits, Papers die angegebene Revision. Fortlaufende Dokumentationen können sich nach dem Lesedatum ändern. Die zentrale, auch auf der Website ausgegebene Registry liegt in `src/data/course-sources.ts`; Kapitel und Quizantworten referenzieren ihre stabilen Schlüssel.
+
+### Dive into Deep Learning · Supervised, unsupervised, self-supervised and reinforcement learning (aiIntroduction)
+
+- Herausgeber: Aston Zhang, Zachary C. Lipton, Mu Li, Alexander J. Smola
+- Version: Commit 23d7a5aecceee57d1292c56e90cce307f183bb0a
+- Abschnitt: Supervised, unsupervised, self-supervised and reinforcement learning
+- [Dokumentation](https://d2l.ai/chapter_introduction/index.html) · [Gelesener Beleg](https://raw.githubusercontent.com/d2l-ai/d2l-en/23d7a5aecceee57d1292c56e90cce307f183bb0a/chapter_introduction/index.md)
+- Lesedatum: 2026-10-23
+
+### Metrics and scoring (mlEvaluation)
+
+- Herausgeber: scikit-learn developers
+- Version: 1.9.1 · accessed 2026-10-23
+- Abschnitt: Classification metrics; precision, recall, F-measures
+- [Dokumentation](https://scikit-learn.org/stable/modules/model_evaluation.html) · [Gelesener Beleg](https://scikit-learn.org/stable/modules/model_evaluation.html)
+- Lesedatum: 2026-10-23
+
+### Cross-validation (mlValidation)
+
+- Herausgeber: scikit-learn developers
+- Version: 1.9.1 · accessed 2026-10-23
+- Abschnitt: Train/validation/test; cross-validation
+- [Dokumentation](https://scikit-learn.org/stable/modules/cross_validation.html) · [Gelesener Beleg](https://scikit-learn.org/stable/modules/cross_validation.html)
+- Lesedatum: 2026-10-23
+
+### Conv2d (torchConv)
+
+- Herausgeber: PyTorch
+- Version: 2.14
+- Abschnitt: Shape; parameters
+- [Dokumentation](https://docs.pytorch.org/docs/2.14/generated/torch.nn.Conv2d.html) · [Gelesener Beleg](https://docs.pytorch.org/docs/2.14/generated/torch.nn.Conv2d.html)
+- Lesedatum: 2026-10-23
+
+### LSTM (torchLstm)
+
+- Herausgeber: PyTorch
+- Version: 2.14
+- Abschnitt: Gates; inputs and outputs
+- [Dokumentation](https://docs.pytorch.org/docs/2.14/generated/torch.nn.LSTM.html) · [Gelesener Beleg](https://docs.pytorch.org/docs/2.14/generated/torch.nn.LSTM.html)
+- Lesedatum: 2026-10-23
+
+### Reproducibility (torchRepro)
+
+- Herausgeber: PyTorch
+- Version: 2.14
+- Abschnitt: Reproducibility; controlling sources of randomness
+- [Dokumentation](https://docs.pytorch.org/docs/2.14/notes/randomness.html) · [Gelesener Beleg](https://docs.pytorch.org/docs/2.14/notes/randomness.html)
+- Lesedatum: 2026-10-23
+
+### Automatic Mixed Precision (torchAmp)
+
+- Herausgeber: PyTorch
+- Version: 2.14
+- Abschnitt: Autocasting; gradient scaling
+- [Dokumentation](https://docs.pytorch.org/docs/2.14/amp.html) · [Gelesener Beleg](https://docs.pytorch.org/docs/2.14/amp.html)
+- Lesedatum: 2026-10-23
+
+### Dropout (torchDropout)
+
+- Herausgeber: PyTorch
+- Version: 2.14
+- Abschnitt: Training and evaluation behaviour
+- [Dokumentation](https://docs.pytorch.org/docs/2.14/generated/torch.nn.Dropout.html) · [Gelesener Beleg](https://docs.pytorch.org/docs/2.14/generated/torch.nn.Dropout.html)
+- Lesedatum: 2026-10-23
+
+### Transfer Learning for Computer Vision (torchTransfer)
+
+- Herausgeber: PyTorch · Sasank Chilamkurthy
+- Version: Tutorial updated 2025-01-27
+- Abschnitt: Fine-tuning; fixed feature extractor
+- [Dokumentation](https://docs.pytorch.org/tutorials/beginner/transfer_learning_tutorial.html) · [Gelesener Beleg](https://docs.pytorch.org/tutorials/beginner/transfer_learning_tutorial.html)
+- Lesedatum: 2026-10-23
+
+### Deep Residual Learning for Image Recognition (resnetPaper)
+
+- Herausgeber: He et al. · arXiv
+- Version: arXiv:1512.03385v1
+- Abschnitt: 3.2 · Identity mapping by shortcuts
+- [Dokumentation](https://arxiv.org/abs/1512.03385v1) · [Gelesener Beleg](https://arxiv.org/html/1512.03385v1)
+- Lesedatum: 2026-10-23
+
+### Supervised Fine-Tuning (llmTraining)
+
+- Herausgeber: Hugging Face
+- Version: Living course · accessed 2026-10-23
+- Abschnitt: Supervised Fine-Tuning
+- [Dokumentation](https://huggingface.co/learn/llm-course/chapter11/1) · [Gelesener Beleg](https://huggingface.co/learn/llm-course/chapter11/1)
+- Lesedatum: 2026-10-23
+
+### Direct Preference Optimization (llmPreferences)
+
+- Herausgeber: Rafailov et al. · arXiv
+- Version: arXiv:2305.18290v3
+- Abschnitt: Abstract
+- [Dokumentation](https://arxiv.org/abs/2305.18290v3) · [Gelesener Beleg](https://arxiv.org/abs/2305.18290v3)
+- Lesedatum: 2026-10-23
+
+### LLM01:2025 Prompt Injection (owaspLlm)
+
+- Herausgeber: OWASP Gen AI Security Project
+- Version: 2025 edition
+- Abschnitt: Prevention and mitigation strategies
+- [Dokumentation](https://genai.owasp.org/llmrisk/llm01-prompt-injection/) · [Gelesener Beleg](https://genai.owasp.org/llmrisk/llm01-prompt-injection/)
+- Lesedatum: 2026-10-23
+
+### User’s Guide for the amsmath Package (amsmathGuide)
+
+- Herausgeber: American Mathematical Society / LaTeX Project
+- Version: Guide 2.1 · revised 2020-02-18
+- Abschnitt: 3.7 · Alignment building blocks; 5 · Operator names
+- [Dokumentation](https://www.latex-project.org/help/documentation/amsldoc.pdf) · [Gelesener Beleg](https://www.latex-project.org/help/documentation/amsldoc.pdf)
+- Lesedatum: 2026-10-23
+
+### Learn LaTeX · More definitions; optional arguments (latexMacros)
+
+- Herausgeber: Learn LaTeX / LaTeX Project contributors
+- Version: Commit b254d6ea14b8f97f55ef7bd1edc592526e96f560
+- Abschnitt: More definitions; optional arguments
+- [Dokumentation](https://www.learnlatex.org/en/more-06) · [Gelesener Beleg](https://raw.githubusercontent.com/learnlatex/learnlatex.github.io/b254d6ea14b8f97f55ef7bd1edc592526e96f560/en/more-06.md)
+- Lesedatum: 2026-10-23
+
+### longtable (latexLongtable)
+
+- Herausgeber: LaTeX Project / CTAN
+- Version: 4.27 · 2026-01-28
+- Abschnitt: Tables across page boundaries
+- [Dokumentation](https://ctan.org/pkg/longtable) · [Gelesener Beleg](https://ctan.org/pkg/longtable)
+- Lesedatum: 2026-10-23
+
+### Hypertext marks in LaTeX (hyperrefGuide)
+
+- Herausgeber: LaTeX3 Project
+- Version: 7.01s · 2026-10-09
+- Abschnitt: Implicit behavior; package loading order
+- [Dokumentation](https://tug.ctan.org/macros/latex/contrib/hyperref/doc/hyperref-doc.html) · [Gelesener Beleg](https://tug.ctan.org/macros/latex/contrib/hyperref/doc/hyperref-doc.html)
+- Lesedatum: 2026-10-23
+
+### The LaTeX Tagged PDF Project (latexAccessibility)
+
+- Herausgeber: LaTeX Project
+- Version: Project status accessed 2026-10-23
+- Abschnitt: Guidelines for accessible PDF; package compatibility
+- [Dokumentation](https://latex3.github.io/tagging-project/) · [Gelesener Beleg](https://latex3.github.io/tagging-project/)
+- Lesedatum: 2026-10-23
+
+### Learn LaTeX · Working with LaTeX (latexSetup)
+
+- Herausgeber: Learn LaTeX / LaTeX Project contributors
+- Version: Commit b254d6ea14b8f97f55ef7bd1edc592526e96f560
+- Abschnitt: Working with LaTeX
+- [Dokumentation](https://www.learnlatex.org/en/lesson-02) · [Gelesener Beleg](https://raw.githubusercontent.com/learnlatex/learnlatex.github.io/b254d6ea14b8f97f55ef7bd1edc592526e96f560/en/lesson-02.md)
+- Lesedatum: 2026-10-23
+
+### Learn LaTeX · Document structure (latexSyntax)
+
+- Herausgeber: Learn LaTeX / LaTeX Project contributors
+- Version: Commit b254d6ea14b8f97f55ef7bd1edc592526e96f560
+- Abschnitt: Document structure
+- [Dokumentation](https://www.learnlatex.org/en/lesson-03) · [Gelesener Beleg](https://raw.githubusercontent.com/learnlatex/learnlatex.github.io/b254d6ea14b8f97f55ef7bd1edc592526e96f560/en/lesson-03.md)
+- Lesedatum: 2026-10-23
+
+### Learn LaTeX · Logical structure (latexStructure)
+
+- Herausgeber: Learn LaTeX / LaTeX Project contributors
+- Version: Commit b254d6ea14b8f97f55ef7bd1edc592526e96f560
+- Abschnitt: Logical structure
+- [Dokumentation](https://www.learnlatex.org/en/lesson-04) · [Gelesener Beleg](https://raw.githubusercontent.com/learnlatex/learnlatex.github.io/b254d6ea14b8f97f55ef7bd1edc592526e96f560/en/lesson-04.md)
+- Lesedatum: 2026-10-23
+
+### Learn LaTeX · Extending LaTeX; defining commands (latexPackages)
+
+- Herausgeber: Learn LaTeX / LaTeX Project contributors
+- Version: Commit b254d6ea14b8f97f55ef7bd1edc592526e96f560
+- Abschnitt: Extending LaTeX; defining commands
+- [Dokumentation](https://www.learnlatex.org/en/lesson-06) · [Gelesener Beleg](https://raw.githubusercontent.com/learnlatex/learnlatex.github.io/b254d6ea14b8f97f55ef7bd1edc592526e96f560/en/lesson-06.md)
+- Lesedatum: 2026-10-23
+
+### Learn LaTeX · Using graphics; floating figures (latexGraphics)
+
+- Herausgeber: Learn LaTeX / LaTeX Project contributors
+- Version: Commit b254d6ea14b8f97f55ef7bd1edc592526e96f560
+- Abschnitt: Using graphics; floating figures
+- [Dokumentation](https://www.learnlatex.org/en/lesson-07) · [Gelesener Beleg](https://raw.githubusercontent.com/learnlatex/learnlatex.github.io/b254d6ea14b8f97f55ef7bd1edc592526e96f560/en/lesson-07.md)
+- Lesedatum: 2026-10-23
+
+### Learn LaTeX · Tables; column types; booktabs (latexTables)
+
+- Herausgeber: Learn LaTeX / LaTeX Project contributors
+- Version: Commit b254d6ea14b8f97f55ef7bd1edc592526e96f560
+- Abschnitt: Tables; column types; booktabs
+- [Dokumentation](https://www.learnlatex.org/en/lesson-08) · [Gelesener Beleg](https://raw.githubusercontent.com/learnlatex/learnlatex.github.io/b254d6ea14b8f97f55ef7bd1edc592526e96f560/en/lesson-08.md)
+- Lesedatum: 2026-10-23
+
+### Learn LaTeX · Cross-referencing; label and ref (latexReferences)
+
+- Herausgeber: Learn LaTeX / LaTeX Project contributors
+- Version: Commit b254d6ea14b8f97f55ef7bd1edc592526e96f560
+- Abschnitt: Cross-referencing; label and ref
+- [Dokumentation](https://www.learnlatex.org/en/lesson-09) · [Gelesener Beleg](https://raw.githubusercontent.com/learnlatex/learnlatex.github.io/b254d6ea14b8f97f55ef7bd1edc592526e96f560/en/lesson-09.md)
+- Lesedatum: 2026-10-23
+
+### Learn LaTeX · Mathematics; amsmath; fonts (latexMath)
+
+- Herausgeber: Learn LaTeX / LaTeX Project contributors
+- Version: Commit b254d6ea14b8f97f55ef7bd1edc592526e96f560
+- Abschnitt: Mathematics; amsmath; fonts
+- [Dokumentation](https://www.learnlatex.org/en/lesson-10) · [Gelesener Beleg](https://raw.githubusercontent.com/learnlatex/learnlatex.github.io/b254d6ea14b8f97f55ef7bd1edc592526e96f560/en/lesson-10.md)
+- Lesedatum: 2026-10-23
+
+### Learn LaTeX · Citations and references; biblatex and Biber (latexBibliography)
+
+- Herausgeber: Learn LaTeX / LaTeX Project contributors
+- Version: Commit b254d6ea14b8f97f55ef7bd1edc592526e96f560
+- Abschnitt: Citations and references; biblatex and Biber
+- [Dokumentation](https://www.learnlatex.org/en/lesson-12) · [Gelesener Beleg](https://raw.githubusercontent.com/learnlatex/learnlatex.github.io/b254d6ea14b8f97f55ef7bd1edc592526e96f560/en/lesson-12.md)
+- Lesedatum: 2026-10-23
+
+### Learn LaTeX · Structuring longer documents; input and include (latexProjects)
+
+- Herausgeber: Learn LaTeX / LaTeX Project contributors
+- Version: Commit b254d6ea14b8f97f55ef7bd1edc592526e96f560
+- Abschnitt: Structuring longer documents; input and include
+- [Dokumentation](https://www.learnlatex.org/en/lesson-13) · [Gelesener Beleg](https://raw.githubusercontent.com/learnlatex/learnlatex.github.io/b254d6ea14b8f97f55ef7bd1edc592526e96f560/en/lesson-13.md)
+- Lesedatum: 2026-10-23
+
+### Learn LaTeX · Fonts and Unicode engines (latexFonts)
+
+- Herausgeber: Learn LaTeX / LaTeX Project contributors
+- Version: Commit b254d6ea14b8f97f55ef7bd1edc592526e96f560
+- Abschnitt: Fonts and Unicode engines
+- [Dokumentation](https://www.learnlatex.org/en/lesson-14) · [Gelesener Beleg](https://raw.githubusercontent.com/learnlatex/learnlatex.github.io/b254d6ea14b8f97f55ef7bd1edc592526e96f560/en/lesson-14.md)
+- Lesedatum: 2026-10-23
+
+### Learn LaTeX · Dealing with errors (latexErrors)
+
+- Herausgeber: Learn LaTeX / LaTeX Project contributors
+- Version: Commit b254d6ea14b8f97f55ef7bd1edc592526e96f560
+- Abschnitt: Dealing with errors
+- [Dokumentation](https://www.learnlatex.org/en/lesson-15) · [Gelesener Beleg](https://raw.githubusercontent.com/learnlatex/learnlatex.github.io/b254d6ea14b8f97f55ef7bd1edc592526e96f560/en/lesson-15.md)
+- Lesedatum: 2026-10-23
+
+### Dive into Deep Learning · Scalars, vectors, matrices; dot products; matrix multiplication (aiAlgebra)
+
+- Herausgeber: Aston Zhang, Zachary C. Lipton, Mu Li, Alexander J. Smola
+- Version: Commit 23d7a5aecceee57d1292c56e90cce307f183bb0a
+- Abschnitt: Scalars, vectors, matrices; dot products; matrix multiplication
+- [Dokumentation](https://d2l.ai/chapter_preliminaries/linear-algebra.html) · [Gelesener Beleg](https://raw.githubusercontent.com/d2l-ai/d2l-en/23d7a5aecceee57d1292c56e90cce307f183bb0a/chapter_preliminaries/linear-algebra.md)
+- Lesedatum: 2026-10-23
+
+### Dive into Deep Learning · Gradients; chain rule (aiCalculus)
+
+- Herausgeber: Aston Zhang, Zachary C. Lipton, Mu Li, Alexander J. Smola
+- Version: Commit 23d7a5aecceee57d1292c56e90cce307f183bb0a
+- Abschnitt: Gradients; chain rule
+- [Dokumentation](https://d2l.ai/chapter_preliminaries/calculus.html) · [Gelesener Beleg](https://raw.githubusercontent.com/d2l-ai/d2l-en/23d7a5aecceee57d1292c56e90cce307f183bb0a/chapter_preliminaries/calculus.md)
+- Lesedatum: 2026-10-23
+
+### Dive into Deep Learning · Conditional probability; Bayes; expectations (aiProbability)
+
+- Herausgeber: Aston Zhang, Zachary C. Lipton, Mu Li, Alexander J. Smola
+- Version: Commit 23d7a5aecceee57d1292c56e90cce307f183bb0a
+- Abschnitt: Conditional probability; Bayes; expectations
+- [Dokumentation](https://d2l.ai/chapter_preliminaries/probability.html) · [Gelesener Beleg](https://raw.githubusercontent.com/d2l-ai/d2l-en/23d7a5aecceee57d1292c56e90cce307f183bb0a/chapter_preliminaries/probability.md)
+- Lesedatum: 2026-10-23
+
+### Dive into Deep Learning · Linear regression; loss; stochastic gradient descent (aiRegression)
+
+- Herausgeber: Aston Zhang, Zachary C. Lipton, Mu Li, Alexander J. Smola
+- Version: Commit 23d7a5aecceee57d1292c56e90cce307f183bb0a
+- Abschnitt: Linear regression; loss; stochastic gradient descent
+- [Dokumentation](https://d2l.ai/chapter_linear-regression/linear-regression.html) · [Gelesener Beleg](https://raw.githubusercontent.com/d2l-ai/d2l-en/23d7a5aecceee57d1292c56e90cce307f183bb0a/chapter_linear-regression/linear-regression.md)
+- Lesedatum: 2026-10-23
+
+### Dive into Deep Learning · Hidden layers; activation functions (aiMlp)
+
+- Herausgeber: Aston Zhang, Zachary C. Lipton, Mu Li, Alexander J. Smola
+- Version: Commit 23d7a5aecceee57d1292c56e90cce307f183bb0a
+- Abschnitt: Hidden layers; activation functions
+- [Dokumentation](https://d2l.ai/chapter_multilayer-perceptrons/mlp.html) · [Gelesener Beleg](https://raw.githubusercontent.com/d2l-ai/d2l-en/23d7a5aecceee57d1292c56e90cce307f183bb0a/chapter_multilayer-perceptrons/mlp.md)
+- Lesedatum: 2026-10-23
+
+### Dive into Deep Learning · Forward and backward propagation; computational graphs (aiBackprop)
+
+- Herausgeber: Aston Zhang, Zachary C. Lipton, Mu Li, Alexander J. Smola
+- Version: Commit 23d7a5aecceee57d1292c56e90cce307f183bb0a
+- Abschnitt: Forward and backward propagation; computational graphs
+- [Dokumentation](https://d2l.ai/chapter_multilayer-perceptrons/backprop.html) · [Gelesener Beleg](https://raw.githubusercontent.com/d2l-ai/d2l-en/23d7a5aecceee57d1292c56e90cce307f183bb0a/chapter_multilayer-perceptrons/backprop.md)
+- Lesedatum: 2026-10-23
+
+### Dive into Deep Learning · Cross-correlation; learning a kernel (aiCnn)
+
+- Herausgeber: Aston Zhang, Zachary C. Lipton, Mu Li, Alexander J. Smola
+- Version: Commit 23d7a5aecceee57d1292c56e90cce307f183bb0a
+- Abschnitt: Cross-correlation; learning a kernel
+- [Dokumentation](https://d2l.ai/chapter_convolutional-neural-networks/conv-layer.html) · [Gelesener Beleg](https://raw.githubusercontent.com/d2l-ai/d2l-en/23d7a5aecceee57d1292c56e90cce307f183bb0a/chapter_convolutional-neural-networks/conv-layer.md)
+- Lesedatum: 2026-10-23
+
+### Dive into Deep Learning · Recurrent neural networks with hidden states (aiRnn)
+
+- Herausgeber: Aston Zhang, Zachary C. Lipton, Mu Li, Alexander J. Smola
+- Version: Commit 23d7a5aecceee57d1292c56e90cce307f183bb0a
+- Abschnitt: Recurrent neural networks with hidden states
+- [Dokumentation](https://d2l.ai/chapter_recurrent-neural-networks/rnn.html) · [Gelesener Beleg](https://raw.githubusercontent.com/d2l-ai/d2l-en/23d7a5aecceee57d1292c56e90cce307f183bb0a/chapter_recurrent-neural-networks/rnn.md)
+- Lesedatum: 2026-10-23
+
+### Dive into Deep Learning · Adam algorithm; moment estimates and bias correction (aiAdam)
+
+- Herausgeber: Aston Zhang, Zachary C. Lipton, Mu Li, Alexander J. Smola
+- Version: Commit 23d7a5aecceee57d1292c56e90cce307f183bb0a
+- Abschnitt: Adam algorithm; moment estimates and bias correction
+- [Dokumentation](https://d2l.ai/chapter_optimization/adam.html) · [Gelesener Beleg](https://raw.githubusercontent.com/d2l-ai/d2l-en/23d7a5aecceee57d1292c56e90cce307f183bb0a/chapter_optimization/adam.md)
+- Lesedatum: 2026-10-23
+
+### Optimizing Model Parameters (aiTraining)
+
+- Herausgeber: PyTorch
+- Version: Commit c8ccbbf7fcb8cb71adda1b957bd6bab50e29c2e6
+- Abschnitt: Hyperparameters; loss; optimizer; full implementation
+- [Dokumentation](https://docs.pytorch.org/tutorials/beginner/basics/optimization_tutorial.html) · [Gelesener Beleg](https://raw.githubusercontent.com/pytorch/tutorials/c8ccbbf7fcb8cb71adda1b957bd6bab50e29c2e6/beginner_source/basics/optimization_tutorial.py)
+- Lesedatum: 2026-10-23
+
+### Common pitfalls and recommended practices (mlPipeline)
+
+- Herausgeber: scikit-learn developers
+- Version: Commit 289c4d5cfa1b5c74c2c03420ed809c499ddf7287
+- Abschnitt: Inconsistent preprocessing; data leakage; randomness
+- [Dokumentation](https://scikit-learn.org/stable/common_pitfalls.html) · [Gelesener Beleg](https://raw.githubusercontent.com/scikit-learn/scikit-learn/289c4d5cfa1b5c74c2c03420ed809c499ddf7287/doc/common_pitfalls.rst)
+- Lesedatum: 2026-10-23
+
+### Attention Is All You Need (transformerPaper)
+
+- Herausgeber: Vaswani et al. · arXiv
+- Version: arXiv:1706.03762v7
+- Abschnitt: 3 · Model architecture; scaled dot-product attention; masks
+- [Dokumentation](https://arxiv.org/abs/1706.03762v7) · [Gelesener Beleg](https://arxiv.org/html/1706.03762v7)
+- Lesedatum: 2026-10-23
+
+### Decoupled Weight Decay Regularization (adamwPaper)
+
+- Herausgeber: Loshchilov & Hutter · arXiv
+- Version: arXiv:1711.05101v3
+- Abschnitt: Abstract
+- [Dokumentation](https://arxiv.org/abs/1711.05101v3) · [Gelesener Beleg](https://arxiv.org/abs/1711.05101v3)
+- Lesedatum: 2026-10-23
+
+### LoRA: Low-Rank Adaptation of Large Language Models (loraPaper)
+
+- Herausgeber: Hu et al. · arXiv
+- Version: arXiv:2106.09685v2
+- Abschnitt: Abstract
+- [Dokumentation](https://arxiv.org/abs/2106.09685v2) · [Gelesener Beleg](https://arxiv.org/abs/2106.09685v2)
+- Lesedatum: 2026-10-23
+
+### Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks (ragPaper)
+
+- Herausgeber: Lewis et al. · arXiv
+- Version: arXiv:2005.11401v4
+- Abschnitt: Abstract
+- [Dokumentation](https://arxiv.org/abs/2005.11401v4) · [Gelesener Beleg](https://arxiv.org/abs/2005.11401v4)
+- Lesedatum: 2026-10-23
+
+### Auto-Encoding Variational Bayes (vaePaper)
+
+- Herausgeber: Kingma & Welling · arXiv
+- Version: arXiv:1312.6114v11
+- Abschnitt: 2–3 · Variational bound; reparameterization
+- [Dokumentation](https://arxiv.org/abs/1312.6114v11) · [Gelesener Beleg](https://arxiv.org/html/1312.6114v11)
+- Lesedatum: 2026-10-23
+
+### Generative Adversarial Networks (ganPaper)
+
+- Herausgeber: Goodfellow et al. · arXiv
+- Version: arXiv:1406.2661v1
+- Abschnitt: Abstract
+- [Dokumentation](https://arxiv.org/abs/1406.2661v1) · [Gelesener Beleg](https://arxiv.org/abs/1406.2661v1)
+- Lesedatum: 2026-10-23
+
+### Denoising Diffusion Probabilistic Models (diffusionPaper)
+
+- Herausgeber: Ho, Jain & Abbeel · arXiv
+- Version: arXiv:2006.11239v2
+- Abschnitt: 2–3 · Forward and reverse process; noise prediction
+- [Dokumentation](https://arxiv.org/abs/2006.11239v2) · [Gelesener Beleg](https://arxiv.org/html/2006.11239v2)
+- Lesedatum: 2026-10-23
+
+### Text Generation Inference with LLMs (llmInference)
+
+- Herausgeber: Hugging Face
+- Version: Living course · accessed 2026-10-23
+- Abschnitt: Prefill; decode; sampling; performance metrics
+- [Dokumentation](https://huggingface.co/learn/llm-course/chapter1/8) · [Gelesener Beleg](https://huggingface.co/learn/llm-course/chapter1/8)
+- Lesedatum: 2026-10-23
+
+### Bias and limitations (llmLimits)
+
+- Herausgeber: Hugging Face
+- Version: Living course · accessed 2026-10-23
+- Abschnitt: Bias and limitations
+- [Dokumentation](https://huggingface.co/learn/llm-course/chapter1/9) · [Gelesener Beleg](https://huggingface.co/learn/llm-course/chapter1/9)
+- Lesedatum: 2026-10-23

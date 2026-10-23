@@ -1,7 +1,13 @@
 import { t } from './browser-i18n';
 import { recordQuestion } from './progress-client';
+import { matchesQuizFilter } from '../lib/quiz-filter';
 const sections = [...document.querySelectorAll<HTMLElement>("[data-question]")];
 const selection = document.querySelector<HTMLSelectElement>("#quiz-topic")!;
+const courseSelect = document.querySelector<HTMLSelectElement>('#quiz-course')!;
+const levelSelect = document.querySelector<HTMLSelectElement>('#quiz-level')!;
+const chapterSelect = document.querySelector<HTMLSelectElement>('#quiz-chapter')!;
+const empty = document.querySelector<HTMLElement>('#quiz-empty')!;
+let exactQuestion = '';
 const progress =
   document.querySelector<HTMLProgressElement>("#question-progress")!;
 const result = document.querySelector<HTMLElement>("#quiz-result")!;
@@ -12,16 +18,17 @@ let position = 0;
 let score = 0;
 
 function resetQuiz(focus = false) {
-  active = sections.filter(
-    (section) =>
-      selection.value === "alle" || section.dataset.topic === selection.value,
-  );
+  active = sections.filter(section => matchesQuizFilter(section.dataset, {
+    topic: selection.value, course: courseSelect.value, level: levelSelect.value,
+    chapter: chapterSelect.value, question: exactQuestion,
+  }));
   position = 0;
   score = 0;
-  progress.max = active.length;
+  progress.max = Math.max(1, active.length);
   progress.value = 0;
   result.hidden = true;
-  progressContainer.hidden = false;
+  progressContainer.hidden = active.length === 0;
+  empty.hidden = active.length > 0;
   sections.forEach((section) => {
     section.hidden = true;
     const form = section.querySelector<HTMLFormElement>("form")!;
@@ -38,7 +45,7 @@ function resetQuiz(focus = false) {
       .querySelectorAll<HTMLElement>("[data-explanation]")
       .forEach((item) => (item.hidden = true));
   });
-  showQuestion(focus);
+  if (active.length) showQuestion(focus);
 }
 function showQuestion(focus: boolean) {
   sections.forEach((section) => (section.hidden = true));
@@ -70,9 +77,7 @@ sections.forEach((section) => {
     form.querySelector(".feedback-heading")!.textContent = correct
       ? t("Genau, das passt!", "Exactly right!")
       : t("Hier steckt dein nächstes Aha.", "Here is your next discovery.");
-    form.querySelector<HTMLElement>(
-      `[data-explanation="${chosen.value}"]`,
-    )!.hidden = false;
+    form.querySelectorAll<HTMLElement>('[data-explanation]').forEach(explanation => { explanation.hidden = false; });
     form.querySelectorAll<HTMLInputElement>("input").forEach((input) => {
       input.disabled = true;
       if (Number(input.value) === Number(form.dataset.answer))
@@ -102,20 +107,44 @@ sections.forEach((section) => {
     }
   });
 });
-const initialTopic = new URLSearchParams(location.search).get("thema");
-if (
-  initialTopic &&
-  [...selection.options].some((option) => option.value === initialTopic)
-)
-  selection.value = initialTopic;
-selection.addEventListener("change", () => {
-  const url = new URL(location.href);
-  if (selection.value === "alle") url.searchParams.delete("thema");
-  else url.searchParams.set("thema", selection.value);
-  history.replaceState(null, "", url);
+const controls = [[selection, 'thema'], [courseSelect, 'kurs'], [levelSelect, 'stufe']] as const;
+function readLocation() {
+  const params = new URLSearchParams(location.search);
+  for (const [select, key] of controls) select.value = [...select.options].some(option => option.value === params.get(key)) ? params.get(key)! : 'alle';
+  const chapter = [...chapterSelect.options].find(option => option.dataset.course === params.get('kurs') && option.dataset.chapter === params.get('kapitel'));
+  chapterSelect.value = chapter?.value ?? 'alle';
+  exactQuestion = sections.some(section => section.dataset.question === params.get('frage')) ? params.get('frage')! : '';
   resetQuiz();
+}
+function updateLocation() {
+  const url = new URL(location.href);
+  for (const [select, key] of controls) {
+    if (select.value === 'alle') url.searchParams.delete(key);
+    else url.searchParams.set(key, select.value);
+  }
+  const chapter = chapterSelect.selectedOptions[0];
+  if (chapter?.dataset.chapter) {
+    url.searchParams.set('kapitel', chapter.dataset.chapter);
+    url.searchParams.set('kurs', chapter.dataset.course!);
+    courseSelect.value = chapter.dataset.course!;
+  } else url.searchParams.delete('kapitel');
+  url.searchParams.delete('frage');
+  exactQuestion = '';
+  history.replaceState(null, '', url);
+  resetQuiz();
+}
+for (const [select] of controls) select.addEventListener('change', () => {
+  if (select === courseSelect || select === selection) chapterSelect.value = 'alle';
+  updateLocation();
 });
+chapterSelect.addEventListener('change', updateLocation);
+document.querySelector('#clear-quiz-filters')!.addEventListener('click', () => {
+  for (const [select] of controls) select.value = 'alle';
+  chapterSelect.value = 'alle';
+  updateLocation();
+});
+window.addEventListener('popstate', readLocation);
 document
   .querySelector("#restart-quiz")!
   .addEventListener("click", () => resetQuiz(true));
-resetQuiz();
+readLocation();

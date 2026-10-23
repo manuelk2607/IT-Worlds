@@ -1,4 +1,6 @@
 import { additionalSources, additionalLessons, additionalQuestions } from './expansion.ts';
+import { courseSources } from './course-sources.ts';
+import { courseQuestions, courseLearningPaths } from './courses.ts';
 export const levels = [
   {
     id: "einstieg",
@@ -21,7 +23,7 @@ export const levels = [
 ] as const;
 export type Level = (typeof levels)[number]["id"];
 
-type Source = {
+export type Source = {
   title: string;
   publisher: string;
   url: string;
@@ -32,6 +34,7 @@ type Source = {
   description: string;
 };
 export const sources = {
+  ...courseSources,
   python: {
     title: "An Informal Introduction to Python",
     publisher: "Python Software Foundation",
@@ -263,7 +266,7 @@ const baseTopics: Topic[] = [
       {
         title: "Auszeichnungs- & Satzsprachen",
         description:
-          "LaTeX bereitet Dokumente für den Textsatz auf. Typst verbindet Markup und Textsatz mit Funktionen und Scripting. Markdown dient zum Schreiben strukturierter Dokumente in Klartext. Diese Sprachen ergänzen hier das Programmieren um Dokumentstruktur und Publikation. Die Lektionen dazu sind geplant.",
+          "LaTeX bereitet Dokumente für den Textsatz auf. Typst verbindet Markup und Textsatz mit Funktionen und Scripting. Markdown dient zum Schreiben strukturierter Dokumente in Klartext. Diese Sprachen ergänzen hier das Programmieren um Dokumentstruktur und Publikation. Der LaTeX-Kurs ist verfügbar; die eigenständigen Typst- und Markdown-Lektionen sind weiterhin geplant.",
         languages: ["LaTeX", "Typst", "Markdown"],
         sources: ["latex", "typst", "markdown"],
       },
@@ -378,10 +381,10 @@ const baseTopics: Topic[] = [
     color: "purple",
     group: "daten",
     description:
-      "Ordne KI, maschinelles Lernen und neuronale Netze ein. Der geplante Weg verbindet Python und mathematische Grundlagen mit eigenen Modellen, Evaluation und einem kritischen Blick auf Grenzen und Risiken.",
+      "Ordne KI, maschinelles Lernen und neuronale Netze ein. Der Kurs verbindet Python und mathematische Grundlagen mit eigenen Modellen, Transformern, generativer KI, Evaluation und einem kritischen Blick auf Grenzen und Risiken.",
     tags: ["Machine Learning", "PyTorch", "Modelle"],
     prerequisites:
-      "Für das PyTorch-Beispiel sind Python-Klassen und Funktionen hilfreich. Die geplanten Einstiegslektionen erklären zunächst Begriffe und nötige Mathematik.",
+      "Für das PyTorch-Beispiel sind Python-Klassen und Funktionen hilfreich. Die ersten Kurskapitel erklären Begriffe und nötige Mathematik.",
     curriculum: {
       einstieg: [
         "KI, Machine Learning & Deep Learning einordnen",
@@ -619,6 +622,8 @@ export const topics: Topic[] = baseTopics.map(topic => {
 });
 
 export type Question = {
+  course?: string;
+  chapter?: string;
   id: string;
   topic: string;
   level: Level;
@@ -758,6 +763,7 @@ export const questions: Question[] = [
 ];
 
 export type LearningPath = {
+  course?: string;
   id: string;
   title: string;
   description: string;
@@ -765,9 +771,9 @@ export type LearningPath = {
   icon: string;
   color: string;
   prerequisites: string;
-  steps: { topic: string; title: string; available: boolean }[];
+  steps: { topic: string; title: string; available: boolean; href?: string; contentId?: string }[];
 };
-questions.push(...additionalQuestions);
+questions.push(...additionalQuestions, ...courseQuestions('de'));
 
 export const paths: LearningPath[] = [
   {
@@ -864,6 +870,8 @@ export const paths: LearningPath[] = [
     ],
   },
 ];
+
+paths.push(...courseLearningPaths('de'));
 
 export function topicById(id: string) {
   return topics.find((topic) => topic.id === id);

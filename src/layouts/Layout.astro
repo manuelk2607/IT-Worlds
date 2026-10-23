@@ -2,7 +2,8 @@
 import { getContent, translate, localePath, type Locale } from "../lib/i18n";
 const locale: Locale = Astro.props.locale ?? "de";
 const t = translate(locale);
-const { topics, paths } = getContent(locale);
+const { topics, paths, questions, sources } = getContent(locale);
+import { courseChapters } from '../data/courses.ts';
 import "../styles/global.css";
 import "../styles/preferences.css";
 import { pageSeo } from "../lib/seo";
@@ -19,9 +20,9 @@ interface Props {
   active?: string;
 }
 const pageDescriptions: Record<string,string> = {
-  '/quiz/': t('Zehn IT-Quizfragen mit Erklärungen zu jeder Antwort und offiziellen Quellen. Teste dein Wissen ohne Anmeldung und ohne Zeitdruck.', 'Ten IT quiz questions with explanations for every answer and official sources. Test your knowledge without an account or time pressure.'),
-  '/quellen/': t('19 offizielle IT-Quellen mit Herausgeber, Version, Abschnitt und Lesedatum. Prüfe die Belege hinter unseren Lerntexten und Übungen.', '19 official IT sources with publisher, version, section and reading date. Check the evidence behind our articles and exercises.'),
-  '/lernpfade/': t('Drei IT-Lernpfad-Skizzen mit Voraussetzungen und ehrlicher Kennzeichnung verfügbarer und geplanter Inhalte.', 'Three IT learning-path sketches with prerequisites and clear labels for available and planned content.'),
+  '/quiz/': t(`${questions.length} IT-Quizfragen mit Erklärungen, Schwierigkeitsstufen und belegten Lösungen. Prüfe dein Wissen zu KI, LaTeX und weiteren Themen.`, `${questions.length} IT quiz questions with explanations, difficulty levels and sourced solutions. Test your knowledge of AI, LaTeX and other topics.`),
+  '/quellen/': t(`${Object.keys(sources).length} Primärquellen mit Herausgeber, Version, Abschnitt und Lesedatum zu unseren Lerntexten und Übungen.`, `${Object.keys(sources).length} primary sources with publisher, version, section and reading date for our lessons and exercises.`),
+  '/lernpfade/': t('Strukturierte Kurse zu KI und LaTeX sowie drei IT-Lernpfad-Skizzen. Voraussetzungen, Kapitel und verfügbare Inhalte auf einen Blick.', 'Structured AI and LaTeX courses plus three IT learning-path outlines. Prerequisites, chapters and available content at a glance.'),
 };
 const basePath = Astro.url.pathname.replace(/^\/en(?=\/|$)/, '') || '/';
 const {
@@ -193,6 +194,7 @@ const nav = [
       </div>
       <p class="search-help">{t("Themenwelten & Lernpfade durchsuchen", "Search topics & learning paths")}</p>
       <div id="search-results" aria-live="polite">
+        {courseChapters.map(({ course, chapter, url }) => <a href={localePath(locale, url)} data-search-item data-search-text={`${course.title[locale]} ${chapter.title[locale]} ${chapter.goals.map(goal => goal[locale]).join(' ')} ${chapter.sections.map(section => section.title[locale]).join(' ')}`.toLocaleLowerCase(locale)}><span class="search-result-icon"><Icon name="book" size={19} /></span><span>{chapter.title[locale]}<small>{course.title[locale]} · {t('Kapitel', 'Chapter')}</small></span><Icon name="arrow" size={17} /></a>)}
         {topics.map((topic) => (
           <a
             href={localePath(locale, `/themen/${topic.id}/`)}

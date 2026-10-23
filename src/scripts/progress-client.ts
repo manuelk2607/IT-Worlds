@@ -34,7 +34,7 @@ function render() {
   document.querySelectorAll<HTMLElement>('[data-path-lesson-ids]').forEach(element => {
     const ids: string[] = JSON.parse(element.dataset.pathLessonIds!);
     const read = ids.filter(id => itemFor('lesson', id)?.completed).length;
-    element.textContent = t(`${read} von ${ids.length} verfügbaren Einstiegen gelesen`, `${read} of ${ids.length} available introductions read`);
+    element.textContent = t(`${read} von ${ids.length} verfügbaren Lektionen gelesen`, `${read} of ${ids.length} available lessons read`);
   });
   document.querySelectorAll<HTMLElement>('[data-question-solved]').forEach(element => {
     const solved = itemFor('question', element.dataset.questionSolved)?.solved;

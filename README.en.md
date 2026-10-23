@@ -4,9 +4,11 @@
 
 [English website](https://it-worlds.maki26.workers.dev/en/) · [German website](https://it-worlds.maki26.workers.dev/) · [Practice editors](https://it-worlds.maki26.workers.dev/en/uebungen/) · [Deutsche README](README.md)
 
-A German/English learning platform covering ten IT topics, from programming and databases to AI, networks, security and Linux. All learning content and quizzes remain accessible without signing in. An optional account synchronises read introductions, practised questions and correct answers across devices. Light and dark modes are available, with the choice saved in your browser.
+A German/English learning platform covering ten IT topics, from programming and databases to AI, networks, security and Linux. All learning content and quizzes remain accessible without signing in. An optional account synchronises read introductions and chapters, practised questions and correct answers across devices. Light and dark modes are available, with the choice saved in your browser.
 
-The current site contains ten three-level topic outlines, three learning-path sketches, ten short introductory articles, ten interactive questions with explanations for every option, and nineteen official sources. Ten local practice editors offer hints and sample solutions. They check limited learning models rather than executing arbitrary code. Further lessons are clearly marked as planned. Complete advanced courses and an independent subject review are still pending.
+The site contains ten topic outlines, ten introductions and ten local practice editors, plus two complete chapter sequences: 14 AI chapters and 13 LaTeX chapters, progressing from foundations to advanced projects. There are 64 quiz questions with explanations for every option and 69 primary sources. Two course learning paths are available in full; three other paths remain sketches. An independent subject review is still pending.
+
+[AI course](https://it-worlds.maki26.workers.dev/en/themen/ki-neuronale-netze/kurs/) · [LaTeX course](https://it-worlds.maki26.workers.dev/en/themen/programmiersprachen/latex/) · [Course architecture](docs/KURSE.md)
 
 LaTeX, Typst and Markdown form the **Markup & typesetting languages** area within Programming languages.
 
@@ -30,7 +32,7 @@ npm run deploy:check
 
 Astro builds static pages. A TypeScript Cloudflare Worker provides same-origin authentication and progress APIs, backed by Neon Managed Auth and Postgres. A restricted database role and row-level security isolate personal progress. Email verification is disabled by the owner's choice; password reset uses Neon's shared mail service and its sending limits.
 
-German content is in `src/data/content.ts`, English in `src/data/content.en.ts`. Keep IDs aligned so both languages share progress. Own code and web examples use TypeScript; Python, SQL and LaTeX examples retain their language. See [contribution rules](CONTRIBUTING.md), [architecture](docs/TECHNIK.md), [source records](docs/QUELLEN.md) and [validation](docs/VALIDIERUNG.md).
+German content is in `src/data/content.ts`, English in `src/data/content.en.ts`. Bilingual course data lives in `src/data/course-*.ts`, aggregated by `courses.ts`. Keep IDs aligned so both languages share progress. Own code and web examples use TypeScript; Python, SQL and LaTeX examples retain their language. See [contribution rules](CONTRIBUTING.md), [architecture](docs/TECHNIK.md), [source records](docs/QUELLEN.md) and [validation](docs/VALIDIERUNG.md).
 
 A bilingual sitemap, canonical and language links, robots rules, structured data and social preview images support discovery. See [editor details](docs/EDITOR.md) and [SEO](docs/SEO.md) (German).
 

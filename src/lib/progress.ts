@@ -1,4 +1,5 @@
 import { topics, questions } from '../data/content.ts';
+import { courseChapters } from '../data/courses.ts';
 
 export type ProgressKind = 'lesson' | 'question';
 export interface ProgressItem {
@@ -14,7 +15,7 @@ export interface ProgressChange {
   completed: boolean;
   selectedOption?: number;
 }
-export const lessonIds = topics.filter(topic => topic.lesson).map(topic => topic.id);
+export const lessonIds = [...topics.filter(topic => topic.lesson).map(topic => topic.id), ...courseChapters.map(chapter => chapter.id)];
 export const questionIds = questions.map(question => question.id);
 export function parseProgressChange(value: unknown): ProgressChange | null {
   if (!value || typeof value !== 'object') return null;

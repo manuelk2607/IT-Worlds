@@ -9,6 +9,8 @@ import Layout from "../../layouts/Layout.astro";
 import Icon from "../../components/Icon.astro";
 import SourceCard from "../../components/SourceCard.astro";
 import { topics as staticTopics, type Topic } from "../../data/content";
+import { courses, coursePath } from '../../data/courses.ts';
+import '../../styles/courses.css';
 export function getStaticPaths() {
   return staticTopics.map((topic) => ({
     params: { slug: topic.id },
@@ -17,6 +19,8 @@ export function getStaticPaths() {
 }
 interface Props { locale?: Locale; topic: Topic }
 const { topic } = Astro.props;
+const topicCourses = courses.filter(course => course.topic === topic.id);
+const fullCourse = topic.id === 'ki-neuronale-netze' ? topicCourses[0] : undefined;
 const question = questions.find((question) => question.topic === topic.id);
 const reviewDates = [...new Set(topic.lesson?.sources.map(id=>sources[id].reviewedAt))].sort().map(date=>new Intl.DateTimeFormat(locale,{dateStyle:"medium",timeZone:"UTC"}).format(new Date(date))).join(" · ");
 ---
@@ -82,11 +86,12 @@ const reviewDates = [...new Set(topic.lesson?.sources.map(id=>sources[id].review
           ))}
         </section>
       )}
+      {topicCourses.map(course => <section class="course-teaser"><p class="eyebrow">{t('ZUSAMMENHÄNGENDER KURS', 'STRUCTURED COURSE')}</p><h2>{course.title[locale]}</h2><p>{course.description[locale]}</p><p>{t(`${course.chapters.length} ausgearbeitete Kapitel · ${course.chapters.reduce((sum, chapter) => sum + chapter.questions.length, 0)} Quizfragen · Aufgaben mit Lösungen`, `${course.chapters.length} available chapters · ${course.chapters.reduce((sum, chapter) => sum + chapter.questions.length, 0)} quiz questions · exercises with solutions`)}</p><a class="button primary" href={localePath(locale, coursePath(course))}>{t('Kurs öffnen →', 'Open course →')}</a></section>)}
       <section id="themenplan">
         <p class="eyebrow">{t("DEIN WEG VOM EINSTIEG BIS ZUM PROFI", "YOUR ROUTE FROM BEGINNER TO ADVANCED")}</p>
         <h2>{t("Eine Richtung. Drei Lernstufen.", "One direction. Three levels.")}</h2>
         <p class="muted">
-          {t("Die Themenlandkarte zeigt den geplanten Ausbau. Ausgearbeitete Einstiege findest du direkt darunter.", "The topic map outlines planned content. The available introductions follow below.")}
+          {fullCourse ? t('Alle verlinkten Kapitel sind verfügbar. Beginne bei den Grundlagen und arbeite dich bis zum Abschlussprojekt vor.', 'All linked chapters are available. Start with the foundations and work towards the final project.') : t('Die Themenlandkarte zeigt den weiteren Ausbau. Verfügbare Kurse und Einstiege sind gesondert verlinkt.', 'The topic map shows further expansion. Available courses and introductions are linked separately.')}
         </p>
         <div class="curriculum">
           {levels.map((level) => (
@@ -99,12 +104,12 @@ const reviewDates = [...new Set(topic.lesson?.sources.map(id=>sources[id].review
                 </div>
               </div>
               <ul>
-                {topic.curriculum[level.id].map((title, index) => (
+                {(fullCourse ? fullCourse.chapters.filter(chapter => chapter.level === level.id).map(chapter => chapter.title[locale]) : topic.curriculum[level.id]).map((title, index) => (
                   <li>
                     <Icon name="book" size={17} />
                     <span>{title}</span>
                     <small>
-                      {level.id === "einstieg" &&
+                      {fullCourse ? <a href={localePath(locale, coursePath(fullCourse, fullCourse.chapters.filter(chapter => chapter.level === level.id)[index]))}>{t('Kapitel lesen →', 'Read chapter →')}</a> : level.id === "einstieg" &&
                       topic.lesson &&
                       (topic.lesson.curriculumIndex !== undefined ? index === topic.lesson.curriculumIndex : ((topic.id === "datenbanken" && index === 1) ||
                         (topic.id !== "datenbanken" &&
