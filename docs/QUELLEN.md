@@ -943,3 +943,11 @@ Gelesene Abschnitte für die acht Webkapitel: HTML-Struktur, Boxmodell, responsi
 ## IT-Grundlagen · Abgleich 23. Oktober 2026
 
 Neun neue Quellen in `course-basics-sources.ts`: IETF RFC 8259, §§1–5 (Objekte, Arrays und Werte); MDN JSON.parse (Syntaxprüfung), Number.toString (Radix) und Number.isSafeInteger (Darstellungsgrenzen); Node.js 22.22.0 File system (mkdtempSync, writeFileSync, readFileSync, rmSync); Pro Git, zweite Ausgabe (Staging und Commit); NIST DADS, Stand 21.04.2022 (lineare und binäre Suche); Google SRE, Kapitel 12, Chris Jones, 2016 (kontrollierte Fehlersuche). URLs, Herausgeber, Version und Lesedatum sind pro Eintrag hinterlegt. UTF-8 und TextEncoder nutzen die bereits gelesenen Belege. Quellenabgleich erfolgt; unabhängiges Fachreview weiterhin offen.
+
+## Linux · Abgleich 23. Oktober 2026
+
+Acht ergänzte Belege in `course-linux-sources.ts`: die von man7 wiedergegebenen Originalhandbücher von Bash, GNU grep und GNU cmp (Quoting, Pipe-Status, Rückgabestatus und Bytevergleich); Linux man-pages inode(7) und signal(7); systemd 262 systemctl und journalctl; GNU-Coreutils-Quellhandbuch, Abschnitt cp invocation. Die bestehende feste Coreutils-9.7-Quelle belegt Dateirechte. Herkunft, Fassung, gelesene Abschnitte, URL und Lesedatum stehen im Quellenregister. Keine unabhängige Fachprüfung behauptet.
+
+## Netzwerke · Abgleich 23. Oktober 2026
+
+Sechs neue Einträge in `course-network-sources.ts`: IETF RFC 4632 §3.1 (CIDR-Präfixnotation), RFC 9293 §2.2 (zuverlässiger geordneter Bytestrom), RFC 768 (UDP-Vertrag und Ports); MDN URL-Schnittstelle (strukturierte Bestandteile), TLS (Verschlüsselung, Integrität, Serverauthentifizierung), HTTP caching (Frische, ETag, no-cache/no-store). Der vorhandene RFC-1034-Beleg stützt DNS/TTL. Die konkreten Abschnitte wurden gelesen; Metadaten einschließlich Lesedatum sind im Register hinterlegt.

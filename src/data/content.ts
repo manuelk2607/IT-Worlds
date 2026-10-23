@@ -1,3 +1,5 @@
+import {networkSources} from './course-network-sources.ts';
+import {linuxSources} from './course-linux-sources.ts';
 import {basicsSources} from './course-basics-sources.ts';
 import {webSources} from './course-web-sources.ts';
 import {programmingSources} from './course-programming-sources.ts';
@@ -43,6 +45,8 @@ export const sources = {
   ...programmingSources,
   ...webSources,
   ...basicsSources,
+  ...linuxSources,
+  ...networkSources,
   python: {
     title: "An Informal Introduction to Python",
     publisher: "Python Software Foundation",

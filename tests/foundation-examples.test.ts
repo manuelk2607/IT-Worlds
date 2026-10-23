@@ -103,3 +103,61 @@ assert.equal(total('[0]'),0);
   assert.equal(execFileSync('git',['status','--short'],{cwd:gitDir,encoding:'utf8'}).trim(),'M notes.txt');
  }finally{rmSync(dir,{recursive:true,force:true});}
 });
+
+test('portable Linux-course shell examples handle spaces, statuses and restore failure',async()=>{
+ const {linuxCourse}=await import('../src/data/course-linux.ts');
+ const dir=mkdtempSync(join(tmpdir(),'it-worlds-shell-'));
+ try{
+  for(const chapter of linuxCourse.chapters){
+   if(chapter.id==='dienste')continue; // systemd inspection requires a running Linux user manager.
+   const code=chapter.sections.find(section=>section.language==='Shell')!.code!;
+   const output=execFileSync('/bin/bash',['--noprofile','--norc','-c',code],{encoding:'utf8',timeout:10000,env:{...process.env,TMPDIR:dir}});
+   if(chapter.id==='shell')assert.equal(output,'<Learning notes>\n$label\n');
+   if(chapter.id==='rechte')assert.match(output,/^-rw-r-----/);
+   if(chapter.id==='datenstroeme')assert.equal(output.trim(),'2\nNo matching line');
+   if(chapter.id==='prozesse')assert.match(output,/nonzero status/);
+   if(chapter.id==='wiederherstellung'){
+    assert.equal(output,'Restore verified\n');
+    const corrupted=code.replace('cp "$practice_dir/backup.txt" "$practice_dir/restored.txt"',`printf 'Corrupted\\n' > "$practice_dir/backup.txt"\ncp "$practice_dir/backup.txt" "$practice_dir/restored.txt"`);
+    assert.throws(()=>execFileSync('/bin/bash',['--noprofile','--norc','-c',corrupted],{encoding:'utf8',timeout:10000,env:{...process.env,TMPDIR:dir}}),error=>typeof error==='object'&&error!==null&&'status'in error&&error.status===1);
+   }
+  }
+ }finally{rmSync(dir,{recursive:true,force:true});}
+});
+
+test('network models validate prefixes, TTL, exact origins and HTTP revalidation',async()=>{
+ const {networkCourse}=await import('../src/data/course-networks.ts');
+ const dir=mkdtempSync(join(tmpdir(),'it-worlds-network-'));
+ try{
+  writeFileSync(join(dir,'package.json'),'{"type":"module"}');
+  for(const chapter of networkCourse.chapters){
+   const code=chapter.sections.find(section=>section.language==='TypeScript')!.code!;
+   let extra='';
+   if(chapter.id==='praefixe')extra=`
+import assert from 'node:assert/strict';
+assert.equal(addressCount(0),4294967296);assert.equal(addressCount(32),1);
+for(const prefix of [-1,33,1.5,NaN,Infinity])assert.throws(()=>addressCount(prefix));
+`;
+   if(chapter.id==='dns')extra=`
+import assert from 'node:assert/strict';
+assert.equal(remainingTtl(60,60),0);assert.equal(remainingTtl(0,0),0);
+for(const value of [-1,NaN,Infinity]){assert.throws(()=>remainingTtl(value,1));assert.throws(()=>remainingTtl(1,value));}
+`;
+   if(chapter.id==='tls')extra=`
+import assert from 'node:assert/strict';
+for(const raw of ['broken','http://example.test','https://example.test:8443','https://example.test@other.invalid','https://user@example.test'])assert.equal(expectedOrigin(raw),false);
+assert.equal(expectedOrigin('https://example.test:443/a'),true);
+`;
+   if(chapter.id==='diagnose')extra=`
+assert.equal(serve('/lesson','"v0"').status,200);
+assert.equal(await serve('/lesson','"v0"').text(),'SQL');
+assert.equal(serve('/lesson','"v1"').body,null);
+assert.equal(serve('/lesson').headers.get('cache-control'),'no-cache');
+`;
+   const filename=join(dir,chapter.id+'.ts');writeFileSync(filename,code+'\n'+extra);
+   const output=execFileSync(process.execPath,['--experimental-strip-types',filename],{encoding:'utf8',timeout:10000});
+   if(chapter.id==='transport')assert.match(output,/\[ 'SQL', 'HTTP' \] 0/);
+   if(chapter.id==='diagnose')assert.equal(output.trim(),'3 response cases passed');
+  }
+ }finally{rmSync(dir,{recursive:true,force:true});}
+});

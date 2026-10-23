@@ -33,3 +33,11 @@ Sieben Kapitel führen von Binärdarstellung und UTF-8 über JSON, isolierte Dat
 Quizfilter begrenzen nach Themen-/Kurswahl die tatsächlich angebotenen Kurse und Kapitel; ein Kapitel setzt Kurs, Thema und Lernstufe konsistent. Ein Themenwechsel entfernt unpassende Unterfilter, ein Stufenwechsel entfernt unpassende Kapitel. Exakte Fragenlinks bleiben möglich. Die Auswahl nennt ihre Fragenzahl und erklärt den Rundenneustart. Die Filterlogik ist mit Konflikt- und Grenzfällen getestet; zwei Fragen, alle Erklärungen, Ergebnis und Neustart wurden im Browser geprüft.
 
 Der Lernstand gruppiert Kapitel und Fragen in zugänglichen aufklappbaren Kursgruppen. Ansicht, Thema und „Nur offene Inhalte“ reduzieren die Übersicht. Jede Gruppe nennt ihren Fortschritt und verlinkt den nächsten offenen Schritt. Einstiege bleiben separat erreichbar; alle Inhalte auch ohne erreichbaren Account-Dienst lesbar. Suche normalisiert den bereits geladenen Index nur einmal pro Eintrag, sodass weitere Tastatureingaben die langen Kapiteltexte nicht wiederholt aufbereiten.
+
+## Paket 6 · Linux
+
+Sechs Kapitel mit zwölf Fragen erklären Quoting, Pfade und Rechte, Pipes und Rückgabestatus, eigene Prozesse, systemd-Diagnose und eine Wiederherstellungsprobe. Portable Shell-Beispiele laufen in einem isolierten temporären Verzeichnis; Tests prüfen Leerzeichen, 640-Rechte, Nichttreffer, kontrolliertes Beenden des eigenen Jobs sowie erfolgreiche und absichtlich beschädigte Wiederherstellung. Die rein lesenden systemd-Befehle wurden gegen die offiziellen Handbücher abgeglichen; eine Live-Ausführung bleibt mangels laufender Linux-/systemd-Umgebung offen. Keine fremden Prozesse oder Dienste werden verändert.
+
+## Paket 7 · Netzwerke
+
+Sechs Kapitel und zwölf Fragen verbinden URL-Bestandteile, IPv4/CIDR, DNS/TTL, TCP/UDP, TLS und HTTP-Caches. Lokale Modelle sind ausdrücklich keine Live-Netztests. Alle TypeScript-Listings werden ausgeführt und streng geprüft; Zusatzfälle decken Präfixgrenzen, ungültige Zeiten, exakte Origins einschließlich Port/Benutzerinformationen sowie aktuelle und veraltete ETags ab. Geteilte Nachrichten werden anhand eines klar begrenzten ASCII-Modells erklärt, ohne TCP-Nachrichtengrenzen oder einen vollständigen DNS-Resolver zu behaupten.
