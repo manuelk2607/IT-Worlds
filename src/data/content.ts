@@ -1,3 +1,4 @@
+import {devopsSources} from './course-devops-sources.ts';
 import {securitySources} from './course-security-sources.ts';
 import {networkSources} from './course-network-sources.ts';
 import {linuxSources} from './course-linux-sources.ts';
@@ -49,6 +50,7 @@ export const sources = {
   ...linuxSources,
   ...networkSources,
   ...securitySources,
+  ...devopsSources,
   python: {
     title: "An Informal Introduction to Python",
     publisher: "Python Software Foundation",

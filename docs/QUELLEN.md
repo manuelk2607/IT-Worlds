@@ -955,3 +955,7 @@ Sechs neue Einträge in `course-network-sources.ts`: IETF RFC 4632 §3.1 (CIDR-P
 ## Sicherheit · Abgleich 23. Oktober 2026
 
 Sieben aktuelle OWASP-Cheat-Sheets in `course-security-sources.ts`: Threat Modeling (vier Leitfragen, Systemmodell/Vertrauensgrenzen), Authentication (Identitätsnachweis, Passwortmanager), Input Validation (Syntax/Semantik und Grenzen anderer Schutzmechanismen), Authorization (Least privilege, Deny by default, jede Anfrage), XSS Prevention (textContent und Ausgabekontexte), CSRF Prevention (bestehende Framework-Abwehr, Tokens, SameSite-Grenzen, Origin) und Logging (Ereignisse, ausgeschlossene Geheimnisse, Steuerzeichen und Zugriff). Die bestehenden MFA- und BOLA-Belege ergänzen diese. Quellenabgleich ist dokumentiert; unabhängiges Fachreview steht weiterhin aus.
+
+## Cloud & DevOps · Abgleich 24. Oktober 2026
+
+16 neue Belege in course-devops-sources.ts: NIST SP 800-145 §2 (Dienstmodelle); npm CLI 11 npm ci (Lockdatei und eingefrorene Installation); Node 22.22.0 Crypto (createHash/update/digest); GitHub Workflows und Secure use (Ereignisse, Jobs, minimale Rechte und geprüfte Action-Commits); Docker Container, Images, Run, CLI-Flags, None-Netzwerk, Volumes und Build secrets; Cloudflare Secrets und Rollbacks mit Datenkompatibilitätsgrenzen; Google SRE, Ausgabe 2016, Kapitel 4 und 6 (SLI/SLO/SLA, Messfenster, vier Betriebssignale). Die genannten Originalabschnitte wurden gelesen; URLs, Herausgeber, Fassung, Abschnitt und Lesedatum sind pro Quelle hinterlegt. Keine unabhängige Fachprüfung behauptet.

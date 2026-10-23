@@ -13,8 +13,8 @@ Informationsarchitektur, Benutzerführung und vernachlässigte Inhalte iterativ 
 31 Tests; 100 Dateien strikt ohne Meldungen; Build 252 HTML-Seiten; lokaler SEO-Audit 246 öffentliche URLs; 16.254 interne Links/Assets/Anker geprüft; Deployment-Vorschau erfolgreich. Öffentlich mobil: Lernstart, Menü/Escape, Designs, Sprachwechsel, Sicherheitsquiz samt sämtlichen Erklärungen. Öffentlicher SEO-Abgleich am 24.10. für alle 246 URLs samt bytegleicher Auslieferung erfolgreich; lokaler Build wird vorher vollständig eingelesen. Kein neuer angemeldeter E2E-Test, keine systemd-Liveprüfung, kein unabhängiges Fachreview behauptet.
 
 ## Nächste Schritte
-1. GitHub-Workflow auf Node 22.22.0 und 24 ausführen; lokale Prüfung für alle Schritte erfolgreich.
-2. Cloud-&-DevOps-Kurs als nächstes vollständiges Inhaltspaket mit gelesenen Primärquellen, Beispielen und Quiz ergänzen.
+1. GitHub-Workflow 523383f auf Node 22.22.0 und 24 erfolgreich (Run 40041316700). Neuer Containerjob folgt mit DevOps-Paket.
+2. Cloud-&-DevOps-Kurs ist lokal vollständig ergänzt (8 Kapitel, 16 Fragen, 16 neue Quellen). Node-Beispiele geprüft; Container-CI und Veröffentlichung folgen.
 3. Drei ältere Querverbindungspfade auf passende verfügbare Kapitel umstellen; Kursstart und weitere Orientierung verbessern.
 4. Relevante Tests/Browserprüfungen, Dokumentation und Deployment jeweils nach abgeschlossenem Paket.
 
