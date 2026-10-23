@@ -18,7 +18,8 @@ const next = course.chapters[position + 1];
 const title = chapter ? chapter.title[locale] : course.title[locale] + t(' · Kursübersicht', ' · Course overview');
 const description = chapter ? chapter.goals.map(goal => goal[locale]).join(' ') + ' ' + course.title[locale] + '.' : course.description[locale];
 const quizUrl = localePath(locale, `/quiz/?kurs=${course.id}${chapter ? `&kapitel=${chapter.id}` : ''}`);
-const other = courses.find(item => item.id !== course.id)!;
+const relatedId = {ki:'latex',latex:'ki',datenbanken:'apis',apis:'datenbanken'}[course.id];
+const other = courses.find(item => item.id === relatedId)!;
 ---
 <Layout locale={locale} title={title} description={description} active="themen">
   <header class="container page-top course-header">
@@ -63,7 +64,7 @@ const other = courses.find(item => item.id !== course.id)!;
         </article>
         <nav class="course-pagination" aria-label={t('Weiterlernen', 'Continue learning')}>
           {previous && <a class="button secondary" href={localePath(locale, coursePath(course, previous))}>← {previous.title[locale]}</a>}
-          {next ? <a class="button primary" href={localePath(locale, coursePath(course, next))}>{next.title[locale]} →</a> : <a class="button primary" href={localePath(locale, coursePath(other, other.chapters.at(-1)))}>{t('Abschlussprojekt verbinden:', 'Connect the final project:')} {other.title[locale]} →</a>}
+          {next ? <a class="button primary" href={localePath(locale, coursePath(course, next))}>{next.title[locale]} →</a> : <a class="button primary" href={localePath(locale, coursePath(other, course.id === 'ki' || course.id === 'latex' ? other.chapters.at(-1) : undefined))}>{t('Abschlussprojekt verbinden:', 'Connect the final project:')} {other.title[locale]} →</a>}
         </nav>
       </>}
       <p class="course-review muted">{t('Die Kursfolge behandelt Grundlagen bis zu fortgeschrittenen Entscheidungen und Projekten. Sie ist kein Zertifikat und ersetzt keine eigenständige Praxis oder fachliche Begutachtung.', 'The course sequence covers foundations through advanced decisions and projects. It is not a certificate and does not replace independent practice or expert assessment.')}</p>

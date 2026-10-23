@@ -22,7 +22,7 @@ interface Props {
 const pageDescriptions: Record<string,string> = {
   '/quiz/': t(`${questions.length} IT-Quizfragen mit Erklärungen, Schwierigkeitsstufen und belegten Lösungen. Prüfe dein Wissen zu KI, LaTeX und weiteren Themen.`, `${questions.length} IT quiz questions with explanations, difficulty levels and sourced solutions. Test your knowledge of AI, LaTeX and other topics.`),
   '/quellen/': t(`${Object.keys(sources).length} Primärquellen mit Herausgeber, Version, Abschnitt und Lesedatum zu unseren Lerntexten und Übungen.`, `${Object.keys(sources).length} primary sources with publisher, version, section and reading date for our lessons and exercises.`),
-  '/lernpfade/': t('Strukturierte Kurse zu KI und LaTeX sowie drei IT-Lernpfad-Skizzen. Voraussetzungen, Kapitel und verfügbare Inhalte auf einen Blick.', 'Structured AI and LaTeX courses plus three IT learning-path outlines. Prerequisites, chapters and available content at a glance.'),
+  '/lernpfade/': t('Strukturierte Kurse zu Datenbanken, APIs, KI und LaTeX sowie drei IT-Lernpfad-Skizzen. Voraussetzungen, Kapitel und verfügbare Inhalte auf einen Blick.', 'Structured database, API, AI and LaTeX courses plus three IT learning-path outlines. Prerequisites, chapters and available content at a glance.'),
 };
 const basePath = Astro.url.pathname.replace(/^\/en(?=\/|$)/, '') || '/';
 const {

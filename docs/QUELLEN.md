@@ -1,6 +1,6 @@
 # Quellenprotokoll
 
-Stand der Erweiterung: **23. Oktober 2026**. Das Verzeichnis umfasst 69 Primärquellen: 19 bisherige Quellen und 50 neue Kursbelege. Die ursprünglichen 14 wurden am 20. Oktober gelesen; fünf weitere Quellen und der Docker-Stand wurden am 22. Oktober anhand der unten festgehaltenen Originale gelesen. Die HTML-Zielseiten sind die kanonischen Lesefassungen; abgerufen wurden die explizit verlinkten Quelltexte aus den offiziellen Repositories beziehungsweise die RFC-Originale. Es wurden keine fremden Artikeltexte oder Bilder übernommen. Die Lerntexte sind eigenständige Zusammenfassungen.
+Stand der Erweiterung: **23. Oktober 2026**. Das Verzeichnis umfasst 86 Primärquellen: 19 ursprüngliche Quellen, 50 KI-/LaTeX-Belege und 17 Datenbank-/API-Belege. Die ursprünglichen 14 wurden am 20. Oktober gelesen; fünf weitere Quellen und der Docker-Stand wurden am 22. Oktober anhand der unten festgehaltenen Originale gelesen. Die HTML-Zielseiten sind die kanonischen Lesefassungen; abgerufen wurden die explizit verlinkten Quelltexte aus den offiziellen Repositories beziehungsweise die RFC-Originale. Es wurden keine fremden Artikeltexte oder Bilder übernommen. Die Lerntexte sind eigenständige Zusammenfassungen.
 
 Die zehn bisherigen Quizfragen beziehen sich auf Python, SQL, HTML, PyTorch, OpenAPI, UTF-8, DNS-TTL, MFA-Faktoren, Image/Container und Dateirechte. Zehn eigene Editor-Aufgaben üben dieselben Grundlagen mit begrenzten lokalen Lernmodellen. Sie belegen nicht automatisch alle geplanten Profi-Lektionen. OWASP wird ausdrücklich als Ausgabe 2021 verwendet, ohne Behauptung über die aktuelle Rangfolge.
 
@@ -606,4 +606,144 @@ Die 27 Kapitel und 54 zusätzlichen Fragen verknüpfen die folgenden tatsächlic
 - Version: Living course · accessed 2026-10-23
 - Abschnitt: Bias and limitations
 - [Dokumentation](https://huggingface.co/learn/llm-course/chapter1/9) · [Gelesener Beleg](https://huggingface.co/learn/llm-course/chapter1/9)
+- Lesedatum: 2026-10-23
+
+## Datenbanken und APIs · 23. Oktober 2026
+
+Die folgenden Originalabschnitte wurden für die 15 neuen Kapitel und 30 Fragen gelesen. PostgreSQL ist ausdrücklich Ausgabe 18; fortlaufende Webdokumentationen tragen ihr Lesedatum. Quellenabgleich ist kein unabhängiges Fachreview.
+
+### PostgreSQL · 2.3 · Creating a new table (dbTables)
+
+- Herausgeber: PostgreSQL Global Development Group
+- Version: PostgreSQL 18
+- Abschnitt: 2.3 · Creating a new table
+- [Gelesener Originalbeleg](https://www.postgresql.org/docs/18/tutorial-table.html)
+- Lesedatum: 2026-10-23
+
+### PostgreSQL · 5.5 · NOT NULL, CHECK, primary and foreign keys (dbConstraints)
+
+- Herausgeber: PostgreSQL Global Development Group
+- Version: PostgreSQL 18
+- Abschnitt: 5.5 · NOT NULL, CHECK, primary and foreign keys
+- [Gelesener Originalbeleg](https://www.postgresql.org/docs/18/ddl-constraints.html)
+- Lesedatum: 2026-10-23
+
+### PostgreSQL · 2.6 · Inner and left outer joins (dbJoin)
+
+- Herausgeber: PostgreSQL Global Development Group
+- Version: PostgreSQL 18
+- Abschnitt: 2.6 · Inner and left outer joins
+- [Gelesener Originalbeleg](https://www.postgresql.org/docs/18/tutorial-join.html)
+- Lesedatum: 2026-10-23
+
+### PostgreSQL · 2.7 · Aggregate functions; GROUP BY; HAVING (dbAggregate)
+
+- Herausgeber: PostgreSQL Global Development Group
+- Version: PostgreSQL 18
+- Abschnitt: 2.7 · Aggregate functions; GROUP BY; HAVING
+- [Gelesener Originalbeleg](https://www.postgresql.org/docs/18/tutorial-agg.html)
+- Lesedatum: 2026-10-23
+
+### PostgreSQL · 9.2 · NULL comparisons (dbNull)
+
+- Herausgeber: PostgreSQL Global Development Group
+- Version: PostgreSQL 18
+- Abschnitt: 9.2 · NULL comparisons
+- [Gelesener Originalbeleg](https://www.postgresql.org/docs/18/functions-comparison.html)
+- Lesedatum: 2026-10-23
+
+### PostgreSQL · 3.4 · BEGIN, COMMIT, ROLLBACK; savepoints (dbTransaction)
+
+- Herausgeber: PostgreSQL Global Development Group
+- Version: PostgreSQL 18
+- Abschnitt: 3.4 · BEGIN, COMMIT, ROLLBACK; savepoints
+- [Gelesener Originalbeleg](https://www.postgresql.org/docs/18/tutorial-transactions.html)
+- Lesedatum: 2026-10-23
+
+### PostgreSQL · 13.2 · Read Committed; Serializable; retrying transactions (dbIsolation)
+
+- Herausgeber: PostgreSQL Global Development Group
+- Version: PostgreSQL 18
+- Abschnitt: 13.2 · Read Committed; Serializable; retrying transactions
+- [Gelesener Originalbeleg](https://www.postgresql.org/docs/18/transaction-iso.html)
+- Lesedatum: 2026-10-23
+
+### PostgreSQL · 11.1 · Index use and maintenance costs (dbIndex)
+
+- Herausgeber: PostgreSQL Global Development Group
+- Version: PostgreSQL 18
+- Abschnitt: 11.1 · Index use and maintenance costs
+- [Gelesener Originalbeleg](https://www.postgresql.org/docs/18/indexes-intro.html)
+- Lesedatum: 2026-10-23
+
+### PostgreSQL · 14.1 · Plans; EXPLAIN ANALYZE (dbExplain)
+
+- Herausgeber: PostgreSQL Global Development Group
+- Version: PostgreSQL 18
+- Abschnitt: 14.1 · Plans; EXPLAIN ANALYZE
+- [Gelesener Originalbeleg](https://www.postgresql.org/docs/18/using-explain.html)
+- Lesedatum: 2026-10-23
+
+### PostgreSQL · 3.5 · Window functions; partitioning (dbWindow)
+
+- Herausgeber: PostgreSQL Global Development Group
+- Version: PostgreSQL 18
+- Abschnitt: 3.5 · Window functions; partitioning
+- [Gelesener Originalbeleg](https://www.postgresql.org/docs/18/tutorial-window.html)
+- Lesedatum: 2026-10-23
+
+### PostgreSQL · PREPARE · parameters; EXECUTE (dbPrepare)
+
+- Herausgeber: PostgreSQL Global Development Group
+- Version: PostgreSQL 18
+- Abschnitt: PREPARE · parameters; EXECUTE
+- [Gelesener Originalbeleg](https://www.postgresql.org/docs/18/sql-prepare.html)
+- Lesedatum: 2026-10-23
+
+### PostgreSQL · 25.1 · SQL dump and restore (dbBackup)
+
+- Herausgeber: PostgreSQL Global Development Group
+- Version: PostgreSQL 18
+- Abschnitt: 25.1 · SQL dump and restore
+- [Gelesener Originalbeleg](https://www.postgresql.org/docs/18/backup-dump.html)
+- Lesedatum: 2026-10-23
+
+### Using Fetch (apiFetch)
+
+- Herausgeber: MDN Web Docs
+- Version: Living documentation · accessed 2026-10-23
+- Abschnitt: Checking response status; cancelling requests; credentials and CORS
+- [Gelesener Originalbeleg](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch)
+- Lesedatum: 2026-10-23
+
+### Narrowing (apiNarrow)
+
+- Herausgeber: Microsoft · TypeScript
+- Version: Handbook · accessed 2026-10-23
+- Abschnitt: typeof; in operator; type predicates
+- [Gelesener Originalbeleg](https://www.typescriptlang.org/docs/handbook/2/narrowing.html)
+- Lesedatum: 2026-10-23
+
+### Problem Details for HTTP APIs (apiProblems)
+
+- Herausgeber: IETF · RFC Editor
+- Version: RFC 9457 · July 2023
+- Abschnitt: 3.1 · type, status, title, detail; 5 · security
+- [Gelesener Originalbeleg](https://www.rfc-editor.org/rfc/rfc9457.html)
+- Lesedatum: 2026-10-23
+
+### Broken Object Level Authorization (apiBola)
+
+- Herausgeber: OWASP Foundation
+- Version: API1:2023
+- Abschnitt: Is the API vulnerable?; How to prevent
+- [Gelesener Originalbeleg](https://api-security.owasp.org/editions/2023/en/0xa1-broken-object-level-authorization/)
+- Lesedatum: 2026-10-23
+
+### HTTP Semantics · methods and preconditions (apiSemantics)
+
+- Herausgeber: IETF · RFC Editor
+- Version: RFC 9110 · June 2022
+- Abschnitt: 9.2–9.3 · method semantics; 13.1.1 · If-Match; 15 · status codes
+- [Gelesener Originalbeleg](https://www.rfc-editor.org/rfc/rfc9110.html)
 - Lesedatum: 2026-10-23

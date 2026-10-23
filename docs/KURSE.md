@@ -1,6 +1,6 @@
 # KI- und LaTeX-Kurse
 
-Stand: 23. Oktober 2026. 14 KI- und 13 LaTeX-Kapitel sind auf Deutsch und Englisch verfügbar. Beide Folgen behandeln Grundlagen, Vertiefung und fortgeschrittene Projekte; sie ersetzen keine eigenständige Praxis oder Fachbegutachtung. LaTeX bleibt unter Programmiersprachen → Auszeichnungs- & Satzsprachen.
+Stand: 23. Oktober 2026. 8 Datenbank-, 7 API-, 14 KI- und 13 LaTeX-Kapitel sind auf Deutsch und Englisch verfügbar. Die vier Folgen behandeln Grundlagen, Vertiefung und fortgeschrittene Projekte; sie ersetzen keine eigenständige Praxis oder Fachbegutachtung. LaTeX bleibt unter Programmiersprachen → Auszeichnungs- & Satzsprachen.
 
 ## Lernfolge
 
@@ -29,3 +29,9 @@ Neue Fortschrittskennungen sind `ki-[kapitel]` beziehungsweise `latex-[kapitel]`
 Alle acht Python-Beispiele wurden mit Python 3.12 und PyTorch 2.14.1 ausgeführt. Zwölf LaTeX-Beispiele wurden mit dem eingebauten Tectonic/XeTeX-Compiler erfolgreich übersetzt. Der BibLaTeX-Beispieltext erreicht den Biber-Schritt; die vollständige Literaturpipeline ist lokal mangels Biber nicht geprüft. Der angegebene Ablauf (LaTeX → Biber → LaTeX → LaTeX) setzt eine vollständige TeX-Installation voraus.
 
 Automatische Tests prüfen Sprachparität, eindeutige IDs, Quellenbezüge, Formelrendering, Quizlösungen und Filterkombinationen. Handrechnungen prüfen ausgewählte Zahlenbeispiele. Quellenabgleich und technische Prüfung sind kein unabhängiges Fachreview; dieses steht aus.
+
+## Ergänzung: Datenbanken und APIs
+
+Acht SQL-Kapitel führen von Modellierung über Abfragen, Joins, Auswertungen und Transaktionen bis zu Parametern, Plänen und Migration/Restore. Sieben API-Kapitel behandeln HTTP, OpenAPI, Laufzeitvalidierung, Fehler, Objektberechtigungen, Idempotenz/Versionskonflikte und Vertragstests. Beide Folgen haben aufeinander aufbauende Aufgaben und Abschlussprojekte. Alle acht SQL-Beispiele wurden in isoliertem PostgreSQL 18 geprüft, alle sieben TypeScript-Beispiele streng typgeprüft und ausgeführt. Der API-Test prüft zusätzlich ungültige Daten, HTTP-Fehler und veraltete Versionen. Ein eigener Dump/Restore-Test verwendet ausschließlich eine lokale Testdatenbank.
+
+Daten: `course-databases.ts`, `course-apis.ts`, `course-foundation-sources.ts`; 17 zusätzliche Primärquellen und 30 Fragen. Fortschrittskennungen beginnen mit `datenbanken-` beziehungsweise `apis-`. Die bisherigen KI-/LaTeX-Kapitel wurden nicht verändert. Die nun vier Kurse nutzen dieselbe Darstellung, Suche, Quizfilter, Lernpfade und Fortschrittsvalidierung. Gesamt: 42 Kapitel und 94 Fragen.

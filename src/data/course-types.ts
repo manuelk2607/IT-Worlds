@@ -8,7 +8,7 @@ export interface CourseSection {
   paragraphs: Bilingual[];
   formula?: string;
   code?: string;
-  language?: 'Python' | 'LaTeX' | 'BibTeX' | 'Shell';
+  language?: 'Python' | 'LaTeX' | 'BibTeX' | 'Shell' | 'SQL' | 'TypeScript';
 }
 export interface CourseQuestion {
   prompt: Bilingual;
@@ -28,7 +28,7 @@ export interface Chapter {
   questions: CourseQuestion[];
 }
 export interface Course {
-  id: 'ki' | 'latex';
+  id: 'ki' | 'latex' | 'datenbanken' | 'apis';
   topic: string;
   slug: string;
   title: Bilingual;

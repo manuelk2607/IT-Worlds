@@ -1,5 +1,21 @@
 # Validierung und Veröffentlichung
 
+## Datenbank-/API-Ausbau · 23. Oktober 2026
+
+Priorisierte Erweiterung: acht SQL- und sieben API-Kapitel mit 15 Aufgaben, vollständigen Beispielen und 30 Fragen. Gesamt: 42 Kurskapitel, 94 Quizfragen, 86 Primärquellen und 52 lesbare Inhalte mit optionalem Fortschritt. Die bisherigen KI-/LaTeX-Inhalte bleiben unverändert. Analyse aller anderen Themen und offene Arbeitspakete: [AUSBAU.md](AUSBAU.md).
+
+- `npm test`: 21 Tests erfolgreich. Der neue Test führt alle sieben API-Beispiele aus und prüft zusätzlich fehlerhafte Antwortdaten, HTTP 404, Vertragsfälle und veraltete Schreibversionen. Bestehende Tests prüfen auch alle neuen Quizlösungen, Übersetzungen, Quellen und Fortschrittskennungen.
+- `npm run check`: 74 Dateien; keine Fehler, Warnungen oder Hinweise. Alle sieben veröffentlichten TypeScript-Beispiele zusätzlich mit strenger separater Typprüfung geprüft.
+- `npm run build`: 142 HTML-Seiten. `npm run deploy:check`: erfolgreich, 729,50 KiB / gzip 196,96 KiB.
+- Alle acht vollständigen SQL-Beispiele in einem isolierten PostgreSQL-18-Cluster ausgeführt; erwartete Zeilenwerte, Rollback, Parameterbindung, Migration und Index-Scan geprüft. Zusätzlich eigene Testtabelle exportiert, in eine neue Datenbank wiederhergestellt und Ergebnis 2|SQL,HTTP bestätigt. Keine vorhandene oder produktive Datenbank verwendet.
+- 15.129 interne Links/Sprungmarken geprüft; beabsichtigte Fehlerseiten separat. Alle 17 neuen Quellen-URLs liefern HTTP 200.
+- `npm run seo:check -- --live`: alle 136 öffentlichen URLs mit korrekten Metadaten und bytegleicher Auslieferung; HTTPS-Weiterleitung geprüft.
+- Browser: neue Kapitelnavigation, Aufgabenlösung, deutsches SQL-Quiz mit richtiger/falscher Antwort und allen Erklärungen, Ergebnis 1/2, Neustart, Filter ohne Treffer, Zurücksetzen und Sprachwechsel mit erhaltenen Filtern. Englische Kapiteltitelsuche, mobile Navigation bei 390 × 844, helles/dunkles Design und Seitenbreite ohne horizontalen Überlauf geprüft. Öffentlich zusätzlich API-Quiz, Kursübergang SQL → APIs und DE-/EN-404-Seiten samt HTTP 404 geprüft.
+
+Veröffentlicht **23.10.2026, 21:06:28 (Europe/Stockholm)**: Worker it-worlds, Version **a75d5b7f-af72-4571-a6f7-da8a3df927ad**, 100 % Traffic; Deployment **9deb6277-49ec-4fe9-88ea-25cd9b0167df**. Account, Subdomain, bestehende vier Bindings und Worker-Einstellungen vor/nach Veröffentlichung verglichen und erhalten. README, GitHub-Beschreibung und SQL-Topic aktualisiert.
+
+Grenzen: Quellenabgleich und technische Tests sind kein unabhängiges Fachreview. Kein erneuter angemeldeter Ende-zu-Ende-Test; die neuen Account-Kennungen und Antwortbewertungen sind automatisiert geprüft. Die Kursbeispiele sind lokale Lernprogramme und keine neuen Produktionsendpunkte. Die übrigen Themen besitzen weiterhin ihren bisherigen Einstieg und Editor; keine pauschale Vollständigkeit aller Themen wird behauptet.
+
 ## Kursausbau · 23. Oktober 2026
 
 14 KI- und 13 LaTeX-Kapitel in Deutsch und Englisch, 27 Aufgaben mit Lösungen, 54 neue Quizfragen (insgesamt 64), zwei verfügbare Kurslernwege und 69 Primärquellen. Kapitel sind in Themenansichten, Suche, Fortschritt, Quellenverzeichnis und Sitemap eingebunden. Bisherige IDs und lokale Nutzerdateien bleiben erhalten. Keine Änderung am Account-Schema.

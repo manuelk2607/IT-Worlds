@@ -6,9 +6,9 @@
 
 A German/English learning platform covering ten IT topics, from programming and databases to AI, networks, security and Linux. All learning content and quizzes remain accessible without signing in. An optional account synchronises read introductions and chapters, practised questions and correct answers across devices. Light and dark modes are available, with the choice saved in your browser.
 
-The site contains ten topic outlines, ten introductions and ten local practice editors, plus two complete chapter sequences: 14 AI chapters and 13 LaTeX chapters, progressing from foundations to advanced projects. There are 64 quiz questions with explanations for every option and 69 primary sources. Two course learning paths are available in full; three other paths remain sketches. An independent subject review is still pending.
+The site contains ten topic outlines, ten introductions and ten local practice editors, plus four complete chapter sequences: 8 database, 7 API, 14 AI and 13 LaTeX chapters, progressing from foundations to advanced projects. There are 94 quiz questions with explanations for every option and 86 primary sources. Four course learning paths are available in full; three other paths remain sketches. An independent subject review is still pending.
 
-[AI course](https://it-worlds.maki26.workers.dev/en/themen/ki-neuronale-netze/kurs/) · [LaTeX course](https://it-worlds.maki26.workers.dev/en/themen/programmiersprachen/latex/) · [Course architecture](docs/KURSE.md)
+[SQL course](https://it-worlds.maki26.workers.dev/en/themen/datenbanken/kurs/) · [API course](https://it-worlds.maki26.workers.dev/en/themen/apis/kurs/) · [AI course](https://it-worlds.maki26.workers.dev/en/themen/ki-neuronale-netze/kurs/) · [LaTeX course](https://it-worlds.maki26.workers.dev/en/themen/programmiersprachen/latex/) · [Course architecture](docs/KURSE.md)
 
 LaTeX, Typst and Markdown form the **Markup & typesetting languages** area within Programming languages.
 

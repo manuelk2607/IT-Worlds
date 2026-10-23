@@ -20,7 +20,7 @@ export function getStaticPaths() {
 interface Props { locale?: Locale; topic: Topic }
 const { topic } = Astro.props;
 const topicCourses = courses.filter(course => course.topic === topic.id);
-const fullCourse = topic.id === 'ki-neuronale-netze' ? topicCourses[0] : undefined;
+const fullCourse = topic.id !== 'programmiersprachen' ? topicCourses[0] : undefined;
 const question = questions.find((question) => question.topic === topic.id);
 const reviewDates = [...new Set(topic.lesson?.sources.map(id=>sources[id].reviewedAt))].sort().map(date=>new Intl.DateTimeFormat(locale,{dateStyle:"medium",timeZone:"UTC"}).format(new Date(date))).join(" · ");
 ---

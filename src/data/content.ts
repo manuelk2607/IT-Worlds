@@ -1,3 +1,4 @@
+import { foundationSources } from './course-foundation-sources.ts';
 import { additionalSources, additionalLessons, additionalQuestions } from './expansion.ts';
 import { courseSources } from './course-sources.ts';
 import { courseQuestions, courseLearningPaths } from './courses.ts';
@@ -35,6 +36,7 @@ export type Source = {
 };
 export const sources = {
   ...courseSources,
+  ...foundationSources,
   python: {
     title: "An Informal Introduction to Python",
     publisher: "Python Software Foundation",

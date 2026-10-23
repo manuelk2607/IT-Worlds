@@ -6,9 +6,9 @@
 
 IT-Worlds ist eine deutsch-englische IT-Lernplattform mit zehn Themenwelten. Alle Inhalte, Quellen und Quizfragen sind ohne Anmeldung zugänglich. Ein freiwilliger Account speichert gelesene Einstiege und Kapitel, bearbeitete Fragen und richtig beantwortete Fragen geräteübergreifend. Ein optionales dunkles Design ergänzt das helle Design; die Auswahl bleibt im Browser gespeichert.
 
-**Stand:** Zehn Themenwelten, zehn Einstiegsartikel und zehn lokale Übungseditoren. Zwei ausgearbeitete Kursfolgen ergänzen 14 KI-Kapitel und 13 LaTeX-Kapitel vom Einstieg bis zu fortgeschrittenen Projekten. Insgesamt 64 Quizfragen erklären jede Antwortmöglichkeit; 69 Primärquellen belegen die Inhalte. Die zwei Kurslernwege sind vollständig verfügbar, drei weitere Lernpfade bleiben Skizzen. Ein unabhängiges Fachreview steht aus.
+**Stand:** Zehn Themenwelten, zehn Einstiegsartikel und zehn lokale Übungseditoren. Vier ausgearbeitete Kursfolgen ergänzen 8 Datenbank-, 7 API-, 14 KI- und 13 LaTeX-Kapitel vom Einstieg bis zu fortgeschrittenen Projekten. Insgesamt 94 Quizfragen erklären jede Antwortmöglichkeit; 86 Primärquellen belegen die Inhalte. Die vier Kurslernwege sind vollständig verfügbar, drei weitere Lernpfade bleiben Skizzen. Ein unabhängiges Fachreview steht aus.
 
-[KI-Kurs](https://it-worlds.maki26.workers.dev/themen/ki-neuronale-netze/kurs/) · [LaTeX-Kurs](https://it-worlds.maki26.workers.dev/themen/programmiersprachen/latex/) · [Kursarchitektur](docs/KURSE.md)
+[SQL-Kurs](https://it-worlds.maki26.workers.dev/themen/datenbanken/kurs/) · [API-Kurs](https://it-worlds.maki26.workers.dev/themen/apis/kurs/) · [KI-Kurs](https://it-worlds.maki26.workers.dev/themen/ki-neuronale-netze/kurs/) · [LaTeX-Kurs](https://it-worlds.maki26.workers.dev/themen/programmiersprachen/latex/) · [Kursarchitektur](docs/KURSE.md) · [Prioritäten und offene Inhalte](docs/AUSBAU.md)
 
 ## Themenwelten
 
