@@ -20,3 +20,6 @@ Neue Entwurfsprüfungen decken exakten Text, getrennte Aufgaben, Reset, geänder
 
 ## Zwischenstand Markdown
 14 Kurse, 114 Kapitel, 238 Fragen, 187 Quellen. Markdown-Kurs und Render-/Ausführungsprüfung abgeschlossen; 46 Tests (45 pass/1 Docker-Skip), 132 Dateien strikt, Build und Browser-Kapitelquiz erfolgreich. Noch nicht veröffentlicht. Nächster Schritt Typst-Kurs mit real kompilierten Beispielen; offizielles CLI 0.15.1 für Apple ARM geladen, SHA-256 mit Release-Digest verglichen.
+
+## Zwischenstand Typst
+15 Kurse, 122 Kapitel, 254 Fragen, 200 Quellen. Acht reale Typst-Kompilationen einschließlich Literatur, Rechenwerten/Änderungsfall/Fehlerfall; vier Ausgaben visuell geprüft. 47 Tests (46 pass/1 Docker-Skip), 135 Dateien strikt, 348 HTML-Seiten. Browser EN-Abschluss zeigt vollständigen Code und Querverweise. Nächster Schritt: Release beider Kurse und Editorentwürfe, anschließend persönliche Quiz-Wiederholung.

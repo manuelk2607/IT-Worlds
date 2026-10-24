@@ -1,5 +1,6 @@
 import {guidedLearningPaths} from './learning-paths.ts';
 import {markdownSources} from './course-markdown-sources.ts';
+import {typstSources} from './course-typst-sources.ts';
 import {osSources} from './course-os-sources.ts';
 import {pythonSources} from './course-python-sources.ts';
 import {devopsSources} from './course-devops-sources.ts';
@@ -46,6 +47,7 @@ export type Source = {
   description: string;
 };
 export const sources = {
+  ...typstSources,
   ...markdownSources,
   ...courseSources,
   ...foundationSources,
@@ -193,11 +195,11 @@ export const sources = {
   typst: {
     title: "Typst – README",
     publisher: "Typst",
-    url: "https://github.com/typst/typst#readme",
-    evidenceUrl: "https://raw.githubusercontent.com/typst/typst/main/README.md",
-    version: "Fortlaufende Projektbeschreibung",
-    section: "Introduction · Example",
-    reviewedAt: "2026-10-20",
+    url: "https://github.com/typst/typst/tree/v0.15.1",
+    evidenceUrl: "https://raw.githubusercontent.com/typst/typst/v0.15.1/README.md",
+    version: "Typst 0.15.1 · 2026-07-17",
+    section: "Overview; Installation; Usage: compile, watch, fonts, help",
+    reviewedAt: "2026-10-24",
     description:
       "Markup-basiertes Satzsystem mit Funktionen und integriertem Scripting; Beispiele für Überschriften, Formeln und Layoutregeln.",
   },
@@ -289,7 +291,7 @@ const baseTopics: Topic[] = [
       {
         title: "Auszeichnungs- & Satzsprachen",
         description:
-          "LaTeX bereitet Dokumente für den Textsatz auf. Typst verbindet Markup und Textsatz mit Funktionen und Scripting. Markdown dient zum Schreiben strukturierter Dokumente in Klartext. Diese Sprachen ergänzen hier das Programmieren um Dokumentstruktur und Publikation. LaTeX und Markdown besitzen eigene Kursfolgen; Typst-Lektionen sind noch geplant.",
+          "LaTeX bereitet Dokumente für den Textsatz auf. Typst verbindet Markup und Textsatz mit Funktionen und Scripting. Markdown dient zum Schreiben strukturierter Dokumente in Klartext. Diese Sprachen ergänzen hier das Programmieren um Dokumentstruktur und Publikation. LaTeX, Typst und Markdown besitzen eigene verfügbare Kursfolgen.",
         languages: ["LaTeX", "Typst", "Markdown"],
         sources: ["latex", "typst", "markdown"],
       },
