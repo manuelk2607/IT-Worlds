@@ -15,3 +15,5 @@
 html[data-theme="dark"] .exercise-editor { background: #1b2334; }
 html[data-theme="dark"] .exercise-feedback.passed { color: #8be7b9; }
 @media(max-width:480px) { .editor-actions .button { width: 100%; justify-content: center; } }
+
+.exercise-draft-status{font-size:.88rem;color:var(--muted);min-height:1.5em}.editor-actions [data-undo-exercise]{min-height:44px;border:0;background:transparent;color:var(--blue);padding:.6rem;cursor:pointer}

@@ -13,11 +13,12 @@ const editorId = `editor-${topic}`;
   <p class="eyebrow">{t('SELBST AUSPROBIEREN', 'TRY IT YOURSELF')}</p>
   <h2>{exercise.title[locale]}</h2>
   <p>{exercise.task[locale]}</p>
-  <p class="exercise-limit">{t('Lokale Modellprüfung · begrenzte Syntax', 'Local model checker · limited syntax')}<br />{t('Kein vollständiger Interpreter. Deine Eingabe wird als Text geprüft, nicht als Programm ausgeführt oder an einen Server gesendet. Beim Neuladen wird sie verworfen.', 'This is not a full interpreter. Your input is checked as text, never executed as a program or sent to a server. Reloading discards it.')}</p>
+  <p class="exercise-limit">{t('Lokale Modellprüfung · begrenzte Syntax', 'Local model checker · limited syntax')}<br />{t('Kein vollständiger Interpreter. Deine Eingabe wird als Text geprüft, nicht als Programm ausgeführt oder an einen Server gesendet. Dein Entwurf bleibt auf diesem Gerät im Browser gespeichert. Zurücksetzen entfernt ihn.', 'This is not a full interpreter. Your input is checked as text, never executed as a program or sent to a server. Your draft is saved in this browser on this device. Reset removes it.')}</p>
   <div class="editor-toolbar"><span>{exercise.format}</span><span data-line-count></span></div>
   <label for={editorId} class="sr-only">{t('Code für die Übung bearbeiten', 'Edit the exercise code')}</label>
   <textarea id={editorId} data-editor spellcheck="false" autocapitalize="off" autocomplete="off" maxlength="8000" wrap="off" rows="9">{exercise.starter}</textarea>
-  <div class="editor-actions"><button class="button primary" data-check-exercise>{t('Aufgabe prüfen', 'Check task')}</button><button class="button secondary" data-reset-exercise>{t('Zurücksetzen', 'Reset')}</button></div>
+  <div class="editor-actions"><button class="button primary" data-check-exercise>{t('Aufgabe prüfen', 'Check task')}</button><button class="button secondary" data-reset-exercise>{t('Zurücksetzen', 'Reset')}</button><button class="text-link" data-undo-exercise hidden>{t('Letzte Ersetzung rückgängig','Undo last replacement')}</button></div>
+  <p class="exercise-draft-status" data-draft-status role="status"></p>
   <p class="exercise-feedback" data-exercise-feedback role="status" aria-live="polite"></p>
   <div class="exercise-output" hidden data-exercise-output><h3>{t('Ausgabe des Lernmodells', 'Learning model output')}</h3><pre><code data-exercise-output-text></code></pre></div>
   <details><summary>{t('Hinweis anzeigen', 'Show hint')}</summary><p>{exercise.hint[locale]}</p></details>

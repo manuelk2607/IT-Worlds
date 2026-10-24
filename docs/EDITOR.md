@@ -2,7 +2,7 @@
 
 Unter `/uebungen/` und `/en/uebungen/` gibt es eine Übersicht. Jede der zehn Themenwelten enthält einen Editor unter `#uebungseditor`. Alle Aufgaben funktionieren ohne Anmeldung.
 
-Vorlage bearbeiten, **Aufgabe prüfen** wählen und die Modellausgabe mit dem Lernziel vergleichen. Hinweise und Musterlösung sind ausklappbar. Eine Lösung lässt sich in den Editor laden; Zurücksetzen stellt die Startvorlage wieder her. Das Textfeld bleibt mit Tab regulär verlassbar. Eingaben werden beim Neuladen verworfen und nicht an den Server geschickt.
+Vorlage bearbeiten, **Aufgabe prüfen** wählen und die Modellausgabe mit dem Lernziel vergleichen. Hinweise und Musterlösung sind ausklappbar. Eine Lösung lässt sich in den Editor laden; Zurücksetzen stellt die Startvorlage wieder her. Das Textfeld bleibt mit Tab regulär verlassbar. Entwürfe werden pro Aufgabe auf diesem Gerät im Browser gespeichert und bei Neuladen oder Sprachwechsel wiederhergestellt. Sie werden nicht an einen Server geschickt und nicht über den Account synchronisiert. Zurücksetzen entfernt nur den Entwurf dieser Aufgabe; die letzte Ersetzung durch Vorlage oder Musterlösung kann über „Letzte Ersetzung rückgängig“ zurückgenommen werden. Nach eigener weiterer Eingabe wird diese Rückgängig-Option ausgeblendet. Bei nicht verfügbarem Browserspeicher bleibt die Bearbeitung nutzbar und weist auf die fehlende Speicherung hin. Veraltete Entwürfe zu einer geänderten Vorlage werden verworfen, damit das Aufgabenformat konsistent bleibt.
 
 ## Was geprüft wird
 
