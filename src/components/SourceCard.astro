@@ -15,7 +15,7 @@ const { id, compact = false, topics } = Astro.props;
 const source = sources[id];
 ---
 
-<article class:list={["source-card", { compact }]} data-source={id} data-source-topics={topics?.join(' ')} data-source-publisher={topics ? source.publisher : undefined}>
+<article id={topics ? `quelle-${id}` : undefined} class:list={["source-card", { compact }]} data-source={id} data-source-topics={topics?.join(' ')} data-source-publisher={topics ? source.publisher : undefined}>
   <div class="source-publisher">
     <Icon name="book" size={17} />
     {source.publisher}

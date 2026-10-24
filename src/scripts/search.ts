@@ -20,7 +20,7 @@ function render() {
   const description=document.createElement('span');description.className='search-result-description';description.textContent=entry.description;
   copy.append(title,context,description);link.append(copy);results.append(link);
  }
- status.textContent=matches.length ? input.value.trim()?t(`${matches.length} ${matches.length===1?"passendes Ergebnis":"passende Ergebnisse"}, höchstens 12 angezeigt.`,`${matches.length} matching ${matches.length===1?"result":"results"}, up to 12 shown.`):t('Wähle einen Kurs oder suche nach einem Thema.','Choose a course or search for a topic.') : t('Keine Treffer. Kürze die Suche oder wähle „Alles“.','No results. Shorten your search or choose “Everything”.');
+ status.textContent=matches.length ? input.value.trim()?t(`${matches.length} ${matches.length===1?"passendes Ergebnis":"passende Ergebnisse"}, höchstens 12 angezeigt.`,`${matches.length} matching ${matches.length===1?"result":"results"}, up to 12 shown.`):filter.value==='source'?t('Suche nach Titel, Herausgeber oder Abschnitt.','Search by title, publisher or section.'):t('Wähle einen Kurs oder suche nach einem Thema.','Choose a course or search for a topic.') : t('Keine Treffer. Kürze die Suche oder wähle „Alles“.','No results. Shorten your search or choose “Everything”.');
 }
 async function loadIndex() {
  if(entries){render();return;}

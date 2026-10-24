@@ -1,4 +1,4 @@
-export type SearchKind = 'topic' | 'course' | 'chapter' | 'path' | 'exercise';
+export type SearchKind = 'topic' | 'course' | 'chapter' | 'path' | 'exercise' | 'source';
 export interface SearchEntry {
  id: string;
  kind: SearchKind;
@@ -32,5 +32,5 @@ export function isSearchEntry(value: unknown): value is SearchEntry {
  if(!value||typeof value!=='object')return false;
  for(const key of ['id','kind','title','description','context','url','text'])if(!(key in value)||typeof (value as Record<string,unknown>)[key]!=='string')return false;
  const item=value as Record<string,string>;
- return ['topic','course','chapter','path','exercise'].includes(item.kind)&&/^\/(?!\/)/.test(item.url)&&!/[\\\u0000-\u0020]/.test(item.url);
+ return ['topic','course','chapter','path','exercise','source'].includes(item.kind)&&/^\/(?!\/)/.test(item.url)&&!/[\\\u0000-\u0020]/.test(item.url);
 }

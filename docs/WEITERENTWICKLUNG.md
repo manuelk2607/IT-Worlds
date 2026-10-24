@@ -155,3 +155,5 @@ Abschluss der Runde: Alle Pakete veröffentlicht, öffentliche Version 323ad148-
 204 Quellen sind nun über Text, Abschnitt, Version, Themenwelt und Herausgeber auffindbar. Themenzuordnung aus tatsächlichen Inhaltsverweisen; keine manuelle zweite Belegliste. Filter und Sprachwechsel synchron. Die Prüfung der Zuordnungen bleibt beim statischen Seitenaufbau; der Browser lädt nur die kleine Filterlogik.
 
 Weitere sinnvolle Aufgaben bleiben: mehrere abgestufte Übungen je Kapitel, umfangreichere Abschlussprojekte, echtes systemd-Benutzerlabor, unabhängiges Fachreview und assistive Nutzerprüfung. Der Editor bleibt ein lokales begrenztes Lernmodell; Ergebnisse sind kein Ausführungsnachweis vollständiger Programme.
+
+Die globale Suche findet jetzt auch sämtliche 204 Quellen über Titel, Herausgeber, Fassung und Abschnitt. Ein Treffer führt zur passenden Quellenkarte mit sichtbarem Belegstand; Quellen lassen sich als eigener Inhaltstyp auswählen. Aufgaben werden zusätzlich über ihre Hilfen und stabilen Begriffe gefunden. Quellenmetadaten sind auf Desktop und Mobilgeräten größer gesetzt.
