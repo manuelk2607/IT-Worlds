@@ -1,0 +1,8 @@
+---
+import ExerciseView from '../../../components/ExerciseView.astro';
+import { exercises } from '../../../data/exercises.ts';
+import type { Exercise } from '../../../data/exercise-types.ts';
+export function getStaticPaths() { return exercises.filter(item=>item.id!==item.topic).map(exercise=>({params:{id:exercise.id},props:{exercise}})); }
+interface Props {exercise:Exercise}
+---
+<ExerciseView exercise={Astro.props.exercise} locale="en" />

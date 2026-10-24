@@ -5,6 +5,7 @@ import LearningRoute from './LearningRoute.astro';
 import Breadcrumbs from './Breadcrumbs.astro';
 import SourceCard from './SourceCard.astro';
 import ProgressToggle from './ProgressToggle.astro';
+import ExerciseLinks from './ExerciseLinks.astro';
 import { courses, coursePath, chapterProgressId } from '../data/courses.ts';
 import type { Course, Chapter } from '../data/course-types.ts';
 import { getContent, translate, localePath, type Locale } from '../lib/i18n.ts';
@@ -53,6 +54,7 @@ const other=related[0];
         <LearningRoute locale={locale} steps={course.chapters.map(chapter=>({id:chapterProgressId(course,chapter),title:chapter.title[locale],url:coursePath(course,chapter)}))}/>
         <section class="prerequisite"><div><h2>{t('Dein Einstieg', 'Your starting point')}</h2><p>{course.prerequisites[locale]}</p><p>{t('Arbeite die Kapitel in Reihenfolge durch. Lies die Erklärung, rechne oder führe das Beispiel aus und löse die Aufgabe vor dem Öffnen der Lösung. Die Quizfragen prüfen anschließend dein Verständnis.', 'Work through the chapters in order. Read the explanation, calculate or run the example, and solve the exercise before opening its solution. The quiz then checks your understanding.')}</p></div></section>
         {levels.map(level => <section class="course-stage"><h2>{level.name}</h2><ol class="course-chapters">{course.chapters.filter(item => item.level === level.id).map(item => <li><a href={localePath(locale, coursePath(course, item))}><h3>{item.title[locale]}</h3><p>{item.goals.map(goal => goal[locale]).join(' ')}</p><span class="text-link">{t('Kapitel öffnen →', 'Open chapter →')}</span></a></li>)}</ol></section>)}
+        <ExerciseLinks locale={locale} course={course.id} />
         <a class="button primary" href={quizUrl}>{t('Kursquiz starten', 'Start course quiz')}</a>
       </> : <>
         <article id="einstiegsartikel" class="course-article">
@@ -64,6 +66,7 @@ const other=related[0];
             {section.code && <CodeExample code={section.code} language={section.language} locale={locale} label={section.runtime==='browser'?t('Im Browser ausführen','Run in a browser'):section.runtime==='node'?t('Mit Node.js ausführen','Run with Node.js'):t('Vollständiges Beispiel','Complete example')}/>}
           </section>)}
           <section id="aufgabe" class="course-exercise"><p class="eyebrow">{t('SELBST ANWENDEN', 'APPLY IT YOURSELF')}</p><h2>{t('Deine Aufgabe', 'Your exercise')}</h2><p>{chapter.exercise[locale]}</p><details><summary>{t('Lösung & Begründung anzeigen', 'Show solution & reasoning')}</summary><p>{chapter.solution[locale]}</p></details></section>
+          <ExerciseLinks locale={locale} course={course.id} chapter={chapter.id} />
           <ProgressToggle locale={locale} kind="lesson" contentId={chapterProgressId(course, chapter)} />
           <a class="button primary" href={quizUrl}>{t('Dieses Kapitel im Quiz prüfen', 'Test this chapter in the quiz')} →</a>
           <section id="belege" class="course-sources"><h2>{t('Quellen & Vertiefung', 'Sources & further reading')}</h2><p class="muted">{t('Die angegebenen Abschnitte dienen als Belege und als weiterführende Lektüre. Fassung und Lesedatum stehen bei jedem Beleg. Ein unabhängiges Fachreview steht aus.', 'The listed sections provide evidence and further reading. Each source records its edition and reading date. Independent expert review is pending.')}</p>{chapter.sources.map(id => <SourceCard locale={locale} id={id} compact />)}</section>

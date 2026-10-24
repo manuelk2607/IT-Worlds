@@ -1,19 +1,16 @@
 # IT-Worlds · Arbeitscheckpoint
 
-## Ziel
-24. Oktober 2026: größte reale Inhalts-/UX-/Funktions-/Techniklücken iterativ schließen, Architektur/IDs und Nutzerdatei .clinerules erhalten. Kontingent weitgehend genutzt; Reserve für Abschluss. KI/LaTeX nicht inhaltlich erweitert.
+## Aktuelle Runde · 24. Oktober 2026
+Vorheriger Abschluss: Code b0c60b5, Dokumentation a20f8a3, öffentliche Version 323ad148-67c5-4332-87be-8c5244b6ce3b. Nutzercommit 43a48e5 (.clinerules) ist vorhanden; sauberer Arbeitsbranch codex/cloudstand-lokal. Erhalten. Keine Datenbank-/Schemaarbeit vorgesehen.
 
-## Abgeschlossen
-- Editorentwürfe geräte-/browserlokal mit Größen-/Versionsprüfung; letzte Ersetzung rückgängig. Reload, Sprachwechsel und Reset im Browser geprüft.
-- Markdown: 6 DE/EN-Kapitel, 12 Fragen, 6 zusätzliche Quellen; Renderer und enthaltenes TypeScript praktisch geprüft.
-- Typst: 8 DE/EN-Kapitel, 16 Fragen, 13 zusätzliche Quellen; alle 8 Dokumente mit CLI 0.15.1 real kompiliert, Literatur-/Rechen-/Fehlerfälle und repräsentative Ausgabe geprüft.
-- Persönliche Quizwiederholung: offene/noch nicht richtig/richtige Fragen, stabile laufende Runde, URL/DE/EN, hilfreicher Leerzustand und Weiterüben. Zwei echte development-Accounts, RLS, getrennte Sessions, Widerruf und Browseranmeldung erfolgreich.
-- Live: Kurse/Editoren ae669219-257f-407a-8f71-c264a9694810, persönliche Wiederholung d8985117-8935-41ec-b315-c671630c72eb; jeweils 342 öffentliche Seiten bytegleich. GitHub bis aeb3296 gesichert und CI grün.
+## Abgeschlossenes Paket · noch nicht veröffentlicht
+13 neue Kursaufgaben, 23 Aufgaben insgesamt; stabile IDs und alte Entwurfsschlüssel erhalten. Eigene DE/EN-Routen, Kurs-/Kapitel-/Themenlinks, Suchindex, Sitemap und strukturierte Daten. Katalog filtert Thema/Kurs/Stufe/Text, erklärt Leerzustände und erhält URL/Sprachwechsel. Quellenkarten direkt an Aufgaben. 61 Tests: 56 bestanden/5 mangels lokaler SQL-/Docker-/Typst-Laufzeit übersprungen; 152 strikte Dateien ohne Meldungen. Build 374 Seiten, 368 öffentliche Sprachseiten und 25.201 interne Links geprüft; Dry-Run erfolgreich. Browser: alle 13 neuen Aufgaben gelöst, sieben Systemaufgaben zusätzlich EN, Filter/Reset, Entwurf/Sprachwechsel/Undo, Mobilmenü und 390px hell/dunkel ohne Überlauf. Lokale Dateisynchronisierung benennt generierte dist-Unterordner um: für Browser und Release isoliertes Artefakt außerhalb verwenden. Keine Quelldateien beschädigt.
 
-## Abschluss geprüft und veröffentlicht
-Quellstand b0c60b5, Version 323ad148-67c5-4332-87be-8c5244b6ce3b, 24.10.2026 12:15 Europe/Stockholm. 56 Tests (55 erfolgreich/1 lokaler Docker-Skip), 142 strikte Dateien ohne Meldung, 348 HTML-Seiten, 24.009 interne Verweise und alle 342 öffentlichen Sprachseiten geprüft. CI 40085060165 mit beiden Node-Versionen, PostgreSQL und Docker grün. Erstes öffentliches Netzproblem durch erneuten Audit desselben Artefakts erfolgreich aufgelöst. Cloudflare-Einstellungen und vier Bindings erhalten. Öffentliche SQL-/Quiz-/404-Prüfung und Kurskatalog bestätigt. GitHub-Beschreibung/Readmes/Dokumentation aktualisiert. Eigene lokale Testserver und Datenbank sauber beendet.
+## Priorisierte Arbeit
+1. Übungsarchitektur um stabile Aufgabenkennungen und eigene Adressen erweitern; alte Themen-URLs und Entwurfsschlüssel erhalten. Gemeinsame Oberfläche wiederverwenden.
+2. Vollständige Kursaufgaben für vernachlässigte praktische Lernziele ergänzen, zunächst TypeScript/Python/Web/Daten/Markup, danach Systeme/Sicherheit/Betrieb. DE/EN, echte Quellenlektüre, hilfreiche Ausgaben und Negativtests. KI/LaTeX nicht weiter ausbauen.
+3. Nächste tatsächliche UX-Lücke: Quellenverzeichnis mit 204 Karten besitzt keine Suche/Filter. Kleines abgeschlossenes Folgepaket; dann zusammen veröffentlichen und öffentlich prüfen.
+4. Nach jedem abgeschlossenen Paket neu priorisieren; weitere sinnvolle Lücken im verfügbaren Kontingent schließen und kleine Abschlussreserve lassen.
 
-Nächster sinnvoller Schritt: zusätzliche Aufgaben je Kurs oder ein echtes Benutzer-systemd-Labor, danach assistive Nutzerprüfung. Diese Runde ist abgeschlossen; keine automatische Fortsetzung behauptet.
-
-## Offen / Grenzen
-Zusätzliche Aufgaben je Kurs, echtes Benutzer-systemd-Labor, unabhängiges Fachreview, assistive Nutzerprüfung/Feldmessungen, kontrollierter Mail-/Passwort-Reset-Test, weitere API-/NoSQL-/Betriebsprojekte. Lokaler Worker lädt im synchronisierten Verzeichnis häufig neu; eine Markierungsentfernung erhielt einmal 503 und wurde beim erneuten Versuch erfolgreich gespeichert. Keine Produktionseinstellung oder Schema geändert. Zwei eigene Testaccounts bleiben ausschließlich in development, private Zugangsdaten außerhalb Git.
+## Bestehender Stand / Grenzen
+15 Kurse, 122 Kapitel, 254 Fragen, 200 Quellen, 10 Themeneditoren. Vorige Runde: 56 Tests (55 pass/1 lokaler Docker-Skip), 142 strikte Dateien, 348 HTML-Seiten und 342 öffentliche Lernseiten geprüft; reale Zwei-Account-/RLS-Prüfung erfolgreich. Neue Datenbankprüfungen laut .clinerules nur über MCP it-worlds. Weitere offene Aufgaben: echtes Benutzer-systemd-Labor, zusätzliche Praxisprojekte, unabhängiges Fachreview, assistive Nutzerprüfung/Feldmessungen und kontrollierter Mail-/Passwort-Reset-Test.

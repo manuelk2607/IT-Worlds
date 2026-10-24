@@ -1,3 +1,4 @@
+import { exerciseSources } from './exercise-sources.ts';
 import {guidedLearningPaths} from './learning-paths.ts';
 import {markdownSources} from './course-markdown-sources.ts';
 import {typstSources} from './course-typst-sources.ts';
@@ -47,6 +48,7 @@ export type Source = {
   description: string;
 };
 export const sources = {
+  ...exerciseSources,
   ...typstSources,
   ...markdownSources,
   ...courseSources,
@@ -210,7 +212,7 @@ export const sources = {
     evidenceUrl:
       "https://raw.githubusercontent.com/commonmark/commonmark-spec/0.31.2/spec.txt",
     version: "CommonMark 0.31.2 · 28. Januar 2024",
-    section: "Introduction; 4.5 Fenced code blocks; document structure and literal code",
+    section: "Introduction; 4.2 ATX headings; 4.5 Fenced code blocks; document structure and literal code",
     reviewedAt: "2026-10-24",
     description:
       "Markdown als Klartextformat für strukturierte Dokumente und die präzisierte CommonMark-Syntax.",

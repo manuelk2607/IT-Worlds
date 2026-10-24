@@ -1,17 +1,9 @@
-import type { SourceId } from './content.ts';
+import type { Exercise } from './exercise-types.ts';
+import { courseExercises } from './course-exercises.ts';
+export { exercisePath, type Exercise } from './exercise-types.ts';
 type Text = { de: string; en: string };
-export interface Exercise {
-  topic: string;
-  title: Text;
-  task: Text;
-  format: string;
-  starter: string;
-  solution: string;
-  hint: Text;
-  sources: SourceId[];
-}
 const text = (de: string, en: string): Text => ({ de, en });
-export const exercises: Exercise[] = [
+const topicExercises: Omit<Exercise, 'id' | 'level'>[] = [
   {
     topic: 'programmiersprachen', title: text('Den ganzzahligen Quotienten finden', 'Find the integer quotient'), format: 'Python · 17, 3, /, //, %',
     task: text('Ersetze den Operator so, dass result den abgerundeten Quotienten von 17 und 3 erhält. Dieses Rechenmodell prüft genau eine Zuweisung, kein vollständiges Python-Programm.', 'Replace the operator so result is the quotient of 17 and 3 rounded down. This arithmetic model checks one assignment, not a full Python program.'),
@@ -75,3 +67,5 @@ export const exercises: Exercise[] = [
     hint: text('r = 4, w = 2, x = 1. Symbolisch geht auch u=rw,g=r,o=.', 'r = 4, w = 2, x = 1. Symbolic u=rw,g=r,o= also works.'), sources: ['coreutils'],
   },
 ];
+
+export const exercises: Exercise[] = [...topicExercises.map(exercise => ({...exercise, id:exercise.topic, level:'einstieg' as const})), ...courseExercises];

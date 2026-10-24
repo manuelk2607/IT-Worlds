@@ -2,16 +2,16 @@
 import '../styles/exercises.css';
 import { exercises } from '../data/exercises';
 import { getContent, translate, type Locale } from '../lib/i18n';
-interface Props { topic: string; locale: Locale }
-const {topic,locale} = Astro.props;
-const exercise = exercises.find(item => item.topic === topic)!;
+interface Props { topic?: string; exerciseId?: string; locale: Locale; standalone?: boolean }
+const {topic,exerciseId,locale,standalone} = Astro.props;
+const exercise = exercises.find(item => item.id === (exerciseId ?? topic))!;
 const {sources} = getContent(locale);
 const t = translate(locale);
-const editorId = `editor-${topic}`;
+const editorId = `editor-${exercise.id}`;
 ---
-<section id="uebungseditor" class="exercise-editor" data-exercise={topic}>
+<section id="uebungseditor" class="exercise-editor" data-exercise={exercise.id}>
   <p class="eyebrow">{t('SELBST AUSPROBIEREN', 'TRY IT YOURSELF')}</p>
-  <h2>{exercise.title[locale]}</h2>
+  <h2>{standalone ? t('Deine Aufgabe', 'Your task') : exercise.title[locale]}</h2>
   <p>{exercise.task[locale]}</p>
   <p class="exercise-limit">{t('Lokale Modellprüfung · begrenzte Syntax', 'Local model checker · limited syntax')}<br />{t('Kein vollständiger Interpreter. Deine Eingabe wird als Text geprüft, nicht als Programm ausgeführt oder an einen Server gesendet. Dein Entwurf bleibt auf diesem Gerät im Browser gespeichert. Zurücksetzen entfernt ihn.', 'This is not a full interpreter. Your input is checked as text, never executed as a program or sent to a server. Your draft is saved in this browser on this device. Reset removes it.')}</p>
   <div class="editor-toolbar"><span>{exercise.format}</span><span data-line-count></span></div>

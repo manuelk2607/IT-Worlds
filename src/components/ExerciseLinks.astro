@@ -1,0 +1,11 @@
+---
+import '../styles/exercises.css';
+import { exercises, exercisePath } from '../data/exercises.ts';
+import { translate, localePath, getContent, type Locale } from '../lib/i18n.ts';
+interface Props { locale: Locale; course?: string; chapter?: string; topic?: string }
+const {locale,course,chapter,topic} = Astro.props;
+const selected = exercises.filter(item => item.course && (!course || item.course === course) && (!chapter || item.chapter === chapter) && (!topic || item.topic === topic));
+const t = translate(locale);
+const {levelName} = getContent(locale);
+---
+{selected.length > 0 && <section class="course-practice-links"><h2>{t('Im Editor anwenden', 'Practise in the editor')}</h2><p>{t('Öffne die passende Aufgabe mit lokaler Prüfung, Hinweis und erklärter Musterlösung.', 'Open a matching task with local checking, a hint and an explained sample solution.')}</p><ul>{selected.map(exercise => <li><a class="text-link" href={localePath(locale, exercisePath(exercise))}>{exercise.title[locale]} →</a><small> · {levelName(exercise.level)} · {exercise.format}</small></li>)}</ul></section>}

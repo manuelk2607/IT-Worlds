@@ -1,0 +1,22 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Breadcrumbs from './Breadcrumbs.astro';
+import ExerciseEditor from './ExerciseEditor.astro';
+import SourceCard from './SourceCard.astro';
+import { courses, coursePath } from '../data/courses.ts';
+import type { Exercise } from '../data/exercise-types.ts';
+import { getContent, translate, localePath, type Locale } from '../lib/i18n.ts';
+interface Props {exercise: Exercise; locale?: Locale}
+const {exercise, locale = 'de'} = Astro.props;
+const t = translate(locale);
+const {topicById, levelName} = getContent(locale);
+const course = courses.find(item => item.id === exercise.course);
+const chapter = course?.chapters.find(item => item.id === exercise.chapter);
+const description = exercise.title[locale] + '. ' + t('Bearbeite die Vorlage direkt im Browser. Mit lokaler Ergebnisprüfung, Hinweis, Musterlösung und Quellen. Ohne Anmeldung.', 'Edit the template directly in your browser. Includes local result checking, a hint, sample solution and sources. No account required.');
+---
+<Layout locale={locale} title={exercise.title[locale]} description={description} active="uebungen">
+  <Breadcrumbs locale={locale} items={[{title:t('Übungen','Exercises'),href:'/uebungen/'}, ...(course ? [{title:course.title[locale],href:coursePath(course)}] : []), {title:exercise.title[locale]}]} />
+  <header class="container page-top"><a class="back-link" href={localePath(locale,`/uebungen/?${course ? `kurs=${course.id}` : `thema=${exercise.topic}`}`)}>{t('← Passende Übungen', '← Matching exercises')}</a><p class="eyebrow">{topicById(exercise.topic)!.title} · {levelName(exercise.level)}</p><h1>{exercise.title[locale]}</h1>{course && <p>{t('Vorbereitung:', 'Preparation:')} <a class="text-link" href={localePath(locale,coursePath(course,chapter))}>{course.title[locale]}{chapter ? ` · ${chapter.title[locale]}` : ''} →</a></p>}</header>
+  <div class="container exercise-page"><ExerciseEditor exerciseId={exercise.id} locale={locale} standalone /></div>
+  <section class="container exercise-page section"><h2>{t('Quellen & Prüfstand', 'Sources & review status')}</h2>{exercise.sources.map(id=><SourceCard id={id} locale={locale} compact />)}</section>
+</Layout>

@@ -1,4 +1,5 @@
 import { translate, type Locale } from './locale.ts';
+import { checkCourseExercise } from './course-exercise-checker.ts';
 export interface ExerciseResult { passed: boolean; message: string; output: string }
 const record = (value: unknown): Record<string, unknown> => value !== null && typeof value === 'object' && !Array.isArray(value) ? value as Record<string, unknown> : {};
 export function checkExercise(topic: string, input: string, locale: Locale): ExerciseResult {
@@ -9,6 +10,8 @@ export function checkExercise(topic: string, input: string, locale: Locale): Exe
   });
   if (!input.trim() || input.length > 8000) return result(false, t('Bitte gib zwischen 1 und 8.000 Zeichen ein.', 'Please enter between 1 and 8,000 characters.'));
   const code = input.trim();
+  const courseResult = checkCourseExercise(topic, code, locale, result);
+  if (courseResult) return courseResult;
   // Deliberately model a documented subset. Never eval input, create functions, render HTML or call a service.
   if (topic === 'programmiersprachen') {
     const match = code.replace(/#[^\n]*/g, '').trim().match(/^result\s*=\s*17\s*(\/\/|\/|%)\s*3\s*$/);

@@ -3,7 +3,7 @@ import { exercises } from '../data/exercises';
 import { checkExercise } from '../lib/exercise-checker';
 import { t, locale } from './browser-i18n';
 for (const element of document.querySelectorAll<HTMLElement>('[data-exercise]')) {
-  const exercise = exercises.find(item=>item.topic===element.dataset.exercise)!;
+  const exercise = exercises.find(item=>item.id===element.dataset.exercise)!;
   const editor = element.querySelector<HTMLTextAreaElement>('[data-editor]')!;
   const feedback = element.querySelector<HTMLElement>('[data-exercise-feedback]')!;
   const output = element.querySelector<HTMLElement>('[data-exercise-output]')!;
@@ -13,7 +13,7 @@ for (const element of document.querySelectorAll<HTMLElement>('[data-exercise]'))
   const undo=element.querySelector<HTMLButtonElement>('[data-undo-exercise]')!;
   let previous:string|undefined;
   const storage:DraftStorage={getItem:key=>localStorage.getItem(key),setItem:(key,value)=>localStorage.setItem(key,value),removeItem:key=>localStorage.removeItem(key)};
-  const key=exerciseDraftKey(exercise.topic);
+  const key=exerciseDraftKey(exercise.id);
   const say=(message:string)=>{if(draftStatus.textContent!==message)draftStatus.textContent=message;};
   const persist=()=>{
     const state=saveExerciseDraft(storage,key,exercise.starter,editor.value);
@@ -28,7 +28,7 @@ for (const element of document.querySelectorAll<HTMLElement>('[data-exercise]'))
   const replace=(value:string)=>{if(value!==editor.value){previous=editor.value;undo.hidden=false;}editor.value=value;clear();persist();editor.focus();};
   undo.addEventListener('click',()=>{if(previous===undefined)return;editor.value=previous;previous=undefined;undo.hidden=true;clear();persist();editor.focus();});
   element.querySelector('[data-check-exercise]')!.addEventListener('click',()=>{
-    const result=checkExercise(exercise.topic,editor.value,locale);
+    const result=checkExercise(exercise.id,editor.value,locale);
     feedback.textContent=result.message;
     feedback.classList.toggle('passed',result.passed);
     element.querySelector<HTMLElement>('[data-exercise-output-text]')!.textContent=result.output;
