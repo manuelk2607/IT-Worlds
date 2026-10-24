@@ -1,0 +1,23 @@
+---
+import Icon from './Icon.astro';
+import {coursePath,type Course} from '../data/course-types.ts';
+import type {Topic} from '../data/content.ts';
+import {getContent,translate,localePath,type Locale} from '../lib/i18n.ts';
+interface Props {topic:Topic;courses:Course[];locale:Locale}
+const{topic,courses,locale}=Astro.props;const t=translate(locale);const{levels}=getContent(locale);
+const groups=levels.map(level=>({level,tracks:courses.map(course=>({course,chapters:course.chapters.filter(chapter=>chapter.level===level.id)})).filter(track=>track.chapters.length)}));
+---
+<section id="themenplan">
+ <p class="eyebrow">{t('DEIN WEG VOM EINSTIEG BIS ZUM PROFI','YOUR ROUTE FROM BEGINNER TO ADVANCED')}</p>
+ <h2>{t('Kapitel nach Lernstufe','Chapters by learning level')}</h2>
+ <p class="muted">{courses.length?t('Alle verlinkten Kapitel sind verfügbar. Wähle deinen Kurs und beginne bei seinen Voraussetzungen. Die Stufen gelten innerhalb des jeweiligen Lernwegs.','All linked chapters are available. Choose your course and start with its prerequisites. Levels apply within each learning sequence.'):t('Die Themenlandkarte zeigt den weiteren Ausbau. Verfügbare Einstiege sind gesondert verlinkt.','The topic map shows future expansion. Available introductions are linked separately.')}</p>
+ <div class="curriculum">
+ {groups.map(({level,tracks})=><section class="curriculum-level" id={level.id}>
+  <div class="curriculum-heading"><span>{level.number}</span><div><h3>{level.name}</h3><p>{level.description}</p></div></div>
+  {courses.length?tracks.map(({course,chapters})=><details class="curriculum-course" open={courses.length===1}>
+   <summary><span>{course.title[locale]}</span><small>{t(`${chapters.length} Kapitel`,`${chapters.length} ${chapters.length===1?'chapter':'chapters'}`)}</small></summary>
+   <ul>{chapters.map(chapter=><li><Icon name="book" size={17}/><a href={localePath(locale,coursePath(course,chapter))}>{chapter.title[locale]}<span class="sr-only"> {t('· Kapitel lesen','· read chapter')}</span></a></li>)}</ul>
+  </details>):<ul>{topic.curriculum[level.id].map((title,index)=><li><Icon name="book" size={17}/><span>{title}</span><small>{level.id==='einstieg'&&topic.lesson&&index===(topic.lesson.curriculumIndex??0)?<a href="#einstiegsartikel">{t('Einstieg lesen ↓','Read introduction ↓')}</a>:t('Geplant','Planned')}</small></li>)}</ul>}
+ </section>)}
+ </div>
+</section>

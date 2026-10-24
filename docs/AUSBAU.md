@@ -1,6 +1,6 @@
 # Inhaltsausbau und Prioritäten · 24. Oktober 2026
 
-Dreizehn verfügbare Kursfolgen mit 106 Kapiteln, 222 Fragen und 177 Primärquellen. Neue Kapitel enthalten Voraussetzungen, Lernziele, Erklärungen, Beispiele, Aufgaben und Lösungen. Deutsch/Englisch teilen stabile IDs. KI und LaTeX wurden in dieser Erweiterung nicht verändert.
+Dreizehn verfügbare Kursfolgen mit 108 Kapiteln, 226 Fragen und 181 Primärquellen. Neue Kapitel enthalten Voraussetzungen, Lernziele, Erklärungen, Beispiele, Aufgaben und Lösungen. Deutsch/Englisch teilen stabile IDs. KI und LaTeX wurden in dieser Erweiterung nicht verändert.
 
 | Bereich | Verfügbare Kapitel | Nächster Ausbau |
 | --- | --- | --- |
@@ -10,7 +10,7 @@ Dreizehn verfügbare Kursfolgen mit 106 Kapiteln, 222 Fragen und 177 Primärquel
 | Datenbanken | 8 | Replikation, NoSQL, verteilte Konsistenz |
 | APIs | 7 | Webhooks, GraphQL, Auth-Protokolle |
 | KI & neuronale Netze | 14 | Unabhängiges Fachreview; vorerst kein weiterer Ausbau |
-| Netzwerke | 6 | Routing-Lab, IPv6, reale DNS-/TLS-Diagnose |
+| Netzwerke | 8 | Reale DNS-/TLS-Diagnose, IPv6-Praxislabor |
 | IT-Sicherheit | 7 | Unabhängiges Review und integriertes Praxisprojekt |
 | Betriebssysteme/Linux | Konzepte 6, Linux 6 | Live-systemd-Lab, Benutzerverwaltung, Automatisierung |
 | Cloud & DevOps | 8 | Größeres betreutes Deployment-/Betriebsprojekt, Infrastructure as Code |

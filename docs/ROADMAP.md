@@ -8,14 +8,14 @@ Die Reihenfolge beschreibt vorgeschlagene Ausbaustufen, keine zugesagten Termine
 - [x] Startseite, Themen- und Lernpfadseiten mit responsivem Layout umsetzen.
 - [x] Themen- und Lernpfadsuche sowie Themen- und Stufenfilter bereitstellen.
 - [x] Zehn kurze Einstiegsartikel und zehn passende Quizfragen mit Primärquellen hinterlegen.
-- [x] 169 Originalquellen mit Herausgeber, Version, Abschnitt und Lesedatum dokumentieren.
+- [x] 181 Originalquellen mit Herausgeber, Version, Abschnitt und Lesedatum dokumentieren.
 - [x] LaTeX, Typst und Markdown als Unterbereich von Programmiersprachen einordnen.
 - [x] Projektcode einschließlich Tests, Hilfsskripten und Astro-Konfiguration auf TypeScript vereinheitlichen.
 - [ ] Unabhängiges Fachreview der Einstiege und Quizfragen durchführen.
 - [x] KI- und LaTeX-Kursfolgen mit 27 Kapiteln, 54 zusätzlichen Fragen und Belegen ausarbeiten.
 - [x] Drei themenübergreifende Lernwege mit 13/14/10 verfügbaren Kapitelschritten ausarbeiten.
 
-Zwölf Kursfolgen mit 100 Kapiteln und drei vollständige geführte Lernwege stehen bereit. Weitere Themen wie Typst/Markdown und ein größeres Betriebsprojekt bleiben offen. Details im [Website-Aufbau](WEBSITE-AUFBAU.md).
+Dreizehn Kursfolgen mit 108 Kapiteln und drei vollständige geführte Lernwege stehen bereit. Weitere Themen wie Typst/Markdown und ein größeres Betriebsprojekt bleiben offen. Details im [Website-Aufbau](WEBSITE-AUFBAU.md).
 
 - [x] Zehn lokale Übungseditoren mit Hinweisen und Musterlösungen ergänzen.
 - [x] Sitemap, Canonicals, Sprachbezüge und Social-Metadaten ergänzen.

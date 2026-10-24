@@ -7,6 +7,7 @@ import ExerciseEditor from "../../components/ExerciseEditor.astro";
 import ProgressToggle from "../../components/ProgressToggle.astro";
 import Layout from "../../layouts/Layout.astro";
 import Breadcrumbs from "../../components/Breadcrumbs.astro";
+import TopicCurriculum from "../../components/TopicCurriculum.astro";
 import Icon from "../../components/Icon.astro";
 import SourceCard from "../../components/SourceCard.astro";
 import { topics as staticTopics, type Topic } from "../../data/content";
@@ -21,7 +22,6 @@ export function getStaticPaths() {
 interface Props { locale?: Locale; topic: Topic }
 const { topic } = Astro.props;
 const topicCourses = courses.filter(course => course.topic === topic.id);
-const fullCourse = topicCourses.find(course=>course.id!=='latex');
 const question = questions.find((question) => question.topic === topic.id);
 const reviewDates = [...new Set(topic.lesson?.sources.map(id=>sources[id].reviewedAt))].sort().map(date=>new Intl.DateTimeFormat(locale,{dateStyle:"medium",timeZone:"UTC"}).format(new Date(date))).join(" · ");
 ---
@@ -89,49 +89,7 @@ const reviewDates = [...new Set(topic.lesson?.sources.map(id=>sources[id].review
         </section>
       )}
       <div id="kurse">{topicCourses.map(course => <section class="course-teaser"><p class="eyebrow">{t('ZUSAMMENHÄNGENDER KURS', 'STRUCTURED COURSE')}</p><h2>{course.title[locale]}</h2><p>{course.description[locale]}</p><p>{t(`${course.chapters.length} ausgearbeitete Kapitel · ${course.chapters.reduce((sum, chapter) => sum + chapter.questions.length, 0)} Quizfragen · Aufgaben mit Lösungen`, `${course.chapters.length} available chapters · ${course.chapters.reduce((sum, chapter) => sum + chapter.questions.length, 0)} quiz questions · exercises with solutions`)}</p><a class="button primary" href={localePath(locale, coursePath(course))}>{t('Kurs öffnen →', 'Open course →')}</a></section>)}</div>
-      <section id="themenplan">
-        <p class="eyebrow">{t("DEIN WEG VOM EINSTIEG BIS ZUM PROFI", "YOUR ROUTE FROM BEGINNER TO ADVANCED")}</p>
-        <h2>{t("Eine Richtung. Drei Lernstufen.", "One direction. Three levels.")}</h2>
-        <p class="muted">
-          {fullCourse ? t('Alle verlinkten Kapitel sind verfügbar. Beginne bei den Grundlagen und arbeite dich bis zum Abschlussprojekt vor.', 'All linked chapters are available. Start with the foundations and work towards the final project.') : t('Die Themenlandkarte zeigt den weiteren Ausbau. Verfügbare Kurse und Einstiege sind gesondert verlinkt.', 'The topic map shows further expansion. Available courses and introductions are linked separately.')}
-        </p>
-        <div class="curriculum">
-          {levels.map((level) => (
-            <section class="curriculum-level" id={level.id}>
-              <div class="curriculum-heading">
-                <span>{level.number}</span>
-                <div>
-                  <h3>{level.name}</h3>
-                  <p>{level.description}</p>
-                </div>
-              </div>
-              <ul>
-                {(fullCourse ? fullCourse.chapters.filter(chapter => chapter.level === level.id).map(chapter => chapter.title[locale]) : topic.curriculum[level.id]).map((title, index) => (
-                  <li>
-                    <Icon name="book" size={17} />
-                    <span>{title}</span>
-                    <small>
-                      {fullCourse ? <a href={localePath(locale, coursePath(fullCourse, fullCourse.chapters.filter(chapter => chapter.level === level.id)[index]))}>{t('Kapitel lesen →', 'Read chapter →')}</a> : level.id === "einstieg" &&
-                      topic.lesson &&
-                      (topic.lesson.curriculumIndex !== undefined ? index === topic.lesson.curriculumIndex : ((topic.id === "datenbanken" && index === 1) ||
-                        (topic.id !== "datenbanken" &&
-                          index ===
-                            (topic.id === "apis" ||
-                            topic.id === "ki-neuronale-netze"
-                              ? 2
-                              : 0)))) ? (
-                        <a href="#einstiegsartikel">{t("Einstieg lesen ↓", "Read introduction ↓")}</a>
-                      ) : (
-                        t("Geplant", "Planned")
-                      )}
-                    </small>
-                  </li>
-                ))}
-              </ul>
-            </section>
-          ))}
-        </div>
-      </section>
+      <TopicCurriculum topic={topic} courses={topicCourses} locale={locale}/>
       {topic.lesson ? (
         <article id="einstiegsartikel" class="lesson-article">
           <div class="article-label">

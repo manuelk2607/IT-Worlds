@@ -6,7 +6,7 @@ type TopicText = Pick<Topic, 'title' | 'short' | 'description' | 'tags' | 'prere
 const text: Record<string, TopicText> = {
   programmiersprachen: {
     title: 'Programming languages', short: 'From your first line to thoughtful code.',
-    description: 'Learn to break problems into small steps and express solutions in code. Python, TypeScript, Java, C/C++, Go and Rust form the planned language map. A complementary section covers LaTeX, Typst and Markdown for documents and typesetting.',
+    description: 'Learn to break problems into small steps and express solutions in code. Python and TypeScript have their own course sequences; Java, C/C++, Go and Rust extend the future language map. A complementary section covers LaTeX, Typst and Markdown for documents and typesetting.',
     tags: ['Python', 'TypeScript', 'LaTeX'], prerequisites: 'Curiosity is enough to get started. Further lessons build on variables, functions and basic data structures.',
     curriculum: {
       einstieg: ['Variables & arithmetic operators', 'Conditions, loops & functions', 'First steps with Python and TypeScript', 'Structuring documents: Markdown, LaTeX & Typst'],
@@ -49,7 +49,7 @@ const text: Record<string, TopicText> = {
     curriculum: { einstieg: ['Bits, bytes & number systems', 'Hardware, software & files', 'Logical thinking & first algorithms'], vertiefung: ['Data representation & character encoding', 'Processors, memory & input/output', 'Complexity & abstraction'], profi: ['Computer architecture & memory hierarchy', 'Floating-point numbers & numerical limits', 'System design & technical trade-offs'] },
   },
   netzwerke: {
-    title: 'Internet & networks', short: 'Discover the connections behind the web.', description: 'Follow a request and understand how devices communicate. Planned content ranges from IP and DNS to the analysis of distributed communication.', tags: ['IP & DNS', 'HTTP', 'Routing'], prerequisites: 'No networking knowledge is needed to start. Advanced topics assume familiarity with layered models and basic protocols.',
+    title: 'Internet & networks', short: 'Discover the connections behind the web.', description: 'Follow a request and understand how devices communicate. The course connects IP and DNS with transport, TLS, IPv6, routing and verifiable responses.', tags: ['IP & DNS', 'HTTP', 'Routing'], prerequisites: 'No networking knowledge is needed to start. Advanced topics assume familiarity with layered models and basic protocols.',
     curriculum: { einstieg: ['Clients/servers, IP addresses & ports', 'DNS, HTTP & HTTPS', 'Understand your home network'], vertiefung: ['TCP, UDP & routing', 'Subnets & network diagnostics', 'TLS, proxies & caching'], profi: ['HTTP/2, HTTP/3 & protocol analysis', 'Load balancing & resilience', 'Network design & observability'] },
   },
   'it-sicherheit': {
@@ -61,7 +61,7 @@ const text: Record<string, TopicText> = {
     curriculum: { einstieg: ['Hosting, servers & cloud terminology', 'Git & first deployments', 'Get to know images & containers'], vertiefung: ['CI/CD & infrastructure as code', 'Container networking & configuration', 'Logs, metrics & monitoring'], profi: ['Orchestration & platform architecture', 'SLOs, resilience & recovery', 'Costs, security & operating models'] },
   },
   betriebssysteme: {
-    title: 'Operating systems & Linux', short: 'Understand the system beneath your applications.', description: 'Explore processes, files, permissions and the command line. This planned topic connects practical Linux skills with operating-system concepts.', tags: ['Linux', 'Shell', 'Processes'], prerequisites: 'No Linux experience is needed to start. Advanced systems topics build on programming and computer fundamentals.',
+    title: 'Operating systems & Linux', short: 'Understand the system beneath your applications.', description: 'Explore processes, files, permissions and the command line. Two courses connect practical Linux skills with traceable operating-system concepts.', tags: ['Linux', 'Shell', 'Processes'], prerequisites: 'No Linux experience is needed to start. Advanced systems topics build on programming and computer fundamentals.',
     curriculum: { einstieg: ['Operating systems, kernels & applications', 'Files & first shell commands', 'Users, groups & permissions'], vertiefung: ['Processes, services & package management', 'Shell scripts & automation', 'File systems & system diagnostics'], profi: ['Memory management & scheduling', 'System calls & isolation', 'Kernel concepts & performance analysis'] },
   },
 };

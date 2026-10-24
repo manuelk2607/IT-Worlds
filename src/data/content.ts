@@ -258,7 +258,7 @@ const baseTopics: Topic[] = [
     color: "blue",
     group: "bauen",
     description:
-      "Lerne, Probleme in kleine Schritte zu zerlegen und Lösungen in Code auszudrücken. Python, TypeScript, Java, C/C++, Go und Rust bilden die geplante Sprachlandkarte. Ein ergänzender Unterbereich behandelt LaTeX, Typst und Markdown für Dokumente und Textsatz.",
+      "Lerne, Probleme in kleine Schritte zu zerlegen und Lösungen in Code auszudrücken. Python und TypeScript besitzen eigene Kursfolgen; Java, C/C++, Go und Rust ergänzen die weitere Sprachlandkarte. Ein ergänzender Unterbereich behandelt LaTeX, Typst und Markdown für Dokumente und Textsatz.",
     tags: ["Python", "TypeScript", "LaTeX"],
     prerequisites:
       "Für den Einstieg genügt Neugier. Vertiefungen bauen auf Variablen, Funktionen und grundlegenden Datenstrukturen auf.",
@@ -519,7 +519,7 @@ const baseTopics: Topic[] = [
     color: "cyan",
     group: "systeme",
     description:
-      "Verfolge den Weg einer Anfrage und verstehe, wie Geräte miteinander kommunizieren. Die geplanten Inhalte reichen von IP und DNS bis zur Analyse verteilter Kommunikation.",
+      "Verfolge den Weg einer Anfrage und verstehe, wie Geräte miteinander kommunizieren. Der Kurs verbindet IP und DNS mit Transport, TLS, IPv6, Routing und überprüfbaren Antworten.",
     tags: ["IP & DNS", "HTTP", "Routing"],
     prerequisites:
       "Für den Einstieg sind keine Netzwerkkenntnisse nötig. Fortgeschrittene Themen setzen Schichtenmodelle und grundlegende Protokollkenntnisse voraus.",
@@ -612,7 +612,7 @@ const baseTopics: Topic[] = [
     color: "slate",
     group: "systeme",
     description:
-      "Erkunde Prozesse, Dateien, Berechtigungen und die Kommandozeile. Die geplante Themenwelt verbindet praktische Linux-Kenntnisse mit Betriebssystemkonzepten.",
+      "Erkunde Prozesse, Dateien, Berechtigungen und die Kommandozeile. Zwei Kursfolgen verbinden praktische Linux-Kenntnisse mit nachvollziehbaren Betriebssystemkonzepten.",
     tags: ["Linux", "Shell", "Prozesse"],
     prerequisites:
       "Keine Linux-Vorkenntnisse für den Einstieg. Systemnahe Profi-Themen bauen auf Programmierung und Rechnergrundlagen auf.",
