@@ -1,3 +1,4 @@
+import {guidedLearningPaths} from './learning-paths.ts';
 import {devopsSources} from './course-devops-sources.ts';
 import {securitySources} from './course-security-sources.ts';
 import {networkSources} from './course-network-sources.ts';
@@ -787,107 +788,14 @@ export type LearningPath = {
   icon: string;
   color: string;
   prerequisites: string;
-  steps: { topic: string; title: string; available: boolean; href?: string; contentId?: string }[];
+  outcome?: string;
+  steps: { note?: string; topic: string; title: string; available: boolean; href?: string; contentId?: string }[];
 };
 questions.push(...additionalQuestions, ...courseQuestions('de'));
 
-export const paths: LearningPath[] = [
-  {
-    id: "erste-website",
-    title: "Deine erste Website",
-    description: "Vom ersten HTML-Element zur eigenen Idee im Browser.",
-    level: "einstieg",
-    icon: "browser",
-    color: "green",
-    prerequisites:
-      "Keine Programmierkenntnisse nötig. Ein Browser und Neugier reichen für den ersten Einstieg.",
-    steps: [
-      {
-        topic: "website-bauen",
-        title: "HTML gibt Inhalten Struktur",
-        available: true,
-      },
-      {
-        topic: "website-bauen",
-        title: "Ein responsives Layout mit CSS",
-        available: false,
-      },
-      {
-        topic: "programmiersprachen",
-        title: "Interaktionen mit TypeScript",
-        available: false,
-      },
-      {
-        topic: "cloud-devops",
-        title: "Deine Website veröffentlichen",
-        available: false,
-      },
-    ],
-  },
-  {
-    id: "apis-und-daten",
-    title: "APIs & Daten verbinden",
-    description:
-      "Verstehe den Weg von einer Anfrage bis zur passenden Antwort.",
-    level: "vertiefung",
-    icon: "arrows",
-    color: "blue",
-    prerequisites:
-      "Grundlagen einer Programmiersprache sowie erste Erfahrungen mit HTTP und Tabellen. Die vorhandenen Einstiege dienen zur Wiederholung.",
-    steps: [
-      { topic: "apis", title: "Was beschreibt OpenAPI?", available: true },
-      {
-        topic: "datenbanken",
-        title: "Mit SQL gezielt Daten auswählen",
-        available: true,
-      },
-      {
-        topic: "apis",
-        title: "Einen API-Client implementieren",
-        available: false,
-      },
-      {
-        topic: "it-sicherheit",
-        title: "Zugriffe und Eingaben absichern",
-        available: false,
-      },
-    ],
-  },
-  {
-    id: "systeme-entwerfen",
-    title: "Systeme bewusst entwerfen",
-    description: "Architekturentscheidungen anhand von Anforderungen abwägen.",
-    level: "profi",
-    icon: "blocks",
-    color: "purple",
-    prerequisites:
-      "Praxis mit Anwendungen, Datenbanken und Deployment. Dieser Pfad ist vollständig geplant; fachlich belegte Vertiefungen folgen schrittweise.",
-    steps: [
-      {
-        topic: "apis",
-        title: "Schnittstellen und Verträge versionieren",
-        available: false,
-      },
-      {
-        topic: "datenbanken",
-        title: "Konsistenz und Verfügbarkeit abwägen",
-        available: false,
-      },
-      {
-        topic: "cloud-devops",
-        title: "Betrieb und Wiederherstellung entwerfen",
-        available: false,
-      },
-      {
-        topic: "it-sicherheit",
-        title: "Risiken mit Threat Modeling bewerten",
-        available: false,
-      },
-    ],
-  },
-];
+export const paths: LearningPath[] = [...guidedLearningPaths('de'), ...courseLearningPaths('de')];
 
-paths.push(...courseLearningPaths('de'));
+
 
 export function topicById(id: string) {
   return topics.find((topic) => topic.id === id);

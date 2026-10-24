@@ -13,10 +13,10 @@ Informationsarchitektur, Benutzerführung und vernachlässigte Inhalte iterativ 
 31 Tests; 100 Dateien strikt ohne Meldungen; Build 252 HTML-Seiten; lokaler SEO-Audit 246 öffentliche URLs; 16.254 interne Links/Assets/Anker geprüft; Deployment-Vorschau erfolgreich. Öffentlich mobil: Lernstart, Menü/Escape, Designs, Sprachwechsel, Sicherheitsquiz samt sämtlichen Erklärungen. Öffentlicher SEO-Abgleich am 24.10. für alle 246 URLs samt bytegleicher Auslieferung erfolgreich; lokaler Build wird vorher vollständig eingelesen. Kein neuer angemeldeter E2E-Test, keine systemd-Liveprüfung, kein unabhängiges Fachreview behauptet.
 
 ## Nächste Schritte
-1. GitHub-Workflow 523383f auf Node 22.22.0 und 24 erfolgreich (Run 40041316700). Neuer Containerjob folgt mit DevOps-Paket.
-2. Cloud-&-DevOps-Kurs ist lokal vollständig ergänzt (8 Kapitel, 16 Fragen, 16 neue Quellen). Node-Beispiele geprüft; Container-CI und Veröffentlichung folgen.
-3. Drei ältere Querverbindungspfade auf passende verfügbare Kapitel umstellen; Kursstart und weitere Orientierung verbessern.
-4. Relevante Tests/Browserprüfungen, Dokumentation und Deployment jeweils nach abgeschlossenem Paket.
+1. GitHub-Workflow 523383f auf Node 22.22.0 und 24 erfolgreich (Run 40041316700). Containerjob ebenfalls erfolgreich: Run 40041998694 (32518ab), alle drei Jobs bestanden.
+2. Cloud-&-DevOps-Kurs ist lokal vollständig ergänzt (8 Kapitel, 16 Fragen, 16 neue Quellen). Node-Beispiele und Linux-Container-CI geprüft; Veröffentlichung folgt.
+3. Drei geführte Wege mit 13/14/10 realen Schritten umgesetzt. Fortsetzen und geteilte IDs lokal mit simuliertem Account geprüft, einschließlich Alles-gelesen-/Nur-offen-Zuständen und Englisch. Aktuell 92 Kapitel/194 Fragen/155 Quellen; keine echte neue Neon-Anmeldung behauptet.
+4. Pfad-/Navigationspaket abschließend sichern/veröffentlichen; danach Python-Grundkurs als nächstes zusammenhängendes Inhaltspaket.
 
 ## Grenzen
 Die frühere Kontingentsperre ist nach erneutem Kontingentsbeginn aufgehoben (24.10.2026 geprüft). Gelegentliche zusätzliche Kopien in generierten Builddateien beobachten; Quell-/Nutzerdateien nicht pauschal bereinigen. Auth und Datenbankschema bleiben unverändert, sofern kein neues Paket Änderungen erfordert.

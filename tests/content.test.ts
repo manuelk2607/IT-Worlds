@@ -110,6 +110,6 @@ test("available path steps lead to actual articles; planned paths cannot imply c
   assert.ok(professionalPath);
   assert.equal(
     professionalPath.steps.filter((step) => step.available).length,
-    0,
+    professionalPath.steps.length,
   );
 });

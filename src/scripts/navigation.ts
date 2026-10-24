@@ -50,7 +50,7 @@ export function initNavigation(closeMenu: () => void): void {
     syncPosition();
   }
 
-  function navigate(id: 'home' | 'themen'): void {
+  function navigate(id: 'home' | 'themen', keyboard = false): void {
     if (!section) return;
     cancelAnimationFrame(animation);
     destination = id;
@@ -61,6 +61,10 @@ export function initNavigation(closeMenu: () => void): void {
     const duration = reducedMotion.matches ? 0 : Math.min(520, Math.max(240, Math.abs(distance) * .35));
     nav.style.setProperty('--nav-duration', `${duration}ms`);
     activate(id);
+    if(keyboard){
+      const target=id==='themen'?section.querySelector<HTMLElement>('h2')??section:document.querySelector<HTMLElement>('main h1');
+      if(target){target.setAttribute('tabindex','-1');target.focus({preventScroll:true});}
+    }
     const started = performance.now();
     function frame(now: number): void {
       const progress = duration === 0 ? 1 : Math.min(1, (now - started) / duration);
@@ -105,7 +109,7 @@ export function initNavigation(closeMenu: () => void): void {
     event.preventDefault();
     closeMenu();
     if (url.href !== location.href) history.pushState(null, '', url);
-    navigate(url.hash ? 'themen' : 'home');
+    navigate(url.hash ? 'themen' : 'home',event.detail===0);
   });
   const restore = () => navigate(location.hash === '#themenwelten' ? 'themen' : 'home');
   window.addEventListener('popstate', restore);

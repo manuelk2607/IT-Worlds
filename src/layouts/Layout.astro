@@ -22,12 +22,12 @@ interface Props {
 const pageDescriptions: Record<string,string> = {
   '/quiz/': t(`${questions.length} IT-Quizfragen mit Erklärungen, Schwierigkeitsstufen und belegten Lösungen. Prüfe dein Wissen zu KI, LaTeX und weiteren Themen.`, `${questions.length} IT quiz questions with explanations, difficulty levels and sourced solutions. Test your knowledge of AI, LaTeX and other topics.`),
   '/quellen/': t(`${Object.keys(sources).length} Primärquellen mit Herausgeber, Version, Abschnitt und Lesedatum zu unseren Lerntexten und Übungen.`, `${Object.keys(sources).length} primary sources with publisher, version, section and reading date for our lessons and exercises.`),
-  '/lernpfade/': t('Strukturierte Kurse zu Datenbanken, APIs, KI und LaTeX sowie drei IT-Lernpfad-Skizzen. Voraussetzungen, Kapitel und verfügbare Inhalte auf einen Blick.', 'Structured database, API, AI and LaTeX courses plus three IT learning-path outlines. Prerequisites, chapters and available content at a glance.'),
+  '/lernpfade/': t('Strukturierte Kurse zu allen zehn IT-Themenwelten und drei durchgehende Lernwege für Website, APIs und Systementwurf. Voraussetzungen, Kapitel und nächste Schritte auf einen Blick.', 'Structured courses across all ten IT topics and three complete learning routes for websites, APIs and system design. Prerequisites, chapters and next steps at a glance.'),
 };
 const basePath = Astro.url.pathname.replace(/^\/en(?=\/|$)/, '') || '/';
 const {
   title = t("IT verstehen. Deine Welt erweitern.", "Understand IT. Expand your world."),
-  description = pageDescriptions[basePath] ?? t("Entdecke zehn IT-Themenwelten, Lernwege vom Einstieg bis zum Profi und erste Quizfragen mit nachvollziehbaren Primärquellen.", "Explore ten IT topics, learning paths from beginner to advanced and introductory quizzes with traceable primary sources."),
+  description = pageDescriptions[basePath] ?? t("Entdecke zehn IT-Themenwelten, Lernwege vom Einstieg bis zum Profi und Quizfragen mit nachvollziehbaren Primärquellen.", "Explore ten IT topics, learning paths from beginner to advanced and quizzes with traceable primary sources."),
   active = "",
 } = Astro.props;
 const seo = pageSeo(Astro.url.pathname,locale,title,description);
@@ -168,7 +168,7 @@ const nav = [
       </div>
       <div class="container footer-bottom">
         <span>{t("Ein wachsendes Lernprojekt. Offen für deine Neugier.", "A growing learning project. Open to your curiosity.")}</span>
-        <span>{t("Erster Website-Entwurf · Inhalte im Aufbau", "First website draft · Content in progress")}</span>
+        <span>{t("Quellenbasiert · Schrittweise erweitert", "Source-based · Continuously expanded")}</span>
       </div>
     </footer>
     <dialog id="search-dialog" aria-labelledby="search-title">

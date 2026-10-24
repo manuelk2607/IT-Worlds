@@ -19,7 +19,7 @@ import type { Locale } from '../lib/locale.ts';
 export { coursePath, chapterProgressId } from './course-types.ts';
 
 export const courses: Course[] = [
-  basicsCourse, linuxCourse, networkCourse, securityCourse, devopsCourse, typescriptCourse, webCourse, databaseCourse, apiCourse,
+  basicsCourse, typescriptCourse, webCourse, databaseCourse, apiCourse, networkCourse, linuxCourse, securityCourse, devopsCourse,
   { ...aiCourse, chapters: [...aiCourse.chapters, ...aiAdvanced, ...aiArchitectures] },
   { ...latexCourse, chapters: [...latexCourse.chapters, ...latexTechnical, ...latexAdvanced] },
 ];

@@ -1,0 +1,12 @@
+---
+import {translate,localePath,type Locale} from '../lib/locale.ts';
+import type {RouteStep} from '../lib/learning-route.ts';
+interface Props {locale:Locale;steps:RouteStep[]}
+const {locale,steps}=Astro.props;const t=translate(locale);
+const localized=steps.map(step=>({...step,url:localePath(locale,step.url)}));
+---
+{localized.length>0&&<aside class="learning-route" aria-label={t('Dein nächster Lernschritt','Your next learning step')}>
+ <div><strong>{t('Schritt für Schritt','Step by step')}</strong><p data-path-lesson-ids={JSON.stringify(steps.map(step=>step.id))}>{t(`0 von ${steps.length} verfügbaren Lektionen gelesen`,`0 of ${steps.length} available lessons read`)}</p></div>
+ <a class="button primary" href={localized[0]!.url} data-route-next data-route-steps={JSON.stringify(localized)}>{t('Mit dem ersten offenen Schritt starten →','Start the first unfinished step →')}</a>
+ <p class="route-next-title" data-route-title>{localized[0]!.title}</p>
+</aside>}

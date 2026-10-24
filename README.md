@@ -6,7 +6,7 @@
 
 IT-Worlds ist eine deutsch-englische IT-Lernplattform mit zehn Themenwelten. Alle Inhalte, Quellen und Quizfragen sind ohne Anmeldung zugänglich. Ein freiwilliger Account speichert gelesene Einstiege und Kapitel, bearbeitete Fragen und richtig beantwortete Fragen geräteübergreifend. Ein optionales dunkles Design ergänzt das helle Design; die Auswahl bleibt im Browser gespeichert.
 
-**Stand (23.10.2026):** Zehn Themenwelten, zehn Einstiegsartikel, zehn lokale Übungseditoren und zehn verfügbare Kursfolgen mit **84 Kapiteln, 178 erklärten Quizfragen und 139 Primärquellen**. Neue Folgen: IT-Grundlagen, TypeScript, Webentwicklung, Linux, Netzwerke und Sicherheit. SQL, APIs, KI und LaTeX bleiben integriert. Cloud & DevOps besitzt bisher einen kurzen Einstieg; drei themenübergreifende Lernpfade bleiben ausdrücklich Skizzen. Ein unabhängiges Fachreview steht aus.
+**Stand (24.10.2026):** Zehn Themenwelten, zehn Einstiegsartikel, zehn lokale Übungseditoren und elf verfügbare Kursfolgen mit **92 Kapiteln, 194 erklärten Quizfragen und 155 Primärquellen**. Neue Folgen: IT-Grundlagen, TypeScript, Webentwicklung, Linux, Netzwerke und Sicherheit. SQL, APIs, KI und LaTeX bleiben integriert. Cloud & DevOps ergänzt nun acht Kapitel; drei geführte Lernwege verbinden vorhandene Kapitel durchgehend zu konkreten Projektzielen. Ein unabhängiges Fachreview steht aus.
 
 **Orientierung:** [Lernstart](https://it-worlds.maki26.workers.dev/lernen/) → [Kurskatalog](https://it-worlds.maki26.workers.dev/lernpfade/) → Kapitel mit Aufgaben, Lösungen und Quiz. Die Suche durchsucht auch Kapiteltexte und lädt ihren Index erst bei Bedarf. Quizfilter grenzen passende Kurse/Kapitel ein; der persönliche Lernstand gruppiert Inhalte und führt zum nächsten offenen Schritt.
 

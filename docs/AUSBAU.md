@@ -1,6 +1,6 @@
 # Inhaltsausbau und Prioritäten · 23. Oktober 2026
 
-Zehn verfügbare Kursfolgen mit 84 Kapiteln, 178 Fragen und 139 Primärquellen. Neue Kapitel enthalten Voraussetzungen, Lernziele, Erklärungen, Beispiele, Aufgaben und Lösungen. Deutsch/Englisch teilen stabile IDs. KI und LaTeX wurden in dieser Erweiterung nicht verändert.
+Elf verfügbare Kursfolgen mit 92 Kapiteln, 194 Fragen und 155 Primärquellen. Neue Kapitel enthalten Voraussetzungen, Lernziele, Erklärungen, Beispiele, Aufgaben und Lösungen. Deutsch/Englisch teilen stabile IDs. KI und LaTeX wurden in dieser Erweiterung nicht verändert.
 
 | Bereich | Verfügbare Kapitel | Nächster Ausbau |
 | --- | --- | --- |
@@ -13,8 +13,8 @@ Zehn verfügbare Kursfolgen mit 84 Kapiteln, 178 Fragen und 139 Primärquellen. 
 | Netzwerke | 6 | Routing-Lab, IPv6, reale DNS-/TLS-Diagnose |
 | IT-Sicherheit | 7 | Unabhängiges Review und integriertes Praxisprojekt |
 | Betriebssysteme/Linux | 6 | Live-systemd-Lab, Benutzerverwaltung, Automatisierung |
-| Cloud & DevOps | kurzer Einstieg | Höchste Inhaltspriorität: Build/CI, Container, Konfiguration, Auslieferung, Beobachtung, Rollback |
+| Cloud & DevOps | 8 | Größeres betreutes Deployment-/Betriebsprojekt, Infrastructure as Code |
 
-Die abgeschlossenen Folgen behandeln ihren definierten Umfang, keine vollständigen Fachgebiete. Drei ältere Lernpfade enthalten weiterhin geplante Schritte. Nächste UX-Arbeit: diese mit passenden verfügbaren Kapiteln zu durchgängigen Wegen überarbeiten. Technisch folgen CI-Automatisierung und eine angemeldete Browserprüfung auf isoliertem Entwicklungsbranch. Quellenabgleich ersetzt kein unabhängiges Fachreview.
+Die abgeschlossenen Folgen behandeln ihren definierten Umfang, keine vollständigen Fachgebiete. Drei geführte Wege sind vollständig verfügbar und nennen konkrete Projektergebnisse. CI prüft zwei Node-Versionen und das echte Containerbeispiel auf Linux. Nächstes Inhaltspaket ist ein vollständiger Python-Grundkurs; zusätzlich folgen assistive Nutzerprüfungen und eine echte angemeldete Browserprüfung auf isoliertem Entwicklungsbranch. Quellenabgleich ersetzt kein unabhängiges Fachreview.
 
 Details: [WEITERENTWICKLUNG.md](WEITERENTWICKLUNG.md), [VALIDIERUNG.md](VALIDIERUNG.md).

@@ -21,13 +21,12 @@ themeMedia.addEventListener('change', () => {
   updateThemeButton();
 });
 updateThemeButton();
-document.querySelector<HTMLAnchorElement>('[data-language-switch]')!.addEventListener('click', event => {
-  const link = event.currentTarget as HTMLAnchorElement;
-  const url = new URL(link.href);
-  url.search = location.search;
-  url.hash = location.hash;
-  link.href = url.href;
-});
+const languageLink=document.querySelector<HTMLAnchorElement>('[data-language-switch]')!;
+function updateLanguageLink() {
+ const url=new URL(languageLink.href);url.search=location.search;url.hash=location.hash;languageLink.href=url.href;
+}
+for(const event of ['click','focus','pointerenter','contextmenu'])languageLink.addEventListener(event,updateLanguageLink);
+window.addEventListener('popstate',updateLanguageLink);window.addEventListener('hashchange',updateLanguageLink);updateLanguageLink();
 const menuButton = document.querySelector<HTMLButtonElement>(
   ".mobile-menu-button",
 )!;
@@ -51,7 +50,10 @@ mobileNav
   .querySelectorAll("a")
   .forEach((link) => link.addEventListener("click", closeMenu));
 document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape") closeMenu();
+  if (e.key === "Escape" && menuButton.getAttribute('aria-expanded')==='true') {
+    const returnFocus=mobileNav.contains(document.activeElement);
+    closeMenu();if(returnFocus)menuButton.focus();
+  }
 });
 
 matchMedia('(min-width: 901px)').addEventListener('change',closeMenu);

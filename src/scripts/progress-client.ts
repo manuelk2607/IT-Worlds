@@ -1,3 +1,4 @@
+import {routeProgress,type RouteStep} from '../lib/learning-route.ts';
 import {renderProgressDashboard} from './progress-dashboard.ts';
 import { createAuthClient } from '@neondatabase/auth';
 import { t, locale, pagePath } from './browser-i18n';
@@ -36,6 +37,15 @@ function render() {
     const ids: string[] = JSON.parse(element.dataset.pathLessonIds!);
     const read = ids.filter(id => itemFor('lesson', id)?.completed).length;
     element.textContent = t(`${read} von ${ids.length} verfügbaren Lektionen gelesen`, `${read} of ${ids.length} available lessons read`);
+  });
+  const readLessons=new Set(completed.filter(item=>item.kind==='lesson').map(item=>item.contentId));
+  document.querySelectorAll<HTMLAnchorElement>('[data-route-next]').forEach(link=>{
+    const steps:RouteStep[]=JSON.parse(link.dataset.routeSteps!);
+    const {next}=routeProgress(steps,readLessons);
+    const target=next??steps[0];if(!target)return;
+    link.href=target.url;
+    link.textContent=next?t('Mit dem ersten offenen Schritt starten →','Start the first unfinished step →'):t('Alles gelesen · noch einmal ansehen →','All read · review again →');
+    const title=link.closest('.learning-route')?.querySelector('[data-route-title]');if(title)title.textContent=target.title;
   });
   document.querySelectorAll<HTMLElement>('[data-question-solved]').forEach(element => {
     const solved = itemFor('question', element.dataset.questionSolved)?.solved;

@@ -6,7 +6,7 @@ Der About-Bereich beschreibt den tatsächlichen Funktionsumfang. Mit „Tags“ 
 
 ## Beschreibung
 
-> Deutsch-englische IT-Lernplattform mit zehn Themenwelten, zehn Kursfolgen, 84 Kurskapiteln, 178 Quizfragen und Übungseditoren. Quellenbasiert, frei zugänglich, mit optionalem Lernfortschritt.
+> Deutsch-englische IT-Lernplattform mit zehn Themenwelten, elf Kursfolgen, 92 Kurskapiteln, 194 Quizfragen und Übungseditoren. Quellenbasiert, frei zugänglich, mit optionalem Lernfortschritt.
 
 ## Topics
 

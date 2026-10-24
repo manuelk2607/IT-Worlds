@@ -1,5 +1,6 @@
+import {guidedLearningPaths} from './learning-paths.ts';
 import { additionalEnglishLessons, additionalSourceDescriptions, additionalEnglishQuestions } from './expansion.en.ts';
-import { topics as originalTopics, sources as originalSources, questions as originalQuestions, paths as originalPaths, levels as originalLevels, type Topic, type Lesson, type SourceId } from './content.ts';
+import { topics as originalTopics, sources as originalSources, questions as originalQuestions, levels as originalLevels, type Topic, type Lesson, type SourceId } from './content.ts';
 
 type TopicText = Pick<Topic, 'title' | 'short' | 'description' | 'tags' | 'prerequisites' | 'curriculum'> & { lesson?: Omit<Lesson, 'sources'>; subareas?: Topic['subareas'] };
 const text: Record<string, TopicText> = {
@@ -94,10 +95,5 @@ const quizText = [
 quizText.push(...additionalEnglishQuestions);
 import { courseQuestions, courseLearningPaths } from './courses.ts';
 export const questions = [...originalQuestions.filter(question => !question.course).map((question, index) => ({ ...question, prompt: quizText[index].prompt, options: quizText[index].options.map(([text, explanation]) => ({ text, explanation })) })), ...courseQuestions('en')];
-const pathText = [
-  { title: 'Your first website', description: 'From a first HTML element to your own idea in the browser.', prerequisites: 'No programming knowledge required. A browser and curiosity are enough to get started.', steps: ['HTML gives content structure', 'A responsive layout with CSS', 'Interactions with TypeScript', 'Publish your website'] },
-  { title: 'Connect APIs & data', description: 'Understand the route from a request to a suitable response.', prerequisites: 'Programming-language basics and initial experience with HTTP and tables. The available introductions provide a refresher.', steps: ['What does OpenAPI describe?', 'Select specific data with SQL', 'Implement an API client', 'Secure access and input'] },
-  { title: 'Design systems thoughtfully', description: 'Weigh architectural decisions against requirements.', prerequisites: 'Practical experience with applications, databases and deployment. This path is entirely planned; sourced advanced lessons will be added gradually.', steps: ['Version interfaces and contracts', 'Balance consistency and availability', 'Design operations and recovery', 'Assess risks with threat modelling'] },
-];
-export const paths = [...originalPaths.filter(path => !path.course).map((path, index) => ({ ...path, ...pathText[index], steps: path.steps.map((step, stepIndex) => ({ ...step, title: pathText[index].steps[stepIndex] })) })), ...courseLearningPaths('en')];
+export const paths = [...guidedLearningPaths('en'), ...courseLearningPaths('en')];
 export const levels = originalLevels.map((level, index) => ({ ...level, name: ['Beginner', 'Intermediate', 'Advanced'][index], description: ['Understand the terminology. Take your first steps.', 'Connect ideas. Build independently.', 'Weigh architectures. Question systems.'][index] }));

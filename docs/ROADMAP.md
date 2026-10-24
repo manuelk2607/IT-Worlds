@@ -84,11 +84,11 @@ Der Einstieg braucht noch keine Anmeldung, öffentliche Rangliste, automatische 
 | Breite oder Tiefe? | ein verbundener Lernpfad, dazu eine Themenlandkarte | der erste Pfad wird verständlich und zuverlässig genutzt |
 | Welche Technik? | statische Artikel mit gezielten interaktiven Komponenten | umfangreiche dynamische Anforderungen |
 | Brauchen wir Nutzerkonten? | freiwillige Accounts für Synchronisierung; Inhalte frei | weitere persönliche Funktionen |
-| Wie werden Inhalte gepflegt? | Markdown und Review im Repository | Redaktion benötigt eine andere Oberfläche |
+| Wie werden Inhalte gepflegt? | Inhaltsdaten in TypeScript und Review im Repository | Redaktion benötigt eine andere Oberfläche |
 | Wie lizenzieren wir das Projekt? | Code, Lerntexte und Fremdmaterial getrennt beurteilen | vor entsprechenden externen Beiträgen und Veröffentlichung |
 
-Konkrete nächste Arbeitspakete: die Einstiege, 27 Kapitel und 64 Fragen unabhängig fachlich gegenlesen lassen, die Kurse mit Lernenden erproben und die weiteren Lernpfad-Skizzen ausarbeiten.
+Konkrete nächste Arbeitspakete: die verfügbaren Inhalte unabhängig fachlich gegenlesen lassen, die Kurse mit Lernenden erproben und die geführten Lernwege mit Lernenden erproben.
 
 Aktuelle Prioritäten, abgeschlossene Teilbereiche und verbleibende fachliche Lücken: [AUSBAU.md](AUSBAU.md).
 
-Aktuell: zehn Kursfolgen/84 Kapitel/178 Fragen. Lernstart, Kursfilter, Kapitelsuche, synchronisierte Quizfilter und gruppierter Lernstand umgesetzt. Cloud-&-DevOps-Kurs, durchgängige Querverbindungspfade und unabhängiges Fachreview bleiben offen.
+Aktuell: elf Kursfolgen/92 Kapitel/194 Fragen. Lernstart, Kursfilter, Kapitelsuche, synchronisierte Quizfilter und gruppierter Lernstand umgesetzt. Cloud-&-DevOps-Kurs und drei durchgängige Querverbindungspfade sind ergänzt. Unabhängiges Fachreview, Python-Kurs, weitere Praxisprojekte und assistive Nutzerprüfungen folgen.

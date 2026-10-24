@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import LearningRoute from './LearningRoute.astro';
 import Breadcrumbs from './Breadcrumbs.astro';
 import SourceCard from './SourceCard.astro';
 import ProgressToggle from './ProgressToggle.astro';
@@ -23,7 +24,7 @@ const defaults: Partial<Record<Course['id'],Course['id']>>={ki:'latex',latex:'ki
 const related=(course.related ?? (defaults[course.id]?[defaults[course.id]!]:[])).map(id=>courses.find(item=>item.id===id)).filter((item):item is Course=>!!item);
 const other=related[0];
 ---
-<Layout locale={locale} title={title} description={description} active="themen">
+<Layout locale={locale} title={title} description={description} active="pfade">
   <Breadcrumbs locale={locale} items={[{title:t("Kurse", "Courses"),href:"/lernpfade/"},{title:topicById(course.topic)!.title,href:`/themen/${course.topic}/`}, ...(chapter ? [{title:course.title[locale],href:coursePath(course)},{title:chapter.title[locale]}] : [{title:course.title[locale]}])]} />
   <header class="container page-top course-header">
     <a class="back-link" href={localePath(locale, chapter ? coursePath(course) : `/themen/${course.topic}/`)}>{t('← Zur Übersicht', '← Back to overview')}</a>
@@ -48,6 +49,7 @@ const other=related[0];
     </aside>
     <div class="course-content">
       {!chapter ? <>
+        <LearningRoute locale={locale} steps={course.chapters.map(chapter=>({id:chapterProgressId(course,chapter),title:chapter.title[locale],url:coursePath(course,chapter)}))}/>
         <section class="prerequisite"><div><h2>{t('Dein Einstieg', 'Your starting point')}</h2><p>{course.prerequisites[locale]}</p><p>{t('Arbeite die Kapitel in Reihenfolge durch. Lies die Erklärung, rechne oder führe das Beispiel aus und löse die Aufgabe vor dem Öffnen der Lösung. Die Quizfragen prüfen anschließend dein Verständnis.', 'Work through the chapters in order. Read the explanation, calculate or run the example, and solve the exercise before opening its solution. The quiz then checks your understanding.')}</p></div></section>
         {levels.map(level => <section class="course-stage"><h2>{level.name}</h2><ol class="course-chapters">{course.chapters.filter(item => item.level === level.id).map(item => <li><a href={localePath(locale, coursePath(course, item))}><h3>{item.title[locale]}</h3><p>{item.goals.map(goal => goal[locale]).join(' ')}</p><span class="text-link">{t('Kapitel öffnen →', 'Open chapter →')}</span></a></li>)}</ol></section>)}
         <a class="button primary" href={quizUrl}>{t('Kursquiz starten', 'Start course quiz')}</a>
