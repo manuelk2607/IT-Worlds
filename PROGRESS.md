@@ -1,21 +1,28 @@
 # IT-Worlds · Arbeitscheckpoint
 
-## Ziel
-Informationsarchitektur, Benutzerführung und vernachlässigte Inhalte iterativ verbessern; vollständige geprüfte Pakete veröffentlichen. `.clinerules` unverändert erhalten. KI und LaTeX vorerst nicht ausbauen.
+## Abgeschlossenes Kontingentpaket · 24. Oktober 2026
+Informationsarchitektur, Benutzerführung und vernachlässigte Inhalte in geprüften Paketen erweitert. `.clinerules` unverändert und unversioniert erhalten; KI und LaTeX inhaltlich nicht weiter ausgebaut.
 
-## Gesicherter Stand
-- GitHub main und codex/cloudstand-lokal: 0ec1697, alle drei CI-Jobs erfolgreich (40044291333). Vorherige Pakete: Orientierung/Suche, Grundlagen, TypeScript/Web, Linux/Netzwerk/Sicherheit, Cloud/DevOps, vollständige geführte Wege, Python und Quizrunden.
-- Öffentlich 24.10.2026 02:18:33 Europe/Stockholm: Version af5f9f59-aa9d-4c5f-80b8-7ab7e57e7f77, Deployment 83741850-9dcf-4ce0-bf37-52db12dfe174, 100 % Traffic. Account/Subdomain/Einstellungen/vier Bindings erhalten.
-- Zwölf Kurse, 100 Kapitel, 210 Fragen, 169 Quellen; 110 lesbare Inhalte, jeweils DE/EN. Drei geführte Wege mit 13/14/10 realen Schritten und gemeinsamem Fortschritt. Quiz: 5/10/20/alle, reproduzierbares Mischen, gezielte Fehlerlinks.
+## Tatsächlicher Stand
+- 10 Themenwelten, 13 Kursfolgen, 108 Kapitel, 226 erklärte Fragen und 181 Lernquellen, vollständig DE/EN. Dazu zehn Einstiege und zehn Übungseditoren. Neue Folgen dieses Kontingents: Cloud/DevOps, Python, Betriebssystemkonzepte; Netzwerke um IPv6 und Routing ergänzt.
+- Drei durchgehende Lernwege mit 13/14/10 realen Schritten. Gemeinsame Kapitelkennungen, nächster ungelesener Schritt, Fortschritt und Wiederholung auch in Kurskarten. Themenpläne berücksichtigen sämtliche Kurse pro Thema.
+- Quiz: 5/10/20/alle, reproduzierbares Mischen, Neustart derselben Runde, gezielte Fehlerlinks, konsistente Direktfilter. Aufklappbare Filter und größere kleine Texte verbessern die Mobilansicht. Gemeinsame Kopierknöpfe für Code; Suche weist ungültige Ergebnis-URLs ab.
+- Releases verwenden frische isolierte Artefakte mit SEO-/Linkprüfung und anschließendem öffentlichem Bytevergleich. Transiente Netzfehler werden begrenzt wiederholt; bei fehlgeschlagener Postdeployprüfung bleibt das Artefakt erhalten.
+
+## Veröffentlichung und Sicherung
+- Cloudflare öffentlich: Version 3c3a56d6-38ed-4cbd-b3ed-d35611997784, Deployment f72fbf6c-04c5-44ff-89a7-b476a29b6cd1, 24.10.2026 02:45:22 Europe/Stockholm, 100 % Traffic. Account, Subdomain, Einstellungen und vier Bindings erhalten; am 24.10. nach Wiederaufnahme erneut bestätigt.
+- GitHub main und codex/cloudstand-lokal: Code bis 3c3b565 gesichert. Letzte Änderung korrigiert die npm-10-Override-Auflösung; Bibliotheksversionen und öffentlich ausgelieferter Code bleiben gleich. GitHub-Run 40076879059 vollständig erfolgreich: Node 22.22.0, Node 24 und echter Linux-Containerfall. Beschreibung, Website-Link, Tags und DE/EN-README aktualisiert.
 
 ## Verifikation
-37 Tests (36 bestanden, Docker lokal ohne Engine übersprungen; echter Linux-Containerfall in CI erfolgreich), 113 Dateien strikt ohne Meldungen. 292 HTML-Seiten, 286 öffentliche URLs; öffentlicher bytegleicher Abgleich erfolgreich. Python-Listings lokal auf 3.12.6 und CI auf 3.12 ausgeführt, Grenz-/Fehlerfälle und unveränderte Eingaben geprüft. Browser: DE/EN, mobil/Designs, Menü/Tastatur, vollständige Quizrunde/Feedback/Ergebnis/Neustart/Einzelfrage, geführte Wege. Lernstand mit lokal simulierter Session geprüft, keine neue tatsächliche Neon-Anmeldung behauptet.
+- 41 lokale Tests: 40 bestanden, ein Containerfall ohne laufende lokale Engine übersprungen; derselbe echte Containerfall besteht in CI. 127 Dateien strikt ohne Fehler/Warnungen/Hinweise.
+- Build: 312 HTML-Seiten; 21.515 interne Links/Assets/Anker. Alle 306 öffentlichen Sprachseiten erneut bytegleich und indexierbar geprüft; HTTPS-Weiterleitung und DE/EN-404 bestätigt. Isolierte Deployment-Vorschau erfolgreich.
+- Vollständiger npm-Audit: null Schwachstellen. Eng begrenzte Zod-/Undici-Korrekturen samt Lockdatei; npm 10 installiert in CI erfolgreich. Auth-Konfiguration, Datenbankschema und RLS unverändert.
+- Browser: DE/EN, Designs, mobile Navigation/Escape/Fokus, Suche, mehrkursige Themenpläne, Quiz samt Erklärungen/Ergebnis/Neustart, Codekopie zeichengetreu auf der öffentlichen Website. Fortschritt mit lokaler simulierter Session: TypeScript 5/8 → nächstes Testkapitel, Web 8/8 → Wiederholung. Temporären Fixture-Server beendet.
 
-## Laufendes Paket und nächster Schritt
-- Isolierter Release-Build implementiert: frischer temporärer Ordner, Pflichtdateien/Konfliktkopien/Symlinks, SEO/interne Verweise vor Upload, öffentliche Auslieferung danach, nur eigenen temporären Ordner entfernen. 38 Tests (37 pass/1 Skip), 117 strikte Dateien; Dry-Run erfolgreich mit 372 Artefaktdateien/286 URLs/19.863 internen Verweisen.
-- Releasepaket auf GitHub gesichert (5738773). Betriebssystemkonzepte fertig: sechs Kapitel/zwölf Fragen/acht neue OSTEP-Belege, vorhandenen Node-Beleg wiederverwendet. Gesamt 13 Kurse/106 Kapitel/222 Fragen/177 Quellen. 39 Tests (38 pass/1 Skip), 120 strikte Dateien, 308 HTML/302 URLs/20.917 interne Verweise. Browser DE/EN, Formel/Lösung und Belady-Volltextsuche erfolgreich. OS auf GitHub d5b9a71/CI erfolgreich und über isolierten Ablauf veröffentlicht: Version 5d728fc5-edbd-4340-a4f9-ba69093ff6ec (02:27), 302 URLs bytegleich, Einstellungen erhalten.
-- Nächstes Paket lokal: IPv6/Routing (+2 Kapitel/+4 Fragen/+4 RFCs) und vollständige mehrkursige Themenpläne ohne Browser-Skript. Gesamt 108 Kapitel/226 Fragen/181 Quellen. Auf GitHub 9fe2535/CI erfolgreich; öffentlich Version 5e807d42-7989-4082-a4df-e711a6bec061. Audit traf vorübergehenden HTTP-Verbindungsfehler; später 308 bestätigt.
-- Codekomfort lokal fertig: gemeinsamer Kopierknopf, größere kleine Texte, Kartenfortschritt/Weiterlernen, sichere Such-URLs, begrenzte transiente Auditwiederholung und Artefakterhalt bei Postdeployfehler. 41 Tests (40 pass/1 Skip), 127 strikte Dateien. Browser: exakter Clipboardtext und simulierte Kartenstände 5/8→Tests, 8/8→Wiederholung. Nächster Schritt: abschließende Prüfung, sichern/veröffentlichen, vollständiger öffentlicher Audit und Statusabgleich.
+## Verbleibende priorisierte Aufgaben
+1. Unabhängiges Fachreview; Quellenabgleich ist davon getrennt.
+2. Neuer echter angemeldeter E2E-Test mit getrennten Nutzern auf isoliertem Entwicklungsbranch; die neue UI-Prüfung verwendete simulierte Sessions.
+3. Assistive Nutzerprüfungen und Core-Web-Vitals-Felddaten; systemd-/reales IPv6-Labor.
+4. Weitere vollständige Inhaltspakete: Typst/Markdown, NoSQL/Replikation, Webhooks/GraphQL und größeres Betriebsprojekt. Abgeschlossene Kurse beschreiben ihren definierten Umfang, keine vollständigen Fachgebiete.
 
-## Grenzen
-Kein unabhängiges Fachreview, kein neuer echter angemeldeter E2E-Test, keine systemd-Liveprüfung oder Core-Web-Vitals-Feldmessung. Backend/Auth/Schema unverändert. Quell- und Nutzerdateien nicht pauschal bereinigen. Kontingent bis zur Ausführungsgrenze produktiv weiterverwenden, geprüfte Meilensteine früh sichern.
+Details: docs/VALIDIERUNG.md, docs/WEITERENTWICKLUNG.md und docs/AUSBAU.md. Keine offenen Implementierungsänderungen dieses Pakets.

@@ -1,5 +1,16 @@
 # Validierung
 
+## Abschließender Stand · 24. Oktober 2026
+
+13 Kurse, 108 Kapitel, 226 erklärte Fragen und 181 Lernquellen. 41 lokale Tests: 40 bestanden, Container lokal ohne Engine übersprungen. 127 Dateien strikt ohne Meldungen; Build 312 HTML-Seiten; 21.515 interne Verweise. Alle 306 öffentlichen URLs nach Wiederaufnahme erneut bytegleich, indexierbar und mit passenden Sprach-/SEO-Daten bestätigt. Deployment-Vorschau und vollständiger npm-Audit erfolgreich (null Schwachstellen). npm 10.9.4 prüft die Lockdatei; GitHub-Run 40076879059 besteht tatsächlich auf Node 22.22.0 und 24 sowie mit dem veröffentlichten Dockerbefehl auf Linux.
+
+Öffentliche Version 3c3a56d6-38ed-4cbd-b3ed-d35611997784, Deployment f72fbf6c-04c5-44ff-89a7-b476a29b6cd1, 24.10.2026 02:45:22 Europe/Stockholm, 100 % Traffic. Account, Subdomain, Einstellungen und vier Bindings unverändert bestätigt. Die nachfolgende npm-10-Korrektur 3c3b565 verändert die Installationsauflösung, keine ausgelieferten Bibliotheksversionen.
+
+Öffentlicher Browser: englische Codekopie zeichengetreu, IPv6-Direktquiz mit synchronem Thema/Kapitel/Stufe, richtige/falsche Antwort und alle Erklärungen, Ergebnis 1/2, Nachlese-/Wiederholungslinks und Neustart. Mobilmenü schließt per Escape und gibt den Fokus zurück; Katalog zeigt 13 Kurse ohne horizontales Überlaufen. Gastsession HTTP 200, persönlicher Fortschritt ohne Session HTTP 401; beide fehlenden Sprachrouten HTTP 404. Eine neue echte Anmeldung mit getrennten Nutzern, unabhängiges Fachreview, assistive Nutzerprüfung und Feldmessungen bleiben offen.
+
+Die folgenden Abschnitte dokumentieren frühere Paketprüfstände.
+
+
 ## Lernwege und Cloud & DevOps · 24. Oktober 2026
 
 Veröffentlicht: 24.10.2026 02:08:24 Europe/Stockholm, Version c8ebeb2c-242a-40b0-9013-b4f23096942b, Deployment 1c10f650-6ee4-419c-a9d1-73b5ebbd9998, 100 % Traffic. Elf Kurse, 92 Kapitel, 194 Fragen, 155 Quellen. 35 lokale Tests (34 bestanden, Container lokal ohne Engine übersprungen), 108 Dateien strikt ohne Meldungen, 272 HTML-Seiten, 17.847 interne Links/Assets/Anker, 266 öffentliche Sprachseiten. Deployment-Vorschau erfolgreich. GitHub-Run 40043330066 bestand auf Node 22.22.0/24 und führte das echte Docker-Beispiel erfolgreich aus.
