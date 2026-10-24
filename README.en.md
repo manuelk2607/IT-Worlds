@@ -6,7 +6,7 @@
 
 A German/English learning platform covering ten IT topics, from programming and databases to AI, networks, security and Linux. All learning content and quizzes remain accessible without signing in. An optional account synchronises read introductions and chapters, practised questions and correct answers across devices. Light and dark modes are available, with the choice saved in your browser.
 
-The site contains ten topics, ten introductions, ten local editors and eleven available courses with 92 chapters, 194 explained quiz questions and 155 primary sources. New courses cover IT foundations, TypeScript, web development, Linux, networks and security. Cloud & DevOps now adds eight chapters; three guided routes connect existing chapters into complete project-oriented sequences. Independent expert review is pending. A new learning start, filtered catalogue, chapter-text search, synchronised quiz filters and grouped progress improve orientation.
+The site contains ten topics, ten introductions, ten local editors and twelve available courses with 100 chapters, 210 explained quiz questions and 169 primary sources. New courses cover IT foundations, TypeScript, Python, web development, Linux, networks and security. Cloud & DevOps now adds eight chapters; three guided routes connect existing chapters into complete project-oriented sequences. Independent expert review is pending. A new learning start, filtered catalogue, chapter-text search, synchronised quiz filters and grouped progress improve orientation.
 
 [SQL course](https://it-worlds.maki26.workers.dev/en/themen/datenbanken/kurs/) · [API course](https://it-worlds.maki26.workers.dev/en/themen/apis/kurs/) · [AI course](https://it-worlds.maki26.workers.dev/en/themen/ki-neuronale-netze/kurs/) · [LaTeX course](https://it-worlds.maki26.workers.dev/en/themen/programmiersprachen/latex/) · [Course architecture](docs/KURSE.md)
 
@@ -14,7 +14,7 @@ LaTeX, Typst and Markdown form the **Markup & typesetting languages** area withi
 
 ## Development
 
-Requires Node.js 22.22.0 or newer and npm; tested with Node.js 26.8.1.
+Requires Node.js 22.22.0 or newer, npm and Python 3.12+ for the executable learning-example tests; tested with Node.js 26.8.1.
 
 ```bash
 npm ci

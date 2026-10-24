@@ -49,7 +49,7 @@ Sieben Kapitel mit 14 Fragen zu Bedrohungsmodell, Authentifizierung/MFA, Eingabe
 ## Verbleibende priorisierte Arbeiten
 
 - Cloud & DevOps besitzt weiterhin den kurzen belegten Einstieg, aber noch keine vollständige Kursfolge. Nächstes Inhaltspaket: reproduzierbarer Build/CI, Container und persistente Daten, Konfiguration/Secrets, Auslieferung, Beobachtbarkeit und kontrollierter Rollback.
-- Drei ältere themenübergreifende Lernpfade enthalten weiterhin ausdrücklich geplante Schritte. Diese gezielt auf jetzt verfügbare Kapitel umstellen und als durchgehende Lernwege überarbeiten; keine automatischen Ersatzlinks mit unpassenden Inhalten.
+- Die früheren drei Lernpfad-Skizzen sind inzwischen vollständig auf verfügbare Kapitel umgestellt (Paket 10).
 - Unabhängiges Fachreview sämtlicher Kurse und Fragen bleibt ausstehend. Der dokumentierte Quellenabgleich ist davon getrennt.
 - systemd-Beispiele auf einer laufenden Linux-Testumgebung praktisch prüfen. Portable Shellfälle sind lokal getestet; Docker ist vorhanden, aber sein Dienst läuft nicht.
 - Felddaten zu Ladezeit, Interaktionszeit und Layoutstabilität erfassen; aus lokalen Funktionsprüfungen keine echten Core-Web-Vitals-Werte ableiten.
@@ -62,7 +62,7 @@ Die wegen des früheren Kontingentlimits unterbliebene GitHub-Sicherung wurde na
 
 Acht Kapitel mit 16 Fragen und Aufgaben/Lösungen schließen die bislang fehlende Kursfolge für Cloud/DevOps: Dienstmodelle, Buildartefakte und Lockdateien, CI, Container/Persistenz, Konfiguration/Secrets, SLI/SLO und Monitoring, Rollback/Datenkompatibilität sowie HTTP-Auslieferungsvertrag. 16 Primärbelege am 24.10. gelesen. Alle TypeScript-Listings streng geprüft und lokal ausgeführt; zusätzliche Fälle prüfen Standard-SHA-256-Digest, öffentliche Feldprojektion, leere/ungültige Messungen sowie Status-, Inhaltstyp-, Inhalts- und 404-Fehler. Eine separate CI-Prüfung führt den veröffentlichten Containerbefehl auf Linux aus; lokal wird dieser Fall ohne laufende Docker-Engine ausdrücklich übersprungen. Der erste Qualitätsworkflow (523383f) bestand auf Node 22.22.0 und Node 24.
 
-Lokaler Stand: elf Kurse, 92 Kapitel, 194 Fragen, 155 Quellen, 272 HTML-Seiten und 266 öffentliche Sprachseiten. Kapitel-Suche, Quizfilter und Fortschrittskennungen leiten sich aus denselben Daten ab. Browserprüfung: gerenderte Formel, Kapitelnavigation, Aufgabenlösung, Fragenauswahl und Feedback für eine falsche Antwort mit sämtlichen Erklärungen. Die allgemeine Quellenzeile nennt kein hart codiertes Lesedatum mehr; Fassungen und Termine stehen pro Beleg. Veröffentlichung des Pakets folgt nach den weiteren Prüfungen.
+Lokaler Stand: elf Kurse, 92 Kapitel, 194 Fragen, 155 Quellen, 272 HTML-Seiten und 266 öffentliche Sprachseiten. Kapitel-Suche, Quizfilter und Fortschrittskennungen leiten sich aus denselben Daten ab. Browserprüfung: gerenderte Formel, Kapitelnavigation, Aufgabenlösung, Fragenauswahl und Feedback für eine falsche Antwort mit sämtlichen Erklärungen. Die allgemeine Quellenzeile nennt kein hart codiertes Lesedatum mehr; Fassungen und Termine stehen pro Beleg. Am 24.10.2026 öffentlich veröffentlicht; Nachweis siehe VALIDIERUNG.md.
 
 Container-Verifikation abgeschlossen: GitHub-Run 40041998694 bestand auf Node 22.22.0 und Node 24; der zusätzliche Linux-Job führte den unveränderten veröffentlichten Dockerbefehl mit schreibgeschützter Quelldatei und isoliertem Containernetz aus. Die Ausgabe und der unveränderte Dateiinhalt wurden geprüft. Die lokale Docker-/systemd-Umgebung bleibt davon getrennt.
 
@@ -73,3 +73,9 @@ Die bisherigen drei Skizzen verweisen jetzt auf tatsächlich verfügbare Kapitel
 Mit einem ausschließlich lokalen simulierten Account geprüft: anfangs 2/13 gelesen, nach Markierung 3/13 und nächster Formularschritt; derselbe Stand in der Web-Kursübersicht 3/8; anschließend 13/13 mit Wiederholung. Der Filter „Nur offene Inhalte“ blendet die vollständig gelesene Webgruppe aus. Englischer Lernweg übernimmt 13/13 und verlinkt englische Kapitel. Dies prüft die Oberfläche und ihre API-Verarbeitung, nicht eine neue echte Neon-Anmeldung. Backend und Schema unverändert.
 
 Kursseiten markieren in der Hauptnavigation nun „Kurse“. Escape aus dem Mobilmenü gibt den Fokus an den Auslöser zurück; Tastaturaktivierung von Start-/Themenankern fokussiert die passende Überschrift ohne zusätzlichen Sprung. Der Sprachlink übernimmt aktuelle Query/Anker auch beim Fokussieren oder Öffnen des Kontextmenüs.
+
+## Paket 11 · Python als vollständige Einsteigerfolge
+
+Acht Kapitel mit 16 erklärten Fragen: Interpreter/venv, Werte, Kontrollfluss, Sammlungen, Funktionen/Verträge, UTF-8/JSON, Module/Tests und ein lesendes Kommandozeilenprojekt zur Lernzeit-Auswertung. 14 offizielle Python-3.12-Belege tatsächlich gelesen. Keine zusätzlichen Pakete. Alle Python-Listings werden durch einen TypeScript-Test auf Syntax und Ausführung geprüft; zusätzliche Eingaben prüfen bool, negative/zu große Minuten, leere und beschädigte Daten, ungültiges UTF-8, fehlende Dateien, --help und unveränderte Eingabedateien. Lokal Python 3.12.6; CI wählt ausdrücklich Python 3.12.
+
+Aktuell zwölf Kurse, 100 Kapitel, 210 Fragen, 169 Quellen; 292 HTML-Seiten/286 öffentliche Sprachseiten. Umfang ist ein abgeschlossener Grundkurs mit Transferprojekt, keine Behauptung einer vollständigen Python-Expertenausbildung.

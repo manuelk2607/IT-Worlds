@@ -6,11 +6,11 @@
 
 IT-Worlds ist eine deutsch-englische IT-Lernplattform mit zehn Themenwelten. Alle Inhalte, Quellen und Quizfragen sind ohne Anmeldung zugänglich. Ein freiwilliger Account speichert gelesene Einstiege und Kapitel, bearbeitete Fragen und richtig beantwortete Fragen geräteübergreifend. Ein optionales dunkles Design ergänzt das helle Design; die Auswahl bleibt im Browser gespeichert.
 
-**Stand (24.10.2026):** Zehn Themenwelten, zehn Einstiegsartikel, zehn lokale Übungseditoren und elf verfügbare Kursfolgen mit **92 Kapiteln, 194 erklärten Quizfragen und 155 Primärquellen**. Neue Folgen: IT-Grundlagen, TypeScript, Webentwicklung, Linux, Netzwerke und Sicherheit. SQL, APIs, KI und LaTeX bleiben integriert. Cloud & DevOps ergänzt nun acht Kapitel; drei geführte Lernwege verbinden vorhandene Kapitel durchgehend zu konkreten Projektzielen. Ein unabhängiges Fachreview steht aus.
+**Stand (24.10.2026):** Zehn Themenwelten, zehn Einstiegsartikel, zehn lokale Übungseditoren und zwölf verfügbare Kursfolgen mit **100 Kapiteln, 210 erklärten Quizfragen und 169 Primärquellen**. Neue Folgen: IT-Grundlagen, TypeScript, Python, Webentwicklung, Linux, Netzwerke und Sicherheit. SQL, APIs, KI und LaTeX bleiben integriert. Cloud & DevOps ergänzt nun acht Kapitel; drei geführte Lernwege verbinden vorhandene Kapitel durchgehend zu konkreten Projektzielen. Ein unabhängiges Fachreview steht aus.
 
 **Orientierung:** [Lernstart](https://it-worlds.maki26.workers.dev/lernen/) → [Kurskatalog](https://it-worlds.maki26.workers.dev/lernpfade/) → Kapitel mit Aufgaben, Lösungen und Quiz. Die Suche durchsucht auch Kapiteltexte und lädt ihren Index erst bei Bedarf. Quizfilter grenzen passende Kurse/Kapitel ein; der persönliche Lernstand gruppiert Inhalte und führt zum nächsten offenen Schritt.
 
-[SQL-Kurs](https://it-worlds.maki26.workers.dev/themen/datenbanken/kurs/) · [API-Kurs](https://it-worlds.maki26.workers.dev/themen/apis/kurs/) · [KI-Kurs](https://it-worlds.maki26.workers.dev/themen/ki-neuronale-netze/kurs/) · [LaTeX-Kurs](https://it-worlds.maki26.workers.dev/themen/programmiersprachen/latex/) · [Kursarchitektur](docs/KURSE.md) · [Prioritäten und offene Inhalte](docs/AUSBAU.md)
+[Python-Kurs](https://it-worlds.maki26.workers.dev/themen/programmiersprachen/python/) · [SQL-Kurs](https://it-worlds.maki26.workers.dev/themen/datenbanken/kurs/) · [API-Kurs](https://it-worlds.maki26.workers.dev/themen/apis/kurs/) · [KI-Kurs](https://it-worlds.maki26.workers.dev/themen/ki-neuronale-netze/kurs/) · [LaTeX-Kurs](https://it-worlds.maki26.workers.dev/themen/programmiersprachen/latex/) · [Kursarchitektur](docs/KURSE.md) · [Prioritäten und offene Inhalte](docs/AUSBAU.md)
 
 ## Themenwelten
 
@@ -20,7 +20,7 @@ LaTeX, Typst und Markdown gehören unter **Programmiersprachen → Auszeichnungs
 
 ## Lokal entwickeln
 
-Voraussetzung: Node.js ab 22.22.0 und npm. Mit Node.js 26.8.1 geprüft.
+Voraussetzung: Node.js ab 22.22.0, npm und Python ab 3.12 für die ausführbaren Lernbeispieltests. Mit Node.js 26.8.1 geprüft.
 
 ```bash
 npm ci

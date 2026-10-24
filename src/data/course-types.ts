@@ -29,7 +29,7 @@ export interface Chapter {
   questions: CourseQuestion[];
 }
 export interface Course {
-  id: 'ki' | 'latex' | 'datenbanken' | 'apis' | 'typescript' | 'web' | 'grundlagen' | 'linux' | 'netzwerke' | 'sicherheit' | 'devops';
+  id: 'ki' | 'latex' | 'datenbanken' | 'apis' | 'typescript' | 'web' | 'grundlagen' | 'linux' | 'netzwerke' | 'sicherheit' | 'devops' | 'python';
   topic: string;
   slug: string;
   title: Bilingual;

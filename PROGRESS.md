@@ -16,7 +16,8 @@ Informationsarchitektur, Benutzerführung und vernachlässigte Inhalte iterativ 
 1. GitHub-Workflow 523383f auf Node 22.22.0 und 24 erfolgreich (Run 40041316700). Containerjob ebenfalls erfolgreich: Run 40041998694 (32518ab), alle drei Jobs bestanden.
 2. Cloud-&-DevOps-Kurs ist lokal vollständig ergänzt (8 Kapitel, 16 Fragen, 16 neue Quellen). Node-Beispiele und Linux-Container-CI geprüft; Veröffentlichung folgt.
 3. Drei geführte Wege mit 13/14/10 realen Schritten umgesetzt. Fortsetzen und geteilte IDs lokal mit simuliertem Account geprüft, einschließlich Alles-gelesen-/Nur-offen-Zuständen und Englisch. Aktuell 92 Kapitel/194 Fragen/155 Quellen; keine echte neue Neon-Anmeldung behauptet.
-4. Pfad-/Navigationspaket abschließend sichern/veröffentlichen; danach Python-Grundkurs als nächstes zusammenhängendes Inhaltspaket.
+4. Pfade/DevOps öffentlich: Version c8ebeb2c-242a-40b0-9013-b4f23096942b (24.10.02:08), Einstellungen erhalten; 266 URLs bytegleich geprüft. GitHub 5b4fba3 mit erfolgreichem CI.
+5. Python lokal fertig: 8 Kapitel/16 Fragen/14 Quellen, Gesamt 100/210/169; 36 Tests (35 pass/1 lokaler Docker-Skip), 111 strikte Dateien, 292 HTML/286 URLs/19.174 interne Verweise. Nächster Schritt: Python-Browsercheck, sichern und veröffentlichen; danach kurze Quizrunden/Ergebnisführung.
 
 ## Grenzen
 Die frühere Kontingentsperre ist nach erneutem Kontingentsbeginn aufgehoben (24.10.2026 geprüft). Gelegentliche zusätzliche Kopien in generierten Builddateien beobachten; Quell-/Nutzerdateien nicht pauschal bereinigen. Auth und Datenbankschema bleiben unverändert, sofern kein neues Paket Änderungen erfordert.

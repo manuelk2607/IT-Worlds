@@ -1,5 +1,16 @@
 # Validierung
 
+## Lernwege und Cloud & DevOps · 24. Oktober 2026
+
+Veröffentlicht: 24.10.2026 02:08:24 Europe/Stockholm, Version c8ebeb2c-242a-40b0-9013-b4f23096942b, Deployment 1c10f650-6ee4-419c-a9d1-73b5ebbd9998, 100 % Traffic. Elf Kurse, 92 Kapitel, 194 Fragen, 155 Quellen. 35 lokale Tests (34 bestanden, Container lokal ohne Engine übersprungen), 108 Dateien strikt ohne Meldungen, 272 HTML-Seiten, 17.847 interne Links/Assets/Anker, 266 öffentliche Sprachseiten. Deployment-Vorschau erfolgreich. GitHub-Run 40043330066 bestand auf Node 22.22.0/24 und führte das echte Docker-Beispiel erfolgreich aus.
+
+Öffentlicher Audit aller 266 URLs: indexierbar, Canonicals/Sprachen, Metadaten, strukturierte Daten, HTTPS und bytegleiche Auslieferung bestätigt. DevOps-Kapitel mit Formel, Aufgabenlösung und gefiltertem Zwei-Fragen-Quiz im Browser geprüft; Antwort samt allen Erklärungen sichtbar. Geführter Weg mit 13 verfügbaren Schritten und Gastzustand öffentlich bestätigt. Lokal mit simuliertem Account zusätzlich Fortsetzen, geteilte Kapitelkennungen, 13/13, nur offene Inhalte, Englisch und mobile Tastaturnavigation geprüft. Dies ist kein neuer tatsächlicher Neon-Accounttest. Cloudflare-Account/Subdomain, bestehende Einstellungen und vier Bindings vor/nach Veröffentlichung identisch.
+
+## Python · lokaler Folgestand
+
+36 Tests: 35 bestanden, ein lokaler Containerfall übersprungen. 111 Dateien strikt ohne Meldungen. 292 HTML-Seiten, 19.174 interne Links/Assets/Anker, 286 öffentliche Sprachseiten im lokalen SEO-Audit. Python 3.12.6 führt sämtliche Listings und zusätzliche Grenz-/Fehlerfälle aus. Noch nicht als Python-Release veröffentlicht.
+
+
 ## Aktuelle iterative Erweiterung · 23. Oktober 2026
 
 Zehn Kursfolgen, 84 Kapitel, 178 Fragen und 139 Quellen. Neu: Grundlagen 7, TypeScript 8, Web 8, Linux 6, Netzwerke 6, Sicherheit 7. Bestehende SQL-/API-/KI-/LaTeX-IDs erhalten. KI und LaTeX inhaltlich unverändert. UX: Lernstart, Kurskatalog, Breadcrumbs, verzögert geladene Kapitelsuche, passende Quiz-Auswahllisten und gruppierter Lernstand mit Fortsetzen.

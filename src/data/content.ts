@@ -1,4 +1,5 @@
 import {guidedLearningPaths} from './learning-paths.ts';
+import {pythonSources} from './course-python-sources.ts';
 import {devopsSources} from './course-devops-sources.ts';
 import {securitySources} from './course-security-sources.ts';
 import {networkSources} from './course-network-sources.ts';
@@ -52,6 +53,7 @@ export const sources = {
   ...networkSources,
   ...securitySources,
   ...devopsSources,
+  ...pythonSources,
   python: {
     title: "An Informal Introduction to Python",
     publisher: "Python Software Foundation",
