@@ -3,6 +3,7 @@ import {renderProgressDashboard} from './progress-dashboard.ts';
 import { createAuthClient } from '@neondatabase/auth';
 import { t, locale, pagePath } from './browser-i18n';
 import type { ProgressItem, ProgressChange } from '../lib/progress';
+import {acceptProgressResponse} from '../lib/progress-response';
 
 export const authClient = createAuthClient(new URL('/api/auth', location.origin).href);
 interface User { id: string; name: string; email: string }
@@ -75,12 +76,14 @@ export async function loadLearningState() {
 export const learningReady = loadLearningState();
 export async function saveProgress(change: ProgressChange) {
   await learningReady;
-  if (!learningState.user) return false;
+  const requestUserId=learningState.user?.id;
+  if (!requestUserId) return false;
   const response = await fetch('/api/progress', { method: 'POST', credentials: 'same-origin', keepalive: true, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(change) });
+  if(learningState.user?.id!==requestUserId)return false;
   if (response.status === 401) { learningState.user = null; learningState.items = []; render(); throw new Error('SESSION_EXPIRED'); }
   if (!response.ok) throw new Error('SAVE_FAILED');
   const { item } = await response.json() as { item: ProgressItem };
-  learningState.items = [...learningState.items.filter(current => current.kind !== item.kind || current.contentId !== item.contentId), item];
+  if(!acceptProgressResponse(learningState,requestUserId,item))return false;
   render();
   return true;
 }
@@ -105,8 +108,8 @@ for (const control of controls) {
     input.disabled = true;
     message.textContent = t('Wird gespeichert …', 'Saving …');
     try {
-      await saveProgress({ kind: control.dataset.kind as ProgressChange['kind'], contentId: control.dataset.contentId!, completed: input.checked });
-      message.textContent = t('Gespeichert.', 'Saved.');
+      const saved=await saveProgress({ kind: control.dataset.kind as ProgressChange['kind'], contentId: control.dataset.contentId!, completed: input.checked });
+      message.textContent = saved?t('Gespeichert.', 'Saved.'):t('Dein Accountzustand hat sich geändert. Bitte lade den Lernstand neu.','Your account state changed. Please reload your learning record.');
     } catch { message.textContent = t('Nicht gespeichert. Bitte erneut versuchen oder neu anmelden.', 'Not saved. Please try again or sign in again.'); }
     finally { control.dataset.saving = 'false'; render(); }
   });

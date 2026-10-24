@@ -6,11 +6,11 @@ Der About-Bereich beschreibt den tatsächlichen Funktionsumfang. Mit „Tags“ 
 
 ## Beschreibung
 
-> Deutsch-englische IT-Lernplattform mit zehn Themenwelten, dreizehn Kursfolgen, 108 Kurskapiteln, 226 Quizfragen und Übungseditoren. Quellenbasiert, frei zugänglich, mit optionalem Lernfortschritt.
+> Deutsch-englische IT-Lernplattform mit zehn Themenwelten, fünfzehn Kursfolgen, 122 Kurskapiteln, 254 Quizfragen und Übungseditoren. Quellenbasiert, frei zugänglich, mit optionalem Lernfortschritt.
 
 ## Topics
 
-`astro`, `typescript`, `neon`, `postgresql`, `cloudflare-workers`, `education`, `learning-platform`, `learning-progress`, `quiz`, `bilingual`, `dark-mode`, `programming`, `information-technology`, `coding-exercises`, `interactive-learning`, `sitemap`, `latex`, `machine-learning`, `deep-learning`, `sql`.
+`astro`, `typescript`, `neon`, `postgresql`, `cloudflare-workers`, `education`, `learning-platform`, `learning-progress`, `quiz`, `bilingual`, `dark-mode`, `programming`, `information-technology`, `coding-exercises`, `interactive-learning`, `python`, `latex`, `machine-learning`, `deep-learning`, `sql`.
 
 Beschreibung, Homepage und Topics lassen sich mit der vorhandenen GitHub-Anmeldung pflegen. Vorhandene passende Topics erhalten und den gesetzten Stand anschließend zurücklesen. Den konkreten Kursumfang nennen; keine vollständige Abdeckung aller IT-Themen, Zertifizierung oder offene Lizenz behaupten.
 
@@ -18,4 +18,4 @@ Beschreibung, Homepage und Topics lassen sich mit der vorhandenen GitHub-Anmeldu
 
 Issue-Formulare sammeln Inhaltsvorschläge, Lernspielideen und Fehler/Korrekturen. Pull Requests sollen Zweck, Umfang, Prüfungen und Quellen nennen. Eigene Änderungen auf einem Branch vorbereiten und den geprüften Stand ohne Force-Push veröffentlichen. Fremde lokale Dateien und parallele Änderungen erhalten.
 
-Spätere Aufgaben sind unabhängige Fachreviews, inhaltlicher Ausbau, CI und eine bewusst ausgewählte Lizenz für Code und eigene Lerntexte. Rechte an Fremdmaterial separat dokumentieren.
+Spätere Aufgaben sind unabhängige Fachreviews, inhaltlicher Ausbau und eine bewusst ausgewählte Lizenz für Code und eigene Lerntexte. Rechte an Fremdmaterial separat dokumentieren.

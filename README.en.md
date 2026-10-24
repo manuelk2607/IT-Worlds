@@ -8,7 +8,7 @@ A German/English learning platform covering ten IT topics, from programming and 
 
 The site contains ten topics, ten introductions, ten local editors and fifteen available courses with 122 chapters, 254 explained quiz questions and 200 primary sources. New courses cover IT foundations, TypeScript, Python, web development, Linux, networks, security and operating-system concepts. Markdown and Typst now cover markup and typesetting. Cloud & DevOps adds eight chapters; three guided routes connect existing chapters into complete project-oriented sequences. Independent expert review is pending. A new learning start, filtered catalogue, chapter-text search, synchronised quiz filters and grouped progress improve orientation.
 
-[SQL course](https://it-worlds.maki26.workers.dev/en/themen/datenbanken/kurs/) · [API course](https://it-worlds.maki26.workers.dev/en/themen/apis/kurs/) · [AI course](https://it-worlds.maki26.workers.dev/en/themen/ki-neuronale-netze/kurs/) · [LaTeX course](https://it-worlds.maki26.workers.dev/en/themen/programmiersprachen/latex/) · [Course architecture](docs/KURSE.md)
+[Markdown course](https://it-worlds.maki26.workers.dev/en/themen/programmiersprachen/markdown/) · [Typst course](https://it-worlds.maki26.workers.dev/en/themen/programmiersprachen/typst/) · [SQL course](https://it-worlds.maki26.workers.dev/en/themen/datenbanken/kurs/) · [API course](https://it-worlds.maki26.workers.dev/en/themen/apis/kurs/) · [AI course](https://it-worlds.maki26.workers.dev/en/themen/ki-neuronale-netze/kurs/) · [LaTeX course](https://it-worlds.maki26.workers.dev/en/themen/programmiersprachen/latex/) · [Course architecture](docs/KURSE.md)
 
 LaTeX, Typst and Markdown form the **Markup & typesetting languages** area within Programming languages.
 
@@ -37,3 +37,5 @@ German content is in `src/data/content.ts`, English in `src/data/content.en.ts`.
 A bilingual sitemap, canonical and language links, robots rules, structured data and social preview images support discovery. See [editor details](docs/EDITOR.md) and [SEO](docs/SEO.md) (German).
 
 No project licence has been selected. Public visibility alone does not grant a general licence to reuse the code or learning content.
+
+Practical checks and their limits: [learning examples](docs/BEISPIELTESTS.md) (German).

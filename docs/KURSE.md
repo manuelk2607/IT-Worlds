@@ -1,12 +1,14 @@
 # Kursarchitektur und Lernfolgen
 
-Stand: 24. Oktober 2026. Dreizehn verfügbare Kursfolgen mit 108 Kapiteln und 226 erklärten Quizfragen. Die Folgen decken ihren jeweils beschriebenen Umfang ab; sie sind keine vollständige Expertenausbildung in sämtlichen Fachgebieten. Alle Kapitel stehen auf Deutsch und Englisch ohne Account bereit. LaTeX bleibt unter Programmiersprachen → Auszeichnungs- & Satzsprachen.
+Stand: 24. Oktober 2026. Fünfzehn verfügbare Kursfolgen mit 122 Kapiteln und 254 erklärten Quizfragen. Die Folgen decken ihren jeweils beschriebenen Umfang ab; sie sind keine vollständige Expertenausbildung in sämtlichen Fachgebieten. Alle Kapitel stehen auf Deutsch und Englisch ohne Account bereit. LaTeX, Typst und Markdown bleiben unter Programmiersprachen → Auszeichnungs- & Satzsprachen.
 
 | Folge | Kapitel | Schwerpunkt |
 | --- | --- | --- |
 | IT-Grundlagen | 7 | Daten, Dateien, Git, Algorithmen und Fehlersuche |
 | TypeScript | 8 | Sprache, sichere Daten, asynchrone Abläufe, Tests und Projekt |
 | Python | 8 | Sprache, Dateien/JSON, Tests und Kommandozeilenprojekt |
+| Markdown | 6 | Struktur, Code, Links/Bilder, GFM, sichere Ausgabe und README |
+| Typst | 8 | Umgebung, Markup, Gestaltung, Mathematik, Tabellen, Literatur, Vorlagen und Bericht |
 | Web | 8 | Semantik, CSS, Layout, Formulare, DOM, Zustände, Tastatur und Auslieferung |
 | Datenbanken | 8 | Modell, SQL, Joins, Transaktionen, Parameter, Pläne und Restore |
 | APIs | 7 | HTTP, Verträge, Clients, Fehler, Rechte und konkurrierende Änderungen |

@@ -29,12 +29,12 @@ const other=related[0];
   <Breadcrumbs locale={locale} items={[{title:t("Kurse", "Courses"),href:"/lernpfade/"},{title:topicById(course.topic)!.title,href:`/themen/${course.topic}/`}, ...(chapter ? [{title:course.title[locale],href:coursePath(course)},{title:chapter.title[locale]}] : [{title:course.title[locale]}])]} />
   <header class="container page-top course-header">
     <a class="back-link" href={localePath(locale, chapter ? coursePath(course) : `/themen/${course.topic}/`)}>{t('← Zur Übersicht', '← Back to overview')}</a>
-    <p class="eyebrow">{topicById(course.topic)!.title} · {course.id === 'latex' ? t('AUSZEICHNUNGS- & SATZSPRACHEN', 'MARKUP & TYPESETTING') : t('LERNKURS', 'LEARNING COURSE')}</p>
+    <p class="eyebrow">{topicById(course.topic)!.title} · {['latex','typst','markdown'].includes(course.id) ? t('AUSZEICHNUNGS- & SATZSPRACHEN', 'MARKUP & TYPESETTING') : t('LERNKURS', 'LEARNING COURSE')}</p>
     <h1>{title}</h1>
-    <p class="page-lead">{description}</p>
+    {!chapter && <p class="page-lead">{description}</p>}
     <div class="course-meta">
       <span>{chapter ? levelName(chapter.level) : t('Einstieg → Vertiefung → Profi', 'Beginner → Intermediate → Advanced')}</span>
-      <span>{t(`${course.chapters.length} Kapitel`, `${course.chapters.length} chapters`)}</span>
+      <span>{chapter?t(`Kapitel ${position+1} von ${course.chapters.length}`,`Chapter ${position+1} of ${course.chapters.length}`):t(`${course.chapters.length} Kapitel`, `${course.chapters.length} chapters`)}</span>
       <span>{t('Ohne Anmeldung zugänglich', 'Accessible without signing in')}</span>
     </div>
   </header>

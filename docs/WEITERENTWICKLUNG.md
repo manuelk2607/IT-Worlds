@@ -135,3 +135,13 @@ Acht vollständige DE/EN-Kapitel und 16 erklärte Fragen: Einrichtung, Markup, S
 Aus dem Lernstand direkt offene bzw. bearbeitete, noch nicht richtig beantwortete Fragen üben. Standfilter mit Themen-/Kurs-/Kapitel-/Stufenwahl kombinierbar; DE/EN und URL teilen die Auswahl. Der Pool bleibt während einer Runde stabil, dieselbe Runde bleibt wiederholbar; erst eine neue Runde berücksichtigt neue gespeicherte Ergebnisse. Ohne Account bleiben alle Fragen zugänglich. Leere persönliche Auswahl erklärt den Zustand und bietet alle Fragen derselben fachlichen Auswahl an.
 
 Wiederverwendbarer echter Entwicklungstest mit zwei unabhängigen Accounts einschließlich RLS, ungültigen Anfragen und widerrufenen Sessions erfolgreich. Browser prüfte Anmeldung, Fortschrittszähler und persönlichen Wiederholungsablauf. Details in ACCOUNTS.md. Der bestehende Zustand „mindestens einmal richtig bis zum Entfernen der Markierung“ bleibt erhalten und wird erklärt. Der SQL-/Linux-Praxisabgleich, zusätzliche Aufgaben pro Kurs und ein unabhängiges Inhaltsreview bleiben sinnvolle nächste Pakete.
+
+### Praktische SQL-/Bash-Prüfung und verspätete Fortschrittsantworten
+
+Acht veröffentlichte SQL-Listings gegen eine eigene lokale PostgreSQL-18.6-Instanz ausgeführt. NULL-, Constraint-, Parameter-, Rollback- und Migrationsfälle sowie zwei unabhängige konkurrierende Platzvergaben erfolgreich. EXPLAIN-Lektion korrigiert: Planausgabe und tatsächliche Datenzeile werden getrennt gezeigt. Gelesene PostgreSQL-18-Abschnitte zu Plänen und Isolation am 24. Oktober nachgeführt. Eigener CI-Job verwendet ein festes PostgreSQL-Image.
+
+Bash prüft fünf reale isolierte Beispiele einschließlich Dateirechten, Pipes, eigenem Prozess und Byte-Wiederherstellung; beschädigte Sicherung wird korrekt abgewiesen. Dienstdiagnose wird nur syntaktisch geprüft und bleibt ein reales Benutzer-systemd-Labor. Ein gezielter Clientfehler ist abgesichert: Nach Abmeldung oder Accountwechsel dürfen spät eintreffende Fortschrittsantworten keine alten Daten wieder in den sichtbaren Zustand eintragen. Negativtests prüfen beide Fälle, erfolgreiche Antworten ersetzen nur die passende Inhaltsart/ID.
+
+### Kompaktere Kapitelansicht
+
+Mobile Prüfung mit 390px: Doppelter Kursname und wiederholte Lernzielbeschreibung im Kapitelkopf entfernt; Ziele stehen weiterhin im eigenen Abschnitt. Die Kopfzeile nennt Kapitel X von Y. SEO-Beschreibung bleibt vollständig. Markdown, Typst und LaTeX erhalten dieselbe vorhandene Auszeichnungs-/Satzsprachen-Kennzeichnung. Suchtreffer, Tastaturöffnung, mobile Standfilter, Escape-Fokusrückkehr, MathML, helles Design und fehlendes horizontales Überlaufen geprüft.

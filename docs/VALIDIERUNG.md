@@ -1,6 +1,12 @@
 # Validierung
 
-## Abschließender Stand · 24. Oktober 2026
+## Aktuelle Entwicklungsrunde · 24. Oktober 2026
+
+15 Kurse, 122 Kapitel, 254 erklärte Fragen und 200 Primärquellen. Markdown/Typst sowie persönliche Quiz-Wiederholung sind bereits veröffentlicht. Die folgenden neuen Praxis-/Sitzungsprüfungen und die kompaktere Kapitelansicht werden vor dem abschließenden Release erneut geprüft. Historische Paketstände bleiben unten mit ihren damaligen Grenzen erhalten.
+
+Echte Zwei-Account- und RLS-Prüfung auf development erfolgreich; Mailzustellung und unabhängiges Fachreview bleiben offen. Ein neuer Typst-Kapitelstand wurde im Browser tatsächlich gespeichert und nach DE/EN-Wechsel wiederhergestellt. Ein späteres Entfernen traf während lokaler Worker-Neuladungen auf HTTP 503; die Oberfläche meldete den Fehler und stellte die bestätigte Markierung wieder her. Das ist kein Nachweis eines verlorenen Produktionsdatensatzes.
+
+## Vorheriger Releaseprüfstand · 24. Oktober 2026, 02:45
 
 13 Kurse, 108 Kapitel, 226 erklärte Fragen und 181 Lernquellen. 41 lokale Tests: 40 bestanden, Container lokal ohne Engine übersprungen. 127 Dateien strikt ohne Meldungen; Build 312 HTML-Seiten; 21.515 interne Verweise. Alle 306 öffentlichen URLs nach Wiederaufnahme erneut bytegleich, indexierbar und mit passenden Sprach-/SEO-Daten bestätigt. Deployment-Vorschau und vollständiger npm-Audit erfolgreich (null Schwachstellen). npm 10.9.4 prüft die Lockdatei; GitHub-Run 40076879059 besteht tatsächlich auf Node 22.22.0 und 24 sowie mit dem veröffentlichten Dockerbefehl auf Linux.
 
@@ -147,3 +153,7 @@ Der [vorherige Prüfstand vom 21. Oktober](https://github.com/manuelk2607/IT-Wor
 ## Release 24. Oktober · Markdown/Typst und Editorentwürfe
 
 Quellstand `59c837c`, GitHub-Quality auf Node 22.22 und 24 sowie Containerprüfung erfolgreich (Run 40080918164). 47 lokale Tests: 46 erfolgreich, ein Dockerfall lokal ohne Engine übersprungen; 135 Dateien strikt ohne Meldung. 348 HTML-Seiten, 342 öffentliche Sprachseiten und 24.003 interne Links/Assets/Anker geprüft. Acht Typst-Dokumente tatsächlich mit 0.15.1 kompiliert; Markdown-Listings gerendert und enthaltenes TypeScript ausgeführt. `deploy:check` und tatsächlicher Release erfolgreich. Öffentliche Version `ae669219-257f-407a-8f71-c264a9694810`; alle 342 Crawlerantworten entsprechen dem Build. Account, Workers-Subdomain, Bindings und Einstellungen vorher/nachher identisch. Öffentliche Typst-Kursübersicht im Browser bestätigt. Quellenabgleich ersetzt kein unabhängiges Fachreview.
+
+## Persönliche Wiederholung veröffentlicht
+
+Quellstand aeb3296, GitHub-Run 40083172487 mit Node 22.22/24 und realem Containerfall erfolgreich. 49 lokale Tests (48 erfolgreich/1 Docker-Skip), 138 Dateien strikt. Version d8985117-8935-41ec-b315-c671630c72eb auf dem bestehenden Worker veröffentlicht; 342 öffentliche Seiten entsprechen dem Build. Echte Zwei-Account-/RLS-/Widerrufsprüfung auf development und Anmeldung im Browser erfolgreich. Persönliche Runde bleibt nach erfolgreicher Antwort stabil; identische Wiederholung, neue leere Auswahl, englischer Hinweis und Weiterüben-Button bestätigt.

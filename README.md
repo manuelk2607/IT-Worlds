@@ -8,9 +8,9 @@ IT-Worlds ist eine deutsch-englische IT-Lernplattform mit zehn Themenwelten. All
 
 **Stand (24.10.2026):** Zehn Themenwelten, zehn Einstiegsartikel, zehn lokale Übungseditoren und fünfzehn verfügbare Kursfolgen mit **122 Kapiteln, 254 erklärten Quizfragen und 200 Primärquellen**. Neue Folgen: IT-Grundlagen, TypeScript, Python, Webentwicklung, Linux, Netzwerke, Sicherheit und Betriebssystemkonzepte. Markdown und Typst ergänzen nun die Auszeichnungs-/Satzsprachen. SQL, APIs, KI und LaTeX bleiben integriert. Cloud & DevOps ergänzt nun acht Kapitel; drei geführte Lernwege verbinden vorhandene Kapitel durchgehend zu konkreten Projektzielen. Ein unabhängiges Fachreview steht aus.
 
-**Orientierung:** [Lernstart](https://it-worlds.maki26.workers.dev/lernen/) → [Kurskatalog](https://it-worlds.maki26.workers.dev/lernpfade/) → Kapitel mit Aufgaben, Lösungen und Quiz. Die Suche durchsucht auch Kapiteltexte und lädt ihren Index erst bei Bedarf. Quizfilter grenzen passende Kurse/Kapitel ein; der persönliche Lernstand gruppiert Inhalte und führt zum nächsten offenen Schritt.
+**Orientierung:** [Lernstart](https://it-worlds.maki26.workers.dev/lernen/) → [Kurskatalog](https://it-worlds.maki26.workers.dev/lernpfade/) → Kapitel mit Aufgaben, Lösungen und Quiz. Die Suche durchsucht auch Kapiteltexte und lädt ihren Index erst bei Bedarf. Quizfilter grenzen Kurse/Kapitel und optional den gespeicherten Lösungsstand ein; der persönliche Lernstand gruppiert Inhalte und führt zum nächsten offenen Schritt.
 
-[Python-Kurs](https://it-worlds.maki26.workers.dev/themen/programmiersprachen/python/) · [SQL-Kurs](https://it-worlds.maki26.workers.dev/themen/datenbanken/kurs/) · [API-Kurs](https://it-worlds.maki26.workers.dev/themen/apis/kurs/) · [KI-Kurs](https://it-worlds.maki26.workers.dev/themen/ki-neuronale-netze/kurs/) · [LaTeX-Kurs](https://it-worlds.maki26.workers.dev/themen/programmiersprachen/latex/) · [Kursarchitektur](docs/KURSE.md) · [Prioritäten und offene Inhalte](docs/AUSBAU.md)
+[Markdown-Kurs](https://it-worlds.maki26.workers.dev/themen/programmiersprachen/markdown/) · [Typst-Kurs](https://it-worlds.maki26.workers.dev/themen/programmiersprachen/typst/) · [Python-Kurs](https://it-worlds.maki26.workers.dev/themen/programmiersprachen/python/) · [SQL-Kurs](https://it-worlds.maki26.workers.dev/themen/datenbanken/kurs/) · [API-Kurs](https://it-worlds.maki26.workers.dev/themen/apis/kurs/) · [KI-Kurs](https://it-worlds.maki26.workers.dev/themen/ki-neuronale-netze/kurs/) · [LaTeX-Kurs](https://it-worlds.maki26.workers.dev/themen/programmiersprachen/latex/) · [Kursarchitektur](docs/KURSE.md) · [Prioritäten und offene Inhalte](docs/AUSBAU.md)
 
 ## Themenwelten
 
@@ -46,7 +46,7 @@ npm run seo:check
 npm run links:check
 ```
 
-`npm run ready` prüft HTTP-Seiten eines laufenden Servers; die Adresse lässt sich mit `IT_WORLDS_URL` setzen. Accounts mit getrennten Testnutzern prüfen. Suche, Filter, mobiles Menü, Quiz samt Erklärungen und Neustart, Quellenlinks, Designs, Sprachwechsel und 404-Seiten zusätzlich im Browser prüfen.
+`npm run ready` prüft HTTP-Seiten eines laufenden Servers; die Adresse lässt sich mit `IT_WORLDS_URL` setzen. Die [praktischen Beispieltests](docs/BEISPIELTESTS.md) und [echten Accounttests](docs/ACCOUNTS.md) erklären Voraussetzungen und Grenzen. Suche, Filter, mobiles Menü, Quiz samt Erklärungen und Neustart, Quellenlinks, Designs, Sprachwechsel und 404-Seiten zusätzlich im Browser prüfen.
 
 Die Website läuft auf dem bestehenden Cloudflare Worker **it-worlds**. `npm run deploy` veröffentlicht nach Prüfung von Account, Einstellungen und Bindings. Zugangsdaten gehören in lokale ignorierte Dateien bzw. Cloudflare Secrets. Der Cloud-Chat-Token ist dafür nicht erforderlich.
 
@@ -75,3 +75,5 @@ Inhaltsdaten liegen in `src/data/content.ts` und `src/data/content.en.ts`; die n
 Ideen, Quellenhinweise und fachliche Korrekturen sind willkommen: [Issue-Vorlagen](https://github.com/manuelk2607/IT-Worlds/issues/new/choose). Das [Produktkonzept](docs/KONZEPT.md), [Inhaltskonzept](docs/INHALTE.md) und [Lernspielkonzept](docs/LERNSPIELE.md) dokumentieren weitere Ziele; sie beschreiben teilweise noch geplante Funktionen.
 
 **Lizenz:** Noch nicht festgelegt. Der öffentliche Repository-Status allein vergibt keine allgemeine Nutzungslizenz. Rechte an Programmcode, eigenen Lerntexten und Fremdmaterial sind getrennt zu klären.
+
+Praktische Prüfungen und ihre Grenzen: [Lernbeispiele](docs/BEISPIELTESTS.md).
