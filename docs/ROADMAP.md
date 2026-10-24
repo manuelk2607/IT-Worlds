@@ -91,4 +91,4 @@ Konkrete nächste Arbeitspakete: die verfügbaren Inhalte unabhängig fachlich g
 
 Aktuelle Prioritäten, abgeschlossene Teilbereiche und verbleibende fachliche Lücken: [AUSBAU.md](AUSBAU.md).
 
-Aktuell: elf Kursfolgen/92 Kapitel/194 Fragen. Lernstart, Kursfilter, Kapitelsuche, synchronisierte Quizfilter und gruppierter Lernstand umgesetzt. Cloud-&-DevOps-Kurs und drei durchgängige Querverbindungspfade sind ergänzt. Unabhängiges Fachreview, Python-Kurs, weitere Praxisprojekte und assistive Nutzerprüfungen folgen.
+Aktuell: dreizehn Kursfolgen/108 Kapitel/226 Fragen. Lernstart, Kursfilter, Kapitelsuche, synchronisierte Quizfilter und gruppierter Lernstand umgesetzt. Cloud-&-DevOps-Kurs und drei durchgängige Querverbindungspfade sind ergänzt. Python und Betriebssystemkonzepte sind ergänzt; unabhängiges Fachreview, weitere Praxisprojekte und assistive Nutzerprüfungen folgen.

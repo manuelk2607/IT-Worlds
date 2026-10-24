@@ -34,5 +34,16 @@
     "@types/node": "24.19.2",
     "typescript": "6.0.3",
     "wrangler": "4.151.3"
+  },
+  "overrides": {
+    "@neondatabase/auth": {
+      "zod": "4.6.7"
+    },
+    "@neondatabase/auth-ui": {
+      "zod": "4.6.7"
+    },
+    "miniflare": {
+      "undici": "7.30.1"
+    }
   }
 }
