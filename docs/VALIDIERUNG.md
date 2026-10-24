@@ -2,9 +2,15 @@
 
 ## Aktuelle Entwicklungsrunde · 24. Oktober 2026
 
-15 Kurse, 122 Kapitel, 254 erklärte Fragen und 200 Primärquellen. Markdown/Typst sowie persönliche Quiz-Wiederholung sind bereits veröffentlicht. Die folgenden neuen Praxis-/Sitzungsprüfungen und die kompaktere Kapitelansicht werden vor dem abschließenden Release erneut geprüft. Historische Paketstände bleiben unten mit ihren damaligen Grenzen erhalten.
+**Veröffentlicht und geprüft:** Quellstand b0c60b5, Worker-Version 323ad148-67c5-4332-87be-8c5244b6ce3b, Deployment c7901b38-a832-4334-bedb-7bed78e6a48d, 24.10.2026 12:15 Europe/Stockholm, 100 % Traffic. 15 Kurse, 122 Kapitel, 254 erklärte Fragen und 200 Primärquellen. 56 lokale Tests: 55 erfolgreich, ein Dockerfall ohne lokale Engine übersprungen. 142 Dateien strikt ohne Fehler/Warnungen/Hinweise. Build: 348 HTML-Seiten; 24.009 interne Verweise. Dry-Run erfolgreich. GitHub-Run 40085060165: Node 22.22/24, echte PostgreSQL-Beispiele und echtes Dockerbeispiel jeweils erfolgreich.
 
-Echte Zwei-Account- und RLS-Prüfung auf development erfolgreich; Mailzustellung und unabhängiges Fachreview bleiben offen. Ein neuer Typst-Kapitelstand wurde im Browser tatsächlich gespeichert und nach DE/EN-Wechsel wiederhergestellt. Ein späteres Entfernen traf während lokaler Worker-Neuladungen auf HTTP 503; die Oberfläche meldete den Fehler und stellte die bestätigte Markierung wieder her. Das ist kein Nachweis eines verlorenen Produktionsdatensatzes.
+342 öffentliche Sprachseiten stimmen bytegleich mit genau dem ausgelieferten Artefakt überein; Sitemap, robots, Metadaten, Sprachen, strukturierte Daten und Vorschaubilder geprüft. Der erste Abschlussabruf scheiterte an einer vorübergehenden Netzwerkverbindung; Wiederholung desselben erhaltenen Artefakts mit IPv4-Priorität erfolgreich. HTTP leitet mit 308 nach HTTPS. Account, Subdomain, Worker-Einstellungen und sämtliche vier Bindings vorher/nachher unverändert bestätigt. Kein Produktionsschema und keine Authkonfiguration geändert.
+
+Öffentlicher Browser: korrigiertes SQL-Listing, Kapitelposition 7/8, neues Markdown-Quiz mit sämtlichen Erklärungen und Gastzugang, deutsche/englische Fehlerseiten und Kurskatalog bestätigt. Mobil mit 390px: persönliche Standfilter, Tastatursuche nach Typst-Literatur, Escape-Fokusrückkehr, MathML und helles Design ohne horizontales Überlaufen. Kompakter Kapitelkopf behält die vollständige SEO-Beschreibung.
+
+Echte Zwei-Account-/RLS-/Widerrufsprüfung auf development erfolgreich. Ein neuer Typst-Kapitelstand wurde im Browser gespeichert und nach DE/EN-Wechsel wiederhergestellt. Das Entfernen erhielt einmal während lokaler Worker-Neuladungen HTTP 503; die Oberfläche zeigte den Fehler und behielt den bestätigten Stand. Der erneute Versuch speicherte erfolgreich. Testmarkierung entfernt, Browser-Testkonto abgemeldet; eigene Testserver und die ausschließlich lokale PostgreSQL-Testinstanz beendet. Zwei eigene Testaccounts bleiben in development mit privater lokaler Zugangsdaten-Datei.
+
+Offen: unabhängiges Fachreview, reale assistive Nutzerprüfung/Feldmessungen, Benutzer-systemd-Labor, weitere Aufgaben je Kurs und kontrollierter Mail-/Passwort-Reset-Test. Historische Paketstände folgen mit ihren damaligen Grenzen.
 
 ## Vorheriger Releaseprüfstand · 24. Oktober 2026, 02:45
 

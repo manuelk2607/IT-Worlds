@@ -145,3 +145,5 @@ Bash prüft fünf reale isolierte Beispiele einschließlich Dateirechten, Pipes,
 ### Kompaktere Kapitelansicht
 
 Mobile Prüfung mit 390px: Doppelter Kursname und wiederholte Lernzielbeschreibung im Kapitelkopf entfernt; Ziele stehen weiterhin im eigenen Abschnitt. Die Kopfzeile nennt Kapitel X von Y. SEO-Beschreibung bleibt vollständig. Markdown, Typst und LaTeX erhalten dieselbe vorhandene Auszeichnungs-/Satzsprachen-Kennzeichnung. Suchtreffer, Tastaturöffnung, mobile Standfilter, Escape-Fokusrückkehr, MathML, helles Design und fehlendes horizontales Überlaufen geprüft.
+
+Abschluss der Runde: Alle Pakete veröffentlicht, öffentliche Version 323ad148-67c5-4332-87be-8c5244b6ce3b. 56 Tests (55 pass/1 lokaler Docker-Skip), 142 Dateien strikt, 348 HTML-Seiten, 24.009 interne Verweise und 342 öffentliche Sprachseiten geprüft. CI 40085060165 mit Node 22.22/24, PostgreSQL und Docker grün. Konkrete Grenzen und nächste Aufgaben stehen in VALIDIERUNG.md, BEISPIELTESTS.md und AUSBAU.md.
