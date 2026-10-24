@@ -1,6 +1,7 @@
 import {quizRound,roundSize,roundSeed} from '../lib/quiz-round';
 import { t } from './browser-i18n';
-import { recordQuestion } from './progress-client';
+import { recordQuestion,learningState,learningReady } from './progress-client';
+import {quizReview,reviewQuestionIds,matchesReview,type QuizReview} from '../lib/quiz-review';
 import { matchesQuizFilter, reconcileQuizFilter, type QuizFilter } from '../lib/quiz-filter';
 const sections = [...document.querySelectorAll<HTMLElement>("[data-question]")];
 const selection = document.querySelector<HTMLSelectElement>("#quiz-topic")!;
@@ -11,6 +12,15 @@ const courseOptions=[...courseSelect.options],chapterOptions=[...chapterSelect.o
 const empty = document.querySelector<HTMLElement>('#quiz-empty')!;
 const sizeSelect=document.querySelector<HTMLSelectElement>('#quiz-size')!;
 const shuffle=document.querySelector<HTMLInputElement>('#quiz-shuffle')!;
+const reviewSelect=document.querySelector<HTMLSelectElement>('#quiz-review-state')!;
+const personalStatus=document.querySelector<HTMLElement>('#quiz-personal-status')!;
+const personalLogin=document.querySelector<HTMLAnchorElement>('#quiz-personal-login')!;
+const clearReview=document.querySelector<HTMLButtonElement>('#clear-quiz-review')!;
+let requestedReview:QuizReview='alle';
+let stateReady=false;
+let previousIdentity:string|null=null;
+let previousUnavailable=false;
+let roundPoolSize=0;
 let seed:number|undefined;
 let missed:HTMLElement[]=[];
 let exactQuestion = '';
@@ -24,26 +34,32 @@ let position = 0;
 let score = 0;
 
 function resetQuiz(focus = false,keepRound=false) {
-  const pool = sections.filter(section => matchesQuizFilter(section.dataset, {
+  const waiting=!stateReady&&requestedReview!=='alle';
+  const review=stateReady&&learningState.user&&!learningState.unavailable?quizReview(reviewSelect.value):'alle';
+  const savedIds=reviewQuestionIds(learningState.items,review);
+  const scoped = sections.filter(section => matchesQuizFilter(section.dataset, {
     topic: selection.value, course: courseSelect.value, level: levelSelect.value,
     chapter: chapterSelect.value, question: exactQuestion,
   }));
-  if(!keepRound)active=quizRound(pool,roundSize(sizeSelect.value),shuffle.checked?seed:undefined);
+  const pool=scoped.filter(section=>matchesReview(section.dataset.question!,review,savedIds));
+  if(!keepRound){active=waiting?[]:quizRound(pool,roundSize(sizeSelect.value),shuffle.checked?seed:undefined);roundPoolSize=waiting?0:pool.length;}
   missed=[];
   document.querySelector("#quiz-review")!.setAttribute("hidden", "");
-  document.querySelector("#quiz-pool-status")!.textContent = t(
-    `${active.length} von ${pool.length} passenden Fragen in dieser Runde. Filteränderungen starten neu.`,
-    `${active.length} of ${pool.length} matching questions in this round. Changing filters starts again.`);
+  document.querySelector("#quiz-pool-status")!.textContent = waiting?t('Dein gespeicherter Lernstand wird geladen …','Loading your saved learning state …'):t(
+    `${active.length} von ${roundPoolSize} passenden Fragen in dieser Runde. Filteränderungen starten neu.`,
+    `${active.length} of ${roundPoolSize} matching questions in this round. Changing filters starts again.`);
 
   const courseName=courseSelect.selectedOptions[0]?.textContent??'';
-  document.querySelector('#quiz-selection-summary')!.textContent=[selection.selectedOptions[0]?.textContent,courseSelect.value!=='alle'?courseName:'',chapterSelect.value!=='alle'?chapterSelect.selectedOptions[0]?.textContent?.replace(`${courseName} · `,''):'',levelSelect.value!=='alle'?levelSelect.selectedOptions[0]?.textContent:''].filter(Boolean).join(' · ');
+  document.querySelector('#quiz-selection-summary')!.textContent=[selection.selectedOptions[0]?.textContent,courseSelect.value!=='alle'?courseName:'',chapterSelect.value!=='alle'?chapterSelect.selectedOptions[0]?.textContent?.replace(`${courseName} · `,''):'',levelSelect.value!=='alle'?levelSelect.selectedOptions[0]?.textContent:'',review!=='alle'?reviewSelect.selectedOptions[0]?.textContent:''].filter(Boolean).join(' · ');
   position = 0;
   score = 0;
   progress.max = Math.max(1, active.length);
   progress.value = 0;
   result.hidden = true;
   progressContainer.hidden = active.length === 0;
-  empty.hidden = active.length > 0;
+  empty.hidden = waiting||active.length > 0;
+  clearReview.hidden=waiting||active.length>0||review==='alle'||scoped.length===0;
+  empty.textContent=review==='wiederholen'&&scoped.length?t('Für diese Auswahl sind keine bearbeiteten Fragen ohne richtige Antwort gespeichert. Du kannst jetzt weitere Fragen üben.','This selection has no practised questions without a correct answer. You can practise more questions now.'):review==='offen'&&scoped.length?t('Alle Fragen dieser Auswahl sind bereits als bearbeitet gespeichert. Du kannst sie erneut üben.','All questions in this selection are already marked as practised. You can practise them again.'):t('Keine Fragen für diese Kombination. Ändere die Filter oder setze sie zurück.','No questions match this combination. Change or clear the filters.');
   sections.forEach((section) => {
     section.hidden = true;
     const form = section.querySelector<HTMLFormElement>("form")!;
@@ -128,6 +144,8 @@ const controls = [[selection, 'thema'], [courseSelect, 'kurs'], [levelSelect, 's
 function readLocation() {
   courseSelect.replaceChildren(...courseOptions);chapterSelect.replaceChildren(...chapterOptions);
   const params = new URLSearchParams(location.search);
+  requestedReview=quizReview(params.get('stand'));
+  syncPersonalState();
   for (const [select, key] of controls) select.value = [...select.options].some(option => option.value === params.get(key)) ? params.get(key)! : 'alle';
   const chapter = [...chapterSelect.options].find(option => option.dataset.course === params.get('kurs') && option.dataset.chapter === params.get('kapitel'));
   chapterSelect.value = chapter?.value ?? 'alle';
@@ -147,6 +165,8 @@ function readLocation() {
 }
 function updateLocation() {
   const url = new URL(location.href);
+  requestedReview=quizReview(reviewSelect.value);
+  if(requestedReview==='alle')url.searchParams.delete('stand');else url.searchParams.set('stand',requestedReview);
   for (const [select, key] of controls) {
     if (select.value === 'alle') url.searchParams.delete(key);
     else url.searchParams.set(key, select.value);
@@ -190,7 +210,7 @@ levelSelect.addEventListener('change',()=>changeFilter('level'));
 chapterSelect.addEventListener('change',()=>changeFilter('chapter'));
 document.querySelector('#clear-quiz-filters')!.addEventListener('click', () => {
   for (const [select] of controls) select.value = 'alle';
-  chapterSelect.value = 'alle';sizeSelect.value='10';shuffle.checked=false;seed=undefined;
+  chapterSelect.value = 'alle';sizeSelect.value='10';shuffle.checked=false;seed=undefined;reviewSelect.value='alle';
   syncOptions();updateLocation();
 });
 window.addEventListener('popstate', readLocation);
@@ -213,5 +233,24 @@ function showReview(){
 sizeSelect.addEventListener('change',updateLocation);
 function newSeed(){return crypto.getRandomValues(new Uint32Array(1))[0]!;}
 shuffle.addEventListener('change',()=>{seed=shuffle.checked?newSeed():undefined;updateLocation();});
-document.querySelector('#new-quiz-round')!.addEventListener('click',()=>{shuffle.checked=true;seed=newSeed();updateLocation();showQuestion(true);});
+document.querySelector('#new-quiz-round')!.addEventListener('click',()=>{shuffle.checked=true;seed=newSeed();updateLocation();if(active.length)showQuestion(true);else empty.focus();});
+function syncPersonalState(){
+ const available=stateReady&&!!learningState.user&&!learningState.unavailable;
+ reviewSelect.disabled=!available;reviewSelect.value=available?requestedReview:'alle';
+ personalLogin.hidden=!stateReady||!!learningState.user;
+ personalLogin.href=`${personalLogin.pathname}?next=${encodeURIComponent(location.pathname+location.search)}`;
+ const nextStatus=!stateReady?t('Dein Lernstand wird geladen. Alle Inhalte bleiben zugänglich.','Loading your learning state. All content remains accessible.'):learningState.unavailable?t('Dein Lernstand ist gerade nicht erreichbar. Die Runde enthält alle passenden Fragen; lade später neu, um persönlich zu filtern.','Your learning state is currently unavailable. The round includes all matching questions; reload later to filter personally.'):!learningState.user?t('Optional anmelden, um nach deinem Lernstand zu üben. Die Runde enthält alle passenden Fragen.','Sign in optionally to practise by learning state. The round includes all matching questions.'):t('Der gespeicherte Stand gilt beim Start einer neuen Runde. „Richtig“ bleibt bis zum Entfernen der Markierung erhalten. „Noch nicht richtig“ enthält auch manuelle Markierungen ohne richtige Antwort.','Uses saved state when a new round starts. “Correct” is retained until the checkmark is removed. “Not yet correct” also includes manual checkmarks without a correct answer.');
+ if(personalStatus.textContent!==nextStatus)personalStatus.textContent=nextStatus;
+}
+reviewSelect.addEventListener('change',updateLocation);
+clearReview.addEventListener('click',()=>{reviewSelect.value='alle';updateLocation();if(active.length)showQuestion(true);});
+personalLogin.addEventListener('click',syncPersonalState);
+document.addEventListener('learning-state-change',()=>{
+ if(!stateReady)return;
+ const identity=learningState.user?.id??null;
+ const changed=identity!==previousIdentity||learningState.unavailable!==previousUnavailable;
+ previousIdentity=identity;previousUnavailable=learningState.unavailable;
+ syncPersonalState();if(changed&&requestedReview!=='alle')resetQuiz();
+});
+void learningReady.then(()=>{stateReady=true;previousIdentity=learningState.user?.id??null;previousUnavailable=learningState.unavailable;syncPersonalState();if(requestedReview!=='alle')resetQuiz();});
 readLocation();

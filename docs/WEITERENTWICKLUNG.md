@@ -129,3 +129,9 @@ Sechs DE/EN-Kapitel, zwölf erklärte Fragen, sechs neue Primärquellen; unter P
 ### Typst-Kurs abgeschlossen
 
 Acht vollständige DE/EN-Kapitel und 16 erklärte Fragen: Einrichtung, Markup, Set/Show, Mathematik, Tabellen/Grafiken, Literatur, Vorlagen und fertiger Bericht. Keine neue Hauptkategorie. Alle acht Dokumente mit Typst 0.15.1 real kompiliert; SVG aus eigenen Bytes und vollständige works.bib, ohne externe Pakete. Rechenwerte und erwartetes Scheitern bei falschem Literaturverweis geprüft; vier repräsentative Ausgaben visuell kontrolliert. Gesamtstand: 15 Kurse, 122 Kapitel, 254 Fragen, 200 Quellen. 47 Tests (46 pass, ein lokaler Docker-Skip), 135 Dateien strikt ohne Meldung, 348 HTML-Seiten. Gemeinsame Navigation/Quiz/Suche/Fortschritt integrieren die stabilen neuen IDs automatisch.
+
+### Persönliche Quiz-Wiederholung und echte Accounts
+
+Aus dem Lernstand direkt offene bzw. bearbeitete, noch nicht richtig beantwortete Fragen üben. Standfilter mit Themen-/Kurs-/Kapitel-/Stufenwahl kombinierbar; DE/EN und URL teilen die Auswahl. Der Pool bleibt während einer Runde stabil, dieselbe Runde bleibt wiederholbar; erst eine neue Runde berücksichtigt neue gespeicherte Ergebnisse. Ohne Account bleiben alle Fragen zugänglich. Leere persönliche Auswahl erklärt den Zustand und bietet alle Fragen derselben fachlichen Auswahl an.
+
+Wiederverwendbarer echter Entwicklungstest mit zwei unabhängigen Accounts einschließlich RLS, ungültigen Anfragen und widerrufenen Sessions erfolgreich. Browser prüfte Anmeldung, Fortschrittszähler und persönlichen Wiederholungsablauf. Details in ACCOUNTS.md. Der bestehende Zustand „mindestens einmal richtig bis zum Entfernen der Markierung“ bleibt erhalten und wird erklärt. Der SQL-/Linux-Praxisabgleich, zusätzliche Aufgaben pro Kurs und ein unabhängiges Inhaltsreview bleiben sinnvolle nächste Pakete.

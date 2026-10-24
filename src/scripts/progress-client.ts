@@ -54,6 +54,7 @@ function render() {
   const latest = completed.map(item => item.updatedAt).sort().at(-1);
   document.querySelectorAll<HTMLElement>('[data-last-activity]').forEach(element => element.textContent = latest ? new Intl.DateTimeFormat(locale, { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(latest)) : t('Noch kein gespeicherter Fortschritt.', 'No saved progress yet.'));
   renderProgressDashboard(learningState.items);
+  document.dispatchEvent(new CustomEvent('learning-state-change'));
 }
 export async function loadLearningState() {
   try {

@@ -20,7 +20,8 @@
     "migrate": "node --experimental-strip-types scripts/migrate.ts",
     "provision:runtime": "node --experimental-strip-types scripts/provision-runtime.ts",
     "seo:check": "node --experimental-strip-types scripts/seo-check.ts",
-    "links:check": "node --experimental-strip-types scripts/links-check.ts"
+    "links:check": "node --experimental-strip-types scripts/links-check.ts",
+    "test:accounts": "node --experimental-strip-types tests/live-accounts.ts"
   },
   "dependencies": {
     "@neon/config": "1.9.2",

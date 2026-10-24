@@ -27,6 +27,7 @@ const lessonCount = lessons.length + courseChapters.length;
     </div>
     <label class="progress-overview-label">{t('Bearbeitete verfügbare Inhalte', 'Available content completed')}<progress data-total-progress value="0" max={lessonCount + questions.length}></progress></label>
     <p class="muted">{t('Zuletzt gespeichert:', 'Last saved:')} <span data-last-activity>{t('Noch kein gespeicherter Fortschritt.', 'No saved progress yet.')}</span></p>
+    <div class="result-actions" data-signed-in hidden><a class="button primary" href={localePath(locale,'/quiz/?stand=wiederholen')}>{t('Noch nicht richtig gelöste Fragen wiederholen','Review questions not yet answered correctly')}</a><a class="text-link" href={localePath(locale,'/quiz/?stand=offen')}>{t('Offene Fragen üben →','Practise unseen questions →')}</a></div>
     <h2>{t('Deine Lerninhalte', 'Your learning content')}</h2>
     <div class="dashboard-filters">
       <label for="progress-view">{t('Ansicht','View')}<select id="progress-view" disabled><option value="chapters">{t('Kurskapitel','Course chapters')}</option><option value="questions">{t('Quizfragen','Quiz questions')}</option><option value="introductions">{t('Kurze Einstiege','Short introductions')}</option><option value="all">{t('Alle Inhalte','All content')}</option></select></label>

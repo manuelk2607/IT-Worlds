@@ -45,11 +45,17 @@ import Icon from "../components/Icon.astro";
       <label for="quiz-size">{t('Fragen pro Runde','Questions per round')}<select id="quiz-size"><option value="5">5</option><option value="10" selected>10</option><option value="20">20</option><option value="alle">{t('Alle passenden Fragen','All matching questions')}</option></select></label>
       <label class="quiz-shuffle"><input type="checkbox" id="quiz-shuffle" />{t('Fragen zufällig mischen','Shuffle questions')}</label>
     </div>
+    <div class="quiz-personal-controls">
+      <label for="quiz-review-state">{t('Gespeicherter Lernstand','Saved learning state')}<select id="quiz-review-state" disabled aria-describedby="quiz-personal-status"><option value="alle">{t('Alle Fragen','All questions')}</option><option value="offen">{t('Noch nicht bearbeitet','Not practised yet')}</option><option value="wiederholen">{t('Bearbeitet · noch nicht richtig','Practised · not yet correct')}</option><option value="richtig">{t('Richtig beantwortet','Answered correctly')}</option></select></label>
+      <p id="quiz-personal-status" class="muted" role="status">{t('Persönliche Filter sind mit einem optionalen Account verfügbar.','Personal filters are available with an optional account.')}</p>
+      <a id="quiz-personal-login" class="text-link" href={localePath(locale,'/konto/')}>{t('Optional anmelden →','Sign in optionally →')}</a>
+    </div>
     </details>
     <p id="quiz-selection-summary" class="quiz-selection-summary"></p>
     <p id="quiz-pool-status" class="muted" role="status">{t('Deine Fragerunde wird vorbereitet.','Preparing your question round.')}</p>
     <div class="quiz-shell">
-      <p id="quiz-empty" role="status" hidden>{t('Keine Fragen für diese Kombination. Ändere die Filter oder setze sie zurück.', 'No questions match this combination. Change or clear the filters.')}</p>
+      <p id="quiz-empty" role="status" tabindex="-1" hidden>{t('Keine Fragen für diese Kombination. Ändere die Filter oder setze sie zurück.', 'No questions match this combination. Change or clear the filters.')}</p>
+      <button id="clear-quiz-review" class="text-link" hidden>{t('Alle Fragen dieser Auswahl üben →','Practise all questions in this selection →')}</button>
       <div id="quiz-progress" hidden>
         <div>
           <span id="question-count">{t(`Frage 1 von ${questions.length}`, `Question 1 of ${questions.length}`)}</span>
@@ -177,6 +183,7 @@ import Icon from "../components/Icon.astro";
         .check-answer,
         .quiz-controls,
         .quiz-round-controls,
+        .quiz-personal-controls,
         .quiz-filter-panel,
         #quiz-selection-summary,
         #quiz-pool-status,

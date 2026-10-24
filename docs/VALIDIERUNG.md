@@ -143,3 +143,7 @@ Der [vorherige Prüfstand vom 21. Oktober](https://github.com/manuelk2607/IT-Wor
 ## Codekomfort und robuste Audits · lokaler Folgestand
 
 41 Tests: 40 bestanden, lokaler Docker-Fall übersprungen; 127 strikte Dateien ohne Meldungen. Browser: Kopierstatus und zeichengetreuer englischer Zwischenablageinhalt; Kurskarten mit simuliertem Account 5/8 und 8/8 samt korrekten Fortsetzen-/Wiederholungszielen. Eigene Code- und Nutzerdateien bleiben erhalten.
+
+## Release 24. Oktober · Markdown/Typst und Editorentwürfe
+
+Quellstand `59c837c`, GitHub-Quality auf Node 22.22 und 24 sowie Containerprüfung erfolgreich (Run 40080918164). 47 lokale Tests: 46 erfolgreich, ein Dockerfall lokal ohne Engine übersprungen; 135 Dateien strikt ohne Meldung. 348 HTML-Seiten, 342 öffentliche Sprachseiten und 24.003 interne Links/Assets/Anker geprüft. Acht Typst-Dokumente tatsächlich mit 0.15.1 kompiliert; Markdown-Listings gerendert und enthaltenes TypeScript ausgeführt. `deploy:check` und tatsächlicher Release erfolgreich. Öffentliche Version `ae669219-257f-407a-8f71-c264a9694810`; alle 342 Crawlerantworten entsprechen dem Build. Account, Workers-Subdomain, Bindings und Einstellungen vorher/nachher identisch. Öffentliche Typst-Kursübersicht im Browser bestätigt. Quellenabgleich ersetzt kein unabhängiges Fachreview.
