@@ -1,3 +1,4 @@
+import {practiceTools} from '../data/practice-topics.ts';
 import { getContent, localePath, type Locale } from './i18n.ts';
 import { courses, coursePath } from '../data/courses.ts';
 import { exercises, exercisePath } from '../data/exercises.ts';
@@ -5,6 +6,7 @@ import type { SearchEntry } from './search.ts';
 export function createSearchIndex(locale: Locale): SearchEntry[] {
  const {topics,paths,levelName,sources}=getContent(locale);
  return [
+  ...practiceTools.map(tool=>({id:tool.id,kind:'exercise' as const,title:tool.title[locale],description:tool.title[locale],context:locale==='de'?'Interaktives Lernwerkzeug':'Interactive learning tool',url:localePath(locale,tool.url),text:tool.title[locale]})),
   ...courses.map(course=>({id:`course-${course.id}`,kind:'course' as const,title:course.title[locale],description:course.description[locale],context:locale==='de'?'Kurs · alle Kapitel verfügbar':'Course · all chapters available',url:localePath(locale,coursePath(course)),text:course.prerequisites[locale]+' '+course.chapters.map(c=>c.title[locale]).join(' ')})),
   ...topics.map(topic=>({id:`topic-${topic.id}`,kind:'topic' as const,title:topic.title,description:topic.short,context:locale==='de'?'Themenwelt':'Topic',url:localePath(locale,`/themen/${topic.id}/`),text:`${topic.description} ${topic.tags.join(' ')} ${Object.values(topic.curriculum).flat().join(' ')}`})),
   ...courses.flatMap(course=>course.chapters.map(chapter=>({id:`chapter-${course.id}-${chapter.id}`,kind:'chapter' as const,title:chapter.title[locale],description:chapter.goals.map(g=>g[locale]).join(' '),context:`${course.title[locale]} · ${levelName(chapter.level)}`,url:localePath(locale,coursePath(course,chapter)),text:chapter.sections.map(s=>s.title[locale]+' '+s.paragraphs.map(p=>p[locale]).join(' ')).join(' ')}))),

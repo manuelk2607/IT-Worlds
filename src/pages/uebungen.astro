@@ -1,4 +1,5 @@
 ---
+import {practiceTools} from '../data/practice-topics.ts';
 import Layout from '../layouts/Layout.astro';
 import { exercises, exercisePath } from '../data/exercises.ts';
 import { courses } from '../data/courses.ts';
@@ -33,5 +34,6 @@ const practiceCourses=courses.filter(course=>exercises.some(exercise=>exercise.c
     })}</div>
     <p hidden data-exercises-empty>{t('Keine Aufgabe für diese Auswahl. Kürze die Suche oder setze die Filter zurück.','No tasks match this selection. Shorten your search or reset the filters.')}</p>
   </section>
+  <section class="container section"><h2>{t('Interaktive Lernbereiche','Interactive learning areas')}</h2><div class="catalog-grid">{practiceTools.map(tool=><a class="progress-entry" href={localePath(locale,tool.url)}>{tool.title[locale]} →</a>)}</div></section>
   <script src="../scripts/exercise-catalog.ts"></script>
 </Layout>

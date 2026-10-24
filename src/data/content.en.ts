@@ -1,3 +1,4 @@
+import {practiceTopics} from './practice-topics.ts';
 import {guidedLearningPaths} from './learning-paths.ts';
 import { additionalEnglishLessons, additionalSourceDescriptions, additionalEnglishQuestions } from './expansion.en.ts';
 import { topics as originalTopics, sources as originalSources, questions as originalQuestions, levels as originalLevels, type Topic, type Lesson, type SourceId } from './content.ts';
@@ -66,7 +67,7 @@ const text: Record<string, TopicText> = {
   },
 };
 export const topics: Topic[] = originalTopics.map(topic => {
-  const base = text[topic.id];
+  const base = text[topic.id] ?? practiceTopics('en').find(item=>item.id===topic.id);
   const translation = base && { ...base, lesson: additionalEnglishLessons[topic.id] ?? base.lesson };
   if (!translation) throw new Error(`Missing English topic: ${topic.id}`);
   return { ...topic, ...translation, lesson: translation.lesson && topic.lesson ? { ...translation.lesson, sources: topic.lesson.sources } : undefined };

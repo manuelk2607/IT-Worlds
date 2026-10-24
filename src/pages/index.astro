@@ -55,7 +55,7 @@ import KnowledgeMap from "../components/KnowledgeMap.astro";
         <strong>{t("Hier findest du die Zusammenhänge.", "Find the connections here.")}</strong>
       </p>
       <span>
-        {t("10 Themenwelten", "10 topics")} <span class="dot-separator">·</span> {t("3 Lernstufen", "3 levels")}{" "}
+        {t(`${topics.length} Themenwelten`, `${topics.length} topics`)} <span class="dot-separator">·</span> {t("3 Lernstufen", "3 levels")}{" "}
         <span class="dot-separator">·</span> {t("Deine Neugier", "Your curiosity")}
       </span>
     </div>
@@ -115,7 +115,7 @@ import KnowledgeMap from "../components/KnowledgeMap.astro";
       </label>
     </div>
     <p class="sr-only" id="topic-result-count" role="status">
-      {t("10 Themenwelten", "10 topics")}
+      {t(`${topics.length} Themenwelten`, `${topics.length} topics`)}
     </p>
     <div class="topic-grid">
       {topics.map((topic, index) => (

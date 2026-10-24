@@ -29,7 +29,7 @@ import Icon from "../components/Icon.astro";
     <div class="quiz-controls course-filters">
       <label for="quiz-topic">{t("Deine Themenwahl", "Your topic")}
       <select id="quiz-topic">
-        <option value="alle">{t("Alle zehn Themen", "All ten topics")}</option>
+        <option value="alle">{t("Alle Themenwelten", "All topics")}</option>
         {topics.map((topic) => (
           <option value={topic.id}>
             {topic.title}

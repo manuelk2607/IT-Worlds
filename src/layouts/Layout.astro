@@ -22,12 +22,12 @@ interface Props {
 const pageDescriptions: Record<string,string> = {
   '/quiz/': t(`${questions.length} IT-Quizfragen mit Erklärungen, Schwierigkeitsstufen und belegten Lösungen. Prüfe dein Wissen zu KI, LaTeX und weiteren Themen.`, `${questions.length} IT quiz questions with explanations, difficulty levels and sourced solutions. Test your knowledge of AI, LaTeX and other topics.`),
   '/quellen/': t(`${Object.keys(sources).length} Primärquellen mit Herausgeber, Version, Abschnitt und Lesedatum zu unseren Lerntexten und Übungen.`, `${Object.keys(sources).length} primary sources with publisher, version, section and reading date for our lessons and exercises.`),
-  '/lernpfade/': t('Strukturierte Kurse zu allen zehn IT-Themenwelten und drei durchgehende Lernwege für Website, APIs und Systementwurf. Voraussetzungen, Kapitel und nächste Schritte auf einen Blick.', 'Structured courses across all ten IT topics and three complete learning routes for websites, APIs and system design. Prerequisites, chapters and next steps at a glance.'),
+  '/lernpfade/': t('Strukturierte Kurse zu allen IT-Themenwelten und drei durchgehende Lernwege für Website, APIs und Systementwurf. Voraussetzungen, Kapitel und nächste Schritte auf einen Blick.', 'Structured courses across all IT topics and three complete learning routes for websites, APIs and system design. Prerequisites, chapters and next steps at a glance.'),
 };
 const basePath = Astro.url.pathname.replace(/^\/en(?=\/|$)/, '') || '/';
 const {
   title = t("IT verstehen. Deine Welt erweitern.", "Understand IT. Expand your world."),
-  description = pageDescriptions[basePath] ?? t("Entdecke zehn IT-Themenwelten, Lernwege vom Einstieg bis zum Profi und Quizfragen mit nachvollziehbaren Primärquellen.", "Explore ten IT topics, learning paths from beginner to advanced and quizzes with traceable primary sources."),
+  description = pageDescriptions[basePath] ?? t("Entdecke unsere IT-Themenwelten, Lernwege vom Einstieg bis zum Profi und Quizfragen mit nachvollziehbaren Primärquellen.", "Explore our IT topics, learning paths from beginner to advanced and quizzes with traceable primary sources."),
   active = "",
 } = Astro.props;
 const seo = pageSeo(Astro.url.pathname,locale,title,description);

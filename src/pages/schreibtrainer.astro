@@ -1,0 +1,7 @@
+---
+import Layout from '../layouts/Layout.astro';
+import TypingTrainer from '../components/TypingTrainer.astro';
+import {localePath,translate,type Locale} from '../lib/i18n.ts';
+interface Props {locale?:Locale}const locale=Astro.props.locale??'de';const t=translate(locale);
+---
+<Layout locale={locale} title={t('QWERTZ-Schreibtrainer: üben und Fortschritt messen','QWERTZ typing trainer: practise and measure progress')} description={t('Progressive Tastschreibübungen mit Fingerhinweisen, WPM, Genauigkeit, lokalen Ergebnissen und optionalem Konto. Alle Grundlagen sind frei zugänglich.','Progressive touch-typing practice with finger hints, WPM, accuracy, local results and an optional account. All fundamentals are freely accessible.')} active="uebungen"><header class="container page-top"><h1>{t('Sicherer schreiben.','Type with confidence.')}</h1><a href={localePath(locale,'/themen/zehn-finger-schreiben/kurs/')}>{t('Grundlagen und Messregeln im Kurs →','Learn technique and scoring in the course →')}</a></header><div class="container"><TypingTrainer locale={locale}/></div></Layout>

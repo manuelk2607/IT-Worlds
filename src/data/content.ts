@@ -1,3 +1,5 @@
+import {practiceTopics} from './practice-topics.ts';
+import {practiceSources} from './practice-sources.ts';
 import { exerciseSources } from './exercise-sources.ts';
 import {guidedLearningPaths} from './learning-paths.ts';
 import {markdownSources} from './course-markdown-sources.ts';
@@ -48,6 +50,7 @@ export type Source = {
   description: string;
 };
 export const sources = {
+  ...practiceSources,
   ...exerciseSources,
   ...typstSources,
   ...markdownSources,
@@ -643,10 +646,10 @@ const baseTopics: Topic[] = [
   },
 ];
 
-export const topics: Topic[] = baseTopics.map(topic => {
+export const topics: Topic[] = [...baseTopics.map(topic => {
   const lesson = additionalLessons[topic.id];
   return lesson ? { ...topic, lesson, sources: [...new Set([...topic.sources, ...lesson.sources])] } : topic;
-});
+}), ...practiceTopics('de')];
 
 export type Question = {
   course?: string;

@@ -1,4 +1,5 @@
 import { redirectToHttps } from '../src/lib/transport.ts';
+import {typingRequest} from './typing.ts';
 import { handleAuthProxyRequest, parseSessionData } from '@neondatabase/auth/server';
 import { neon } from '@neondatabase/serverless';
 import { isCorrectAnswer, parseProgressChange, type ProgressItem } from '../src/lib/progress.ts';
@@ -98,6 +99,7 @@ export default {
     }
     if (!env.NEON_AUTH_BASE_URL || !env.NEON_AUTH_COOKIE_SECRET || !env.DATABASE_URL) return json({ error: 'SERVICE_UNAVAILABLE' }, 503);
     try {
+      if(url.pathname.startsWith('/api/typing/'))return await typingRequest(request,env,()=>authRequest(new Request(new URL('/api/auth/get-session?disableCookieCache=true',request.url),{headers:request.headers}),env,'get-session'));
       if (url.pathname === '/api/progress') return await getProgress(request, env);
       if (url.pathname.startsWith('/api/auth/')) {
         const path = url.pathname.slice('/api/auth/'.length);

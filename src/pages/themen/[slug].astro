@@ -3,6 +3,8 @@ import { getContent, translate, localePath, type Locale } from "../../lib/i18n";
 const locale: Locale = Astro.props.locale ?? "de";
 const t = translate(locale);
 const { levels, questions, sources } = getContent(locale);
+import PracticeLab from '../../components/PracticeLab.astro';
+import {exercises} from '../../data/exercises.ts';
 import ExerciseLinks from '../../components/ExerciseLinks.astro';
 import ExerciseEditor from "../../components/ExerciseEditor.astro";
 import ProgressToggle from "../../components/ProgressToggle.astro";
@@ -140,7 +142,7 @@ const reviewDates = [...new Set(topic.lesson?.sources.map(id=>sources[id].review
         </div>
       )}
       <ExerciseLinks topic={topic.id} locale={locale} />
-      <ExerciseEditor topic={topic.id} locale={locale} />
+      {exercises.some(item=>item.id===topic.id)?<ExerciseEditor topic={topic.id} locale={locale}/>:<PracticeLab topic={topic.id} locale={locale}/>}
       <section id="quellen" class="detail-sources">
         <p class="eyebrow">{t("WEITERLESEN & NACHPRÜFEN", "READ MORE & CHECK THE SOURCES")}</p>
         <h2>{t("Quellen für diese Themenwelt", "Sources for this topic")}</h2>

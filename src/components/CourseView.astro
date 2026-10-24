@@ -4,6 +4,7 @@ import Layout from '../layouts/Layout.astro';
 import LearningRoute from './LearningRoute.astro';
 import Breadcrumbs from './Breadcrumbs.astro';
 import SourceCard from './SourceCard.astro';
+import {practiceTools} from '../data/practice-topics.ts';
 import ProgressToggle from './ProgressToggle.astro';
 import ExerciseLinks from './ExerciseLinks.astro';
 import { courses, coursePath, chapterProgressId } from '../data/courses.ts';
@@ -76,6 +77,7 @@ const other=related[0];
           {next ? <a class="button primary" href={localePath(locale, coursePath(course, next))}>{next.title[locale]} →</a> : other ? <a class="button primary" href={localePath(locale, coursePath(other))}>{t('Abschlussprojekt verbinden:', 'Connect the final project:')} {other.title[locale]} →</a> : <a class="button primary" href={localePath(locale,'/lernpfade/')}>{t('Weiteren Kurs wählen →','Choose another course →')}</a>}
         </nav>
       </>}
+      {practiceTools.filter(tool=>tool.topic===course.topic).map(tool=><p><a class="button secondary" href={localePath(locale,tool.url)}>{tool.title[locale]} →</a></p>)}
       <p class="course-review muted">{t('Die Kursfolge behandelt Grundlagen bis zu fortgeschrittenen Entscheidungen und Projekten. Sie ist kein Zertifikat und ersetzt keine eigenständige Praxis oder fachliche Begutachtung.', 'The course sequence covers foundations through advanced decisions and projects. It is not a certificate and does not replace independent practice or expert assessment.')}</p>
     </div>
   </div>
