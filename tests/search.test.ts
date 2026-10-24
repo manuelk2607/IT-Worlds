@@ -29,6 +29,7 @@ test('search ranks exact titles and rejects malformed or unsafe result URLs',()=
  assert.equal(searchEntries([{...entry,id:'2',title:'SQL weiterdenken'},entry],'SQL')[0].id,'1');
  assert(!isSearchEntry({...entry,url:'javascript:alert(1)'}));
  assert(!isSearchEntry({...entry,url:'//other.test'}));
+ for(const url of ['/\\other.test','/\t/other.test','/\n/other.test',' /themen/'])assert(!isSearchEntry({...entry,url}),JSON.stringify(url));
  assert(!isSearchEntry({...entry,kind:'unknown'}));
  assert(!isSearchEntry({...entry,title:123}));
 });

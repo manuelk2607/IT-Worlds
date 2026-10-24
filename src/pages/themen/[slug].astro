@@ -5,6 +5,7 @@ const t = translate(locale);
 const { levels, questions, sources } = getContent(locale);
 import ExerciseEditor from "../../components/ExerciseEditor.astro";
 import ProgressToggle from "../../components/ProgressToggle.astro";
+import CodeExample from "../../components/CodeExample.astro";
 import Layout from "../../layouts/Layout.astro";
 import Breadcrumbs from "../../components/Breadcrumbs.astro";
 import TopicCurriculum from "../../components/TopicCurriculum.astro";
@@ -103,12 +104,7 @@ const reviewDates = [...new Set(topic.lesson?.sources.map(id=>sources[id].review
           {topic.lesson.paragraphs.map((paragraph) => (
             <p>{paragraph}</p>
           ))}
-          {topic.lesson.code && (
-            <div class="code-example">
-              <span>{topic.lesson.language} · {t("Beispiel", "Example")}</span>
-              <pre><code>{topic.lesson.code}</code></pre>
-            </div>
-          )}
+          {topic.lesson.code && <CodeExample code={topic.lesson.code} language={topic.lesson.language} locale={locale}/>}
           <div class="takeaway">
             <Icon name="spark" size={22} />
             <p>

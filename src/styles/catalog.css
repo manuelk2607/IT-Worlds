@@ -45,3 +45,5 @@
 .learning-route .route-next-title { flex-basis:100%;margin:0; }
 .path-steps .progress-control [data-progress-login] { display:none; }
 @media(max-width:600px){ .learning-route {padding:18px;} .learning-route .button {width:100%;justify-content:center;} }
+
+.catalog-course .catalog-progress{font-size:.85rem;font-weight:600;color:var(--blue);margin-block:.5rem}

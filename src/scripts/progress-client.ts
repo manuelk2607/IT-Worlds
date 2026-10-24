@@ -41,10 +41,10 @@ function render() {
   const readLessons=new Set(completed.filter(item=>item.kind==='lesson').map(item=>item.contentId));
   document.querySelectorAll<HTMLAnchorElement>('[data-route-next]').forEach(link=>{
     const steps:RouteStep[]=JSON.parse(link.dataset.routeSteps!);
-    const {next}=routeProgress(steps,readLessons);
+    const {next,completed:read}=routeProgress(steps,readLessons);
     const target=next??steps[0];if(!target)return;
     link.href=target.url;
-    link.textContent=next?t('Mit dem ersten offenen Schritt starten →','Start the first unfinished step →'):t('Alles gelesen · noch einmal ansehen →','All read · review again →');
+    link.textContent=link.hasAttribute('data-route-card')?(read===0?t('Mit Kapitel 1 beginnen →','Start with chapter 1 →'):next?t('Weiterlernen →','Continue learning →'):t('Kurs wiederholen →','Review course →')):next?t('Mit dem ersten offenen Schritt starten →','Start the first unfinished step →'):t('Alles gelesen · noch einmal ansehen →','All read · review again →');
     const title=link.closest('.learning-route')?.querySelector('[data-route-title]');if(title)title.textContent=target.title;
   });
   document.querySelectorAll<HTMLElement>('[data-question-solved]').forEach(element => {

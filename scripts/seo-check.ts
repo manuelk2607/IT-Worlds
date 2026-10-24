@@ -1,3 +1,4 @@
+import {auditFetch} from './audit-fetch.ts';
 import { readFile, stat } from 'node:fs/promises';
 import { join } from 'node:path';
 import {buildDirectory} from './build-directory.ts';
@@ -12,7 +13,7 @@ const origin=urls[0].origin;
 const pages=new Map(await Promise.all(urls.map(async url=>[url.href,await readFile(join(dist,url.pathname,'index.html'),'utf8')] as const)));
 const liveChecks:(()=>Promise<void>)[]=[];
 if(process.argv.includes('--live')){
-  const http = await fetch(origin.replace('https:', 'http:')+'/', {redirect:'manual',signal:AbortSignal.timeout(15000)});
+  const http = await auditFetch(origin.replace('https:', 'http:')+'/', {redirect:'manual'});
   assert.equal(http.status,308,'HTTPS redirect missing');
   assert.equal(http.headers.get('location'),origin+'/');
 }
@@ -43,7 +44,7 @@ for(const url of urls){
   const imagePath=join(dist,new URL(attribute(image,'content')!).pathname);
   const png=await readFile(imagePath);assert.equal(png.readUInt32BE(16),1200);assert.equal(png.readUInt32BE(20),630);
   if(process.argv.includes('--live'))liveChecks.push(async()=>{
-    const response=await fetch(url,{redirect:'manual',headers:{'User-Agent':'Googlebot'},signal:AbortSignal.timeout(15000)});
+    const response=await auditFetch(url,{redirect:'manual',headers:{'User-Agent':'Googlebot'}});
     assert.equal(response.status,200,`Crawler HTTP: ${url.pathname}`);
     assert(!response.headers.get('x-robots-tag')?.includes('noindex'),`Header noindex: ${url.pathname}`);
     assert((await response.text())===html,`Public HTML differs: ${url.pathname}`);

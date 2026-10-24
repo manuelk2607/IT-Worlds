@@ -124,3 +124,11 @@ Der [vorherige Prüfstand vom 21. Oktober](https://github.com/manuelk2607/IT-Wor
 ## Betriebssystemkurs · lokaler Folgestand
 
 39 Tests: 38 bestanden, lokaler Docker-Fall übersprungen; alle neuen OS-Listings streng typgeprüft und ausgeführt, Hardlinks real geprüft. 120 Dateien strikt ohne Meldungen; 308 HTML-Seiten, 302 öffentliche Sprachseiten, 20.917 interne Verweise. Quellenabschnitte und tatsächlich gelesene Onlinefassungen abgeglichen. Browser: DE/EN, aufklappbare Lösung, gerenderte MathML-Formel und Volltextsuche. Öffentlich veröffentlicht mit dem neuen Releaseablauf; Nachweis direkt darüber. GitHub-Run 40045017232 erfolgreich, einschließlich Container auf Linux.
+
+## IPv6/Routing und Themenpläne · 24. Oktober 2026
+
+40 Tests: 39 bestanden, lokaler Docker-Fall übersprungen. 123 Dateien strikt ohne Meldungen. 312 HTML-Seiten, 306 öffentliche Sprachseiten, 21.299 interne Verweise; isolierter Dry-Run erfolgreich. Browser: Python-Kapitel in mehrkursigem Themenplan, IPv6-/Routingnavigation, englische Betriebssystem-/Linux-Gruppen mobil ohne horizontales Überlaufen. GitHub-Run 40045578991 erfolgreich. Öffentlich veröffentlicht: Version 5e807d42-7989-4082-a4df-e711a6bec061. Der direkt anschließende öffentliche Audit brach beim HTTP-Verbindungsaufbau ab; der spätere unabhängige Abruf bestätigte 308 und das korrekte HTTPS-Ziel. Der nächste Release-Audit umfasst den vollständigen aktuellen Stand.
+
+## Codekomfort und robuste Audits · lokaler Folgestand
+
+41 Tests: 40 bestanden, lokaler Docker-Fall übersprungen; 127 strikte Dateien ohne Meldungen. Browser: Kopierstatus und zeichengetreuer englischer Zwischenablageinhalt; Kurskarten mit simuliertem Account 5/8 und 8/8 samt korrekten Fortsetzen-/Wiederholungszielen. Eigene Code- und Nutzerdateien bleiben erhalten.

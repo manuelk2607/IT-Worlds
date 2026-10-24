@@ -1,0 +1,18 @@
+---
+import{translate,type Locale}from'../lib/locale.ts';
+interface Props{code:string;language?:string;label?:string;locale?:Locale}
+const{code,language='Code',locale='de',label}=Astro.props;const t=translate(locale);
+---
+<div class="code-example" data-code-example>
+ <div class="code-example-heading"><span>{language} · {label??t('Beispiel','Example')}</span><button type="button" data-copy-code hidden>{t('Code kopieren','Copy code')}</button></div>
+ <pre tabindex="0" aria-label={t(`Codebeispiel: ${language}`,`Code example: ${language}`)}><code>{code}</code></pre>
+ <p class="code-copy-status" role="status" data-copy-status></p>
+</div>
+<script src="../scripts/copy-code.ts"></script>
+<style>
+ .code-example pre{font-size:.85rem;line-height:1.7}
+ .code-example-heading{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.5rem 1rem;background:#28344e;color:#c4d2ee;font-size:.8rem;line-height:1.5;flex-wrap:wrap}
+ .code-example-heading button{border:1px solid #7181a1;border-radius:.5rem;background:transparent;color:#e4edff;padding:.45rem .7rem;min-height:44px;cursor:pointer;font-size:.9rem;flex-shrink:0}
+ .code-example-heading button:hover{background:#394863}.code-example-heading button:focus-visible{outline:3px solid #c4d2ee;outline-offset:2px}
+ .code-copy-status{margin:0;padding:0 1rem .8rem;color:#d9e4ff;font-size:.85rem;line-height:1.6}.code-copy-status:empty{display:none}
+</style>

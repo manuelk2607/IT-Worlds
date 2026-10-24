@@ -1,4 +1,5 @@
 ---
+import CodeExample from './CodeExample.astro';
 import Layout from '../layouts/Layout.astro';
 import LearningRoute from './LearningRoute.astro';
 import Breadcrumbs from './Breadcrumbs.astro';
@@ -60,7 +61,7 @@ const other=related[0];
           <nav class="chapter-toc" aria-label={t('In diesem Kapitel', 'In this chapter')}><strong>{t('In diesem Kapitel', 'In this chapter')}</strong>{chapter.sections.map((section, index) => <a href={`#abschnitt-${index + 1}`}>{section.title[locale]}</a>)}<a href="#aufgabe">{t('Aufgabe & Lösung', 'Exercise & solution')}</a><a href="#belege">{t('Quellen & Vertiefung', 'Sources & further reading')}</a></nav>
           {chapter.sections.map((section, index) => <section class="course-section" id={`abschnitt-${index + 1}`}><h2>{section.title[locale]}</h2>{section.paragraphs.map(paragraph => <p>{paragraph[locale]}</p>)}
             {section.formula && <div class="course-formula" tabindex="0" aria-label={t('Mathematische Formel', 'Mathematical formula')} set:html={katex.renderToString(section.formula, { displayMode: true, throwOnError: true, trust: false, output: 'htmlAndMathml' })} />}
-            {section.code && <div class="code-example"><span>{section.language} · {section.runtime==='browser' ? t('Im Browser ausführen', 'Run in a browser') : section.runtime==='node' ? t('Mit Node.js ausführen', 'Run with Node.js') : t('Vollständiges Beispiel', 'Complete example')}</span><pre tabindex="0"><code>{section.code}</code></pre></div>}
+            {section.code && <CodeExample code={section.code} language={section.language} locale={locale} label={section.runtime==='browser'?t('Im Browser ausführen','Run in a browser'):section.runtime==='node'?t('Mit Node.js ausführen','Run with Node.js'):t('Vollständiges Beispiel','Complete example')}/>}
           </section>)}
           <section id="aufgabe" class="course-exercise"><p class="eyebrow">{t('SELBST ANWENDEN', 'APPLY IT YOURSELF')}</p><h2>{t('Deine Aufgabe', 'Your exercise')}</h2><p>{chapter.exercise[locale]}</p><details><summary>{t('Lösung & Begründung anzeigen', 'Show solution & reasoning')}</summary><p>{chapter.solution[locale]}</p></details></section>
           <ProgressToggle locale={locale} kind="lesson" contentId={chapterProgressId(course, chapter)} />

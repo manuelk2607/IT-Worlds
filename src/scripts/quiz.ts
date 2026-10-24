@@ -136,6 +136,10 @@ function readLocation() {
     const item=sections.find(section=>section.dataset.question===exactQuestion)!;
     selection.value=item.dataset.topic!;courseSelect.value=item.dataset.course||'alle';levelSelect.value=item.dataset.level!;chapterSelect.value=item.dataset.chapter||'alle';
   }
+  const chosenCourse=courseCatalog.find(course=>course.id===courseSelect.value);
+  if(chosenCourse)selection.value=chosenCourse.topic;
+  const chosenChapter=chapterCatalog.find(chapter=>chapter.id===chapterSelect.value);
+  if(chosenChapter)levelSelect.value=chosenChapter.level;
   sizeSelect.value=roundSize(params.get('anzahl'));
   seed=roundSeed(params.get('mischen'));shuffle.checked=seed!==undefined;
   syncOptions();

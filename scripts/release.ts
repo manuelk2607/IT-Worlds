@@ -16,6 +16,7 @@ function node(script:string,args:string[]=[]){
  if(result.error)throw result.error;
  if(result.status!==0)throw new Error(`Release check failed: ${script} (${result.signal??result.status})`);
 }
+let keepArtifact=false;
 try{
  const build=spawnSync(process.execPath,[join(root,'node_modules/astro/bin/astro.mjs'),'build','--outDir',assets],{cwd:root,env,stdio:'inherit'});
  if(build.error)throw build.error;if(build.status!==0)throw new Error('Isolated release build failed');
@@ -24,8 +25,12 @@ try{
  // The directory flag overrides only the asset location; routing and existing bindings remain configured in wrangler.jsonc.
  const deployment=spawnSync(process.execPath,[join(root,'node_modules/wrangler/bin/wrangler.js'),'deploy','--assets',assets,...(dryRun?['--dry-run']:[])],{cwd:root,env,stdio:'inherit'});
  if(deployment.error)throw deployment.error;if(deployment.status!==0)throw new Error('Wrangler release failed');
- if(!dryRun)node('scripts/seo-check.ts',['--live']);
+ if(!dryRun){
+  console.log('Deployment completed; verifying public delivery.');
+  try{node('scripts/seo-check.ts',['--live']);}
+  catch(error){keepArtifact=true;console.error(`Deployment completed, but public verification failed. Exact artifact retained: ${assets}`);throw error;}
+ }
 }finally{
  // Only remove the temporary directory created by this invocation, never dist/ or user files.
- await rm(temporary,{recursive:true,force:true});
+ if(!keepArtifact)await rm(temporary,{recursive:true,force:true});
 }
