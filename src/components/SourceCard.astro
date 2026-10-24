@@ -9,12 +9,13 @@ interface Props {
   locale?: Locale;
   id: SourceId;
   compact?: boolean;
+  topics?: string[];
 }
-const { id, compact = false } = Astro.props;
+const { id, compact = false, topics } = Astro.props;
 const source = sources[id];
 ---
 
-<article class:list={["source-card", { compact }]} data-source={id}>
+<article class:list={["source-card", { compact }]} data-source={id} data-source-topics={topics?.join(' ')} data-source-publisher={topics ? source.publisher : undefined}>
   <div class="source-publisher">
     <Icon name="book" size={17} />
     {source.publisher}

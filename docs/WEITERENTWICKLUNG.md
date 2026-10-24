@@ -147,3 +147,11 @@ Bash prüft fünf reale isolierte Beispiele einschließlich Dateirechten, Pipes,
 Mobile Prüfung mit 390px: Doppelter Kursname und wiederholte Lernzielbeschreibung im Kapitelkopf entfernt; Ziele stehen weiterhin im eigenen Abschnitt. Die Kopfzeile nennt Kapitel X von Y. SEO-Beschreibung bleibt vollständig. Markdown, Typst und LaTeX erhalten dieselbe vorhandene Auszeichnungs-/Satzsprachen-Kennzeichnung. Suchtreffer, Tastaturöffnung, mobile Standfilter, Escape-Fokusrückkehr, MathML, helles Design und fehlendes horizontales Überlaufen geprüft.
 
 Abschluss der Runde: Alle Pakete veröffentlicht, öffentliche Version 323ad148-67c5-4332-87be-8c5244b6ce3b. 56 Tests (55 pass/1 lokaler Docker-Skip), 142 Dateien strikt, 348 HTML-Seiten, 24.009 interne Verweise und 342 öffentliche Sprachseiten geprüft. CI 40085060165 mit Node 22.22/24, PostgreSQL und Docker grün. Konkrete Grenzen und nächste Aufgaben stehen in VALIDIERUNG.md, BEISPIELTESTS.md und AUSBAU.md.
+
+## Kursübungen und Quellenorientierung · 24. Oktober 2026
+
+13 neue vollständige Editor-Aufgaben ergänzen die zehn bisherigen Themeneditoren. Jede besitzt DE/EN-Routen, feste Lernziele, begrenztes akzeptiertes Format, berechnete Ausgabe, Hinweis, Musterlösung und Quellenkarten. Verknüpfung mit Kurs, Kapitel, Themenwelt, Suche, Sitemap und strukturierten Daten. Katalog mit Text-/Themen-/Kurs-/Stufenfilter, URL-Abgleich, Leerzustand und Reset. Stabile bisherige IDs und Entwurfsschlüssel bleiben erhalten; KI und LaTeX werden inhaltlich nicht erweitert.
+
+204 Quellen sind nun über Text, Abschnitt, Version, Themenwelt und Herausgeber auffindbar. Themenzuordnung aus tatsächlichen Inhaltsverweisen; keine manuelle zweite Belegliste. Filter und Sprachwechsel synchron. Die Prüfung der Zuordnungen bleibt beim statischen Seitenaufbau; der Browser lädt nur die kleine Filterlogik.
+
+Weitere sinnvolle Aufgaben bleiben: mehrere abgestufte Übungen je Kapitel, umfangreichere Abschlussprojekte, echtes systemd-Benutzerlabor, unabhängiges Fachreview und assistive Nutzerprüfung. Der Editor bleibt ein lokales begrenztes Lernmodell; Ergebnisse sind kein Ausführungsnachweis vollständiger Programme.

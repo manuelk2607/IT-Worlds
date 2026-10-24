@@ -2,7 +2,9 @@
 import { getContent, translate, type Locale } from "../lib/i18n";
 const locale: Locale = Astro.props.locale ?? "de";
 const t = translate(locale);
-const { sources } = getContent(locale);
+const { sources, topics } = getContent(locale);
+import {sourceTopicIndex,sourcePublishers} from '../lib/source-usage.ts';
+const sourceTopics=sourceTopicIndex();
 interface Props { locale?: Locale }
 import Layout from "../layouts/Layout.astro";
 import SourceCard from "../components/SourceCard.astro";
@@ -21,9 +23,10 @@ import type { SourceId } from "../data/content";
     <p class="page-lead">
       {t("Du sollst Aussagen nachvollziehen können. Deshalb verlinken wir Originaldokumentationen und Standards direkt an den Stellen, an denen du sie brauchst.", "You should be able to check statements. We link original documentation and standards where you need them.")}
     </p>
+    <nav class="section-shortcuts" aria-label={t('Auf dieser Seite','On this page')}><a href="#verzeichnis">{t('Quellen finden','Find sources')}</a><a href="#qualitaet">{t('Wie wir prüfen','How we review')}</a></nav>
   </section>
   <section class="container section">
-    <div class="quality-grid">
+    <div class="quality-grid" id="qualitaet">
       <div>
         <span>01</span>
         <h2>{t("Originale statt Umwege.", "Go to the original.")}</h2>
@@ -46,21 +49,31 @@ import type { SourceId } from "../data/content";
         </p>
       </div>
     </div>
+    <section id="verzeichnis" data-source-catalog aria-labelledby="source-catalog-title">
     <div class="section-heading sources-heading">
       <div>
         <p class="eyebrow">{t("ZUM NACHLESEN UND WEITERDENKEN", "READ FURTHER AND KEEP EXPLORING")}</p>
-        <h2>{t("Unser erstes Quellenverzeichnis.", "Our first source directory.")}</h2>
+        <h2 id="source-catalog-title">{t("Quellen gezielt finden", "Find the sources you need")}</h2>
         <p>
           {t(`${Object.keys(sources).length} gelesene Primärquellen. Ein Anfang für die Lerntexte, keine vollständige Bibliografie aller geplanten Themen.`, `${Object.keys(sources).length} primary sources read. A starting point for the articles, not a complete bibliography of all planned topics.`)}
         </p>
       </div>
       <span class="source-count">{Object.keys(sources).length} {t("Quellen", "sources")}</span>
     </div>
+    <div class="catalog-toolbar">
+      <label for="source-search">{t('Quelle suchen','Search sources')}<input id="source-search" type="search" placeholder={t('Titel, Abschnitt, Version …','Title, section, version …')} /></label>
+      <label for="source-topic">{t('Themenwelt','Topic')}<select id="source-topic"><option value="alle">{t('Alle Themenwelten','All topics')}</option>{topics.map(topic=><option value={topic.id}>{topic.title}</option>)}</select></label>
+      <label for="source-publisher">{t('Herausgeber','Publisher')}<select id="source-publisher"><option value="alle">{t('Alle Herausgeber','All publishers')}</option>{sourcePublishers.map(publisher=><option value={publisher}>{publisher}</option>)}</select></label>
+      <button class="button secondary" data-reset-sources>{t('Filter zurücksetzen','Reset filters')}</button>
+    </div>
+    <p role="status" data-source-count>{t(`${Object.keys(sources).length} Quellen verfügbar`,`${Object.keys(sources).length} sources available`)}</p>
     <div class="sources-grid">
       {(Object.keys(sources) as SourceId[]).map((id) => (
-        <SourceCard locale={locale} id={id} />
+        <SourceCard locale={locale} id={id} topics={sourceTopics[id]} />
       ))}
     </div>
+    <p hidden data-sources-empty>{t('Keine Quelle für diese Auswahl. Kürze die Suche oder setze die Filter zurück.','No sources match this selection. Shorten your search or reset the filters.')}</p>
+    </section>
     <div class="editorial-note">
       <Icon name="book" />
       <div>
@@ -71,4 +84,5 @@ import type { SourceId } from "../data/content";
       </div>
     </div>
   </section>
+  <script src="../scripts/sources.ts"></script>
 </Layout>
