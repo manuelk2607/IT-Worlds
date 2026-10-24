@@ -42,6 +42,8 @@ npm run deploy
 IT_WORLDS_URL=https://it-worlds.maki26.workers.dev npm run ready
 ```
 
+`deploy:check` und `deploy` erzeugen einen frischen Astro-Build in einem eigenen temporären Ordner außerhalb synchronisierter Projektverzeichnisse. Vor dem Upload prüfen sie erforderliche Dateien, mögliche Synchronisationskopien, SEO und sämtliche internen Links/Anker. Wrangler erhält ausschließlich diesen Assetordner; Routing, Account und Bindings stammen weiterhin aus wrangler.jsonc. Nach einem echten Deploy vergleicht der Ablauf alle öffentlichen Sitemap-Seiten bytegenau mit diesem Artefakt. Anschließend entfernt er nur seinen eigenen temporären Ordner. Der normale Build in dist/ bleibt für Entwicklung und Vorschau erhalten. Einzelne Audits können über IT_WORLDS_DIST einen expliziten Build prüfen.
+
 Ein Dry-Run bestätigt keine Veröffentlichung. Danach aktive Version und erhaltene Einstellungen auslesen, gebaute Dateien mit öffentlicher Auslieferung vergleichen und DE/EN-404 mit Status 404 prüfen. Im öffentlichen Browser zusätzlich Suche, Filter, mobiles Menü, Übungseditoren mit Hinweis/Lösung/Reset, Quiz mit falschen Antworten, Erklärungen, Ergebnis, Neustart, Quellenlinks, Sprachwechsel und beide Designs prüfen. Einen Testaccount registrieren, Fortschritt speichern, abmelden, erneut anmelden und Wiederherstellung prüfen.
 
 ## Historischer Cloud-Stand

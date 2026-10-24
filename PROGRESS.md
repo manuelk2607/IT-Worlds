@@ -1,24 +1,19 @@
 # IT-Worlds · Arbeitscheckpoint
 
 ## Ziel
-Informationsarchitektur, Benutzerführung und vernachlässigte Inhalte iterativ verbessern; vollständig geprüfte Arbeitspakete veröffentlichen. Nutzerdatei `.clinerules` unverändert erhalten. KI und LaTeX vorerst nicht ausbauen.
+Informationsarchitektur, Benutzerführung und vernachlässigte Inhalte iterativ verbessern; vollständige geprüfte Pakete veröffentlichen. `.clinerules` unverändert erhalten. KI und LaTeX vorerst nicht ausbauen.
 
 ## Gesicherter Stand
-- Grundlage auf GitHub gesichert: `ee175c6` (einschließlich Sicherheit und öffentlicher Verifikation). Frühere Pakete: Lernstart/Kurskatalog/Suche, TypeScript, Web, Grundlagen, Quizfilter und gruppierter Lernstand.
-- Zusätzlich vollständig implementiert, geprüft und bereits auf Cloudflare veröffentlicht: Sicherheitskurs, Dokumentationsaktualisierung und interner Linkaudit. Wiederaufnahme: alle Prüfungen erneut erfolgreich; Paket einschließlich Checkpoint auf main und Arbeitsbranch gesichert. Die frühere Kontingentsperre ist aufgehoben.
-- Öffentliche Version: `51a5ae9c-3253-4d71-873f-db912367cf55`, Deployment `2c0d7304-78a5-4405-aa2c-cd9d771c63bb`, 23.10.2026 22:22:53 Europe/Stockholm. Bestehender Account, Subdomain und vier Bindings erhalten.
-- Zehn Kursfolgen, 84 Kapitel, 178 Fragen, 139 Quellen; 94 lesbare Inhalte. Neuer Umfang jeweils DE/EN mit Aufgaben/Lösungen und erklärten Antwortoptionen.
+- GitHub main und codex/cloudstand-lokal: 0ec1697, alle drei CI-Jobs erfolgreich (40044291333). Vorherige Pakete: Orientierung/Suche, Grundlagen, TypeScript/Web, Linux/Netzwerk/Sicherheit, Cloud/DevOps, vollständige geführte Wege, Python und Quizrunden.
+- Öffentlich 24.10.2026 02:18:33 Europe/Stockholm: Version af5f9f59-aa9d-4c5f-80b8-7ab7e57e7f77, Deployment 83741850-9dcf-4ce0-bf37-52db12dfe174, 100 % Traffic. Account/Subdomain/Einstellungen/vier Bindings erhalten.
+- Zwölf Kurse, 100 Kapitel, 210 Fragen, 169 Quellen; 110 lesbare Inhalte, jeweils DE/EN. Drei geführte Wege mit 13/14/10 realen Schritten und gemeinsamem Fortschritt. Quiz: 5/10/20/alle, reproduzierbares Mischen, gezielte Fehlerlinks.
 
 ## Verifikation
-31 Tests; 100 Dateien strikt ohne Meldungen; Build 252 HTML-Seiten; lokaler SEO-Audit 246 öffentliche URLs; 16.254 interne Links/Assets/Anker geprüft; Deployment-Vorschau erfolgreich. Öffentlich mobil: Lernstart, Menü/Escape, Designs, Sprachwechsel, Sicherheitsquiz samt sämtlichen Erklärungen. Öffentlicher SEO-Abgleich am 24.10. für alle 246 URLs samt bytegleicher Auslieferung erfolgreich; lokaler Build wird vorher vollständig eingelesen. Kein neuer angemeldeter E2E-Test, keine systemd-Liveprüfung, kein unabhängiges Fachreview behauptet.
+37 Tests (36 bestanden, Docker lokal ohne Engine übersprungen; echter Linux-Containerfall in CI erfolgreich), 113 Dateien strikt ohne Meldungen. 292 HTML-Seiten, 286 öffentliche URLs; öffentlicher bytegleicher Abgleich erfolgreich. Python-Listings lokal auf 3.12.6 und CI auf 3.12 ausgeführt, Grenz-/Fehlerfälle und unveränderte Eingaben geprüft. Browser: DE/EN, mobil/Designs, Menü/Tastatur, vollständige Quizrunde/Feedback/Ergebnis/Neustart/Einzelfrage, geführte Wege. Lernstand mit lokal simulierter Session geprüft, keine neue tatsächliche Neon-Anmeldung behauptet.
 
-## Nächste Schritte
-1. GitHub-Workflow 523383f auf Node 22.22.0 und 24 erfolgreich (Run 40041316700). Containerjob ebenfalls erfolgreich: Run 40041998694 (32518ab), alle drei Jobs bestanden.
-2. Cloud-&-DevOps-Kurs ist lokal vollständig ergänzt (8 Kapitel, 16 Fragen, 16 neue Quellen). Node-Beispiele und Linux-Container-CI geprüft; Veröffentlichung folgt.
-3. Drei geführte Wege mit 13/14/10 realen Schritten umgesetzt. Fortsetzen und geteilte IDs lokal mit simuliertem Account geprüft, einschließlich Alles-gelesen-/Nur-offen-Zuständen und Englisch. Aktuell 92 Kapitel/194 Fragen/155 Quellen; keine echte neue Neon-Anmeldung behauptet.
-4. Pfade/DevOps öffentlich: Version c8ebeb2c-242a-40b0-9013-b4f23096942b (24.10.02:08), Einstellungen erhalten; 266 URLs bytegleich geprüft. GitHub 5b4fba3 mit erfolgreichem CI.
-5. Python lokal fertig: 8 Kapitel/16 Fragen/14 Quellen, Gesamt 100/210/169; 36 Tests (35 pass/1 lokaler Docker-Skip), 111 strikte Dateien, 292 HTML/286 URLs/19.174 interne Verweise. Python-Browsercheck DE/EN samt Lösung erfolgt; auf GitHub 2172aa8 mit erfolgreichem CI (40043886668).
-6. Quizrunden (5/10/20/alle, reproduzierbares Mischen, gleiche Runde wiederholen, gezielte Fehlerlinks) implementiert und im Browser einschließlich 1/5, vier Fehlerlinks und Englisch geprüft. Nächster Schritt: abschließende mobile/404-Prüfung, Paket sichern und Python+Quiz veröffentlichen.
+## Laufendes Paket und nächster Schritt
+- Isolierter Release-Build implementiert: frischer temporärer Ordner, Pflichtdateien/Konfliktkopien/Symlinks, SEO/interne Verweise vor Upload, öffentliche Auslieferung danach, nur eigenen temporären Ordner entfernen. 38 Tests (37 pass/1 Skip), 117 strikte Dateien; Dry-Run erfolgreich mit 372 Artefaktdateien/286 URLs/19.863 internen Verweisen.
+- Releasepaket sichern und mit dem nächsten vollständigen Inhaltspaket tatsächlich einsetzen. Nächste priorisierte Inhaltslücke: Betriebssystemkonzepte (Prozesse/Scheduling, Adressräume/Paging, Nebenläufigkeit und Dateipersistenz); bestehender Linuxkurs behandelt hauptsächlich Bedienung.
 
 ## Grenzen
-Die frühere Kontingentsperre ist nach erneutem Kontingentsbeginn aufgehoben (24.10.2026 geprüft). Gelegentliche zusätzliche Kopien in generierten Builddateien beobachten; Quell-/Nutzerdateien nicht pauschal bereinigen. Auth und Datenbankschema bleiben unverändert, sofern kein neues Paket Änderungen erfordert.
+Kein unabhängiges Fachreview, kein neuer echter angemeldeter E2E-Test, keine systemd-Liveprüfung oder Core-Web-Vitals-Feldmessung. Backend/Auth/Schema unverändert. Quell- und Nutzerdateien nicht pauschal bereinigen. Kontingent bis zur Ausführungsgrenze produktiv weiterverwenden, geprüfte Meilensteine früh sichern.

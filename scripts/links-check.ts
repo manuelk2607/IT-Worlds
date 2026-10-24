@@ -1,6 +1,7 @@
 import {readdir,readFile} from 'node:fs/promises';
-import {resolve,join,relative,extname} from 'node:path';
-const root=resolve('dist');
+import {join,relative,extname} from 'node:path';
+import {buildDirectory} from './build-directory.ts';
+const root=buildDirectory;
 async function files(directory:string):Promise<string[]> {return(await Promise.all((await readdir(directory,{withFileTypes:true})).map(entry=>entry.isDirectory()?files(join(directory,entry.name)):[join(directory,entry.name)]))).flat();}
 const paths=await files(root),known=new Set(paths),html=new Map<string,string>();
 for(const path of paths)if(extname(path)==='.html'&&!/ \d+\.html$/.test(path))html.set(path,await readFile(path,'utf8'));

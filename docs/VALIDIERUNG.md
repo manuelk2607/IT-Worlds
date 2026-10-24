@@ -6,9 +6,9 @@ Veröffentlicht: 24.10.2026 02:08:24 Europe/Stockholm, Version c8ebeb2c-242a-40b
 
 Öffentlicher Audit aller 266 URLs: indexierbar, Canonicals/Sprachen, Metadaten, strukturierte Daten, HTTPS und bytegleiche Auslieferung bestätigt. DevOps-Kapitel mit Formel, Aufgabenlösung und gefiltertem Zwei-Fragen-Quiz im Browser geprüft; Antwort samt allen Erklärungen sichtbar. Geführter Weg mit 13 verfügbaren Schritten und Gastzustand öffentlich bestätigt. Lokal mit simuliertem Account zusätzlich Fortsetzen, geteilte Kapitelkennungen, 13/13, nur offene Inhalte, Englisch und mobile Tastaturnavigation geprüft. Dies ist kein neuer tatsächlicher Neon-Accounttest. Cloudflare-Account/Subdomain, bestehende Einstellungen und vier Bindings vor/nach Veröffentlichung identisch.
 
-## Python · lokaler Folgestand
+## Python und kurze Quizrunden · 24. Oktober 2026
 
-36 Tests: 35 bestanden, ein lokaler Containerfall übersprungen. 111 Dateien strikt ohne Meldungen. 292 HTML-Seiten, 19.174 interne Links/Assets/Anker, 286 öffentliche Sprachseiten im lokalen SEO-Audit. Python 3.12.6 führt sämtliche Listings und zusätzliche Grenz-/Fehlerfälle aus. Noch nicht als Python-Release veröffentlicht.
+37 Tests: 36 bestanden, ein lokaler Containerfall übersprungen. 113 Dateien strikt ohne Meldungen. 292 HTML-Seiten, 19.174 interne Links/Assets/Anker, 286 öffentliche Sprachseiten im lokalen SEO-Audit. Python 3.12.6 führt sämtliche Listings und zusätzliche Grenz-/Fehlerfälle aus. Veröffentlicht um 02:18:33 Europe/Stockholm: Version af5f9f59-aa9d-4c5f-80b8-7ab7e57e7f77, Deployment 83741850-9dcf-4ce0-bf37-52db12dfe174, 100 % Traffic. Cloudflare-Einstellungen unverändert. Öffentlicher Abgleich aller 286 Sprachseiten erfolgreich. Englisches Python-Abschlusskapitel und deutscher gefilterter Quiz-Einstieg öffentlich im Browser bestätigt. GitHub-Run 40044291333 erfolgreich, einschließlich realem Containerfall.
 
 
 ## Aktuelle iterative Erweiterung · 23. Oktober 2026
@@ -116,3 +116,7 @@ Die Editor-Prüfer sind begrenzte Lernmodelle, keine vollständigen Interpreter 
 Ein unabhängiges Fachreview und vollständige Vertiefungs-/Profi-Kurse stehen weiterhin aus. Die Suchseiten sind technisch öffentlich crawlbar; die externe site:-Suchabfrage lieferte am Prüftag noch keinen Indexierungsnachweis. Es wurde keine Search-Console-Property verifiziert und keine Rankingposition versprochen. Details: [SEO.md](SEO.md). Die tatsächliche Passwort-Reset-Mailzustellung wurde weiterhin nicht geprüft.
 
 Der [vorherige Prüfstand vom 21. Oktober](https://github.com/manuelk2607/IT-Worlds/blob/0e6e9cbe2ce33ab407bb6fc6a36c564a1903181e/docs/VALIDIERUNG.md) dokumentiert ZIP-/Patch-Übernahme, ursprüngliche Quellenlektüre und Account-Einrichtung.
+
+## Isolierter Veröffentlichungsablauf · lokaler Folgestand
+
+38 Tests: 37 bestanden, ein lokaler Docker-Fall übersprungen; 117 Dateien strikt ohne Meldungen. Neues Release-Artefakt enthält 372 Dateien, keine Synchronisationskopien. Der isolierte Dry-Run prüft 292 HTML-Seiten, 286 öffentliche URLs und 19.863 interne Verweise; Wrangler erhält die temporären Assets unter Beibehaltung der vorhandenen Konfiguration. Noch kein echter Deploy über das neue Hilfsskript behauptet.

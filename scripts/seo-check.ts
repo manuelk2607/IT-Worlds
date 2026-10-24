@@ -1,8 +1,8 @@
 import { readFile, stat } from 'node:fs/promises';
 import { join } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import {buildDirectory} from './build-directory.ts';
 import assert from 'node:assert/strict';
-const dist = fileURLToPath(new URL('../dist/',import.meta.url));
+const dist = buildDirectory;
 const sitemap = await readFile(join(dist,'sitemap.xml'),'utf8');
 const urls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(match=>new URL(match[1]));
 const robots = await readFile(join(dist,'robots.txt'),'utf8');

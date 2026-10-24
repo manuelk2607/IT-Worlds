@@ -49,4 +49,6 @@ Neue Kursinhalte in den typisierten zweisprachigen Daten unter `src/data/course-
 
 ## Automatische Prüfung
 
-Der GitHub-Workflow `Quality` prüft Pull Requests und Änderungen auf `main` sowie `codex/cloudstand-lokal` mit Node.js 22.22.0 (unterstützte Mindestversion) und Node.js 24. Die Installation verwendet die eingecheckte Lockdatei; danach folgen Tests, strikte Typprüfung, statischer Build, SEO- und interner Linkaudit. Der Workflow besitzt nur Leserechte, erhält keine Produktions-Secrets und veröffentlicht nichts. Änderungen an Actions mit dem offiziellen Repository/Release abgleichen und auf den überprüften Commit festlegen.
+Der GitHub-Workflow `Quality` prüft Pull Requests und Änderungen auf `main` sowie `codex/cloudstand-lokal` mit Node.js 22.22.0 (unterstützte Mindestversion) und Node.js 24. Die Installation verwendet die eingecheckte Lockdatei; Python 3.12 wird ausdrücklich eingerichtet; danach folgen Tests, strikte Typprüfung, statischer Build, SEO- und interner Linkaudit. Der Workflow besitzt nur Leserechte, erhält keine Produktions-Secrets und veröffentlicht nichts. Änderungen an Actions mit dem offiziellen Repository/Release abgleichen und auf den überprüften Commit festlegen.
+
+Für Veröffentlichungen `npm run deploy:check` und anschließend `npm run deploy` verwenden. Diese Befehle bauen ein isoliertes, geprüftes Artefakt; der echte Deploy führt zusätzlich den öffentlichen Abgleich aus. Fremde oder synchronisierte dist-Kopien nicht manuell bereinigen.
