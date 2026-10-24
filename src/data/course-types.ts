@@ -9,7 +9,7 @@ export interface CourseSection {
   runtime?: 'browser' | 'node';
   formula?: string;
   code?: string;
-  language?: 'Python' | 'LaTeX' | 'BibTeX' | 'Shell' | 'SQL' | 'TypeScript' | 'HTML' | 'CSS' | 'JSON' | 'YAML' | 'Dockerfile';
+  language?: 'Python' | 'LaTeX' | 'BibTeX' | 'Shell' | 'SQL' | 'TypeScript' | 'HTML' | 'CSS' | 'JSON' | 'YAML' | 'Dockerfile' | 'Markdown' | 'Typst';
 }
 export interface CourseQuestion {
   prompt: Bilingual;
@@ -29,7 +29,7 @@ export interface Chapter {
   questions: CourseQuestion[];
 }
 export interface Course {
-  id: 'ki' | 'latex' | 'datenbanken' | 'apis' | 'typescript' | 'web' | 'grundlagen' | 'linux' | 'netzwerke' | 'sicherheit' | 'devops' | 'python' | 'betriebssysteme';
+  id: 'ki' | 'latex' | 'datenbanken' | 'apis' | 'typescript' | 'web' | 'grundlagen' | 'linux' | 'netzwerke' | 'sicherheit' | 'devops' | 'python' | 'betriebssysteme' | 'markdown' | 'typst';
   topic: string;
   slug: string;
   title: Bilingual;

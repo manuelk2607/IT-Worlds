@@ -17,3 +17,6 @@ Gesamte Website anhand tatsächlicher Lücken iterativ verbessern; Kontingent we
 
 ## Verifikation / Grenzen
 Neue Entwurfsprüfungen decken exakten Text, getrennte Aufgaben, Reset, geänderte Vorlagen, fehlerhafte Speicherung und Größenlimits ab. Keine neue Veröffentlichung dieses Pakets behauptet. Backend, Schema und bestehende IDs unverändert. Quellenabgleich ersetzt kein unabhängiges Fachreview.
+
+## Zwischenstand Markdown
+14 Kurse, 114 Kapitel, 238 Fragen, 187 Quellen. Markdown-Kurs und Render-/Ausführungsprüfung abgeschlossen; 46 Tests (45 pass/1 Docker-Skip), 132 Dateien strikt, Build und Browser-Kapitelquiz erfolgreich. Noch nicht veröffentlicht. Nächster Schritt Typst-Kurs mit real kompilierten Beispielen; offizielles CLI 0.15.1 für Apple ARM geladen, SHA-256 mit Release-Digest verglichen.

@@ -959,3 +959,7 @@ Sieben aktuelle OWASP-Cheat-Sheets in `course-security-sources.ts`: Threat Model
 ## Cloud & DevOps · Abgleich 24. Oktober 2026
 
 16 neue Belege in course-devops-sources.ts: NIST SP 800-145 §2 (Dienstmodelle); npm CLI 11 npm ci (Lockdatei und eingefrorene Installation); Node 22.22.0 Crypto (createHash/update/digest); GitHub Workflows und Secure use (Ereignisse, Jobs, minimale Rechte und geprüfte Action-Commits); Docker Container, Images, Run, CLI-Flags, None-Netzwerk, Volumes und Build secrets; Cloudflare Secrets und Rollbacks mit Datenkompatibilitätsgrenzen; Google SRE, Ausgabe 2016, Kapitel 4 und 6 (SLI/SLO/SLA, Messfenster, vier Betriebssignale). Die genannten Originalabschnitte wurden gelesen; URLs, Herausgeber, Fassung, Abschnitt und Lesedatum sind pro Quelle hinterlegt. Keine unabhängige Fachprüfung behauptet.
+
+## Markdown · 24. Oktober 2026
+
+Sechs zusätzliche Originalquellen: GitHub-Grundsyntax, Codeblöcke, Tabellen und READMEs, GFM 0.29-gfm sowie WAI-Alternativtext-Entscheidungsbaum. Die relevanten Abschnitte wurden tatsächlich gelesen; die gemeinsame Registrierung enthält URL, Herausgeber, Fassung, Abschnitt und Lesedatum. Bestehende CommonMark-, WAI-Überschriften- und OWASP-XSS-Belege werden wiederverwendet. Keine duplizierten Quellen. Die veröffentlichten Beispiele werden mit Astros Markdown-Renderer geprüft; die beiden enthaltenen TypeScript-Programme werden strikt geprüft und ausgeführt. Das belegt die Beispiele, keine vollständige Renderer-Konformität. Gesamtverzeichnis: 187 Quellen. Unabhängiges Fachreview bleibt offen.

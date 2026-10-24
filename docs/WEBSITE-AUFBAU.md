@@ -11,10 +11,10 @@ Der erste Rahmen macht die breite Themenlandkarte benutzbar. Das Ziel ist Wissen
 | `/lernpfade/`        | Dreizehn verfügbare Kursfolgen mit Themen-/Titelfilter und drei vollständig verfügbare Querverbindungspfade                                                            |
 | `/lernpfade/[slug]/` | Voraussetzungen, Schritte, tatsächliche Verfügbarkeit und Verknüpfung zur Themenwelt                      |
 | `/uebungen/` | Zehn Editor-Aufgaben mit lokalem Prüfer, Hinweisen und Musterlösungen |
-| `/quiz/`             | 226 Fragen, Themen-, Kurs-, Kapitel- und Stufenwahl, Erklärung zu jeder Antwort, Beleg, Runden mit 5/10/20/allen Fragen, reproduzierbares Mischen und gezielte Wiederholung                      |
-| `/quellen/`          | 181 Originalquellen mit Herausgeber, Version, Abschnitt, Lesedatum und gelesenem Dokumentationsquelltext |
+| `/quiz/`             | 238 Fragen, Themen-, Kurs-, Kapitel- und Stufenwahl, Erklärung zu jeder Antwort, Beleg, Runden mit 5/10/20/allen Fragen, reproduzierbares Mischen und gezielte Wiederholung                      |
+| `/quellen/`          | 187 Originalquellen mit Herausgeber, Version, Abschnitt, Lesedatum und gelesenem Dokumentationsquelltext |
 
-Die globale Suche lädt ihren sprachspezifischen JSON-Index erst beim Öffnen und durchsucht Themen, Kurse, alle 108 Kapiteltexte, Lernpfade und Übungen. Mehrere Wörter werden kombiniert; Titel sind höher gewichtet. Ein Inhaltstypfilter sowie Pfeiltasten, Enter und Escape unterstützen die Bedienung. /lernen/ bietet Orientierung; /lernpfade/ bietet verfügbare Kurse und durchgehende Querverbindungspfade.
+Die globale Suche lädt ihren sprachspezifischen JSON-Index erst beim Öffnen und durchsucht Themen, Kurse, alle 114 Kapiteltexte, Lernpfade und Übungen. Mehrere Wörter werden kombiniert; Titel sind höher gewichtet. Ein Inhaltstypfilter sowie Pfeiltasten, Enter und Escape unterstützen die Bedienung. /lernen/ bietet Orientierung; /lernpfade/ bietet verfügbare Kurse und durchgehende Querverbindungspfade.
 
 Die Seiten stehen zusätzlich unter `/en/` vollständig auf Englisch bereit. Der Sprachschalter erhält die entsprechende Seite, Suchparameter und Sprungmarken. Jede Themenwelt enthält unter `#uebungseditor` eine passende Aufgabe. Eingaben werden lokal in einem begrenzten Lernmodell geprüft; der Quiz-/Lesefortschritt wird dadurch nicht automatisch geändert.
 
@@ -42,7 +42,7 @@ Lernstufe und Vorwissen werden getrennt angegeben. Beispielsweise ist das vorhan
 
 ## Verfügbare und geplante Inhalte
 
-Verfügbar sind zehn Einstiege und 108 Kurskapitel: Grundlagen 7, Betriebssystemkonzepte 6, Linux 6, Netzwerke 8, Sicherheit 7, TypeScript 8, Python 8, Web 8, SQL 8, APIs 7, Cloud/DevOps 8, KI 14 und LaTeX 13. Insgesamt 226 Fragen und 181 Quellen. Fortschritt zählt 118 lesbare Inhalte und 226 Fragen mit stabilen IDs. Kursgruppen, Ansicht-/Themenfilter und der nächste offene Schritt verbessern die Übersicht. Alle zehn Themenwelten besitzen nun mindestens eine vollständig verfügbare Kursfolge. Drei Querverbindungspfade nutzen 13, 14 und 10 vorhandene Kapitel mit identischen Fortschrittskennungen.
+Verfügbar sind zehn Einstiege und 114 Kurskapitel: Grundlagen 7, Betriebssystemkonzepte 6, Linux 6, Netzwerke 8, Sicherheit 7, TypeScript 8, Python 8, Markdown 6, Web 8, SQL 8, APIs 7, Cloud/DevOps 8, KI 14 und LaTeX 13. Insgesamt 238 Fragen und 187 Quellen. Fortschritt zählt 124 lesbare Inhalte und 238 Fragen mit stabilen IDs. Kursgruppen, Ansicht-/Themenfilter und der nächste offene Schritt verbessern die Übersicht. Alle zehn Themenwelten besitzen nun mindestens eine vollständig verfügbare Kursfolge. Drei Querverbindungspfade nutzen 13, 14 und 10 vorhandene Kapitel mit identischen Fortschrittskennungen.
 
 Kapitelrouten, Datenmodell und Erweiterung sind in [KURSE.md](KURSE.md) beschrieben.
 

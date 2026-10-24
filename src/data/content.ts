@@ -1,4 +1,5 @@
 import {guidedLearningPaths} from './learning-paths.ts';
+import {markdownSources} from './course-markdown-sources.ts';
 import {osSources} from './course-os-sources.ts';
 import {pythonSources} from './course-python-sources.ts';
 import {devopsSources} from './course-devops-sources.ts';
@@ -45,6 +46,7 @@ export type Source = {
   description: string;
 };
 export const sources = {
+  ...markdownSources,
   ...courseSources,
   ...foundationSources,
   ...programmingSources,
@@ -206,8 +208,8 @@ export const sources = {
     evidenceUrl:
       "https://raw.githubusercontent.com/commonmark/commonmark-spec/0.31.2/spec.txt",
     version: "CommonMark 0.31.2 · 28. Januar 2024",
-    section: "Introduction · What is Markdown?",
-    reviewedAt: "2026-10-20",
+    section: "Introduction; 4.5 Fenced code blocks; document structure and literal code",
+    reviewedAt: "2026-10-24",
     description:
       "Markdown als Klartextformat für strukturierte Dokumente und die präzisierte CommonMark-Syntax.",
   },
@@ -287,7 +289,7 @@ const baseTopics: Topic[] = [
       {
         title: "Auszeichnungs- & Satzsprachen",
         description:
-          "LaTeX bereitet Dokumente für den Textsatz auf. Typst verbindet Markup und Textsatz mit Funktionen und Scripting. Markdown dient zum Schreiben strukturierter Dokumente in Klartext. Diese Sprachen ergänzen hier das Programmieren um Dokumentstruktur und Publikation. Der LaTeX-Kurs ist verfügbar; die eigenständigen Typst- und Markdown-Lektionen sind weiterhin geplant.",
+          "LaTeX bereitet Dokumente für den Textsatz auf. Typst verbindet Markup und Textsatz mit Funktionen und Scripting. Markdown dient zum Schreiben strukturierter Dokumente in Klartext. Diese Sprachen ergänzen hier das Programmieren um Dokumentstruktur und Publikation. LaTeX und Markdown besitzen eigene Kursfolgen; Typst-Lektionen sind noch geplant.",
         languages: ["LaTeX", "Typst", "Markdown"],
         sources: ["latex", "typst", "markdown"],
       },

@@ -121,3 +121,7 @@ Die erste CI-Prüfung der Sicherheitskorrektur scheiterte unter npm 10 an der ve
 ## Neues Kontingent · Editorentwürfe und Wiederherstellung
 
 Gesamtanalyse: bestehende Kurse, Navigation und Prüfungen bleiben erhalten; konkrete Lücken sind Entwurfsverlust, fehlende Markdown-/Typst-Kurse und persönliche Quizwiederholung. Erster abgeschlossener Schritt: versionsgebundene lokale Entwürfe pro Aufgabe mit Größen-/Formatprüfung, Sprachparität und verständlicher Speicherfehlerbehandlung. Ersetzen durch Musterlösung oder Vorlage lässt sich unmittelbar rückgängig machen. Keine Serverübertragung oder neue Account-/Schemafunktion. 44 Tests (43 bestanden, ein lokaler Docker-Skip), 129 strikte Dateien ohne Meldungen, Build erfolgreich. Browser bestätigt Reload, DE/EN, beide Rückgängig-Fälle und dauerhaften Reset.
+
+### Markdown-Kurs abgeschlossen
+
+Sechs DE/EN-Kapitel, zwölf erklärte Fragen, sechs neue Primärquellen; unter Programmiersprachen → Auszeichnungs-/Satzsprachen. Struktur, Code, Links/Bilder, GFM-Dialekt, sichere Ausgabe und vollständiges Mini-README. Eigene SVG, keine fremden Bilder. 46 Tests (45 pass, ein lokaler Docker-Skip), 132 strikte Dateien ohne Meldung, 328 HTML-Seiten. Kapitelquiz samt aller Erklärungen im Browser geprüft. Veröffentlichung folgt gebündelt mit Typst.

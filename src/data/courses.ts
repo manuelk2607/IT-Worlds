@@ -1,4 +1,5 @@
 import {osCourse} from './course-os.ts';
+import {markdownCourse} from './course-markdown.ts';
 import {pythonCourse} from './course-python.ts';
 import {devopsCourse} from './course-devops.ts';
 import {securityCourse} from './course-security.ts';
@@ -21,7 +22,7 @@ import type { Locale } from '../lib/locale.ts';
 export { coursePath, chapterProgressId } from './course-types.ts';
 
 export const courses: Course[] = [
-  basicsCourse, typescriptCourse, pythonCourse, webCourse, databaseCourse, apiCourse, networkCourse, osCourse, linuxCourse, securityCourse, devopsCourse,
+  basicsCourse, typescriptCourse, pythonCourse, markdownCourse, webCourse, databaseCourse, apiCourse, networkCourse, osCourse, linuxCourse, securityCourse, devopsCourse,
   { ...aiCourse, chapters: [...aiCourse.chapters, ...aiAdvanced, ...aiArchitectures] },
   { ...latexCourse, chapters: [...latexCourse.chapters, ...latexTechnical, ...latexAdvanced] },
 ];
