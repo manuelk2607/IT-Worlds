@@ -21,10 +21,11 @@ import Icon from "../components/Icon.astro";
       {t("Ein neues", "A new")} <span>{t("Aha.", "discovery.")}</span>
     </h1>
     <p class="page-lead">
-      {t(`Teste dein Verständnis mit ${questions.length} Fragen vom Einstieg bis zum Profi. Wähle Thema, Kurs, Kapitel oder Lernstufe. Ein freiwilliger Account speichert deinen Lernstand; alle Fragen bleiben frei zugänglich.`, `Test your understanding with ${questions.length} questions from beginner to advanced. Choose a topic, course, chapter or level. An optional account saves progress; all questions remain freely accessible.`)}
+      {t(`${questions.length} erklärte Fragen. Starte mit zehn Fragen oder passe Thema, Kurs, Lernstufe und Rundenlänge an. Ohne Zeitlimit und ohne Anmeldung.`, `${questions.length} explained questions. Start with ten or choose a topic, course, level and round length. No time limit or account required.`)}
     </p>
   </section>
   <section class="container narrow quiz-section">
+    <details class="quiz-filter-panel"><summary>{t('Quiz anpassen: Filter & Rundenlänge','Customise quiz: filters & round length')}</summary>
     <div class="quiz-controls course-filters">
       <label for="quiz-topic">{t("Deine Themenwahl", "Your topic")}
       <select id="quiz-topic">
@@ -40,10 +41,16 @@ import Icon from "../components/Icon.astro";
       <label for="quiz-chapter">{t('Kapitel', 'Chapter')}<select id="quiz-chapter"><option value="alle">{t('Alle Kapitel', 'All chapters')}</option>{courseChapters.map(({ course, chapter, id }) => <option value={id} data-course={course.id} data-chapter={chapter.id} data-level={chapter.level}>{course.title[locale]} · {chapter.title[locale]}</option>)}</select></label>
       <button type="button" id="clear-quiz-filters" class="text-link">{t('Filter zurücksetzen', 'Clear filters')}</button>
     </div>
-    <p id="quiz-pool-status" class="muted" role="status"></p>
+    <div class="quiz-round-controls">
+      <label for="quiz-size">{t('Fragen pro Runde','Questions per round')}<select id="quiz-size"><option value="5">5</option><option value="10" selected>10</option><option value="20">20</option><option value="alle">{t('Alle passenden Fragen','All matching questions')}</option></select></label>
+      <label class="quiz-shuffle"><input type="checkbox" id="quiz-shuffle" />{t('Fragen zufällig mischen','Shuffle questions')}</label>
+    </div>
+    </details>
+    <p id="quiz-selection-summary" class="quiz-selection-summary"></p>
+    <p id="quiz-pool-status" class="muted" role="status">{t('Deine Fragerunde wird vorbereitet.','Preparing your question round.')}</p>
     <div class="quiz-shell">
       <p id="quiz-empty" role="status" hidden>{t('Keine Fragen für diese Kombination. Ändere die Filter oder setze sie zurück.', 'No questions match this combination. Change or clear the filters.')}</p>
-      <div id="quiz-progress">
+      <div id="quiz-progress" hidden>
         <div>
           <span id="question-count">{t(`Frage 1 von ${questions.length}`, `Question 1 of ${questions.length}`)}</span>
           <span>{t("Ohne Zeitlimit", "No time limit")}</span>
@@ -56,14 +63,15 @@ import Icon from "../components/Icon.astro";
         ></progress>
       </div>
       <div id="quiz-questions">
-        {questions.map((question, index) => (
+        {questions.map((question) => (
           <section
             data-question={question.id}
+            data-review-href={localePath(locale, question.course ? coursePath(courses.find(course=>course.id===question.course)!, courseChapters.find(item=>item.id===`${question.course}-${question.chapter}`)!.chapter) : `/themen/${question.topic}/`)}
             data-topic={question.topic}
             data-course={question.course ?? ''}
             data-level={question.level}
             data-chapter={question.course ? `${question.course}-${question.chapter}` : ''}
-            hidden={index !== 0}
+            hidden
           >
             <span class="quiz-topic-label">
               {topicById(question.topic)!.title}{" "}
@@ -141,10 +149,12 @@ import Icon from "../components/Icon.astro";
         <p>
           {t("Ein kurzes Quiz zeigt einen Ausschnitt. Du kannst die Grundlagen nachlesen oder eine andere Themenwelt ausprobieren.", "A short quiz offers a glimpse. Read the foundations or try another topic.")}
         </p>
+        <section id="quiz-review" class="quiz-review" hidden><h3>{t('Gezielt nachlesen und wiederholen','Read and practise what you missed')}</h3><ul id="quiz-review-list"></ul></section>
         <div class="result-actions">
           <button class="button primary" id="restart-quiz">
-            {t("Noch einmal versuchen", "Try again")} <Icon name="arrow" size={18} />
+            {t("Dieselbe Runde wiederholen", "Repeat this round")} <Icon name="arrow" size={18} />
           </button>
+          <button class="button secondary" id="new-quiz-round">{t('Neue zufällige Runde','New shuffled round')}</button>
           <a class="text-link" href={localePath(locale, "/#themenwelten")}>
             {t("Themen entdecken →", "Explore topics →")}
           </a>
@@ -166,6 +176,10 @@ import Icon from "../components/Icon.astro";
         }
         .check-answer,
         .quiz-controls,
+        .quiz-round-controls,
+        .quiz-filter-panel,
+        #quiz-selection-summary,
+        #quiz-pool-status,
         #quiz-progress {
           display: none;
         }

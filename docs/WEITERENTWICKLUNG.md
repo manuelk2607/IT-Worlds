@@ -79,3 +79,9 @@ Kursseiten markieren in der Hauptnavigation nun „Kurse“. Escape aus dem Mobi
 Acht Kapitel mit 16 erklärten Fragen: Interpreter/venv, Werte, Kontrollfluss, Sammlungen, Funktionen/Verträge, UTF-8/JSON, Module/Tests und ein lesendes Kommandozeilenprojekt zur Lernzeit-Auswertung. 14 offizielle Python-3.12-Belege tatsächlich gelesen. Keine zusätzlichen Pakete. Alle Python-Listings werden durch einen TypeScript-Test auf Syntax und Ausführung geprüft; zusätzliche Eingaben prüfen bool, negative/zu große Minuten, leere und beschädigte Daten, ungültiges UTF-8, fehlende Dateien, --help und unveränderte Eingabedateien. Lokal Python 3.12.6; CI wählt ausdrücklich Python 3.12.
 
 Aktuell zwölf Kurse, 100 Kapitel, 210 Fragen, 169 Quellen; 292 HTML-Seiten/286 öffentliche Sprachseiten. Umfang ist ein abgeschlossener Grundkurs mit Transferprojekt, keine Behauptung einer vollständigen Python-Expertenausbildung.
+
+## Paket 12 · Überschaubare Quizrunden
+
+Standardmäßig zehn Fragen; wählbar sind 5, 10, 20 oder alle passenden Fragen. Optionales Mischen verwendet eine im Link gespeicherte Auswahlkennung: erneutes Laden, Teilen und Sprachwechsel behalten dieselbe Reihenfolge. Antworten und Antwortreihenfolge bleiben unverändert. „Dieselbe Runde wiederholen“ setzt Antworten zurück und behält die Auswahl; eine neue zufällige Runde trifft eine neue Auswahl. Ergebnislisten verlinken bei Fehlern direkt zum passenden Kapitel und zur einzelnen Frage. Filter-/Rundenwechsel starten ausdrücklich neu. Ohne Browser-JavaScript bleiben sämtliche Fragen und Lösungen lesbar.
+
+Geprüft: Grenzen/Leermengen/Einzigartigkeit und unveränderter Fragenpool; fünf gemischte Python-Fragen im Browser vollständig beantwortet, Ergebnis 1/5 und vier korrekte Nachlese-/Wiederholungslinks, Neustart derselben Auswahl und Englisch mit gleicher Frage-ID. Eingangsfragen sind bis zum fertigen Filterzustand verborgen; die zuvor kurz sichtbare unpassende Standardfrage entfällt.

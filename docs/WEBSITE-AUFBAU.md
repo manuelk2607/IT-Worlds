@@ -11,7 +11,7 @@ Der erste Rahmen macht die breite Themenlandkarte benutzbar. Das Ziel ist Wissen
 | `/lernpfade/`        | Zwölf verfügbare Kursfolgen mit Themen-/Titelfilter und drei vollständig verfügbare Querverbindungspfade                                                            |
 | `/lernpfade/[slug]/` | Voraussetzungen, Schritte, tatsächliche Verfügbarkeit und Verknüpfung zur Themenwelt                      |
 | `/uebungen/` | Zehn Editor-Aufgaben mit lokalem Prüfer, Hinweisen und Musterlösungen |
-| `/quiz/`             | 210 Fragen, Themen-, Kurs-, Kapitel- und Stufenwahl, Erklärung zu jeder Antwort, Beleg, Ergebnis und Neustart                      |
+| `/quiz/`             | 210 Fragen, Themen-, Kurs-, Kapitel- und Stufenwahl, Erklärung zu jeder Antwort, Beleg, Runden mit 5/10/20/allen Fragen, reproduzierbares Mischen und gezielte Wiederholung                      |
 | `/quellen/`          | 169 Originalquellen mit Herausgeber, Version, Abschnitt, Lesedatum und gelesenem Dokumentationsquelltext |
 
 Die globale Suche lädt ihren sprachspezifischen JSON-Index erst beim Öffnen und durchsucht Themen, Kurse, alle 100 Kapiteltexte, Lernpfade und Übungen. Mehrere Wörter werden kombiniert; Titel sind höher gewichtet. Ein Inhaltstypfilter sowie Pfeiltasten, Enter und Escape unterstützen die Bedienung. /lernen/ bietet Orientierung; /lernpfade/ bietet verfügbare Kurse und durchgehende Querverbindungspfade.

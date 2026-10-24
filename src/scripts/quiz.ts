@@ -1,3 +1,4 @@
+import {quizRound,roundSize,roundSeed} from '../lib/quiz-round';
 import { t } from './browser-i18n';
 import { recordQuestion } from './progress-client';
 import { matchesQuizFilter, reconcileQuizFilter, type QuizFilter } from '../lib/quiz-filter';
@@ -8,6 +9,10 @@ const levelSelect = document.querySelector<HTMLSelectElement>('#quiz-level')!;
 const chapterSelect = document.querySelector<HTMLSelectElement>('#quiz-chapter')!;
 const courseOptions=[...courseSelect.options],chapterOptions=[...chapterSelect.options];
 const empty = document.querySelector<HTMLElement>('#quiz-empty')!;
+const sizeSelect=document.querySelector<HTMLSelectElement>('#quiz-size')!;
+const shuffle=document.querySelector<HTMLInputElement>('#quiz-shuffle')!;
+let seed:number|undefined;
+let missed:HTMLElement[]=[];
 let exactQuestion = '';
 const progress =
   document.querySelector<HTMLProgressElement>("#question-progress")!;
@@ -18,12 +23,20 @@ let active: HTMLElement[] = [];
 let position = 0;
 let score = 0;
 
-function resetQuiz(focus = false) {
-  active = sections.filter(section => matchesQuizFilter(section.dataset, {
+function resetQuiz(focus = false,keepRound=false) {
+  const pool = sections.filter(section => matchesQuizFilter(section.dataset, {
     topic: selection.value, course: courseSelect.value, level: levelSelect.value,
     chapter: chapterSelect.value, question: exactQuestion,
   }));
-  document.querySelector("#quiz-pool-status")!.textContent = t(`${active.length} ${active.length === 1 ? "Frage in deiner Auswahl" : "Fragen in deiner Auswahl"}. Filteränderungen starten eine neue Runde.`, `${active.length} ${active.length === 1 ? "question" : "questions"} in your selection. Changing filters starts a new round.`);
+  if(!keepRound)active=quizRound(pool,roundSize(sizeSelect.value),shuffle.checked?seed:undefined);
+  missed=[];
+  document.querySelector("#quiz-review")!.setAttribute("hidden", "");
+  document.querySelector("#quiz-pool-status")!.textContent = t(
+    `${active.length} von ${pool.length} passenden Fragen in dieser Runde. Filteränderungen starten neu.`,
+    `${active.length} of ${pool.length} matching questions in this round. Changing filters starts again.`);
+
+  const courseName=courseSelect.selectedOptions[0]?.textContent??'';
+  document.querySelector('#quiz-selection-summary')!.textContent=[selection.selectedOptions[0]?.textContent,courseSelect.value!=='alle'?courseName:'',chapterSelect.value!=='alle'?chapterSelect.selectedOptions[0]?.textContent?.replace(`${courseName} · `,''):'',levelSelect.value!=='alle'?levelSelect.selectedOptions[0]?.textContent:''].filter(Boolean).join(' · ');
   position = 0;
   score = 0;
   progress.max = Math.max(1, active.length);
@@ -72,6 +85,7 @@ sections.forEach((section) => {
     }
     const correct = Number(chosen.value) === Number(form.dataset.answer);
     if (correct) score++;
+    else missed.push(section);
     form.dataset.answered = "true";
     void recordQuestion(section.dataset.question!, Number(chosen.value));
     const feedback = form.querySelector<HTMLElement>(".quiz-feedback")!;
@@ -105,6 +119,7 @@ sections.forEach((section) => {
       result.hidden = false;
       document.querySelector("#quiz-score")!.textContent =
         t(`${score} von ${active.length} ${active.length === 1 ? "Frage richtig beantwortet" : "Fragen richtig beantwortet"}.`, `${score} of ${active.length} ${active.length === 1 ? 'question' : 'questions'} answered correctly.`);
+      showReview();
       result.querySelector<HTMLElement>("h2")!.focus();
     }
   });
@@ -121,6 +136,8 @@ function readLocation() {
     const item=sections.find(section=>section.dataset.question===exactQuestion)!;
     selection.value=item.dataset.topic!;courseSelect.value=item.dataset.course||'alle';levelSelect.value=item.dataset.level!;chapterSelect.value=item.dataset.chapter||'alle';
   }
+  sizeSelect.value=roundSize(params.get('anzahl'));
+  seed=roundSeed(params.get('mischen'));shuffle.checked=seed!==undefined;
   syncOptions();
   resetQuiz();
 }
@@ -136,6 +153,8 @@ function updateLocation() {
     url.searchParams.set('kurs', chapter.dataset.course!);
     courseSelect.value = chapter.dataset.course!;
   } else url.searchParams.delete('kapitel');
+  if(sizeSelect.value==='10')url.searchParams.delete('anzahl');else url.searchParams.set('anzahl',sizeSelect.value);
+  if(shuffle.checked&&seed!==undefined)url.searchParams.set('mischen',seed.toString(16).padStart(8,'0'));else url.searchParams.delete('mischen');
   url.searchParams.delete('frage');
   exactQuestion = '';
   history.replaceState(null, '', url);
@@ -167,11 +186,28 @@ levelSelect.addEventListener('change',()=>changeFilter('level'));
 chapterSelect.addEventListener('change',()=>changeFilter('chapter'));
 document.querySelector('#clear-quiz-filters')!.addEventListener('click', () => {
   for (const [select] of controls) select.value = 'alle';
-  chapterSelect.value = 'alle';
+  chapterSelect.value = 'alle';sizeSelect.value='10';shuffle.checked=false;seed=undefined;
   syncOptions();updateLocation();
 });
 window.addEventListener('popstate', readLocation);
 document
   .querySelector("#restart-quiz")!
-  .addEventListener("click", () => resetQuiz(true));
+  .addEventListener("click", () => resetQuiz(true,true));
+function showReview(){
+ const list=document.querySelector<HTMLElement>('#quiz-review-list')!;list.replaceChildren();
+ for(const section of missed){
+  const item=document.createElement('li');const title=document.createElement('p');
+  title.textContent=section.querySelector('legend')!.textContent;item.append(title);
+  const read=document.createElement('a');read.className='text-link';read.href=section.dataset.reviewHref!;
+  read.textContent=t('Passenden Inhalt nachlesen →','Read the related lesson →');item.append(read);
+  const retry=document.createElement('a');retry.className='text-link';
+  const url=new URL(location.pathname,location.origin);url.searchParams.set('frage',section.dataset.question!);
+  retry.href=url.href;retry.textContent=t('Diese Frage wiederholen →','Retry this question →');item.append(retry);list.append(item);
+ }
+ document.querySelector<HTMLElement>('#quiz-review')!.hidden=missed.length===0;
+}
+sizeSelect.addEventListener('change',updateLocation);
+function newSeed(){return crypto.getRandomValues(new Uint32Array(1))[0]!;}
+shuffle.addEventListener('change',()=>{seed=shuffle.checked?newSeed():undefined;updateLocation();});
+document.querySelector('#new-quiz-round')!.addEventListener('click',()=>{shuffle.checked=true;seed=newSeed();updateLocation();showQuestion(true);});
 readLocation();
