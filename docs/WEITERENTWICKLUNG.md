@@ -89,3 +89,9 @@ Geprüft: Grenzen/Leermengen/Einzigartigkeit und unveränderter Fragenpool; fün
 ## Paket 13 · Verlässlicher Release-Build
 
 Frischer temporärer Build außerhalb synchronisierter Projektordner, Pflichtdatei-/Konfliktkopien-/Symlinkprüfung, SEO- und Linkaudit vor Upload, öffentlicher bytegenauer Abgleich nach echtem Deploy. Bestehende Account-/Routing-/Bindingkonfiguration bleibt erhalten. Der normale dist-Build wird weder gelöscht noch für den Upload verwendet. Tests prüfen fehlende Dateien, beide Sprachen, Konfliktdateien/-ordner und Symlinks. Dry-Run erfolgreich. Neue Lerninhalte benötigen keine zusätzliche Buildabhängigkeit.
+
+## Paket 14 · Betriebssystemkonzepte
+
+Die bisher überwiegend auf Bedienung ausgerichtete Betriebssystemwelt erhält sechs eigene Kapitel: Prozesse/Zustände, Round Robin, Adressraum/Paging, Nebenläufigkeit/Mutex, Dateisystem/Hardlinks/Persistenz und FIFO-Seitenaustausch als Abschlussprojekt. Acht tatsächlich gelesene OSTEP-1.10-Kapitel; vorhandenen Node-Dateisystembeleg wiederverwendet und um gelesene API-Abschnitte ergänzt. Zwölf neue erklärte Fragen, sechs Aufgaben/Lösungen. Kein echter Scheduler und keine echte Seitentabelle werden verändert. Der Hardlinkversuch läuft tatsächlich in seinem eigenen temporären Ordner.
+
+Alle Listings streng geprüft/ausgeführt. Weitere Fälle prüfen Prozessübergänge, Schedulinggrenzen/Unveränderlichkeit, Adress-/Framegrenzen und fehlende Zuordnung, beide verlorenen Schreibreihenfolgen, Schreiben vor Lesen, leere/wiederholte Referenzen und Belady-Gegenbeispiel (9/10 Misses). Lokal 39 Tests (38 pass/1 Docker-Skip), 120 strikte Dateien, 308 HTML-Seiten/302 öffentliche Sprachseiten und 20.917 interne Verweise. Browser DE/EN: Formel als MathML ohne Renderfehler, Aufgabenlösung und Volltextsuche „Belady“ mit genau passendem Abschlusskapitel. Quellenabgleich ist kein unabhängiges Fachreview.

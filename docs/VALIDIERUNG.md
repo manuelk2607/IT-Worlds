@@ -120,3 +120,7 @@ Der [vorherige Prüfstand vom 21. Oktober](https://github.com/manuelk2607/IT-Wor
 ## Isolierter Veröffentlichungsablauf · lokaler Folgestand
 
 38 Tests: 37 bestanden, ein lokaler Docker-Fall übersprungen; 117 Dateien strikt ohne Meldungen. Neues Release-Artefakt enthält 372 Dateien, keine Synchronisationskopien. Der isolierte Dry-Run prüft 292 HTML-Seiten, 286 öffentliche URLs und 19.863 interne Verweise; Wrangler erhält die temporären Assets unter Beibehaltung der vorhandenen Konfiguration. Noch kein echter Deploy über das neue Hilfsskript behauptet.
+
+## Betriebssystemkurs · lokaler Folgestand
+
+39 Tests: 38 bestanden, lokaler Docker-Fall übersprungen; alle neuen OS-Listings streng typgeprüft und ausgeführt, Hardlinks real geprüft. 120 Dateien strikt ohne Meldungen; 308 HTML-Seiten, 302 öffentliche Sprachseiten, 20.917 interne Verweise. Quellenabschnitte und tatsächlich gelesene Onlinefassungen abgeglichen. Browser: DE/EN, aufklappbare Lösung, gerenderte MathML-Formel und Volltextsuche. Veröffentlichung mit neuem Releaseablauf folgt.

@@ -13,7 +13,7 @@ Informationsarchitektur, Benutzerführung und vernachlässigte Inhalte iterativ 
 
 ## Laufendes Paket und nächster Schritt
 - Isolierter Release-Build implementiert: frischer temporärer Ordner, Pflichtdateien/Konfliktkopien/Symlinks, SEO/interne Verweise vor Upload, öffentliche Auslieferung danach, nur eigenen temporären Ordner entfernen. 38 Tests (37 pass/1 Skip), 117 strikte Dateien; Dry-Run erfolgreich mit 372 Artefaktdateien/286 URLs/19.863 internen Verweisen.
-- Releasepaket sichern und mit dem nächsten vollständigen Inhaltspaket tatsächlich einsetzen. Nächste priorisierte Inhaltslücke: Betriebssystemkonzepte (Prozesse/Scheduling, Adressräume/Paging, Nebenläufigkeit und Dateipersistenz); bestehender Linuxkurs behandelt hauptsächlich Bedienung.
+- Releasepaket auf GitHub gesichert (5738773). Betriebssystemkonzepte fertig: sechs Kapitel/zwölf Fragen/acht neue OSTEP-Belege, vorhandenen Node-Beleg wiederverwendet. Gesamt 13 Kurse/106 Kapitel/222 Fragen/177 Quellen. 39 Tests (38 pass/1 Skip), 120 strikte Dateien, 308 HTML/302 URLs/20.917 interne Verweise. Browser DE/EN, Formel/Lösung und Belady-Volltextsuche erfolgreich. Nächster Schritt: sichern, isolierten Deploy tatsächlich ausführen und öffentlich verifizieren; anschließend nächste sinnvolle Lücke.
 
 ## Grenzen
 Kein unabhängiges Fachreview, kein neuer echter angemeldeter E2E-Test, keine systemd-Liveprüfung oder Core-Web-Vitals-Feldmessung. Backend/Auth/Schema unverändert. Quell- und Nutzerdateien nicht pauschal bereinigen. Kontingent bis zur Ausführungsgrenze produktiv weiterverwenden, geprüfte Meilensteine früh sichern.

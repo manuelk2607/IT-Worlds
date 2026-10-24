@@ -1,41 +1,41 @@
-# KI- und LaTeX-Kurse
+# Kursarchitektur und Lernfolgen
 
-Stand: 23. Oktober 2026. 8 Datenbank-, 7 API-, 14 KI- und 13 LaTeX-Kapitel sind auf Deutsch und Englisch verfügbar. Die vier Folgen behandeln Grundlagen, Vertiefung und fortgeschrittene Projekte; sie ersetzen keine eigenständige Praxis oder Fachbegutachtung. LaTeX bleibt unter Programmiersprachen → Auszeichnungs- & Satzsprachen.
+Stand: 24. Oktober 2026. Dreizehn verfügbare Kursfolgen mit 106 Kapiteln und 222 erklärten Quizfragen. Die Folgen decken ihren jeweils beschriebenen Umfang ab; sie sind keine vollständige Expertenausbildung in sämtlichen Fachgebieten. Alle Kapitel stehen auf Deutsch und Englisch ohne Account bereit. LaTeX bleibt unter Programmiersprachen → Auszeichnungs- & Satzsprachen.
 
-## Lernfolge
+| Folge | Kapitel | Schwerpunkt |
+| --- | --- | --- |
+| IT-Grundlagen | 7 | Daten, Dateien, Git, Algorithmen und Fehlersuche |
+| TypeScript | 8 | Sprache, sichere Daten, asynchrone Abläufe, Tests und Projekt |
+| Python | 8 | Sprache, Dateien/JSON, Tests und Kommandozeilenprojekt |
+| Web | 8 | Semantik, CSS, Layout, Formulare, DOM, Zustände, Tastatur und Auslieferung |
+| Datenbanken | 8 | Modell, SQL, Joins, Transaktionen, Parameter, Pläne und Restore |
+| APIs | 7 | HTTP, Verträge, Clients, Fehler, Rechte und konkurrierende Änderungen |
+| Netzwerke | 6 | Adressen, CIDR, DNS, Transport, TLS und Caches |
+| Betriebssystemkonzepte | 6 | Prozesse, Scheduling, Speicher, Nebenläufigkeit, Dateien und FIFO |
+| Linux | 6 | Terminal, Rechte, Pipes, Prozesse, Dienste und Wiederherstellung |
+| Sicherheit | 7 | Bedrohungen, Identität, Eingaben, Rechte, XSS/CSRF und Audit |
+| Cloud & DevOps | 8 | Dienstmodelle, Builds, CI, Container, Secrets, SLO und Delivery |
+| KI | 14 | Mathematik, Lernen, Training, Architekturen, generative Modelle und Grenzen |
+| LaTeX | 13 | Syntax, Struktur, Satz, Mathematik, Tabellen, Grafiken und Literatur |
 
-KI: Lernaufgaben → lineare Algebra → Wahrscheinlichkeit → Ableitungen/Backpropagation → ML/Evaluation → mehrschichtige Netze → vollständiges Training → Optimierung → CNN/Transferlernen → RNN/LSTM → Transformer → LLM/LoRA/RAG → VAE/GAN/Diffusion → Anwendungen, Grenzen und Abschlussprojekt.
+## Gemeinsames Inhaltsmodell
 
-LaTeX: Einrichtung → Syntax → Dokumentstruktur → Typografie → Mathematik → Ausrichtungen/Matrizen → Tabellen → Grafiken → Querverweise → BibLaTeX/Biber → Pakete/eigene Befehle → Fehlerdiagnose → komplexer Abschlussbericht.
+`src/data/course-types.ts` definiert strikt typisierte zweisprachige Kapitel, Abschnitte, Lernziele, Aufgaben/Lösungen und Fragen. Die Dateien `course-*.ts` verwenden dieselben Builder; Titel, Antwortindizes und IDs werden nicht separat übersetzt. `courses.ts` erzeugt die gemeinsamen Kapitel-, Quiz- und Fortschrittslisten. Quellenregister werden in `content.ts` zusammengeführt; jeder Beleg nennt Herausgeber, Fassung, Abschnitt, URL und Lesedatum.
 
-Jedes Kapitel enthält Lernziele, erklärende Abschnitte, eine Praxisaufgabe mit aufklappbarer Lösung, zwei Quizfragen und konkrete Quellen. Vorheriges/nächstes Kapitel, Voraussetzungen, Inhaltsverzeichnis und zwei Kurslernwege verbinden die Inhalte. Formeln werden beim Build mit KaTeX als HTML und zugängliches MathML erzeugt. Die Beispiele sind eigenständig; die Website führt Python oder LaTeX nicht aus.
+`CourseView.astro` stellt Kursübersichten und Kapitel dar. Breadcrumbs, mobile Kapitelübersicht, vorheriger/nächster Schritt, Aufgabenlösung, Quellen und Quizlinks greifen auf die gemeinsamen Daten zu. Formeln werden beim Build mit KaTeX als HTML und MathML erzeugt. `runtime` unterscheidet Browser- und Node-Beispiele; Python, SQL, Shell und LaTeX behalten ihre Fachsprache. Der Browser führt die vollständigen Kurslistings nicht automatisch aus.
 
-## Integration
+Routen leiten sich aus Themenwelt, Kursslug und Kapitel-ID ab; Englisch ergänzt `/en/`. Suche, Sitemap, Themenansichten, Quiz und Lernstand nutzen dieselben Daten. Neue Kurse benötigen keine eigenen Darstellungsseiten. `related` verknüpft passende Kursübersichten.
 
-- `src/data/course-types.ts`: strikt typisierte zweisprachige Daten und gemeinsame Builder.
-- `course-ai*.ts` und `course-latex*.ts`: Texte, Beispiele, Aufgaben und Fragen.
-- `course-sources.ts`: 50 neue Primärbelege mit Herausgeber, Version, Abschnitt, URL und Lesedatum.
-- `courses.ts`: gemeinsame Kursliste, Kapitel-IDs, Quizfragen und Lernpfade. Keine getrennte Kopie der DE-/EN-Inhalte.
-- `CourseView.astro`: gemeinsame Kapitel-/Übersichtsansicht; `courses.css`: responsive Darstellung.
-- Routen: `/themen/ki-neuronale-netze/kurs/[kapitel]/` und `/themen/programmiersprachen/latex/[kapitel]/`; Englisch zusätzlich unter `/en/`. Ohne Kapitel erscheint die Kursübersicht.
-- Suche, Quellenverzeichnis, Sitemap, Themenansichten und Lernstand übernehmen dieselben Daten.
+## Geführte Wege und persönlicher Fortschritt
 
-Das Quiz filtert nach Thema, Kurs, Stufe und Kapitel. Links verwenden `?kurs=ki&kapitel=transformer`; `?frage=ki-transformer-1` öffnet eine einzelne Frage. Nach der Antwortprüfung werden sämtliche Optionen erklärt. Neustart beginnt den Durchlauf neu; freiwillig gespeicherter Account-Fortschritt bleibt erhalten.
+`learning-paths.ts` verbindet vorhandene Kapitel zu drei vollständigen Wegen: Website (13 Schritte), APIs/Daten (14), Systementwurf (10). Jedes Ziel nennt Voraussetzungen, Zweck der Schritte und ein überprüfbares Projektergebnis. Titel, URLs und Fortschrittskennungen werden aus den Kursdaten bezogen. Kurs und Querverbindungspfad teilen denselben Kapitelstand. `LearningRoute.astro` bietet den ersten ungelesenen Schritt oder die Wiederholung eines vollständig gelesenen Weges an.
 
-Neue Fortschrittskennungen sind `ki-[kapitel]` beziehungsweise `latex-[kapitel]`; Frage-IDs ergänzen `-1` oder `-2`. Die vorhandene API validiert sie gegen die gemeinsame Inhaltsliste. Keine Datenbankmigration, Änderung der Zugriffsrechte oder Löschung bestehender Lernstände.
+Kapitelkennungen folgen `[kurs]-[kapitel]`, Fragen ergänzen `-1` beziehungsweise `-2`. Bestehende veröffentlichte Kennungen bleiben stabil. Die API validiert sie gegen die gemeinsame Inhaltsliste; neue Inhalte benötigen dafür keine Schemaänderung. Accounts ergänzen nur geräteübergreifenden Fortschritt.
 
-## Prüfung und Grenzen
+## Quiz und Prüfung
 
-Alle acht Python-Beispiele wurden mit Python 3.12 und PyTorch 2.14.1 ausgeführt. Zwölf LaTeX-Beispiele wurden mit dem eingebauten Tectonic/XeTeX-Compiler erfolgreich übersetzt. Der BibLaTeX-Beispieltext erreicht den Biber-Schritt; die vollständige Literaturpipeline ist lokal mangels Biber nicht geprüft. Der angegebene Ablauf (LaTeX → Biber → LaTeX → LaTeX) setzt eine vollständige TeX-Installation voraus.
+Thema, Kurs, Kapitel und Stufe begrenzen den Fragenpool. Runden umfassen 5, 10, 20 oder alle passenden Fragen; optionales Mischen bleibt über eine Kennung im Link reproduzierbar. `?frage=ki-transformer-1` öffnet eine konkrete Frage. Jede Antwortoption erhält eine Erklärung und einen Beleg. Das Ergebnis verlinkt Fehler zum Nachlesen und Wiederholen. Ein Neustart derselben Runde behält deren Reihenfolge; gespeicherter Lernstand bleibt erhalten.
 
-Automatische Tests prüfen Sprachparität, eindeutige IDs, Quellenbezüge, Formelrendering, Quizlösungen und Filterkombinationen. Handrechnungen prüfen ausgewählte Zahlenbeispiele. Quellenabgleich und technische Prüfung sind kein unabhängiges Fachreview; dieses steht aus.
+`npm test`, `npm run check` und `npm run build` prüfen Struktur, Übersetzungen, IDs, Quellen, Formeln und ausführbare Beispiele. Zusätzliche Tests führen TypeScript-, Python- und portable Shellbeispiele aus. Der Linux-CI-Job führt das veröffentlichte Dockerbeispiel tatsächlich aus; lokal wird es ohne laufende Engine übersprungen. SQL-Beispiele wurden separat in einem isolierten PostgreSQL-18-Cluster geprüft. Frühere KI-/LaTeX-Prüfstände und verbleibende Biber-/systemd-Grenzen stehen in [VALIDIERUNG.md](VALIDIERUNG.md). Der aktuelle Ausbau verändert KI und LaTeX inhaltlich nicht.
 
-## Ergänzung: Datenbanken und APIs
-
-Acht SQL-Kapitel führen von Modellierung über Abfragen, Joins, Auswertungen und Transaktionen bis zu Parametern, Plänen und Migration/Restore. Sieben API-Kapitel behandeln HTTP, OpenAPI, Laufzeitvalidierung, Fehler, Objektberechtigungen, Idempotenz/Versionskonflikte und Vertragstests. Beide Folgen haben aufeinander aufbauende Aufgaben und Abschlussprojekte. Alle acht SQL-Beispiele wurden in isoliertem PostgreSQL 18 geprüft, alle sieben TypeScript-Beispiele streng typgeprüft und ausgeführt. Der API-Test prüft zusätzlich ungültige Daten, HTTP-Fehler und veraltete Versionen. Ein eigener Dump/Restore-Test verwendet ausschließlich eine lokale Testdatenbank.
-
-Daten: `course-databases.ts`, `course-apis.ts`, `course-foundation-sources.ts`; 17 zusätzliche Primärquellen und 30 Fragen. Fortschrittskennungen beginnen mit `datenbanken-` beziehungsweise `apis-`. Die bisherigen KI-/LaTeX-Kapitel wurden nicht verändert. Die nun vier Kurse nutzen dieselbe Darstellung, Suche, Quizfilter, Lernpfade und Fortschrittsvalidierung. Gesamt: 42 Kapitel und 94 Fragen.
-
-## Aktueller Ausbau · 23.10.2026
-
-Zehn Kursfolgen mit 84 Kapiteln und 178 Fragen. Neue Dateien: course-basics.ts (7), course-typescript.ts (8), course-web.ts (8), course-linux.ts (6), course-networks.ts (6), course-security.ts (7). Alle zweisprachig mit Aufgabe, Lösung und zwei erklärten Fragen pro Kapitel. Quellenregister laufen zentral in content.ts zusammen. runtime kennzeichnet Browser-/Node-Beispiele; related nennt ergänzende Kurse. Alle TypeScript-Listings werden streng geprüft, lokale Modelle zusätzlich ausgeführt. Details: [WEITERENTWICKLUNG.md](WEITERENTWICKLUNG.md).
+Quellenabgleich und technische Prüfung ersetzen kein unabhängiges Fachreview. Offene Ausbaupakete: [AUSBAU.md](AUSBAU.md); Veröffentlichung: [CLOUDFLARE.md](CLOUDFLARE.md).
