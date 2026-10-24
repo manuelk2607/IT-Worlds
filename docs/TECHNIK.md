@@ -58,3 +58,7 @@ Die zweisprachigen Kursdaten und ihre 50 zusätzlichen Quellen liegen in `src/da
 ## Orientierung und Suche
 
 `/lernen/` bietet den Lernstart; `/lernpfade/` trennt verfügbare Kurse von teilweise geplanten Lernwegen. `CourseCard.astro` und `Breadcrumbs.astro` werden gemeinsam verwendet. Die Suche lädt `/suche.json` beziehungsweise `/en/suche.json` erst beim Öffnen. `search-index.ts` erzeugt den öffentlichen Index aus den Inhaltsdaten; `search.ts` gewichtet Mehrwortabfragen. Browsertexte werden mit DOM-Textknoten erzeugt. Details und Paketprüfungen: [WEITERENTWICKLUNG.md](WEITERENTWICKLUNG.md).
+
+## Lokaler Test bei nummerierten Build-Kopien
+
+Falls `dist/` nummerierte Ordnerkopien enthält und erwartete Routen fehlen, einen neuen temporären Ausgabeordner verwenden. Beispiel mit einem eigens dafür angelegten leeren Verzeichnis: `npx astro build --outDir /private/tmp/it-worlds-preview/assets`, danach `npx wrangler dev --local --port 8791 --assets /private/tmp/it-worlds-preview/assets`. Vor dem Entfernen ausschließlich dieses eigenen temporären Ordners den eigenen Testserver beenden. `npm run deploy` erzeugt und prüft bereits ein eigenes isoliertes Release-Artefakt. Keine generierten Browserdateien manuell umschreiben.

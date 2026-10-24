@@ -1,6 +1,22 @@
 # Validierung
 
-## Aktuelle Entwicklungsrunde · 24. Oktober 2026
+## Aktuelle Entwicklungsrunde · Kursübungen und Quellenorientierung
+
+**Veröffentlicht und öffentlich geprüft:** Quellstand **25cf8eb**, Worker-Version **b54243e9-3627-496e-a8f4-66c0c378638f**, Deployment **513face4-f18e-43cb-9be9-04b6c0ebe106**, 24.10.2026 **15:53:22 Europe/Stockholm**, 100 % Traffic. Vorhandener Nutzercommit 43a48e5 erhalten. Drei abgeschlossene Pakete: 19ea45e (13 zusätzliche Kursaufgaben und Katalog), 8bfd4ac (Quellenfilter), 25cf8eb (globale Quellensuche und lesbarere Belegstände).
+
+15 Kurse, 122 Kapitel, 254 erklärte Quizfragen, **23 Editor-Aufgaben und 204 Primärquellen**. 64 Tests mit vorhandenem Typst 0.15.1: **60 erfolgreich, vier lokale SQL-/Dockerfälle ohne Laufzeit übersprungen**. Ohne den expliziten Typst-Pfad wird zusätzlich der Compilerfall übersprungen. 156 Dateien strikt ohne Fehler/Warnungen/Hinweise. `npm test`, `npm run check`, `npm run build` und `npm run deploy:check` ausgeführt. GitHub-Run **40100011712** bestätigt Node 22.22.0, Node 24, die vorhandenen echten PostgreSQL-Beispiele und das Dockerbeispiel erfolgreich.
+
+374 HTML-Seiten und **25.207 interne Verweise** geprüft. Sämtliche **368 öffentlichen Sprachseiten** stimmen bytegleich mit dem separat gebauten Deployment-Artefakt überein. Sitemap, robots, eindeutige Titel, Beschreibungen, Canonicals, Sprachalternativen, strukturierte Daten, Vorschaubilder und HTTP-zu-HTTPS geprüft. Beide unbekannten Sprachrouten liefern HTTP 404 samt passender Fehlerseite. Lokale Wrangler-Anmeldung, Account, Subdomain, Worker-Einstellungen und alle vier vorhandenen Bindings vorher/nachher bestätigt. Keine Produktionsdatenbank, Authkonfiguration oder Geheimnisse geändert.
+
+Browser: alle 13 neuen Aufgaben mit ihren Lösungen auf Deutsch geprüft, sieben System-/Betriebsaufgaben zusätzlich Englisch. Starterfehler, alternative Eingaben und Format-/Typfehler automatisch geprüft. Neue Entwürfe sind getrennt gespeichert und bleiben bei Sprachwechsel erhalten; Reset und Undo funktionieren. Kurs-/Themen-/Stufenfilter einschließlich widersprüchlicher Kursauswahl, Leerzustand und Reset; Quellensuche nach Titel/Abschnitt/Version, Themenwelt und Herausgeber; Sprachwechsel erhält Filter. Globale Suche findet Quellen, führt per Enter zur richtigen Karte und findet Aufgabenbegriffe. Belegstand mit Ausgabe, Abschnitt und Lesedatum ausklappbar. Quellenmetadaten haben auch mobil 13,6 px statt unter 11 px.
+
+Öffentlich zusätzlich: TypeScript-Aufgabe gelöst, globale deutsche/englische Suche und Quellenfilter bedient, Kapitelquiz mit richtiger und falscher Antwort samt Erklärung jeder Option, Ergebnis 1/2 und Neustart auf 0/2. Mobilmenü sowie 390px- und 1280px-Darstellung in hell/dunkel ohne horizontales Überlaufen. Belegbild der veröffentlichten Übungsübersicht lokal gesichert; temporärer Browser-Viewport zurückgesetzt. Eigener lokaler Worker-Testserver beendet.
+
+Im lokalen `dist/` wurden nummerierte Ordnerkopien und fehlende erwartete Pfade beobachtet. Außerhalb des Arbeitsordners erzeugte Artefakte waren korrekt. Die Ursache dieser lokalen Umbenennung ist nicht abschließend geklärt. Browser und Release wurden deshalb mit isolierten Artefakten geprüft; `scripts/release.ts` verwendet diese bereits. Die Quelldateien und veröffentlichten Assets sind intakt.
+
+Offen: weitere abgestufte Aufgaben je Kapitel, größere Abschlussprojekte, echtes systemd-Benutzerlabor, unabhängiges Fachreview, assistive Nutzerprüfung/Feldmessungen und kontrollierter Mail-/Passwort-Reset-Test. Editorprüfungen bleiben begrenzte lokale Lernmodelle. KI und LaTeX wurden inhaltlich nicht weiter ausgebaut.
+
+## Vorheriger Abschluss · 24. Oktober 2026, 12:15
 
 **Veröffentlicht und geprüft:** Quellstand b0c60b5, Worker-Version 323ad148-67c5-4332-87be-8c5244b6ce3b, Deployment c7901b38-a832-4334-bedb-7bed78e6a48d, 24.10.2026 12:15 Europe/Stockholm, 100 % Traffic. 15 Kurse, 122 Kapitel, 254 erklärte Fragen und 200 Primärquellen. 56 lokale Tests: 55 erfolgreich, ein Dockerfall ohne lokale Engine übersprungen. 142 Dateien strikt ohne Fehler/Warnungen/Hinweise. Build: 348 HTML-Seiten; 24.009 interne Verweise. Dry-Run erfolgreich. GitHub-Run 40085060165: Node 22.22/24, echte PostgreSQL-Beispiele und echtes Dockerbeispiel jeweils erfolgreich.
 
