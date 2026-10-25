@@ -5,10 +5,12 @@ import {neon} from '@neondatabase/serverless';
 import {parseSessionData} from '@neondatabase/auth/server';
 import {questions} from '../src/data/content.ts';
 import {lessonIds} from '../src/lib/progress.ts';
+import {pathToFileURL} from 'node:url';
+import {resolve} from 'node:path';
 type Credentials={name:string;email:string;password:string};
 let phase='configuration';
 function ensure(value:unknown,label:string):asserts value {if(!value)throw new Error(label);}
-class Client{
+export class Client{
  cookies=new Map<string,string>();
  readonly base:URL;
  constructor(base:URL){this.base=base;}
@@ -105,4 +107,6 @@ async function main(){
  await b.request('/api/auth/sign-out',{});
  console.log('PASS: two real development accounts; independent sessions/progress; wrong/correct/manual/reset states; origin/content checks; restricted role and RLS; restoration, sign-out and revoked cookies. Credentials remain only in the private local file.');
 }
-try{await main();}catch{console.error(`FAIL: live account checks at ${phase}. No credentials or response payloads logged.`);process.exitCode=1;}
+if(import.meta.url===pathToFileURL(resolve(process.argv[1]??'')).href){
+ try{await main();}catch{console.error(`FAIL: live account checks at ${phase}. No credentials or response payloads logged.`);process.exitCode=1;}
+}

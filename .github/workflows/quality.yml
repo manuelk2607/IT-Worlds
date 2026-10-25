@@ -91,3 +91,47 @@ jobs:
         with:
           node-version: '22.22.0'
       - run: node --experimental-strip-types --test tests/sql-examples.test.ts
+  systemd-example:
+    name: Published user systemd lab
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '22.22.0'
+      - name: Prepare ephemeral runner user session
+        run: |
+          sudo loginctl enable-linger "$(id -un)"
+          sudo systemctl start "user@$(id -u).service"
+          echo "XDG_RUNTIME_DIR=/run/user/$(id -u)" >> "$GITHUB_ENV"
+          echo "DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$(id -u)/bus" >> "$GITHUB_ENV"
+          sudo journalctl --flush
+      - run: IT_WORLDS_SYSTEMD_TEST=1 node --experimental-strip-types --test tests/systemd-examples.test.ts
+      - name: Verify no test units remain
+        if: always()
+        run: |
+          if systemctl --user list-units --all --no-legend 'it-worlds-lab-*' | grep -q 'it-worlds-lab-'; then
+            echo 'Test unit cleanup failed'
+            exit 1
+          fi
+  godot-example:
+    name: Published Godot 4.5 project
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '22.22.0'
+      - name: Install verified Godot 4.5
+        run: |
+          curl -fsSL https://github.com/godotengine/godot/releases/download/4.5-stable/Godot_v4.5-stable_linux.x86_64.zip -o "$RUNNER_TEMP/godot.zip"
+          echo "c7316e1fd782ad276a4d985a7673b5976eaaa8d90561a2bea5289210dc53e9ba  $RUNNER_TEMP/godot.zip" | sha256sum --check
+          unzip -q "$RUNNER_TEMP/godot.zip" -d "$RUNNER_TEMP/godot"
+          echo "IT_WORLDS_GODOT=$RUNNER_TEMP/godot/Godot_v4.5-stable_linux.x86_64" >> "$GITHUB_ENV"
+      - run: node --experimental-strip-types --test tests/godot-examples.test.ts

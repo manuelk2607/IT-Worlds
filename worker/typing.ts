@@ -19,7 +19,8 @@ export async function typingRequest(request:Request,env:Env,getSession:()=>Promi
  if(request.method!=='POST')return send({error:'NOT_FOUND'},404);const data=object(await request.json().catch(()=>null));
  if(path==='profile'){
   const name=typeof data.name==='string'?data.name.trim():'';if(typeof data.visible!=='boolean'||name.length>24||!/^[\p{L}\p{N} _-]*$/u.test(name)||(data.visible&&name.length<2))return send({error:'INVALID_PROFILE'},400);
-  await sql.transaction([sql`SELECT set_config('app.user_id',${user},true)`,sql`INSERT INTO public.typing_profiles(user_id,display_name,visible) VALUES(${user},${name},${data.visible}) ON CONFLICT(user_id) DO UPDATE SET display_name=EXCLUDED.display_name,visible=EXCLUDED.visible`]);return send({saved:true});
+  try{await sql.transaction([sql`SELECT set_config('app.user_id',${user},true)`,sql`INSERT INTO public.typing_profiles(user_id,display_name,visible) VALUES(${user},${name},${data.visible}) ON CONFLICT(user_id) DO UPDATE SET display_name=EXCLUDED.display_name,visible=EXCLUDED.visible`]);}
+  catch(error){if(error&&typeof error==='object'&&'code'in error&&error.code==='23505')return send({error:'NAME_TAKEN'},409);throw error;}return send({saved:true});
  }
  if(path==='start'){
   if(data.locale!=='de'&&data.locale!=='en'||data.mode!=='practice'&&data.mode!=='ranked')return send({error:'INVALID_TEST'},400);
@@ -29,11 +30,11 @@ export async function typingRequest(request:Request,env:Env,getSession:()=>Promi
   return rows.length?send({id:rows[0].id,text:rows[0].target,duration:60000}):send({error:'RATE_LIMITED'},429);
  }
  if(path==='finish'){
-  const trace=parseTypingTrace(data);if(typeof data.id!=='string'||!/^[0-9a-f-]{36}$/i.test(data.id)||!trace||typeof data.elapsed!=='number'||!Number.isInteger(data.elapsed)||data.elapsed<1||data.elapsed>60000)return send({error:'INVALID_RESULT'},400);
+  const trace=parseTypingTrace(data);if(typeof data.id!=='string'||!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(data.id)||!trace||typeof data.elapsed!=='number'||!Number.isInteger(data.elapsed)||data.elapsed<1||data.elapsed>60000)return send({error:'INVALID_RESULT'},400);
   const [,rows]=await sql.transaction([sql`SELECT set_config('app.user_id',${user},true)`,sql`SELECT id,target,mode,started_at,ended_at FROM public.typing_runs WHERE id=${data.id} AND user_id=${user}`]);
   const run=rows[0];if(!run)return send({error:'NOT_FOUND'},404);if(run.ended_at)return send({error:'ALREADY_SUBMITTED'},409);
   const elapsed=Date.now()-new Date(String(run.started_at)).getTime(),score=scoreTyping(String(run.target),trace,data.elapsed);
-  if(!score||elapsed>120000||data.elapsed>elapsed+1000)return send({error:'INVALID_RESULT'},422);
+  if(!score||elapsed<0||elapsed>120000||data.elapsed>elapsed+1000||score.wpm>15000||score.kpm>75000)return send({error:'INVALID_RESULT'},422);
   if(run.mode==='ranked'&&(data.elapsed!==60000||!rankedTraceValid(trace,elapsed)))return send({error:'INVALID_TEST'},422);
   const eligible=run.mode==='ranked'&&score.accuracy>=90&&score.retained>=20&&score.wpm<=200;
   const [,saved]=await sql.transaction([sql`SELECT set_config('app.user_id',${user},true)`,sql`UPDATE public.typing_runs SET ended_at=clock_timestamp(),duration=${data.elapsed},characters=${score.characters},wpm=${score.wpm},kpm=${score.kpm},accuracy=${score.accuracy},weakness=${JSON.stringify(score.weakness)}::jsonb,eligible=${eligible} WHERE id=${data.id} AND user_id=${user} AND ended_at IS NULL RETURNING id`]);

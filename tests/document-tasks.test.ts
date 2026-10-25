@@ -5,7 +5,6 @@ import {analyzeDocument} from '../src/lib/document-analysis.ts';
 import {checkDocumentTask} from '../src/lib/document-task-check.ts';
 import {parseProgressChange} from '../src/lib/progress.ts';
 import {courses} from '../src/data/courses.ts';
-import {typingAccountsEnabled} from '../src/lib/release-features.ts';
 const file=(path:string,text:string)=>({path,bytes:new TextEncoder().encode(text)});
 test('every typesetting chapter has a bilingual task profile and an existing progress ID',()=>{
  const chapters=courses.filter(course=>['latex','typst'].includes(course.id)).flatMap(course=>course.chapters.map(chapter=>`${course.id}-${chapter.id}`));
@@ -60,4 +59,3 @@ test('the existing Typst reference exercise keeps its chapter progress and expos
  assert(!analyzeDocument(corrected,'typst','main.typ').diagnostics.some(item=>item.code==='REFERENCE'));
  assert.equal(documentTasks.find(task=>task.id==='typst-verweis')?.progressId,'typst-tabellen-grafiken');
 });
-test('unreleased typing account backend stays disabled without a production migration',()=>{assert.equal(typingAccountsEnabled,false);});

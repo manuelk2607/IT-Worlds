@@ -7,6 +7,7 @@ export const linuxSources={
  linuxGrep:doc('https://man7.org/linux/man-pages/man1/grep.1.html','grep(1)','GNU grep authors · Free Software Foundation','GNU manual · rendered by man7 · accessed 2026-10-23','Fixed strings; standard input; exit status'),
  linuxSystemctl:doc('https://www.freedesktop.org/software/systemd/man/latest/systemctl.html','systemctl','systemd project','systemd 262','Unit introspection; list-units; start versus enable'),
  linuxJournal:doc('https://www.freedesktop.org/software/systemd/man/latest/journalctl.html','journalctl','systemd project','systemd 262','Description; --user; --boot; --unit; --lines; --no-pager'),
+ linuxRun:{...doc('https://www.freedesktop.org/software/systemd/man/latest/systemd-run.html','systemd-run','systemd project','systemd 262; live lab tested separately','Description; --user; --unit; --wait; transient service exit status'),reviewedAt:'2026-10-25'},
  linuxCopy:doc('https://github.com/coreutils/coreutils/blob/master/doc/coreutils.texi','Copy files and directories','GNU Project · Free Software Foundation','Living source · accessed 2026-10-23','cp invocation; independent copy; recursive copy'),
  linuxCompare:doc('https://man7.org/linux/man-pages/man1/cmp.1.html','cmp(1)','GNU diffutils authors · Free Software Foundation','GNU manual · rendered by man7 · accessed 2026-10-23','Byte comparison; -s; exit statuses 0, 1, 2'),
 };

@@ -1,4 +1,16 @@
-# Aktiver Auftrag · Schlanke Dokumentprüfung · 25.10.2026
+# Aktiver Auftrag · P1-Abschluss · 25.10.2026
+
+Ziel: die fünf konsolidierten P1-Pakete unten abarbeiten, keine P2/P3-Erweiterung. Vorhandener Dokumentationsdiff bleibt erhalten. Reihenfolge: (1) Ranking-Audit/echte development-Sessions und Fehler beheben, (2) Godot-Engine-/Browserprüfungen, (3) reproduzierbares Linux-/systemd-Labor, (4) Auth-Reset-Fehlerpfade und erreichbare technische Accessibility-Prüfungen, (5) Gesamttests/Check/Build und präziser Abschluss.
+
+Stand: Development-Branch, Migration 002 und Auth ohne Verifizierung bestätigt; bestehende private Runtime-/Testaccountdateien verfügbar. Ranking bleibt bis bestandenen Prüfungen deaktiviert. Ein unabhängiges menschliches Fach-/assistives Review und ein tatsächlicher Reset-Mailempfang können ohne externe Prüfpersonen bzw. kontrolliertes Postfach nicht als erledigt gelten. Kein solcher Nachweis wird simuliert. Laufend: Ranking-Implementierung und Testvoraussetzungen prüfen.
+
+Paket 1 verifiziert: `test:development` startet einen eigenen localhost-Worker mit bestehender eingeschränkter development-Rolle. Zwei echte Accounts/Sessions, alter Fortschrittstest, Ranking-RLS, fremde IDs/Origin, konkurrierende Starts (200/429), echte 61 Sekunden Serverwartezeit mit DE/EN-Protokollreplays, konkurrierende Abgaben (200/409), frühe/Burst-/wiederholte Abgaben, alle Ranglistenfilter, feste öffentliche Projektion, Opt-in/out und widerrufene Session bestehen. Keine menschliche Tippleistung behauptet. Reset-Negativpfade (ungültiger Token, fehlerhafte Mail, neutrale Unbekannt-Antwort, fremde Origin) bestehen; echter Mailempfang bleibt blockiert. Behoben: veränderbare Trainerzustände während Requests, doppelte Starts/Speicher-Race, unklare Namenskollision und ungültige UUID mit Serverfehler. Feature im Arbeitsstand zum Test aktiviert; Produktion noch nicht migriert/veröffentlicht.
+
+Paket 2 laufend: verifizierte Godot-4.5-Binärdatei (SHA-256 abb7cabe99fead0bd63ce03bd8c611734b2941f9b90051e8e3b5c6691527954d) in eigener temporärer Kopie. Echter Engine-Test fand einen Neustartfehler durch alte Kollisionsereignisse; Korrektur und erneuter Test laufen. Eigenes Linux-Laborimage gebaut; unprivilegierter systemd-Benutzermanager wird geprüft. Nächster Schritt: Engine-Regressionsprüfung und systemd-Liveprüfung abschließen; danach Browserprüfung und ggf. Produktionsmigration. Keine bestehenden Container geändert.
+
+---
+
+# Abgeschlossen · Schlanke Dokumentprüfung · 25.10.2026
 
 Ziel: ausschließlich externe Bearbeitung in Overleaf/typst.app; sichere lokale Quellen-/ZIP-Prüfung ohne eigenen Kompilierungsdienst oder zusätzliche laufende Kosten. P0: Editorlinks/Import/Diagnostik. P1: Mehrteiler/Aufgabenprüfungen/manuell bestätigter bestehender Kapitel-Lernfortschritt. Danach Tests, Browserprüfung, GitHub-Push und Deploy mit erhaltenen Einstellungen. Keine Dokument- oder Datenbankmigration geplant. Der bislang unveröffentlichte Ranking-Backendstand darf ohne seine ausstehenden Prüfungen nicht aktiviert werden.
 
@@ -47,3 +59,54 @@ Worker-Routen für Start/Finish/Profil/Me/Leaderboard implementiert: Live-Sessio
 Zuerst Backend-/RLS-/Zwei-Account-/Replaytests auf development, Browsertests für beide Sprachen/Designs/Mobilansicht sowie Godot-Import/Spielablauf abschließen. Ranglisten-Sichtbarkeit, Herkunft, Timing- und Eingabegrenzen prüfen und UI-Regeln mit Servergrenzen abgleichen. Erst danach additive Migration auf main und Veröffentlichung mit erhaltenen Cloudflare-Einstellungen. Medien/Videos, größere Projekte, zusätzliche Statistiken, Gamification und Duelle offen; keine Platzhalter dafür veröffentlicht. Fachreview bleibt offen.
 
 Abschlusskorrektur: Der zuvor erfolgreiche isolierte Build (422 Seiten) wurde durch die letzten parallel gestarteten Build-/Releaseprüfungen nicht erneut bestätigt. Abschließender npm-Build und Deploy-Dry-Run schlugen fehl (Modul-/Linkprüfung; Logs im privaten temporären Verzeichnis). Vor Freigabe seriell wiederholen und Ursachen prüfen. Kein Deployment durchgeführt.
+
+## Konsolidierter Aufgabenabgleich · 25.10.2026
+
+Dieser Abschnitt ersetzt verstreute historische „offen“-Hinweise in älteren Protokollen. Die dort beschriebenen früheren Compiler-, Inhaltsausbau- und Releasepakete sind abgeschlossen oder bewusst nicht Teil des aktuellen Releases.
+
+### P0 · kritisch
+
+Keine bestätigten P0-Probleme im veröffentlichten Stand. Dokumentprüfung, Auth-Grundpfade, 404-Verhalten, SEO-Generierung und statische Website-Funktionen sind releasegeprüft.
+
+### P1 · wichtig
+
+| Aufgabe | Status und Abgrenzung | Aufwand | Bereich |
+| --- | --- | --- | --- |
+| Ranking-/Schreibtrainer-Backend sicher freigeben | **Bestätigt offen.** Zwei echte Konten, RLS, fremde/duplizierte/manipulierte Abgaben sowie Timing-/Replay-Grenzen auf development prüfen; danach erst Produktionsmigration und Aktivierung. Online bleibt bis dahin absichtlich deaktiviert. | hoch | Neon, Worker, Datenschutz, Schreibtrainer |
+| Godot-Projekt und Browserprüfungen abschließen | **Bestätigt offen.** In Godot 4.5 importieren und Spielablauf/Reset prüfen; ergänzende DE/EN-, Mobil- und Tastaturprüfung dokumentieren. | mittel | Spieleentwicklung, QA |
+| Unabhängiges Fach- und assistives Review | **Bestätigt offen.** Quellenabgleich ist kein Fachreview. Kurse/Quizze, Textsatz-Lernwege, Tastaturbedienung und Screenreader-/Kontrast-/Feldtests mit unabhängigen Personen prüfen. | hoch | Inhalte, Barrierefreiheit, UX |
+| Kontrollierten Mail-/Passwort-Reset-Test durchführen | **Bestätigt offen.** Anmeldung und Fortschritt sind vorhanden; tatsächliche Mailzustellung und Reset in einem kontrollierten Postfach fehlen als Nachweis. | mittel | Auth, Betrieb |
+| Linux/systemd-Benutzerlabor | **Bestätigt offen, nicht kritisch.** Ein reproduzierbares Linux-/systemd-Testsystem fehlt; kein Produktionsdienst darf dafür verändert werden. | mittel | Betriebssysteme/Linux, QA |
+
+### P2 · Erweiterungen
+
+| Aufgabe | Status und Abgrenzung | Aufwand | Bereich |
+| --- | --- | --- | --- |
+| Konservative Dokumentdiagnostik und PDF-Vorschau bewerten | **Geplant, nicht zugesagt.** Nur bei browser-/kostenfreiem, sicherem und wartungsarmem Betrieb; kein eigener Compilerhost ist Voraussetzung. | hoch | LaTeX/Typst, Sicherheit |
+| Mehr Aufgaben und fachliche Bewertungsrubriken | **Bestätigte Inhaltslücke.** Die 30 Profile erkennen Konstruktionen, bewerten aber keine vollständige Lösung oder fachliche Qualität. | mittel | LaTeX/Typst, Kurse |
+| Schreibtrainer: zusammenhängende Texte | **Bestätigt offen.** Von Zeichen/Buchstabengruppen über Wörter/Sätze zu kurzen Absätzen staffeln; DE/EN, Zeichensetzung, Zahlen, Fortschritt und Messregeln ergänzen. | mittel | Schreibtrainer |
+| Größere Praxisprojekte | **Bestätigte Ausbauoption.** Mehrseitiges Webprojekt, SQL/API-Praxis und betreutes Cloud-/DevOps-Projekt nach Nutzerbedarf; keine Platzhalter veröffentlichen. | hoch | Kurse, Praxislabore |
+| Benutzerfreundlichkeit mit Lernenden erproben | **Bestätigt offen.** Lernwege, Suche, Filter, Fortschritt und Dokumentprüfung mit realen Lernenden beobachten und Befunde in UX-Änderungen überführen. | mittel | UX, Navigation |
+
+### P3 · optional
+
+| Aufgabe | Status und Abgrenzung | Aufwand | Bereich |
+| --- | --- | --- | --- |
+| Weitere Visualisierungen, Gamification und Duelle | **Vermutete Verbesserung, kein bestätigter Fehler.** Erst nach Nutzungsfeedback priorisieren. | hoch | UX, Lernspiele |
+| CMS/Redaktionsworkflow | **Vermutete Verbesserung.** Repository-Pflege funktioniert; CMS erst bei nachgewiesenem Redaktionsbedarf prüfen. | hoch | Wartbarkeit |
+| Weitere Sprachen und Community-Beiträge | **Vermutete Verbesserung.** Erst Rechte, Review und Pflegekapazität klären. | hoch | Inhalte, Übersetzung |
+
+### Veraltete oder bereits umgesetzte „offene“ Hinweise
+
+- Editorlinks, sicherer Einzel-/ZIP-Import, 30 Aufgabenprofile, bestehender Fortschritt, SEO, Dark Mode, Deutsch/Englisch und der veröffentlichte Cloudflare-Deploy sind **erledigt**; ältere Dokumente nennen diese teils noch als Planung.
+- Compilercontainer, Worker-Proxy, PDF-Vorschau und Compiler-CI sind **bewusst entfernt**, nicht unvollständig. Historische Kompilierungstests belegen Beispiele, keine öffentliche Nutzerkompilierung.
+- Alte Zählungen in `docs/AUSBAU.md`, `docs/INHALTE.md`, `docs/VALIDIERUNG.md` und `docs/DREI-LERNBEREICHE.md` sind historische Protokolle; der aktuelle Stand steht am Anfang dieser Datei und in der aktuellen Roadmap.
+- Keine unmarkierten TODO/FIXME-Implementierungsmarker wurden im produktiven TypeScript/Astro-Code gefunden. UI-Treffer für „offen“ sind Nutzerstatus, keine fehlenden Implementierungen.
+
+### Empfohlene Reihenfolge
+
+1. Unabhängiges Fach-/assistives Review und kontrollierter Auth-Mailtest als Freigabegrundlage.
+2. Ranking-/RLS-/Replay- und Godot-Prüfungen isoliert auf development; nur bei bestandenem Audit Produktionsmigration und schrittweise Aktivierung.
+3. Linux/systemd-Labor sowie Lernenden-Erprobung, daraus konkrete UX- und Inhaltskorrekturen.
+4. Schreibtrainer-Texte und zusätzliche Aufgaben/Rubriken mit geprüften Inhalten.
+5. Nur bei nachgewiesen kleinem Aufwand: Dokumentdiagnostik/PDF-Vorschau; P3-Ideen zuletzt.

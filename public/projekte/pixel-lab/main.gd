@@ -35,6 +35,8 @@ func _ready() -> void:
 func reset() -> void:
     score = 0
     player.position = Vector2(60,180)
+    player.velocity = Vector2.ZERO
+    player.force_update_transform()
     player.set_physics_process(true)
     spawn_coin()
 func spawn_coin() -> void:
@@ -46,6 +48,7 @@ func spawn_coin() -> void:
         player.set_physics_process(false)
         return
     coin = Area2D.new()
+    coin.monitoring = false
     coin.position = Vector2(560,180) if score % 2 == 0 else Vector2(60,60)
     var shape := CollisionShape2D.new()
     var circle := CircleShape2D.new()
@@ -59,10 +62,17 @@ func spawn_coin() -> void:
     visual.polygon = points
     visual.color = Color.GOLD
     coin.add_child(visual)
-    coin.body_entered.connect(collect)
+    coin.body_entered.connect(collect.bind(coin))
     add_child(coin)
-func collect(body: Node2D) -> void:
-    if body != player or coin.get_meta("collected",false):
+    arm_coin(coin)
+func arm_coin(source: Area2D) -> void:
+    # Let PhysicsServer receive a reset player transform before detecting overlaps.
+    await get_tree().physics_frame
+    await get_tree().physics_frame
+    if is_instance_valid(source) and source == coin and not source.is_queued_for_deletion():
+        source.set_deferred("monitoring",true)
+func collect(body: Node2D, source: Area2D) -> void:
+    if body != player or source != coin or source.is_queued_for_deletion() or source.get_meta("collected",false) or score >= GOAL:
         return
     coin.set_meta("collected",true)
     score += 1
