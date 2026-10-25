@@ -2,7 +2,7 @@
 
 Ziel: die fünf konsolidierten P1-Pakete unten abarbeiten, keine P2/P3-Erweiterung. Vorhandener Dokumentationsdiff bleibt erhalten. Reihenfolge: (1) Ranking-Audit/echte development-Sessions und Fehler beheben, (2) Godot-Engine-/Browserprüfungen, (3) reproduzierbares Linux-/systemd-Labor, (4) Auth-Reset-Fehlerpfade und erreichbare technische Accessibility-Prüfungen, (5) Gesamttests/Check/Build und präziser Abschluss.
 
-Stand: technische P1-Implementierungen und development-/CI-Prüfungen abgeschlossen. Migration 002 nach bestandenem Audit auch auf main angewendet (unveränderte Prüfsumme; neue Tabellen mit erzwungener RLS; eingeschränkte Runtime ohne Kontext sieht keine Daten). Veröffentlichung des geprüften Featurestands ist der nächste Schritt. Ein unabhängiges Fach-/assistives Review und tatsächlicher Reset-Mailempfang bleiben mangels Prüfpersonen bzw. kontrolliertem Postfach offen.
+Stand: drei technische P1-Pakete abgeschlossen und öffentlich veröffentlicht. Migration 002 nach bestandenem Audit auch auf main angewendet (unveränderte Prüfsumme; neue Tabellen mit erzwungener RLS; eingeschränkte Runtime ohne Kontext sieht keine Daten). Unabhängiges Fach-/assistives Review und tatsächlicher Reset-Mailempfang bleiben mangels Prüfpersonen bzw. kontrolliertem Postfach extern blockiert; keine P2/P3-Arbeit begonnen.
 
 Paket 1 verifiziert: `test:development` startet einen eigenen localhost-Worker mit bestehender eingeschränkter development-Rolle. Zwei echte Accounts/Sessions, alter Fortschrittstest, Ranking-RLS, fremde IDs/Origin, konkurrierende Starts (200/429), echte 61 Sekunden Serverwartezeit mit DE/EN-Protokollreplays, konkurrierende Abgaben (200/409), frühe/Burst-/wiederholte Abgaben, alle Ranglistenfilter, feste öffentliche Projektion, Opt-in/out und widerrufene Session bestehen. Keine menschliche Tippleistung behauptet. Reset-Negativpfade (ungültiger Token, fehlerhafte Mail, neutrale Unbekannt-Antwort, fremde Origin) bestehen; echter Mailempfang bleibt blockiert. Behoben: veränderbare Trainerzustände während Requests, doppelte Starts/Speicher-Race, unklare Namenskollision und ungültige UUID mit Serverfehler. Feature im Arbeitsstand zum Test aktiviert; Produktion noch nicht migriert/veröffentlicht.
 
@@ -10,7 +10,11 @@ Paket 2 verifiziert: Godot 4.5 (offizieller SHA-256 geprüft) importiert das Pro
 
 Git: cc21b52 auf codex/cloudstand-lokal gepusht. GitHub Quality 40215505510: alle sechs Jobs erfolgreich (Node 22/24, echte SQL-/Containerbeispiele, echtes Linux/systemd-Labor und Godot 4.5). Lokal 85 Tests: 78 pass/7 optionale Skips; Engine separat 2/2 erfolgreich; check 196 Dateien ohne Meldungen; Build 444 Seiten; deploy:check 438 kanonische Sprachseiten/31.730 Links erfolgreich.
 
-Browser abgeschlossen: echte development-Anmeldung, private Kontohistorie, Profil speichern, leere öffentliche Rangliste, gesperrte Einstellungen während Requests, Kontospeicherung, konsistente Endwerte/Reset, Ranglistenbestwertfilter und nicht gewerteter Abbruch bestätigt. DE/EN, beide Designs, 390px ohne Überlauf, Mobilmenü/Escape/Fokus, Hardware-Halbaddierer/12 CPU-Schritte/Reset, Spiele-Buttons/Pfeile/Reset, neues Linux-Labor und beide 404 geprüft. Eigener Text bleibt lokale Übung. Erneut 85 Tests (78 pass/7 optionale Skips), check 196 Dateien ohne Meldungen, Build 444 Seiten; kein gesondertes Lint-Skript vorhanden. CF-Login/Einstellungen/Subdomain/vier bestehende Bindings vorab gesichert. Nächster Schritt: verbleibenden Einzeiler und Dokumentation committen/pushen, CI und öffentliche Veröffentlichung prüfen, danach PROGRESS/ROADMAP auf tatsächlich erreichten Stand setzen.
+Browser abgeschlossen: echte development-Anmeldung, private Kontohistorie, Profil speichern, leere öffentliche Rangliste, gesperrte Einstellungen während Requests, Kontospeicherung, konsistente Endwerte/Reset, Ranglistenbestwertfilter und nicht gewerteter Abbruch bestätigt. DE/EN, beide Designs, 390px ohne Überlauf, Mobilmenü/Escape/Fokus, Hardware-Halbaddierer/12 CPU-Schritte/Reset, Spiele-Buttons/Pfeile/Reset, Linux-Labor und beide 404 geprüft. Eigener Text bleibt lokal. Erneut 85 Tests (78 pass/7 optionale Skips), check 196 Dateien ohne Meldungen, Build 444 Seiten; kein gesondertes Lint-Skript vorhanden.
+
+Veröffentlichung verifiziert: Quellcommit 9ccd793 auf codex/cloudstand-lokal, Quality 40237691162 vollständig erfolgreich. Deployment am 25.10.2026 22:56:18 Europe/Stockholm: Version 7f5d4d27-b4c3-4353-ac77-8161225c44a3, Deployment 0fc157cf-8e24-4ca1-b650-4c989e4a95f8, 100 % Traffic. Alle 438 öffentlichen Sprachseiten stimmen mit dem Build überein; 31.730 Links geprüft. Öffentliche DE/EN-Rangliste lädt (200/no-store), Gäste können keine Konto-Ergebnisse lesen (401), Ranked-Start fordert verständlich Anmeldung; Gastübungen bleiben verfügbar. Auth200, Fortschritt401, beide404. CF-Account/Subdomain/Einstellungen/vier Bindings vor/nach identisch. Produktionsdaten: 13 frühere Fortschrittszeilen erhalten, keine Testprofile oder Testläufe auf main. Eigenes experimentelles Linux-Image entfernt; bestehender PostgreSQL-Container unverändert.
+
+Nächster sinnvoller Schritt benötigt externe Voraussetzungen: unabhängige fachkundige und assistive Prüfpersonen sowie ein kontrolliertes development-Testpostfach für echten Reset-Empfang. Prüfabläufe in docs/P1-PRUEFUNGEN.md. Diese beiden P1-Punkte nicht als erledigt markieren oder durch simulierte Tests ersetzen. Technische Pakete und Freigabe nicht erneut analysieren; bei Fortsetzung Git und diese Nachweise abgleichen.
 
 ---
 
@@ -76,11 +80,11 @@ Keine bestätigten P0-Probleme im veröffentlichten Stand. Dokumentprüfung, Aut
 
 | Aufgabe | Status und Abgrenzung | Aufwand | Bereich |
 | --- | --- | --- | --- |
-| Ranking-/Schreibtrainer-Backend sicher freigeben | **Bestätigt offen.** Zwei echte Konten, RLS, fremde/duplizierte/manipulierte Abgaben sowie Timing-/Replay-Grenzen auf development prüfen; danach erst Produktionsmigration und Aktivierung. Online bleibt bis dahin absichtlich deaktiviert. | hoch | Neon, Worker, Datenschutz, Schreibtrainer |
-| Godot-Projekt und Browserprüfungen abschließen | **Bestätigt offen.** In Godot 4.5 importieren und Spielablauf/Reset prüfen; ergänzende DE/EN-, Mobil- und Tastaturprüfung dokumentieren. | mittel | Spieleentwicklung, QA |
-| Unabhängiges Fach- und assistives Review | **Bestätigt offen.** Quellenabgleich ist kein Fachreview. Kurse/Quizze, Textsatz-Lernwege, Tastaturbedienung und Screenreader-/Kontrast-/Feldtests mit unabhängigen Personen prüfen. | hoch | Inhalte, Barrierefreiheit, UX |
-| Kontrollierten Mail-/Passwort-Reset-Test durchführen | **Bestätigt offen.** Anmeldung und Fortschritt sind vorhanden; tatsächliche Mailzustellung und Reset in einem kontrollierten Postfach fehlen als Nachweis. | mittel | Auth, Betrieb |
-| Linux/systemd-Benutzerlabor | **Bestätigt offen, nicht kritisch.** Ein reproduzierbares Linux-/systemd-Testsystem fehlt; kein Produktionsdienst darf dafür verändert werden. | mittel | Betriebssysteme/Linux, QA |
+| Ranking-/Schreibtrainer-Backend sicher freigeben | **Erledigt/verifiziert.** Echte development-Konten/RLS/Timing-/Replaytests, Produktionsmigration und öffentliche Aktivierung mit erhaltenen Daten; Versionsnachweis oben. | hoch | Neon, Worker, Datenschutz, Schreibtrainer |
+| Godot-Projekt und Browserprüfungen abschließen | **Erledigt/verifiziert.** Engine-/Browserprüfungen, korrigierter Reset, bytegleiches ZIP und CI-Regressionsprüfung. | mittel | Spieleentwicklung, QA |
+| Unabhängiges Fach- und assistives Review | **Extern blockiert.** Prüfpersonen fehlen. Eigene Browser-/Quellenprüfungen sind kein Ersatz für den unabhängigen Nachweis. | hoch | Inhalte, Barrierefreiheit, UX |
+| Kontrollierten Mail-/Passwort-Reset-Test durchführen | **Extern blockiert.** Negative API-Pfade geprüft; kontrolliertes Postfach für echten Empfang und erfolgreiche Wiederherstellung fehlt. | mittel | Auth, Betrieb |
+| Linux/systemd-Benutzerlabor | **Erledigt/verifiziert.** Reproduzierbarer Benutzerlaborblock im vorhandenen DE/EN-Kapitel und echter Linux-CI-Lauf samt Bereinigung. | mittel | Betriebssysteme/Linux, QA |
 
 ### P2 · Erweiterungen
 
@@ -109,8 +113,6 @@ Keine bestätigten P0-Probleme im veröffentlichten Stand. Dokumentprüfung, Aut
 
 ### Empfohlene Reihenfolge
 
-1. Unabhängiges Fach-/assistives Review und kontrollierter Auth-Mailtest als Freigabegrundlage.
-2. Ranking-/RLS-/Replay- und Godot-Prüfungen isoliert auf development; nur bei bestandenem Audit Produktionsmigration und schrittweise Aktivierung.
-3. Linux/systemd-Labor sowie Lernenden-Erprobung, daraus konkrete UX- und Inhaltskorrekturen.
-4. Schreibtrainer-Texte und zusätzliche Aufgaben/Rubriken mit geprüften Inhalten.
-5. Nur bei nachgewiesen kleinem Aufwand: Dokumentdiagnostik/PDF-Vorschau; P3-Ideen zuletzt.
+1. Externe Prüfpersonen und kontrolliertes development-Postfach bereitstellen; verbleibende P1-Nachweise durchführen und daraus Befunde beheben.
+2. Abgeschlossene Ranking-/Godot-/systemd-Pakete nicht wiederholen; Regressionen laufen in vorhandenen Tests/CI.
+3. P2/P3 erst nach Abschluss oder ausdrücklicher Neugewichtung der extern blockierten P1-Punkte beginnen.

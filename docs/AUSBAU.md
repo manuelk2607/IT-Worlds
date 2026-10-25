@@ -1,5 +1,7 @@
 # Inhaltsausbau und Prioritäten · 24. Oktober 2026
 
+Historischer Inhaltsplan. Der folgende Stand mit 15 Kursen ist überholt; aktuell 18 Kurse/145 Kapitel/300 Fragen/239 Quellen. Ranking, Godot-Engineprüfung und Linux/systemd-Labor sind nach dem P1-Abschluss geprüft und veröffentlicht; unabhängiges Review und echter Reset-Mailempfang bleiben offen. Aktuelle Prioritäten und Nachweise: [PROGRESS.md](../PROGRESS.md), [ROADMAP.md](ROADMAP.md), [VALIDIERUNG.md](VALIDIERUNG.md).
+
 Fünfzehn verfügbare Kursfolgen mit 122 Kapiteln, 254 Fragen und 200 Primärquellen. Neue Kapitel enthalten Voraussetzungen, Lernziele, Erklärungen, Beispiele, Aufgaben und Lösungen. Deutsch/Englisch teilen stabile IDs. KI und LaTeX wurden in dieser Erweiterung nicht verändert.
 
 | Bereich | Verfügbare Kapitel | Nächster Ausbau |

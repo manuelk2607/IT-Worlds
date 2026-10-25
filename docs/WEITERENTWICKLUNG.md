@@ -1,5 +1,7 @@
 # Iterative Weiterentwicklung · 23. Oktober 2026
 
+Historisches Paketprotokoll: spätere P1-Arbeiten haben die damals offenen Ranking-/Godot-/Linux-systemd-Prüfungen abgeschlossen. Aktuelle Freigaben, verbleibende externe Prüfungen und nächste Schritte stehen in [PROGRESS.md](../PROGRESS.md) und [VALIDIERUNG.md](VALIDIERUNG.md); frühere „offen“-Hinweise unten sind zeitbezogen.
+
 ## Ausgangspunkt
 
 Commit 61810f3: zehn Themenwelten, vier Kursfolgen mit 42 Kapiteln, 94 Fragen und 86 Primärquellen. Sieben Themenwelten haben außerhalb der vorhandenen Unterkurse nur einen kurzen Einstieg. KI und LaTeX werden inhaltlich zunächst nicht erweitert. Nutzerdatei `.clinerules` bleibt erhalten.

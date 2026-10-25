@@ -13,7 +13,7 @@ Die Reihenfolge beschreibt vorgeschlagene Ausbaustufen, keine zugesagten Termine
 - [x] P1: Mehrteilige Projekte/ZIPs, 30 Kapitel-Aufgabenprofile und bewusste bestehende Lernfortschrittsmarkierung integrieren.
 - [x] Eigenen Kompilierungsdienst samt API/CI/Setup zugunsten des einfachen kostenlosen Browserworkflows entfernen. PDF und tatsächliche Kompilierung bleiben im externen Editor.
 - [ ] P2: Zusätzliche Diagnostik/PDF-Vorschau ausschließlich ohne zusätzliche laufende Kosten und bei geringem Wartungsaufwand prüfen. Kein Compilerhost ist Voraussetzung für diesen Release.
-- [x] P1: Ranking-/Zwei-Account-/RLS-/Timing-/Replaytests, Godot-Ausführung und Browserprüfungen bestehen. Additive Produktionsmigration 002 nach development-Audit angewendet. Öffentliche Aktivierung wird separat in VALIDIERUNG.md belegt. Details: [DREI-LERNBEREICHE.md](DREI-LERNBEREICHE.md).
+- [x] P1: Ranking-/Zwei-Account-/RLS-/Timing-/Replaytests, Godot-Ausführung und Browserprüfungen bestehen. Additive Produktionsmigration 002 nach development-Audit angewendet und Onlinefunktionen öffentlich aktiviert; Versionsnachweis in VALIDIERUNG.md. Details: [DREI-LERNBEREICHE.md](DREI-LERNBEREICHE.md).
 - [x] P1: Linux/systemd-Benutzerlabor mit eigener transienter Unit und Fehler-/Journalnachweis, DE/EN und echter Linux-CI-Prüfung ergänzen.
 - [ ] P1 · extern blockiert: unabhängiges Fachreview und assistive Nutzerprüfung; geeignete externe Prüfpersonen fehlen.
 - [ ] P1 · extern blockiert: vollständige Passwort-Wiederherstellung einschließlich tatsächlichem Mailempfang; kontrolliertes Testpostfach fehlt. Negative API-Pfade sind geprüft. [Prüfabläufe](P1-PRUEFUNGEN.md).

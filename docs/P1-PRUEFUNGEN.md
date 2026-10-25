@@ -1,5 +1,7 @@
 # P1-Prüfungen · 25. Oktober 2026
 
+Technische Pakete öffentlich freigegeben: Quellcommit 9ccd793, erfolgreiche Quality 40237691162 und Cloudflare-Version 7f5d4d27-b4c3-4353-ac77-8161225c44a3. Der [Versionsnachweis](VALIDIERUNG.md) dokumentiert Migration und öffentliche Prüfung. Die beiden externen Nachweise unten bleiben ausdrücklich offen.
+
 ## Wiederholbare technische Prüfungen
 
 - `npm run test:development`: bestehende private development-Runtime als `IT_WORLDS_RUNTIME_FILE`, bestehende private Testaccountdatei als `IT_WORLDS_TEST_CREDENTIALS`. Der Runner startet ausschließlich einen eigenen Worker auf localhost:8790 und beendet ihn anschließend. Keine Produktion, keine geheimen Ausgaben.

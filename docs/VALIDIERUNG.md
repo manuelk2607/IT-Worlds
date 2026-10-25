@@ -10,7 +10,11 @@ Godot zusätzlich lokal 2/2: Archiv bytegleich, echte Bewegung/Kollision/Kontakt
 
 Browser: echte Entwicklungssession, Kontohistorie/Speicherung, Profil und Ranglistenabbruch; lokale Endwerte/Reset, privater eigener Text; DE/EN/hell/dunkel, 390px ohne Überlauf, Mobilmenü/Escape/Fokus, Hardware-Gatter/CPU/Reset, Spiele-Buttons/Pfeile/Reset, Linux-Labor und beide 404. Bestehende Container unverändert.
 
-Migration 002 mit unveränderter Prüfsumme nach development-Audit auf main angewendet; alte Migration und 13 bestehende Fortschrittszeilen nicht bearbeitet. Beide neuen Tabellen erzwingen RLS; Produktionsruntime ohne BYPASSRLS und ohne Kontext keine privaten Daten, leere öffentliche Projektion. CF-Account/Subdomain/vier Bindings und Einstellungen vor Veröffentlichung gesichert. Veröffentlichung dieses P1-Stands noch separat zu bestätigen.
+Migration 002 mit unveränderter Prüfsumme nach development-Audit auf main angewendet; alte Migration und 13 bestehende Fortschrittszeilen nicht bearbeitet. Beide neuen Tabellen erzwingen RLS; Produktionsruntime ohne BYPASSRLS und ohne Kontext keine privaten Daten. Nach Freigabe weiterhin 13 Fortschrittszeilen und keine Testprofile/-läufe auf main.
+
+**Öffentlich veröffentlicht am 25.10.2026 22:56:18 Europe/Stockholm:** Quellcommit `9ccd793ed3ccc04d9a718abaa4d7b338d76e98b2`, Quality [40237691162](https://github.com/manuelk2607/IT-Worlds/actions/runs/40237691162) mit allen sechs Jobs erfolgreich. Version `7f5d4d27-b4c3-4353-ac77-8161225c44a3`, Deployment `0fc157cf-8e24-4ca1-b650-4c989e4a95f8`, 100 % Traffic unter [IT-Worlds](https://it-worlds.maki26.workers.dev/). Alle 438 öffentlichen Sprachseiten stimmen mit dem Release-Build überein.
+
+Öffentlicher Browser: DE/EN-Rangliste lädt mit verständlichem Leerzustand; Ranked-Start ohne Konto fordert Anmeldung. Private Konto-/Fortschritts-APIs 401, öffentliche Rangliste 200/no-store, Auth-Session 200, beide unbekannten Sprachrouten 404. Keine Produktionstestkonten angelegt. CF-Account/Subdomain/workers.dev/Preview-Status, Compatibility-Datum/-Flags, Usage-Modell, Placement, Tags, Tail Consumers, Logpush und vier Bindings vor/nach identisch. Eigenes Linux-Experimentimage entfernt, bestehender PostgreSQL-Container unverändert.
 
 Extern offen: unabhängiges Fach-/assistives Review und kontrolliertes Reset-Postfach. Details: [P1-PRUEFUNGEN.md](P1-PRUEFUNGEN.md).
 
