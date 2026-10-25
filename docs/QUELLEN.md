@@ -1,5 +1,11 @@
 # Quellenprotokoll
 
+## Lokaler Textsatz-Ausbau · 25. Oktober 2026
+
+Das lokale Register umfasst jetzt 238 Quellen einschließlich des vorherigen Hardware-/Schreibtrainer-/Spiele-Zwischenstands. Zwölf neue tatsächlich gelesene offizielle Belege in `course-document-sources.ts`: Typst-Funktionen, Kontrollfluss/Module/Pakete, Kontext, Query, CSV, Page, Assert, Systemeingaben, Accessibility, LaTeX-Wechselguide, Projektarchivexport und Overleaf-Quellenexport. Herausgeber, Ausgabe/Compilerbezug, Abschnitt, URL und Lesedatum sind pro Quelle erfasst. Die neuen acht Typst-Kapitel und das LaTeX-Diagnosekapitel haben jeweils zwei Fragen mit Erklärungen zu jeder Option. Vorhandene Grundlagenbelege werden wiederverwendet. Alle 30 Textsatzlistings wurden in frischen isolierten Containern kompiliert, einschließlich Biber. Quellenabgleich und technische Tests ersetzen kein unabhängiges Fachreview. Die neue Erweiterung wurde noch nicht öffentlich veröffentlicht.
+
+Der folgende Stand beschreibt die bisher veröffentlichte Quellenorientierung.
+
 Stand der Erweiterung: **24. Oktober 2026**. Das Verzeichnis umfasst 204 Primärquellen, darunter 19 neue Markdown-/Typst-Belege. Zuvor erfasst waren 181: die früheren 139 sowie 16 Cloud-/DevOps-, 14 Python- und acht OSTEP- sowie vier IPv6-/Dokumentationsnetz-Belege vom 24. Oktober. Die ursprünglichen 14 wurden am 20. Oktober gelesen; fünf weitere Quellen und der Docker-Stand wurden am 22. Oktober anhand der unten festgehaltenen Originale gelesen. Das öffentliche Verzeichnis lässt sich nach Text (einschließlich Abschnitt und Version), Themenwelt und Herausgeber filtern. Themenzuordnungen folgen tatsächlichen Verweisen aus Kursen, Einstiegen und Aufgaben; mehrere Themen pro Beleg sind möglich. Filter bleiben in der URL und beim Sprachwechsel erhalten. Auch die globale Suche enthält alle Quellen als eigenen Inhaltstyp und führt zur jeweiligen Karte mit vollständigem Prüfstand.
 
 Die HTML-Zielseiten sind die kanonischen Lesefassungen. Ältere Quellenabschnitte dokumentieren zusätzlich versionierte Repository-Quelltexte oder RFC-Originale; die neuen Markdown-/Typst-Abschnitte wurden direkt in den offiziellen Dokumentationsseiten gelesen. Es wurden keine fremden Artikeltexte oder Bilder übernommen. Die Lerntexte sind eigenständige Zusammenfassungen.

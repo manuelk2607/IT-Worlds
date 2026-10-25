@@ -1,5 +1,7 @@
 # IT-Worlds
 
+**Local extension · 25 October 2026, not published:** Typst now has 16 chapters/32 course questions and LaTeX 14/28. A shared typesetting guide and bilingual source/ZIP project checker connect external editors to local analysis and a separately tested isolated compiler service with raster PDF previews. All 30 typesetting examples compile locally, including Biber. Public compilation still needs a permanent dedicated compiler host. See [document checking](docs/DOKUMENTPRUEFUNG.md) for commands, privacy, limits and release requirements. The hardware, typing and game-development work remains a separate unreleased stage.
+
 **Understand IT. Discover connections. Test your knowledge.**
 
 [English website](https://it-worlds.maki26.workers.dev/en/) · [German website](https://it-worlds.maki26.workers.dev/) · [Practice editors](https://it-worlds.maki26.workers.dev/en/uebungen/) · [Deutsche README](README.md)

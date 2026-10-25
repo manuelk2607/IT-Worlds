@@ -1,5 +1,7 @@
 # Drei neue Lernbereiche · lokaler Zwischenstand
 
+Abgleich am 25.10.2026 im Textsatz-Auftrag: serieller Build und Deploy-Dry-Run inzwischen erfolgreich; sechs falsche Links auf nicht vorhandene Übungseditoren führen jetzt zum tatsächlichen Labor. Der frühere parallele Modulfehler wurde dabei nicht reproduziert. Ranking-/RLS-/Zwei-Account-/Replay-/Godot- und weitere eigene Freigabeprüfungen dieses Bereichs bleiben offen; keine Veröffentlichung oder Produktionsmigration erfolgt. Der historische Prüfstand unten bleibt als Kontext erhalten.
+
 Die neuen Themen Hardware & Software, 10-Finger-Schreiben und Spieleentwicklung ergänzen vorhandene Kurse und Komponenten. Alle Inhalte sind deutsch/englisch; Gäste können lokale Übungen verwenden. Neue Inhalte und Werkzeuge sind noch nicht veröffentlicht.
 
 Der Trainer berechnet Werte aus dem Eingabereplay. Ein Normwort umfasst fünf Zeichen; die Messung beginnt mit explizitem Start. Netto-WPM verwendet korrekt verbleibende Zeichen, KPM alle druckbaren Eingaben. Korrekturen löschen frühere Fehlanschläge nicht aus der Genauigkeit. Lokale Historie ist kein verifizierter Wettbewerb. Serverprüfungen erschweren offensichtliche Manipulation; sie beweisen keinen menschlichen Teilnehmer.

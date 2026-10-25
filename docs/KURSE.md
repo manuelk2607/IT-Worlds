@@ -1,6 +1,6 @@
 # Kursarchitektur und Lernfolgen
 
-Stand: 24. Oktober 2026. Fünfzehn verfügbare Kursfolgen mit 122 Kapiteln und 254 erklärten Quizfragen. Die Folgen decken ihren jeweils beschriebenen Umfang ab; sie sind keine vollständige Expertenausbildung in sämtlichen Fachgebieten. Alle Kapitel stehen auf Deutsch und Englisch ohne Account bereit. LaTeX, Typst und Markdown bleiben unter Programmiersprachen → Auszeichnungs- & Satzsprachen.
+Lokaler Stand: 25. Oktober 2026, noch nicht veröffentlicht. 18 Kursfolgen mit 145 Kapiteln und 290 Kursfragen; einschließlich der Einstiegsfragen insgesamt 300 Quizfragen. Die Folgen decken ihren jeweils beschriebenen Umfang ab; sie sind keine vollständige Expertenausbildung in sämtlichen Fachgebieten. Alle Kapitel stehen auf Deutsch und Englisch ohne Account bereit. LaTeX, Typst und Markdown bleiben unter Programmiersprachen → Auszeichnungs- & Satzsprachen. Die öffentliche Referenzversion ist getrennt in VALIDIERUNG.md dokumentiert.
 
 | Folge | Kapitel | Schwerpunkt |
 | --- | --- | --- |
@@ -8,7 +8,7 @@ Stand: 24. Oktober 2026. Fünfzehn verfügbare Kursfolgen mit 122 Kapiteln und 2
 | TypeScript | 8 | Sprache, sichere Daten, asynchrone Abläufe, Tests und Projekt |
 | Python | 8 | Sprache, Dateien/JSON, Tests und Kommandozeilenprojekt |
 | Markdown | 6 | Struktur, Code, Links/Bilder, GFM, sichere Ausgabe und README |
-| Typst | 8 | Umgebung, Markup, Gestaltung, Mathematik, Tabellen, Literatur, Vorlagen und Bericht |
+| Typst | 16 | Grundlagen, Mathematik, Literatur, Funktionen, Module/Pakete, Daten, Kontext, Publikationen, Präsentationen und Builds |
 | Web | 8 | Semantik, CSS, Layout, Formulare, DOM, Zustände, Tastatur und Auslieferung |
 | Datenbanken | 8 | Modell, SQL, Joins, Transaktionen, Parameter, Pläne und Restore |
 | APIs | 7 | HTTP, Verträge, Clients, Fehler, Rechte und konkurrierende Änderungen |
@@ -18,7 +18,10 @@ Stand: 24. Oktober 2026. Fünfzehn verfügbare Kursfolgen mit 122 Kapiteln und 2
 | Sicherheit | 7 | Bedrohungen, Identität, Eingaben, Rechte, XSS/CSRF und Audit |
 | Cloud & DevOps | 8 | Dienstmodelle, Builds, CI, Container, Secrets, SLO und Delivery |
 | KI | 14 | Mathematik, Lernen, Training, Architekturen, generative Modelle und Grenzen |
-| LaTeX | 13 | Syntax, Struktur, Satz, Mathematik, Tabellen, Grafiken und Literatur |
+| LaTeX | 14 | Syntax, Struktur, Satz, Mathematik, Tabellen, Grafiken, Literatur und Projektprüfung |
+| Hardware & Software | 6 | Logik, Rechner, Komponenten, Booten, Montage und Leistung; noch nicht freigegeben |
+| Tastschreiben | 3 | Grundstellung, Aufbau und Auswertung; noch nicht freigegeben |
+| Spieleentwicklung | 5 | Mechanik, Bewegung, Godot-Projekt, Unity und Unreal; noch nicht freigegeben |
 
 ## Gemeinsames Inhaltsmodell
 
@@ -38,6 +41,6 @@ Kapitelkennungen folgen `[kurs]-[kapitel]`, Fragen ergänzen `-1` beziehungsweis
 
 Thema, Kurs, Kapitel und Stufe begrenzen den Fragenpool. Runden umfassen 5, 10, 20 oder alle passenden Fragen; optionales Mischen bleibt über eine Kennung im Link reproduzierbar. `?frage=ki-transformer-1` öffnet eine konkrete Frage. Jede Antwortoption erhält eine Erklärung und einen Beleg. Das Ergebnis verlinkt Fehler zum Nachlesen und Wiederholen. Ein Neustart derselben Runde behält deren Reihenfolge; gespeicherter Lernstand bleibt erhalten.
 
-`npm test`, `npm run check` und `npm run build` prüfen Struktur, Übersetzungen, IDs, Quellen, Formeln und ausführbare Beispiele. Zusätzliche Tests führen TypeScript-, Python- und portable Shellbeispiele aus. Der Linux-CI-Job führt das veröffentlichte Dockerbeispiel tatsächlich aus; lokal wird es ohne laufende Engine übersprungen. SQL-Beispiele wurden separat in einem isolierten PostgreSQL-18-Cluster geprüft. Frühere KI-/LaTeX-Prüfstände und verbleibende Biber-/systemd-Grenzen stehen in [VALIDIERUNG.md](VALIDIERUNG.md). Der aktuelle Ausbau verändert KI und LaTeX inhaltlich nicht.
+`npm test`, `npm run check` und `npm run build` prüfen Struktur, Übersetzungen, IDs, Quellen, Formeln und ausführbare Beispiele. Zusätzliche Tests führen TypeScript-, Python- und portable Shellbeispiele aus. Der Linux-CI-Job führt das veröffentlichte Dockerbeispiel tatsächlich aus; lokal wird es ohne das ausdrückliche Testflag übersprungen. SQL-Beispiele wurden separat in einem isolierten PostgreSQL-18-Cluster geprüft. Alle 30 LaTeX-/Typst-Beispiele einschließlich Biber wurden am 25. Oktober in isolierten Containern gebaut; dafür ist ein eigener CI-Job vorbereitet. Ein echtes systemd-Benutzerlabor bleibt offen. Frühere Prüfstände stehen in [VALIDIERUNG.md](VALIDIERUNG.md). KI bleibt in diesem Ausbau unverändert.
 
-Quellenabgleich und technische Prüfung ersetzen kein unabhängiges Fachreview. Offene Ausbaupakete: [AUSBAU.md](AUSBAU.md); Veröffentlichung: [CLOUDFLARE.md](CLOUDFLARE.md).
+Quellenabgleich und technische Prüfung ersetzen kein unabhängiges Fachreview. Der neue Textsatz-Ausbau ergänzt LaTeX und Typst; technische Diagnostik, Build und fachliche Qualitätsbewertung sind getrennt. Kurse, Beispiele und Uploadprüfung: [DOKUMENTPRUEFUNG.md](DOKUMENTPRUEFUNG.md). Weitere Ausbaupakete: [AUSBAU.md](AUSBAU.md); Veröffentlichung: [CLOUDFLARE.md](CLOUDFLARE.md).

@@ -62,6 +62,7 @@ const reviewDates = [...new Set(topic.lesson?.sources.map(id=>sources[id].review
       {topic.subareas && (
         <section id="teilbereiche">
           <h2>{t("Dokumente & Textsatz", "Documents & typesetting")}</h2>
+          <p><a class="button primary" href={localePath(locale,'/textsatz/')}>{t('Typst & LaTeX: Kurse, Vergleich und Projektprüfung →','Typst & LaTeX: courses, comparison and project checks →')}</a></p>
           {topic.subareas.map((subarea) => (
             <div class="editorial-note">
               <Icon name="book" />
@@ -169,7 +170,7 @@ const reviewDates = [...new Set(topic.lesson?.sources.map(id=>sources[id].review
           {topic.lesson && (
             <a href="#einstiegsartikel">{t("Ersten Einstieg lesen", "Read the first introduction")}</a>
           )}
-          <a href="#uebungseditor">{t("Im Editor üben", "Practice in the editor")}</a>
+          {exercises.some(item=>item.id===topic.id)?<a href="#uebungseditor">{t("Im Editor üben", "Practice in the editor")}</a>:<a href="#labor">{t("Im Lernlabor üben", "Practice in the learning lab")}</a>}
           <a href="#quellen">{t("Quellen & Belege", "Sources & evidence")}</a>
         </nav>
         <div class="sidebar-note">

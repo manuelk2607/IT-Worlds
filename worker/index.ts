@@ -1,5 +1,6 @@
 import { redirectToHttps } from '../src/lib/transport.ts';
 import {typingRequest} from './typing.ts';
+import {documentRequest} from './documents.ts';
 import { handleAuthProxyRequest, parseSessionData } from '@neondatabase/auth/server';
 import { neon } from '@neondatabase/serverless';
 import { isCorrectAnswer, parseProgressChange, type ProgressItem } from '../src/lib/progress.ts';
@@ -9,6 +10,8 @@ export interface Env {
   DATABASE_URL: string;
   NEON_AUTH_BASE_URL: string;
   NEON_AUTH_COOKIE_SECRET: string;
+  DOCUMENT_COMPILER_URL?: string;
+  DOCUMENT_COMPILER_TOKEN?: string;
 }
 const authMethods: Record<string, string> = {
   'get-session': 'GET',
@@ -78,6 +81,7 @@ export default {
     const redirect = redirectToHttps(request);
     if (redirect) return redirect;
     const url = new URL(request.url);
+    if(['/api/documents/status','/api/documents/compile'].includes(url.pathname))return documentRequest(request,env);
     if (!url.pathname.startsWith('/api/')) {
       const response = await env.ASSETS.fetch(request);
       if (response.status === 404 && url.pathname.startsWith('/en/')) {

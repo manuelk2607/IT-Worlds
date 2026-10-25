@@ -2,6 +2,21 @@
 
 Die Reihenfolge beschreibt vorgeschlagene Ausbaustufen, keine zugesagten Termine. Umfang und Prioritäten werden nach Rückmeldungen angepasst.
 
+## Lokaler Entwicklungsstand · 25. Oktober 2026
+
+18 Kurse mit 145 Kapiteln, insgesamt 300 Quizfragen und 238 Quellen; noch nicht veröffentlicht. Typst umfasst 16 Kapitel/32 Fragen, LaTeX 14/28. Der zuletzt dokumentierte öffentliche Stand bleibt separat in VALIDIERUNG.md festgehalten. Die historischen Phasen unten sind keine Freigabe des lokalen Zwischenstands.
+
+- [x] Gemeinsamen Textsatz-Einstieg, prominentere Typst-/LaTeX-Navigation, Kursvergleiche und Querverweise ergänzen; bestehende URLs und Fortschrittskennungen erhalten.
+- [x] Typst um Programmierung, Module/Pakete, Datenberichte, Kontext, wissenschaftliche Publikationen, Präsentationen, automatisierte Builds und Projektabgabe erweitern; LaTeX-Diagnosekapitel ergänzen.
+- [x] Einzeldatei-/ZIP-Workflows mit Hauptdateiauswahl, lokaler Analyse, positionsbezogenen Hinweisen und Prüfreport für LaTeX und Typst implementieren.
+- [x] Separaten isolierten Compilerdienst mit PDF-Download und gerasterter Vorschau implementieren und lokal testen; alle 30 Kursbeispiele einschließlich BibLaTeX/Biber kompilieren.
+- [ ] P1: Dauerhaften separaten Compilerhost bereitstellen, unabhängig sicherheitsprüfen, TLS-Proxy/Ratenlimits und zusätzliche Worker-Secrets einrichten; anschließend öffentlich Ende-zu-Ende prüfen. Bis dahin keine öffentliche Kompilierfunktion behaupten.
+- [ ] P1: Vorherigen Hardware-/Schreibtrainer-/Spiele-Zwischenstand freigeben: echte Ranking-/Zwei-Account-/RLS-/Timing-/Replaytests, Godot-Ausführung und ausstehende Browserprüfungen; erst danach Produktionsmigration/Release. Details: [DREI-LERNBEREICHE.md](DREI-LERNBEREICHE.md) und [PROGRESS.md](../PROGRESS.md).
+- [ ] P2: Unabhängiges Fachreview, assistive Nutzerprüfung und Erprobung der erweiterten Textsatz-Lernwege.
+- [ ] P3: Kursspezifische fachliche Bewertungsrubriken, weitere Visualisierungen und zusätzliche geprüfte Offline-Pakete. Kompilierung bleibt von fachlicher Bewertung getrennt.
+
+Architektur, Datenschutz, Limits, lokale Bedienung und aktuelle Freigabegrenzen: [DOKUMENTPRUEFUNG.md](DOKUMENTPRUEFUNG.md).
+
 ## Aktueller Website-Rahmen
 
 - [x] Zehn Themenwelten mit Einstieg, Vertiefung und Profi-Themen strukturieren.
@@ -75,6 +90,17 @@ Der Einstieg braucht noch keine Anmeldung, öffentliche Rangliste, automatische 
 - Isolierte Praxisumgebungen für SQL oder Programmierung gesondert konzipieren.
 - [x] Deutsch/Englisch und optionales dunkles Design ergänzen.
 - Weitere Sprachen, Community-Beiträge und freiwillige Lernziele prüfen.
+
+### LaTeX-/Typst-Projektprüfung · von Planung zur lokalen Implementierung
+
+Der frühere P2-Plan wurde mit dem Nutzerauftrag vom 25. Oktober zur Umsetzung freigegeben. Export-/Upload-Workflow, begrenzte statische Analyse, sichere Projektaufnahme, didaktische Diagnostik, isolierte Kompilierung und PDF-Rastervorschau sind lokal implementiert und geprüft. Öffentlicher Compilerhost, Sicherheitsreview und Veröffentlichung bleiben als P1 oben offen. Inhaltliche Qualitätsbewertung bleibt eine eigene zukünftige Erweiterung; sie wird nicht durch einen erfolgreichen Build ersetzt.
+
+### P2 · Schreibtrainer mit zusammenhängenden Texten
+
+- [ ] Die späteren Herausforderungen des 10-Finger-Trainers um zusammenhängende Texte ergänzen. Der Lernweg soll von Zeichen und Buchstabengruppen über Wörter und Sätze bis zu kurzen, realistischen Absätzen führen, statt dauerhaft nur einzelne Zeichenfolgen zu verwenden.
+- [ ] Texte nach bereits eingeführten Tasten, Länge, Zeichensetzung, Großschreibung, Zahlen, Sonderzeichen und Schwierigkeitsgrad staffeln. Neue Zeichen dürfen erst verlangt werden, wenn sie im Lernpfad eingeführt wurden.
+- [ ] Für Textlektionen Fortschritt, Genauigkeit, Fehlerstellen, WPM/KPM und wiederkehrende Schwächen verständlich auswerten. Korrekturen und übersprungene Zeichen müssen konsistent mit den vorhandenen Messregeln behandelt werden.
+- [ ] Deutsche und englische Übungstexte eigenständig und sprachgerecht verfassen, ihre Schwierigkeit vergleichbar halten und Rechte sowie Quellen vor einer Veröffentlichung klären.
 
 ## Offene Entscheidungen
 

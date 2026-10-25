@@ -1,5 +1,15 @@
 # Validierung
 
+## Lokale Textsatz-Erweiterung · 25. Oktober 2026 · nicht veröffentlicht
+
+Typst 16 Kapitel/32 Fragen, LaTeX 14/28; insgesamt 13 Themen, 18 Kurse, 145 Kapitel, 300 Quizfragen, 238 Quellen. Gemeinsame DE/EN-Projektprüfung, Einzeldateien/ZIP, explizite Hauptdatei, statische Befunde mit Positionen und getrennte Kompilierung. Neues eigenes Compilerimage; keine bestehenden Container verändert. Echte Kompilierung aller 30 LaTeX-/Typst-Beispiele inklusive Literatur/Biber erfolgreich. Zusätzlich fehlerhafte Syntax, fehlende Pakete, ausbrechender Typst-Pfad, Endlosschleife und tatsächlich deaktiviertes TeX-Shell-Escape geprüft. Privater Dienst: Bearer-Pflicht, ungültige Projekte abgewiesen, gültiges PDF/PNG; automatische Löschung eigener verwaister Jobs geprüft. Sieben separate Compiler-/Diensttests bestanden. Neue CI-Prüfung vorbereitet, noch nicht auf GitHub ausgeführt.
+
+Lokaler Browser: Typst-Kursbeispiel übernommen, echte Kompilierung mit PDF-Download und PNG-Vorschau; mehrteilige Dateiauswahl und ZIP auf Englisch bei 390px, richtige Hauptdatei und zwei Dateien ohne falsche Referenzwarnung erkannt. Fehlerpositionen springen zur Quellstelle; Designwechsel und mobiles Menü mit Escape-Fokusrückkehr geprüft. Weitere abschließende Browserprüfungen und allgemeiner Teststand stehen im Abschlussprotokoll in DOKUMENTPRUEFUNG.md.
+
+Serieller Build: 444 HTML-Seiten. Release-Dry-Run erfolgreich: 438 öffentliche Sprachseiten mit SEO/Sprachbezügen und 31.602 interne Links/Assets/Anker geprüft; Wrangler-Dry-Run bestanden. Sechs ältere Sprunglinks zeigten auf nicht vorhandene Übungseditoren in den neuen Themenwelten; sie führen jetzt zum vorhandenen Labor. Der frühere parallele Buildfehler wurde im aktuellen seriellen Ablauf nicht reproduziert. Das ersetzt nicht die offenen Ranking-/RLS-/Godot-Prüfungen des vorherigen Arbeitsauftrags.
+
+Kein Deploy, kein GitHub-Push, keine Produktionsmigration, kein öffentlich eingerichteter Compilerhost. Ohne zusätzliche Compiler-Secrets bleibt die lokale Analyse nutzbar, eine echte öffentliche Kompilierung ist nicht verfügbar. Einzelheiten, Sicherheits- und Hostinggrenzen: [DOKUMENTPRUEFUNG.md](DOKUMENTPRUEFUNG.md). Die früheren öffentlichen Nachweise unten bleiben unverändert.
+
 ## Aktuelle Entwicklungsrunde · Kursübungen und Quellenorientierung
 
 **Veröffentlicht und öffentlich geprüft:** Quellstand **25cf8eb**, Worker-Version **b54243e9-3627-496e-a8f4-66c0c378638f**, Deployment **513face4-f18e-43cb-9be9-04b6c0ebe106**, 24.10.2026 **15:53:22 Europe/Stockholm**, 100 % Traffic. Vorhandener Nutzercommit 43a48e5 erhalten. Drei abgeschlossene Pakete: 19ea45e (13 zusätzliche Kursaufgaben und Katalog), 8bfd4ac (Quellenfilter), 25cf8eb (globale Quellensuche und lesbarere Belegstände).

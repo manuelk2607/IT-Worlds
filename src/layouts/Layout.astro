@@ -36,6 +36,7 @@ const nav = [
   { label: t("Themenwelten", "Topics"), href: "/#themenwelten", id: "themen" },
   { label: t("Kurse", "Courses"), href: "/lernpfade/", id: "pfade" },
   { label: t("Übungen", "Practice"), href: "/uebungen/", id: "uebungen" },
+  { label: "Typst & LaTeX", href: "/textsatz/", id: "textsatz" },
   { label: t("Wissensquiz", "Quiz"), href: "/quiz/", id: "quiz" },
 ];
 ---
@@ -156,6 +157,7 @@ const nav = [
           <a href={localePath(locale, "/lernen/")}>{t("Lernstart", "Getting started")}</a>
           <a href={localePath(locale, "/#themenwelten")}>{t("Themenwelten", "Topics")}</a>
           <a href={localePath(locale, "/lernpfade/")}>{t("Lernpfade", "Learning paths")}</a>
+          <a href={localePath(locale, "/textsatz/")}>Typst & LaTeX</a>
           <a href={localePath(locale, "/quellen/")}>{t("Quellen & Qualität", "Sources & quality")}</a>
           <a
             href="https://github.com/manuelk2607/IT-Worlds"

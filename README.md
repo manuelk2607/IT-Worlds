@@ -2,6 +2,8 @@
 
 **IT verstehen. Zusammenhänge entdecken. Wissen spielerisch testen.**
 
+**Lokale Erweiterung · 25.10.2026, noch nicht veröffentlicht:** Typst umfasst jetzt 16 Kapitel/32 Kursfragen, LaTeX 14/28. Ein gemeinsamer Textsatz-Einstieg und eine DE/EN-Projektprüfung für Einzeldateien und ZIP verbinden externe Editoren mit lokaler Analyse und einem separat getesteten isolierten Compilerdienst samt PDF-Rastervorschau. Alle 30 Textsatzbeispiele kompilieren lokal einschließlich Biber. Für öffentliche Kompilierung fehlt ein dauerhafter eigener Compilerhost; Details, Startbefehle und Grenzen: [Dokumentprüfung](docs/DOKUMENTPRUEFUNG.md). Hardware, Schreibtrainer und Spieleentwicklung bleiben ein eigener noch nicht freigegebener Zwischenstand.
+
 [Website auf Deutsch](https://it-worlds.maki26.workers.dev) · [Website in English](https://it-worlds.maki26.workers.dev/en/) · [Übungseditoren](https://it-worlds.maki26.workers.dev/uebungen/) · [English README](README.en.md)
 
 IT-Worlds ist eine deutsch-englische IT-Lernplattform mit zehn Themenwelten. Alle Inhalte, Quellen und Quizfragen sind ohne Anmeldung zugänglich. Ein freiwilliger Account speichert gelesene Einstiege und Kapitel, bearbeitete Fragen und richtig beantwortete Fragen geräteübergreifend. Ein optionales dunkles Design ergänzt das helle Design; die Auswahl bleibt im Browser gespeichert.
@@ -61,6 +63,7 @@ Astro erzeugt statische Seiten mit TypeScript und CSS. Ein kleiner TypeScript-Wo
 | [Accounts](docs/ACCOUNTS.md) | Neon, Rollen, Migrationen, Sessions und Mailkonfiguration |
 | [Cloudflare](docs/CLOUDFLARE.md) | Bestandsprüfung, Secrets und Veröffentlichung |
 | [Übungseditoren](docs/EDITOR.md) | Aufgabenformate, Bedienung und Grenzen |
+| [Dokumentprüfung](docs/DOKUMENTPRUEFUNG.md) | LaTeX/Typst-Upload, Analyse, isolierte Kompilierung, Datenschutz und Freigabe |
 | [SEO](docs/SEO.md) | Sitemap, Indexierbarkeit und Suchmaschinen |
 | [Quellen](docs/QUELLEN.md) | Tatsächlich gelesene Primärquellen und Grenzen des Reviews |
 | [Validierung](docs/VALIDIERUNG.md) | Durchgeführte Prüfungen und Deployment-Nachweis |

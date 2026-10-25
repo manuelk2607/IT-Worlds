@@ -1,0 +1,24 @@
+.document-check { max-width: 960px; }
+.document-panel { padding: clamp(1.2rem, 3vw, 2rem); margin-block: 1.5rem; border: 1px solid var(--line); border-radius: var(--radius); background: var(--white); }
+.document-panel h2 { font-size: 1.45rem; margin-bottom: 1rem; }
+.document-panel p { margin-block: .9rem; line-height: 1.7; }
+.document-panel label { display: block; font-weight: 600; margin-block: 1rem; }
+.document-panel select, .document-panel input, .document-panel textarea { display: block; width: 100%; max-width: 100%; margin-top: .5rem; padding: .7rem; border: 1px solid var(--line); border-radius: 8px; color: var(--ink); background: var(--paper); font: inherit; }
+.document-panel textarea { font-family: ui-monospace, monospace; font-size: .95rem; overflow-wrap: normal; white-space: pre; }
+.document-panel pre { max-height: 24rem; overflow: auto; white-space: pre-wrap; overflow-wrap: anywhere; font-size: .9rem; }
+.document-panel img { display: block; max-width: 100%; height: auto; margin-block: 1rem; border: 1px solid var(--line); }
+.document-file-options, .document-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+.document-file-options > label { flex: 1 1 260px; min-width: 0; }
+.document-boundary { padding: 1rem; border-inline-start: 4px solid #8b5cf6; }
+.document-diagnostics { list-style: none; padding: 0; }
+.document-diagnostics li { border: 1px solid var(--line); border-inline-start: 4px solid #64748b; border-radius: 8px; padding: 1rem; margin-block: 1rem; overflow-wrap: anywhere; }
+.document-diagnostics li[data-severity=error] { border-inline-start-color: #e11d48; }
+.document-diagnostics li[data-severity=warning] { border-inline-start-color: #d97706; }
+.document-diagnostics button { color: inherit; background: transparent; padding: .4rem; text-decoration: underline; text-align: left; font: inherit; font-weight: 650; cursor: pointer; }
+.document-diagnostics p { margin-block: .5rem; }
+.typesetting-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 1.4rem; }
+.typesetting-grid .document-panel { margin: 0; }
+.typesetting-comparison { width: 100%; border-collapse: collapse; }
+.typesetting-comparison th, .typesetting-comparison td { padding: .8rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+.table-scroll { max-width: 100%; overflow-x: auto; }
+.document-panel :is(code, p, label) { overflow-wrap: anywhere; }

@@ -1,4 +1,5 @@
 import {practiceTopics} from './practice-topics.ts';
+import {documentSources} from './course-document-sources.ts';
 import {practiceSources} from './practice-sources.ts';
 import { exerciseSources } from './exercise-sources.ts';
 import {guidedLearningPaths} from './learning-paths.ts';
@@ -50,6 +51,7 @@ export type Source = {
   description: string;
 };
 export const sources = {
+  ...documentSources,
   ...practiceSources,
   ...exerciseSources,
   ...typstSources,
@@ -268,7 +270,7 @@ const baseTopics: Topic[] = [
     group: "bauen",
     description:
       "Lerne, Probleme in kleine Schritte zu zerlegen und Lösungen in Code auszudrücken. Python und TypeScript besitzen eigene Kursfolgen; Java, C/C++, Go und Rust ergänzen die weitere Sprachlandkarte. Ein ergänzender Unterbereich behandelt LaTeX, Typst und Markdown für Dokumente und Textsatz.",
-    tags: ["Python", "TypeScript", "LaTeX"],
+    tags: ["Python", "TypeScript", "Typst", "LaTeX"],
     prerequisites:
       "Für den Einstieg genügt Neugier. Vertiefungen bauen auf Variablen, Funktionen und grundlegenden Datenstrukturen auf.",
     curriculum: {
@@ -296,8 +298,8 @@ const baseTopics: Topic[] = [
       {
         title: "Auszeichnungs- & Satzsprachen",
         description:
-          "LaTeX bereitet Dokumente für den Textsatz auf. Typst verbindet Markup und Textsatz mit Funktionen und Scripting. Markdown dient zum Schreiben strukturierter Dokumente in Klartext. Diese Sprachen ergänzen hier das Programmieren um Dokumentstruktur und Publikation. LaTeX, Typst und Markdown besitzen eigene verfügbare Kursfolgen.",
-        languages: ["LaTeX", "Typst", "Markdown"],
+          "Typst und LaTeX sind programmierbare Textsatzsysteme für strukturierte Publikationen. Typst verbindet Markup mit einer integrierten Skriptsprache; LaTeX setzt auf das TeX-Makro- und Paketökosystem. Markdown dient zum Schreiben einfacher strukturierter Dokumente in Klartext. Eigene Kurse erklären Syntax, Gestaltung, Literatur und den Weg zum prüfbaren Projekt.",
+        languages: ["Typst", "LaTeX", "Markdown"],
         sources: ["latex", "typst", "markdown"],
       },
     ],

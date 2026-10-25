@@ -37,6 +37,6 @@ test('all published Typst documents compile with their actual bibliography and c
     }
    }
   }
-  assert.equal(count,8);
+  assert.equal(count,16);
  }finally{rmSync(dir,{recursive:true,force:true});}
 });

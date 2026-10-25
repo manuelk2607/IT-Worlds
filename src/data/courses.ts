@@ -20,6 +20,7 @@ import { aiArchitectures } from './course-ai-architectures.ts';
 import { latexCourse } from './course-latex.ts';
 import { latexTechnical } from './course-latex-technical.ts';
 import { latexAdvanced } from './course-latex-advanced.ts';
+import { latexReview } from './course-latex-review.ts';
 import { coursePath, chapterProgressId, localizeQuestion, type Course } from './course-types.ts';
 import type { LearningPath } from './content.ts';
 import type { Locale } from '../lib/locale.ts';
@@ -29,7 +30,7 @@ export const courses: Course[] = [
   hardwareCourse, typingCourse, gamesCourse,
   basicsCourse, typescriptCourse, pythonCourse, markdownCourse, typstCourse, webCourse, databaseCourse, apiCourse, networkCourse, osCourse, linuxCourse, securityCourse, devopsCourse,
   { ...aiCourse, chapters: [...aiCourse.chapters, ...aiAdvanced, ...aiArchitectures] },
-  { ...latexCourse, chapters: [...latexCourse.chapters, ...latexTechnical, ...latexAdvanced] },
+  { ...latexCourse, related:['typst','markdown'], chapters: [...latexCourse.chapters, ...latexTechnical, ...latexAdvanced, ...latexReview] },
 ];
 export const courseChapters = courses.flatMap(course => course.chapters.map(chapter => ({ course, chapter, id: chapterProgressId(course, chapter), url: coursePath(course, chapter) })));
 export const courseQuestions = (locale: Locale) => courses.flatMap(course => course.chapters.flatMap(chapter => chapter.questions.map((question, index) => localizeQuestion(course, chapter, question, index, locale))));

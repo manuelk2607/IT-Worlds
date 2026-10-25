@@ -1,3 +1,17 @@
+# Aktiver Auftrag · LaTeX-/Typst-Dokumentprüfung · 25.10.2026
+
+Auftrag: LaTeX-Restaufgaben, gemeinsamer Export-/Upload-/Prüfworkflow, Typst vertiefen und hervorheben. Vorherige Roadmap-Änderungen erhalten. Details und Freigabegrenzen: docs/DOKUMENTPRUEFUNG.md.
+
+Implementiert: lokal arbeitende, begrenzte Einzeldatei-/ZIP-Aufnahme in Web Worker; LaTeX-/Typst-Analyse mit Positionen, Hauptdatei, Referenzen/Ressourcen, Quellenansicht und Bericht. DE/EN-Routen /textsatz/ und /dokumentpruefung/, gemeinsame Navigation/Suche/Kurslinks; Kursbeispiele direkt in Prüfung ladbar. Typst acht zusätzliche Kapitel (nun 16/32 Fragen), LaTeX Diagnosekapitel (nun 14/28). Stabile frühere IDs erhalten. Zwölf Analyse-/ZIP-/Diagnostiktests bestehen. Gesamter lokaler Stand: 13 Themen/18 Kurse/145 Kapitel/300 Fragen/238 Quellen.
+
+Separater eigener Compilercontainer und privater TS-Dienst mit Worker-Proxy implementiert. Nur eigene Container it-worlds-doc-* erstellt/entfernt; bestehende Container nicht bearbeitet. Docker lokal gestartet, eigenes Image gebaut. Alle 30 Kursbeispiele inklusive Biber erfolgreich kompiliert; sieben separate Compiler-/Diensttests inklusive ungültiger Syntax, fehlender Pakete, Projektausbruch, Endlosschleife, echtem Shell-Escape-Ablehnungstest, Auth und Löschung bestehen. Keine neue öffentliche Hosting-Ressource, kein Deploy, keine Datenbankänderung. Bei fehlender Dienstkonfiguration bleibt Kompilierung verfügbar:false; Quellen bleiben dann lokal.
+
+Verifiziert: npm test 85 Tests (75 bestanden, 10 optionale Laufzeit-Skips), check 193 Dateien ohne Meldungen, serieller Build 444 HTML-Seiten, deploy:check mit 438 SEO-/Sprachseiten und 31.602 Links/Ankern erfolgreich. Die sieben echten Compiler-/Diensttests liefen zusätzlich ohne Skips. Browser: DE/EN, 390px/950px/1280px ohne Seitenüberlauf, Designs/Mobilmenü/Escape, Einzeldateien und ZIP, Hauptdatei, Quellpositionen, echte Typst-/Biber-PDF-Rastervorschau, neue Quizfrage mit Erklärungen/Ergebnis/Neustart und klare Nichtverfügbarkeit ohne Dienst am echten lokalen Worker. Entfernen leert Quelle und Ergebnisse. 22 neue DE/EN-Routen und beide Worker-404-Sprachen per HTTP geprüft; allgemeiner Ready-Check bestanden.
+
+Offen: dauerhafter separater Compilerhost mit unabhängiger Sicherheitsprüfung und öffentlicher Konfiguration; Fachreview/assistive Nutzerprüfung; optionale fachliche Bewertungsrubriken. Der frühere Schreibtrainer-/Hardware-/Spiele-Freigabestand bleibt gesondert offen. Keine automatische Restart-/Fortsetzungszusage; nächster Entwicklungslauf muss diesen Stand mit Git abgleichen. Veröffentlichung/Pushergebnis weiterhin keines.
+
+---
+
 # IT-Worlds · Zwischenstand drei Lernbereiche
 
 ## Stand / Budget · 24.10.2026

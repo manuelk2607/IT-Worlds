@@ -1,0 +1,50 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Breadcrumbs from './Breadcrumbs.astro';
+import {translate, localePath, type Locale} from '../lib/i18n.ts';
+import '../styles/documents.css';
+interface Props {locale?:Locale}
+const locale=Astro.props.locale??'de';const t=translate(locale);
+---
+<Layout locale={locale} title={t('LaTeX- & Typst-Projekte prüfen','Check LaTeX & Typst projects')} description={t('Prüfe lokale LaTeX- und Typst-Projektdateien auf typische Struktur-, Referenz- und Ressourcenprobleme. Mit verständlichen Hinweisen und Fehlerpositionen.','Check local LaTeX and Typst projects for common structure, reference and resource issues. With understandable guidance and source positions.')} active="uebungen">
+ <Breadcrumbs locale={locale} items={[{title:t('Textsatz lernen','Learn typesetting'),href:'/textsatz/'},{title:t('Dokumentprüfung','Document check')}]}/>
+ <header class="container page-top"><p class="eyebrow">{t('VOM EDITOR ZUM GEPRÜFTEN PROJEKT','FROM EDITOR TO REVIEWED PROJECT')}</p><h1>{t('Dein Dokument verstehen und verbessern','Understand and improve your document')}</h1><p class="page-lead">{t('Schreibe extern, exportiere die Quellen und untersuche dein Projekt hier. Die lokale Analyse führt keine Dokumentbefehle aus.','Write externally, export the sources and inspect your project here. Local analysis executes no document commands.')}</p></header>
+ <div class="container section document-check" data-document-check data-locale={locale}>
+  <section class="document-panel"><h2>{t('1 · Erstellen und exportieren','1 · Create and export')}</h2>
+   <p><a href="https://www.overleaf.com/" target="_blank" rel="noopener noreferrer">{t('Overleaf öffnen ↗','Open Overleaf ↗')}</a> · <a href="https://typst.app/" target="_blank" rel="noopener noreferrer">{t('Offiziellen Typst-Editor öffnen ↗','Open the official Typst editor ↗')}</a></p>
+   <p>{t('Overleaf: Projektquellen als ZIP herunterladen. Typst: „Export and Preview → Project archive“ oder „File → Backup project“. Wähle das Quellarchiv, nicht nur das fertige PDF.','Overleaf: download the project sources as ZIP. Typst: “Export and Preview → Project archive” or “File → Backup project”. Choose the source archive, rather than just the finished PDF.')}</p>
+   <p class="muted">{t('Typst-Archive enthalten keine privaten Pakete und keine ausschließlich in der Web-App bereitgestellten Fonts. Stelle benötigte Ressourcen mit ihren Rechten separat bereit.','Typst archives exclude private packages and fonts supplied only by the web app. Include required resources separately with appropriate permissions.')}</p>
+   <p><a href="https://typst.app/docs/web-app/export-and-preview/" target="_blank" rel="noopener noreferrer">{t('Typst-Exportanleitung ↗','Typst export guide ↗')}</a> · <a href="https://www.overleaf.com/learn/how-to/Exporting_your_work_from_Overleaf" target="_blank" rel="noopener noreferrer">{t('Overleaf-Exportanleitung ↗','Overleaf export guide ↗')}</a></p>
+  </section>
+  <section class="document-panel"><h2>{t('2 · Projekt auswählen','2 · Select a project')}</h2>
+   <p id="document-privacy">{t('Die lokale Prüfung findet in diesem Browser statt. Quellen und Ergebnisse werden weder hochgeladen noch dauerhaft gespeichert. „Projekt entfernen“ oder das Schließen der Seite entfernt sie aus dieser Ansicht.','Local checks run in this browser. Sources and results are neither uploaded nor persistently stored. “Remove project” or closing the page removes them from this view.')}</p>
+   <label>{t('Textsatzsystem','Typesetting system')}<select data-doc-format><option value="typst">Typst</option><option value="latex">LaTeX</option></select></label>
+   <div class="document-file-options">
+    <label>{t('Einzeldateien oder ein ZIP','Individual files or one ZIP')}<input type="file" multiple data-doc-files aria-describedby="document-privacy document-limits"/></label>
+    <label>{t('Alternativ: Projektordner auswählen','Alternatively: select a project folder')}<input type="file" multiple data-doc-folder aria-describedby="document-privacy document-limits"/></label>
+   </div>
+   <p id="document-limits" class="muted">{t('Maximal 64 Dateien, 8 MiB insgesamt, 2 MiB je Datei; ZIP mit höchstens 100:1 Kompression. UTF-8-Quellen, Literatur, Bilder, Daten und Fonts. Keine Programme oder verschachtelten Archive.','At most 64 files, 8 MiB total, 2 MiB per file; ZIP compression at most 100:1. UTF-8 sources, bibliography, images, data and fonts. No programs or nested archives.')}</p>
+   <p><button class="button secondary" data-doc-demo>{t('Beispiel mit zwei Fehlern ausprobieren','Try an example with two issues')}</button></p>
+   <label>{t('Hauptdatei','Main file')}<select data-doc-main disabled><option value="">{t('Zuerst Projekt auswählen','Select a project first')}</option></select></label>
+   <div class="document-actions"><button class="button primary" data-doc-analyze disabled>{t('Lokal analysieren','Analyse locally')}</button><button class="button secondary" data-doc-clear>{t('Projekt entfernen','Remove project')}</button></div>
+   <p data-doc-status role="status" aria-live="polite"></p>
+   <noscript><p>{t('Für die lokale Dateiprüfung muss Browser-JavaScript aktiviert sein. Kurse, Beispiele und Lösungen bleiben ohne JavaScript lesbar.','Local file checks require browser JavaScript. Courses, examples and solutions remain readable without JavaScript.')}</p></noscript>
+  </section>
+  <section class="document-panel" data-doc-results hidden aria-labelledby="document-result-title"><h2 id="document-result-title" tabindex="-1">{t('3 · Ergebnisse und nächste Schritte','3 · Results and next steps')}</h2>
+   <p data-doc-summary></p>
+   <p class="document-boundary">{t('Statische Analyse prüft ausgewählte, direkt erkennbare Muster. Sie ist kein vollständiger Syntaxparser, expandiert keine Makros und wertet keinen Typst-Code aus. Hinweise können bei dynamischen Pfaden oder Marken unvollständig sein. Kein Fund bedeutet weder „kompilierbar“ noch „inhaltlich richtig“.','Static analysis checks selected directly recognisable patterns. It is not a complete syntax parser, does not expand macros and does not evaluate Typst code. Dynamic paths or labels can make findings incomplete. No finding means neither “compiles” nor “correct content”.')}</p>
+   <p data-doc-compilation>{t('Kompilierung: nicht ausgeführt. Eine vollständige Prüfung benötigt einen echten Compiler in einer isolierten Laufzeit.','Compilation: not run. Full checking requires a real compiler in an isolated runtime.')}</p>
+   <div data-doc-output></div>
+   <button class="button secondary" data-doc-compile>{t('Isolierte Kompilierung anfragen','Request isolated compilation')}</button>
+   <p class="muted">{t('Nur auf ausdrückliche Anfrage werden Quellen an den eigenen Prüfdienst übertragen. Ist keine isolierte Laufzeit eingerichtet, bleiben sie lokal und du erhältst eine klare Meldung.','Sources are sent to our own compilation service only on explicit request. If no isolated runtime is configured, they remain local and you receive a clear message.')}</p>
+   <ul class="document-diagnostics" data-doc-diagnostics></ul>
+   <details><summary>{t('Dateien und Abhängigkeiten','Files and dependencies')}</summary><p data-doc-inventory></p></details>
+   <label>{t('Quelldatei ansehen (wird nicht ausgeführt)','Inspect a source file (not executed)')}<select data-doc-source></select></label>
+   <label>{t('Quelle; Fehler anklicken, um die Stelle zu markieren','Source; click a finding to highlight its position')}<textarea data-doc-preview readonly rows="12" spellcheck="false"></textarea></label>
+   <p><button class="button secondary" data-doc-download>{t('Prüfbericht herunterladen','Download check report')}</button></p>
+   <p>{t('Übertrage Verbesserungen in deinen Editor und exportiere danach neu. Vergleiche Compilerfehler, Warnungen und fachliche Aussagen getrennt. Markiere die Kursaufgabe erst nach eigener Kontrolle als gelesen.','Apply improvements in your editor and export again. Review compiler errors, warnings and subject claims separately. Mark the course task as read only after your own review.')}</p>
+   <p><a data-doc-course href={localePath(locale,'/themen/programmiersprachen/typst/projektpruefung/')}>{t('Zur passenden Kursaufgabe →','Go to the matching course task →')}</a></p>
+  </section>
+ </div>
+ <script src="../scripts/documents.ts"></script>
+</Layout>

@@ -1,5 +1,7 @@
 ---
 import Exercises from '../uebungen.astro';
+import Typesetting from '../textsatz.astro';
+import DocumentCheck from '../../components/DocumentCheck.astro';
 import CourseView from '../../components/CourseView.astro';
 import { courses } from '../../data/courses.ts';
 import type { Course, Chapter } from '../../data/course-types.ts';
@@ -22,7 +24,7 @@ export function getStaticPaths() {
       { params: { page: `themen/${course.topic}/${course.slug}` }, props: { view: 'course', course } },
       ...course.chapters.map(chapter => ({ params: { page: `themen/${course.topic}/${course.slug}/${chapter.id}` }, props: { view: 'course', course, chapter } })),
     ]),
-    ...[undefined, 'lernen', 'quiz', 'uebungen', 'quellen', 'lernpfade', 'konto', 'fortschritt', '404'].map(page => ({ params: { page }, props: { view: page ?? 'home' } })),
+    ...[undefined, 'lernen', 'quiz', 'uebungen', 'quellen', 'lernpfade', 'konto', 'fortschritt', '404', 'textsatz', 'dokumentpruefung'].map(page => ({ params: { page }, props: { view: page ?? 'home' } })),
     ...topics.map(topic => ({ params: { page: `themen/${topic.id}` }, props: { view: 'topic', topic } })),
     ...paths.map(path => ({ params: { page: `lernpfade/${path.id}` }, props: { view: 'path', path } })),
   ];
@@ -31,6 +33,8 @@ const { view, topic, path, course, chapter } = Astro.props;
 ---
 {view === 'home' && <Home locale="en" />}
 {view === 'lernen' && <Start locale="en" />}
+{view === 'textsatz' && <Typesetting locale="en" />}
+{view === 'dokumentpruefung' && <DocumentCheck locale="en" />}
 {view === 'course' && course && <CourseView locale="en" course={course} chapter={chapter} />}
 {view === 'uebungen' && <Exercises locale="en" />}
 {view === 'quiz' && <Quiz locale="en" />}

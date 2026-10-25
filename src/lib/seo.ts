@@ -4,7 +4,7 @@ import { topics, paths, sources } from '../data/content.ts';
 import { courses, courseChapters, coursePath } from '../data/courses.ts';
 import { localePath, type Locale } from './locale.ts';
 export const SITE_URL = 'https://it-worlds.maki26.workers.dev';
-export const publicPaths = ['/', '/lernen/', '/lernpfade/', '/quiz/', '/quellen/', '/uebungen/', '/schreibtrainer/',
+export const publicPaths = ['/', '/lernen/', '/lernpfade/', '/quiz/', '/quellen/', '/uebungen/', '/schreibtrainer/', '/textsatz/', '/dokumentpruefung/',
   ...exercises.filter(exercise=>exercise.id!==exercise.topic).map(exercisePath), ...topics.map(topic=>`/themen/${topic.id}/`), ...paths.map(path=>`/lernpfade/${path.id}/`), ...courses.map(course => coursePath(course)), ...courseChapters.map(chapter => chapter.url)];
 export const publicUrls = publicPaths.flatMap(path=>(['de','en'] as const).map(locale=>new URL(localePath(locale,path),SITE_URL).href));
 export function pageSeo(pathname: string, locale: Locale, title: string, description: string) {
