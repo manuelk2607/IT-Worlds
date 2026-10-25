@@ -1,6 +1,6 @@
 # Kursarchitektur und Lernfolgen
 
-Lokaler Stand: 25. Oktober 2026, noch nicht veröffentlicht. 18 Kursfolgen mit 145 Kapiteln und 290 Kursfragen; einschließlich der Einstiegsfragen insgesamt 300 Quizfragen. Die Folgen decken ihren jeweils beschriebenen Umfang ab; sie sind keine vollständige Expertenausbildung in sämtlichen Fachgebieten. Alle Kapitel stehen auf Deutsch und Englisch ohne Account bereit. LaTeX, Typst und Markdown bleiben unter Programmiersprachen → Auszeichnungs- & Satzsprachen. Die öffentliche Referenzversion ist getrennt in VALIDIERUNG.md dokumentiert.
+Stand: 25. Oktober 2026; Veröffentlichung siehe VALIDIERUNG.md. 18 Kursfolgen mit 145 Kapiteln und 290 Kursfragen; einschließlich der Einstiegsfragen insgesamt 300 Quizfragen. Die Folgen decken ihren jeweils beschriebenen Umfang ab; sie sind keine vollständige Expertenausbildung in sämtlichen Fachgebieten. Alle Kapitel stehen auf Deutsch und Englisch ohne Account bereit. LaTeX, Typst und Markdown bleiben unter Programmiersprachen → Auszeichnungs- & Satzsprachen. Die öffentliche Referenzversion ist getrennt in VALIDIERUNG.md dokumentiert.
 
 | Folge | Kapitel | Schwerpunkt |
 | --- | --- | --- |
@@ -19,9 +19,9 @@ Lokaler Stand: 25. Oktober 2026, noch nicht veröffentlicht. 18 Kursfolgen mit 1
 | Cloud & DevOps | 8 | Dienstmodelle, Builds, CI, Container, Secrets, SLO und Delivery |
 | KI | 14 | Mathematik, Lernen, Training, Architekturen, generative Modelle und Grenzen |
 | LaTeX | 14 | Syntax, Struktur, Satz, Mathematik, Tabellen, Grafiken, Literatur und Projektprüfung |
-| Hardware & Software | 6 | Logik, Rechner, Komponenten, Booten, Montage und Leistung; noch nicht freigegeben |
-| Tastschreiben | 3 | Grundstellung, Aufbau und Auswertung; noch nicht freigegeben |
-| Spieleentwicklung | 5 | Mechanik, Bewegung, Godot-Projekt, Unity und Unreal; noch nicht freigegeben |
+| Hardware & Software | 6 | Logik, Rechner, Komponenten, Booten, Montage und Leistung |
+| Tastschreiben | 3 | Grundstellung, Aufbau und lokale Auswertung; Online-Ranking deaktiviert |
+| Spieleentwicklung | 5 | Mechanik, Bewegung, Godot-Projekt, Unity und Unreal; Godot-Engineprüfung offen |
 
 ## Gemeinsames Inhaltsmodell
 

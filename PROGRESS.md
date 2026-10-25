@@ -6,7 +6,9 @@ Implementiert: externer Editor-/Export-/Quellenimport für beide Formate, Compil
 
 Verifiziert: 83 Tests (78 pass/5 optionale Laufzeit-Skips), 191 Dateien strikt ohne Meldungen, 444 HTML-Seiten, Dry-Run/438 Sprachseiten/31.728 interne Links. Browser: tatsächliche ZIP-Importe beider Formate, fehlerhafte Quellen, unsicherer ZIP-Pfad, Fundstellen, Entfernen, DE/EN, hell/dunkel und mobil. CF-Account/Subdomain/vier Bindings gelesen, Einstellungen für Nachvergleich gesichert; Login erneuert. Keine bestehenden Docker-Container oder Images verändert.
 
-Nächster Schritt: finalen Git-Commit pushen, beauftragten Deploy durchführen, öffentliche Auslieferung/Interaktionen und erhaltene Einstellungen prüfen. Ergebnis und Version anschließend hier und in docs/VALIDIERUNG.md dokumentieren.
+Abgeschlossen: Quellcommit 4b902cd auf codex/cloudstand-lokal gepusht; GitHub-Quality 40179580624 erfolgreich. Öffentlich veröffentlicht am 25.10.2026 10:11:42 Europe/Stockholm: Version 677144d2-3d90-413b-bc98-35b955122f8e, Deployment 1475cda0-30b8-47ed-bd46-49669f2662f0 mit 100 % Traffic. Alle 438 Sprachseiten bytegleich geprüft. Öffentliche LaTeX-Analyse und echter Typst-Mehrdatei-ZIP-Import funktionieren im Browser. CF-Einstellungen und vier Bindings unverändert; Auth200/Gastfortschritt401/Ranking503/entfernter Compiler404/beide404 geprüft. Dokumentation: docs/VALIDIERUNG.md und docs/DOKUMENTPRUEFUNG.md.
+
+Offen außerhalb dieses abgeschlossenen Auftrags: P2-Verbesserungen nur ohne zusätzliche laufende Kosten/hohen Aufwand; unabhängiges Fach-/assistives Review; ungeprüftes Rankingbackend und Godot-Engineprüfung aus früherem Auftrag. Keine Kompilierungsserver einrichten. Nächster Entwicklungslauf soll vom aktuellen Git-Stand ausgehen und diese bereits abgeschlossenen Pakete nicht wiederholen.
 
 ---
 

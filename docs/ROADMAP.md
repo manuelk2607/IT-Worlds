@@ -2,9 +2,9 @@
 
 Die Reihenfolge beschreibt vorgeschlagene Ausbaustufen, keine zugesagten Termine. Umfang und Prioritäten werden nach Rückmeldungen angepasst.
 
-## Lokaler Entwicklungsstand · 25. Oktober 2026
+## Entwicklungsstand · 25. Oktober 2026
 
-18 Kurse mit 145 Kapiteln, insgesamt 300 Quizfragen und 238 Quellen. Veröffentlichung der vereinfachten Dokumentprüfung wird in VALIDIERUNG.md nachgewiesen. Typst umfasst 16 Kapitel/32 Fragen, LaTeX 14/28. Der zuletzt dokumentierte öffentliche Stand bleibt separat in VALIDIERUNG.md festgehalten. Die historischen Phasen unten sind keine Freigabe des lokalen Zwischenstands.
+18 Kurse mit 145 Kapiteln, insgesamt 300 Quizfragen und 238 Quellen. Die vereinfachte Dokumentprüfung ist veröffentlicht; Versionsnachweis in VALIDIERUNG.md. Typst umfasst 16 Kapitel/32 Fragen, LaTeX 14/28. Der zuletzt dokumentierte öffentliche Stand bleibt separat in VALIDIERUNG.md festgehalten. Die historischen Phasen unten sind keine Freigabe des lokalen Zwischenstands.
 
 - [x] Gemeinsamen Textsatz-Einstieg, prominentere Typst-/LaTeX-Navigation, Kursvergleiche und Querverweise ergänzen; bestehende URLs und Fortschrittskennungen erhalten.
 - [x] Typst um Programmierung, Module/Pakete, Datenberichte, Kontext, wissenschaftliche Publikationen, Präsentationen, automatisierte Builds und Projektabgabe erweitern; LaTeX-Diagnosekapitel ergänzen.
