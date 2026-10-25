@@ -1,5 +1,9 @@
 # Quellenprotokoll
 
+## P1-Linux-Benutzerlabor · 25. Oktober 2026
+
+Registerstand: 239 Quellen. Neu tatsächlich gelesen: systemd project, systemd 262, systemd-run, Abschnitte Description, --user, --unit, --wait und transienter Dienst-/Rückgabestatus; URL und Lesedatum in `course-linux-sources.ts`. Vorhandene systemctl-/journalctl-Belege werden wiederverwendet. Der veröffentlichte Benutzerlaborblock wird auf echtem Linux mit Benutzer-systemd und Journal ausgeführt (Quality 40215505510 erfolgreich). Quellenabgleich und automatisierte Tests ersetzen kein unabhängiges Fachreview.
+
 ## Lokaler Textsatz-Ausbau · 25. Oktober 2026
 
 Das lokale Register umfasst jetzt 238 Quellen einschließlich des vorherigen Hardware-/Schreibtrainer-/Spiele-Zwischenstands. Zwölf neue tatsächlich gelesene offizielle Belege in `course-document-sources.ts`: Typst-Funktionen, Kontrollfluss/Module/Pakete, Kontext, Query, CSV, Page, Assert, Systemeingaben, Accessibility, LaTeX-Wechselguide, Projektarchivexport und Overleaf-Quellenexport. Herausgeber, Ausgabe/Compilerbezug, Abschnitt, URL und Lesedatum sind pro Quelle erfasst. Die neuen acht Typst-Kapitel und das LaTeX-Diagnosekapitel haben jeweils zwei Fragen mit Erklärungen zu jeder Option. Vorhandene Grundlagenbelege werden wiederverwendet. Alle 30 Textsatzlistings wurden in frischen isolierten Containern kompiliert, einschließlich Biber. Quellenabgleich und technische Tests ersetzen kein unabhängiges Fachreview. Die Textsatz-Erweiterung ist mit dem vereinfachten Browserprüfworkflow veröffentlicht; Versionsnachweis in VALIDIERUNG.md. Die früheren Containerbauten sind historische Beispieltests, keine öffentliche Kompilierfunktion.

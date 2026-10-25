@@ -39,7 +39,7 @@ Für Wrangler lokal diese drei Werte als `NAME="WERT"` in `.dev.vars` hinterlege
 
 `learning_progress` enthält pro Nutzer, Inhaltsart und Inhaltskennung eine Zeile. `completed` bedeutet gelesen bzw. bearbeitet; `solved` bedeutet mindestens einmal richtig beantwortet. Manuelles Abhaken einer Frage erzeugt keine richtige Quizantwort. Entfernen der Markierung setzt auch `solved` zurück. Quiz-Neustart ändert nur den aktuellen Durchlauf.
 
-132 verfügbare Einstiege/Kurskapitel und 254 Fragen sind speicherbar. Geplante Pfadschritte sind nicht freischaltbar. Der Worker prüft Kennungen, Datentypen und Antwortindex; die Lösung stammt aus den Inhaltsdaten. Nutzer-IDs stammen ausschließlich aus der live validierten Session.
+158 verfügbare Einstiege/Kurskapitel und 300 Fragen sind speicherbar. Geplante Pfadschritte sind nicht freischaltbar. Der Worker prüft Kennungen, Datentypen und Antwortindex; die Lösung stammt aus den Inhaltsdaten. Nutzer-IDs stammen ausschließlich aus der live validierten Session.
 
 Die Rolle hat SELECT/INSERT/UPDATE/DELETE auf Fortschrittsdaten, keinen Zugriff auf die Auth-Nutzertabelle und kein `BYPASSRLS`. Erzwungene RLS bindet Zeilen an den transaktionslokalen Kontext `app.user_id`. Ohne Kontext sind keine Fortschrittsdaten sichtbar. Der Fremdschlüssel entfernt Fortschrittszeilen bei einer vom Betreiber veranlassten Nutzerlöschung mit.
 
@@ -47,7 +47,7 @@ Die Rolle hat SELECT/INSERT/UPDATE/DELETE auf Fortschrittsdaten, keinen Zugriff 
 
 Registrierung, falsches Passwort, erneute Anmeldung, Abmeldung, Wiederherstellung, Sprachwechsel, falsche/richtige Quizantworten und Entfernen von Markierungen prüfen. Zwei Sessions dürfen fremde Daten weder lesen noch schreiben. Die Rolle zusätzlich direkt prüfen: ohne Kontext keine Zeilen, mit Kontext nur eigene, fremde Inserts abgewiesen, Auth-Tabelle gesperrt. Cross-Origin-Mutationen und ungültige Inhaltskennungen müssen scheitern.
 
-Keine Passwörter, E-Mail-Adressen, Cookies oder Verbindungsstrings in Logs und Screenshots aufnehmen. Tests verwenden eigens erzeugte Accounts. Ein echtes Mailzustellungs- und Wiederherstellungsszenario bleibt mit einem kontrollierten Postfach zu prüfen. Öffentliche Profile, Löschoberfläche, soziale Anmeldung und Zertifikate gehören nicht zum aktuellen Umfang.
+Keine Passwörter, E-Mail-Adressen, Cookies oder Verbindungsstrings in Logs und Screenshots aufnehmen. Tests verwenden eigens erzeugte Accounts. Ein echtes Mailzustellungs- und Wiederherstellungsszenario bleibt mit einem kontrollierten Postfach zu prüfen. Löschoberfläche, soziale Anmeldung und Zertifikate gehören nicht zum aktuellen Umfang. Der Schreibtrainer ergänzt ausschließlich freiwillige pseudonyme Ranglistenprofile; Konto-Ergebnisse bleiben privat.
 
 ## Tatsächliche Prüfung · 24. Oktober 2026
 

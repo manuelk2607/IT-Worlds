@@ -43,7 +43,7 @@ Dokumente und Befunde bleiben im Arbeitsspeicher des Browsers, ohne Upload, Cook
 
 Astro erzeugt die beiden Sprachseiten und öffentlichen Beispiel-JSONs als statische Assets des vorhandenen Cloudflare Workers. `documents.ts` steuert Import/Ergebnisse, `document-worker.ts` führt Aufnahme und Analyse aus. `document-analysis.ts` ist die gemeinsame formatspezifische Basis; `document-task-check.ts` ergänzt Kapitelmerkmale aus `document-tasks.ts`. Vorhandene `ProgressToggle`-/Fortschrittskomponenten werden wiederverwendet. Keine neue npm-Abhängigkeit. Cloudflare-Konfiguration, Bindings und Secrets werden erhalten.
 
-Das noch nicht vollständig geprüfte Ranglistenbackend aus dem früheren Hardware-/Schreibtrainer-Auftrag ist über `release-features.ts` deaktiviert: keine Ranking-API/DB-Zugriffe und keine auswählbaren Online-/Ranglistenfunktionen. Lokale Gastübungen bleiben verfügbar. Aktivierung erst nach den ausstehenden Zwei-Account-/RLS-/Replaytests und einer separat geprüften Produktionsmigration. Dieser Release führt diese Migration nicht aus.
+Der ursprüngliche Dokumentprüfungsrelease hielt das Ranglistenbackend deaktiviert. Der spätere P1-Abschluss prüft es mit zwei echten development-Sessions, RLS, Timing/Replay und Produktionsmigration getrennt; siehe [DREI-LERNBEREICHE.md](DREI-LERNBEREICHE.md). Die Dokumentprüfung nutzt unverändert nur den bestehenden Kapitel-Lernfortschritt und speichert keine Dokumente.
 
 ## Belege, Verifikation und offene Aufgaben
 

@@ -1,5 +1,19 @@
 # Validierung
 
+## P1-Abschluss · 25. Oktober 2026
+
+85 Unit-/Inhaltstests: 78 bestanden, sieben lokale Laufzeit-Skips. Strikte Prüfung: 196 Dateien ohne Meldungen; Build 444 HTML-Seiten. Dry-Run: 438 kanonische Sprachseiten und 31.730 interne Links/Assets/Anker erfolgreich. Kein eigenes Lint-Skript vorhanden. GitHub Quality [40215505510](https://github.com/manuelk2607/IT-Worlds/actions/runs/40215505510): alle sechs Jobs erfolgreich, einschließlich Node 22/24, Docker, SQL, echtem Godot und Linux/systemd.
+
+Godot zusätzlich lokal 2/2: Archiv bytegleich, echte Bewegung/Kollision/Kontakt/Punkte/Abschluss/fünf Neustarts. Gefundenen Neustartfehler korrigiert. Das Linux/systemd-Labor erzeugt ausschließlich eine eigene zufällige Benutzer-Unit, prüft Exit 17, Result und Journal und bereinigt sie; eigener CI-Schritt bestätigt keine verbliebenen Units.
+
+`test:development` vollständig erfolgreich: zwei echte Konten/Sessions und bestehender Fortschritt/RLS; Ranking mit echter 61-Sekunden-Wartezeit, DE/EN-Protokollreplays, Serverwertung, fremden/frühen/Burst-/doppelten/konkurrierenden Abgaben, atomarer Startbegrenzung, allen Ranglistenfiltern, fester öffentlicher Projektion, Opt-in/out und widerrufener Session. Erzeugte Replays sind kein Nachweis menschlichen Tippens. Reset-Negativtests bestehen; tatsächlicher Mailempfang und erfolgreicher Mail-Reset bleiben offen.
+
+Browser: echte Entwicklungssession, Kontohistorie/Speicherung, Profil und Ranglistenabbruch; lokale Endwerte/Reset, privater eigener Text; DE/EN/hell/dunkel, 390px ohne Überlauf, Mobilmenü/Escape/Fokus, Hardware-Gatter/CPU/Reset, Spiele-Buttons/Pfeile/Reset, Linux-Labor und beide 404. Bestehende Container unverändert.
+
+Migration 002 mit unveränderter Prüfsumme nach development-Audit auf main angewendet; alte Migration und 13 bestehende Fortschrittszeilen nicht bearbeitet. Beide neuen Tabellen erzwingen RLS; Produktionsruntime ohne BYPASSRLS und ohne Kontext keine privaten Daten, leere öffentliche Projektion. CF-Account/Subdomain/vier Bindings und Einstellungen vor Veröffentlichung gesichert. Veröffentlichung dieses P1-Stands noch separat zu bestätigen.
+
+Extern offen: unabhängiges Fach-/assistives Review und kontrolliertes Reset-Postfach. Details: [P1-PRUEFUNGEN.md](P1-PRUEFUNGEN.md).
+
 ## Schlanke Dokumentprüfung · 25. Oktober 2026 · Releaseprüfung
 
 Externe Bearbeitung/PDF-Kompilierung in Overleaf und typst.app; lokale sichere Einzeldatei-/ZIP-Prüfung, 30 Kapitelprofile plus bestehende Typst-Verweisaufgabe, Fundstellen/Erklärungen und bewusst bestätigter vorhandener Kapitel-Lernfortschritt. Eigene Compilerinfrastruktur/API/zusätzlicher CI-Job entfernt. Keine neuen Abhängigkeiten, Secrets, Dienste oder Datenbankmigration. Vorheriges ungeprüftes Ranglistenbackend deaktiviert; lokale Übungen erhalten.

@@ -4,7 +4,7 @@ Die Reihenfolge beschreibt vorgeschlagene Ausbaustufen, keine zugesagten Termine
 
 ## Entwicklungsstand · 25. Oktober 2026
 
-18 Kurse mit 145 Kapiteln, insgesamt 300 Quizfragen und 238 Quellen. Die vereinfachte Dokumentprüfung ist veröffentlicht; Versionsnachweis in VALIDIERUNG.md. Typst umfasst 16 Kapitel/32 Fragen, LaTeX 14/28. Der zuletzt dokumentierte öffentliche Stand bleibt separat in VALIDIERUNG.md festgehalten. Die historischen Phasen unten sind keine Freigabe des lokalen Zwischenstands.
+18 Kurse mit 145 Kapiteln, insgesamt 300 Quizfragen und 239 Quellen. Typst umfasst 16 Kapitel/32 Fragen, LaTeX 14/28. Der öffentliche Versionsstand steht in VALIDIERUNG.md. Die technischen P1-Prüfungen für Rangliste, Godot und Linux/systemd sind abgeschlossen; unabhängiges Review und tatsächlicher Reset-Mailempfang bleiben gesondert offen.
 
 - [x] Gemeinsamen Textsatz-Einstieg, prominentere Typst-/LaTeX-Navigation, Kursvergleiche und Querverweise ergänzen; bestehende URLs und Fortschrittskennungen erhalten.
 - [x] Typst um Programmierung, Module/Pakete, Datenberichte, Kontext, wissenschaftliche Publikationen, Präsentationen, automatisierte Builds und Projektabgabe erweitern; LaTeX-Diagnosekapitel ergänzen.
@@ -13,8 +13,10 @@ Die Reihenfolge beschreibt vorgeschlagene Ausbaustufen, keine zugesagten Termine
 - [x] P1: Mehrteilige Projekte/ZIPs, 30 Kapitel-Aufgabenprofile und bewusste bestehende Lernfortschrittsmarkierung integrieren.
 - [x] Eigenen Kompilierungsdienst samt API/CI/Setup zugunsten des einfachen kostenlosen Browserworkflows entfernen. PDF und tatsächliche Kompilierung bleiben im externen Editor.
 - [ ] P2: Zusätzliche Diagnostik/PDF-Vorschau ausschließlich ohne zusätzliche laufende Kosten und bei geringem Wartungsaufwand prüfen. Kein Compilerhost ist Voraussetzung für diesen Release.
-- [ ] P1: Vorherigen Hardware-/Schreibtrainer-/Spiele-Zwischenstand freigeben: echte Ranking-/Zwei-Account-/RLS-/Timing-/Replaytests, Godot-Ausführung und ausstehende Browserprüfungen; erst danach Produktionsmigration und Aktivierung der Online-Rangliste. Der aktuelle Release hält diese Funktionen deaktiviert; lokale Übungen bleiben verfügbar. Details: [DREI-LERNBEREICHE.md](DREI-LERNBEREICHE.md) und [PROGRESS.md](../PROGRESS.md).
-- [ ] P2: Unabhängiges Fachreview, assistive Nutzerprüfung und Erprobung der erweiterten Textsatz-Lernwege.
+- [x] P1: Ranking-/Zwei-Account-/RLS-/Timing-/Replaytests, Godot-Ausführung und Browserprüfungen bestehen. Additive Produktionsmigration 002 nach development-Audit angewendet. Öffentliche Aktivierung wird separat in VALIDIERUNG.md belegt. Details: [DREI-LERNBEREICHE.md](DREI-LERNBEREICHE.md).
+- [x] P1: Linux/systemd-Benutzerlabor mit eigener transienter Unit und Fehler-/Journalnachweis, DE/EN und echter Linux-CI-Prüfung ergänzen.
+- [ ] P1 · extern blockiert: unabhängiges Fachreview und assistive Nutzerprüfung; geeignete externe Prüfpersonen fehlen.
+- [ ] P1 · extern blockiert: vollständige Passwort-Wiederherstellung einschließlich tatsächlichem Mailempfang; kontrolliertes Testpostfach fehlt. Negative API-Pfade sind geprüft. [Prüfabläufe](P1-PRUEFUNGEN.md).
 - [ ] P3: Über die 30 statischen Kapitelprofile hinausgehende fachliche Bewertungsrubriken und weitere Visualisierungen. Kompilierung bleibt von fachlicher Bewertung getrennt.
 
 Architektur, Datenschutz, Limits, lokale Bedienung und aktuelle Freigabegrenzen: [DOKUMENTPRUEFUNG.md](DOKUMENTPRUEFUNG.md).
