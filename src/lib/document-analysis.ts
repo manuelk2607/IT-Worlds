@@ -1,8 +1,9 @@
 import {fileExtension, sourceText, validateProject, projectLimits, resolveProjectPath, type ProjectFile, type DocumentFormat} from './document-project.ts';
+import type {TaskCheck} from './document-task-check.ts';
 export interface Diagnostic { code:string; severity:'error'|'warning'|'info'; file:string; line:number; column:number; detail:string }
 export interface DocumentReport {
   format:DocumentFormat; main:string; diagnostics:Diagnostic[]; files:string[]; packages:string[]; commands:string[];
-  compilation:'not-run'|'passed'|'failed'|'unconfirmed'; engine?:string; compiledAt?:string; truncated:boolean; checkedFiles:string[];
+  compilation:'not-run'; task?:TaskCheck; truncated:boolean; checkedFiles:string[];
 }
 export function sourceCandidates(files:ProjectFile[],format:DocumentFormat):string[] {
   return files.filter(file=>fileExtension(file.path)===(format==='latex'?'tex':'typ')).map(file=>file.path);
@@ -31,6 +32,7 @@ export function analyzeDocument(input:ProjectFile[],format:DocumentFormat,main:s
   const sources=new Map(files.filter(f=>['tex','typ','sty','cls','bib'].includes(fileExtension(f.path))).map(f=>[f.path,sourceText(f)]));
   const labels=new Map<string,{file:string;offset:number}[]>(),references:{key:string;file:string;offset:number}[]=[];
   const generated=new Set<string>();
+  let hasHeading=false;
   const visited=new Set<string>(),active=new Set<string>();
   const add=(code:string,severity:Diagnostic['severity'],file:string,offset:number,detail='')=>{
     if(report.diagnostics.length>=projectLimits.diagnostics){report.truncated=true;return;}
@@ -53,6 +55,7 @@ export function analyzeDocument(input:ProjectFile[],format:DocumentFormat,main:s
     report.checkedFiles.push(file);
     if(fileExtension(file)==='bib') {for(const match of raw.matchAll(/@\w+\s*\{\s*([^,\s]+)\s*,/g))label(match[1]!,file,match.index);active.delete(file);return;}
     const text=maskSource(raw,format);
+    if(format==='latex'?/\\(?:section|chapter)\*?\s*\{/.test(text):/^\s*=+\s+\S/m.test(text))hasHeading=true;
     if(format==='latex') {
       for(const match of text.matchAll(/\\begin\{filecontents\*?\}(?:\[[^\]]*\])?\s*\{([^{}\n]+)\}([\s\S]*?)\\end\{filecontents\*?\}/g)){
         const path=resolveProjectPath(main,match[1]!);if(!path){add('UNSAFE_PATH','error',file,match.index,match[1]);continue;}
@@ -82,7 +85,6 @@ export function analyzeDocument(input:ProjectFile[],format:DocumentFormat,main:s
       if(file===main){
         if(!/\\documentclass(?:\s*\[[^\]]*\])?\s*\{/.test(text))add('DOCUMENTCLASS','warning',file,0);
         if(!/\\begin\s*\{document\}/.test(text)||!/\\end\s*\{document\}/.test(text))add('DOCUMENT_BODY','warning',file,0);
-        if(!/\\(?:section|chapter)\*?\s*\{/.test(text))add('HEADINGS','info',file,0);
       }
       if(/\\(?:input|include)\b(?!\s*\{)/.test(text)||/\\(?:newcommand|def|catcode|csname|graphicspath|includeonly)\b/.test(text))add('STATIC_LIMIT','info',file,0);
     } else {
@@ -96,12 +98,12 @@ export function analyzeDocument(input:ProjectFile[],format:DocumentFormat,main:s
       const visible=text.replace(/"(?:\\.|[^"\\])*"/g,s=>s.replace(/[^\n]/g,' '));
       for(const m of visible.matchAll(/<([\p{L}\p{N}_:.-]+)>/gu))label(m[1]!,file,m.index);
       for(const m of visible.matchAll(/(?<![\p{L}\p{N}_\\])@([\p{L}\p{N}_:.-]+)/gu))references.push({key:m[1]!.replace(/\.+$/,''),file,offset:m.index});
-      if(file===main&&!/^\s*=+\s+\S/m.test(text))add('HEADINGS','info',file,0);
       if(/\b(?:eval|plugin|query|state|label)\s*\(/.test(text))add('STATIC_LIMIT','info',file,0);
     }
     active.delete(file);
   };
   visit(main);
+  if(!hasHeading)add('HEADINGS','info',main,0);
   for(const [key,locations]of labels)if(locations.length>1)for(const loc of locations)add('DUPLICATE_LABEL','warning',loc.file,loc.offset,key);
   for(const ref of references)if(!labels.has(ref.key))add('REFERENCE','warning',ref.file,ref.offset,ref.key);
   report.packages=[...new Set(report.packages)];

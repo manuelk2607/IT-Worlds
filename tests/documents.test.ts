@@ -3,8 +3,6 @@ import assert from 'node:assert/strict';
 import {deflateRawSync} from 'node:zlib';
 import {readProjectZip,crc32,projectPath,validateProject,sourceText,resolveProjectPath,ProjectError} from '../src/lib/document-project.ts';
 import {analyzeDocument,maskSource} from '../src/lib/document-analysis.ts';
-import {documentRequest} from '../worker/documents.ts';
-import {compilerDiagnostics} from '../src/lib/compiler-diagnostics.ts';
 const file=(path:string,text:string)=>({path,bytes:new TextEncoder().encode(text)});
 function zip(items:{name:string;content:string;method?:number;attrs?:number;declared?:number}[]){
  const locals:Buffer[]=[],central:Buffer[]=[];let offset=0;
@@ -45,6 +43,7 @@ test('LaTeX analyzer follows multi-file resources and explains missing reference
  const main=file('main.tex','\\documentclass{article}\n\\usepackage{amsmath}\n\\begin{document}\n\\input{chapters/one}\n\\ref{missing}\n\\end{document}');
  const report=analyzeDocument([main,file('chapters/one.tex','\\section{Hello}\\label{hello}\n\\includegraphics{image.png}'),file('image.png','binary')],'latex','main.tex');
  assert.deepEqual(report.checkedFiles,['main.tex','chapters/one.tex']);
+ assert(!report.diagnostics.some(d=>d.code==='HEADINGS'),'Headings in included chapters count towards the document outline');
  assert.equal(report.compilation,'not-run');assert.deepEqual(report.packages,['amsmath']);
  const ref=report.diagnostics.find(d=>d.code==='REFERENCE');assert.equal(ref?.line,5);assert.equal(ref?.column,1);
  assert.equal(report.diagnostics.filter(d=>d.severity==='error').length,0);
@@ -68,15 +67,6 @@ test('Typst analysis follows modules, reads bibliography, detects missing litera
 test('dependency cycles, duplicate labels and unsafe resource paths are bounded findings',()=>{
  const r=analyzeDocument([file('main.typ','#include "other.typ"\n= A <same>\n#image("../../secret.png")'),file('other.typ','#include "main.typ"\n= B <same>')],'typst','main.typ');
  for(const code of ['CYCLE','DUPLICATE_LABEL','UNSAFE_PATH'])assert(r.diagnostics.some(d=>d.code===code),code);
-});
-test('compiler endpoint fails closed without configuration and rejects cross-origin uploads',async()=>{
- const status=await documentRequest(new Request('https://example.test/api/documents/status'),{});assert.deepEqual(await status.json(),{available:false});
- const denied=await documentRequest(new Request('https://example.test/api/documents/compile',{method:'POST',headers:{origin:'https://evil.test'},body:'{}'}),{});assert.equal(denied.status,403);
- const missing=await documentRequest(new Request('https://example.test/api/documents/compile',{method:'POST',headers:{origin:'https://example.test'},body:'{}'}),{});assert.equal(missing.status,503);
-});
-test('compiler positions only link to actual project files and map errors to useful teaching hints',()=>{
- const items=compilerDiagnostics('main.typ:7:8: error: cannot reference heading without numbering\n./main.tex:8: Undefined control sequence.\n/etc/passwd:1:1: error: test',['main.typ','main.tex']);
- assert.equal(items.length,2);assert.equal(items[0]?.code,'COMPILER_NUMBERING');assert.equal(items[0]?.column,8);assert.equal(items[1]?.code,'COMPILER_NAME');assert.equal(items[1]?.column,1);
 });
 test('literal filecontents bibliography is recognised as generated data rather than a missing upload',()=>{
  const report=analyzeDocument([file('main.tex','\\begin{filecontents*}{references.bib}\n@article{paper, title={Title}}\n\\end{filecontents*}\n\\documentclass{article}\n\\usepackage{biblatex}\n\\addbibresource{references.bib}\n\\begin{document}\\textcite{paper}\\end{document}')],'latex','main.tex');

@@ -2,13 +2,13 @@
 
 **IT verstehen. Zusammenhänge entdecken. Wissen spielerisch testen.**
 
-**Lokale Erweiterung · 25.10.2026, noch nicht veröffentlicht:** Typst umfasst jetzt 16 Kapitel/32 Kursfragen, LaTeX 14/28. Ein gemeinsamer Textsatz-Einstieg und eine DE/EN-Projektprüfung für Einzeldateien und ZIP verbinden externe Editoren mit lokaler Analyse und einem separat getesteten isolierten Compilerdienst samt PDF-Rastervorschau. Alle 30 Textsatzbeispiele kompilieren lokal einschließlich Biber. Für öffentliche Kompilierung fehlt ein dauerhafter eigener Compilerhost; Details, Startbefehle und Grenzen: [Dokumentprüfung](docs/DOKUMENTPRUEFUNG.md). Hardware, Schreibtrainer und Spieleentwicklung bleiben ein eigener noch nicht freigegebener Zwischenstand.
+**Textsatz und Dokumentprüfung · 25.10.2026:** Typst mit 16 Kapiteln/32 Kursfragen und LaTeX mit 14/28. Bearbeitung und PDF-Kontrolle finden in Overleaf beziehungsweise typst.app statt. IT-Worlds prüft Einzeldateien, mehrteilige Projekte und ZIPs sicher lokal im Browser, mit Fundstellen, Erklärungen und 30 Kapitelprofilen. Keine Dokumentuploads, eigenen Kompilierungsserver oder zusätzlichen laufenden Dienste. Optional wird das zugehörige Kapitel nach eigener Kontrolle im bestehenden Lernfortschritt markiert. [Ablauf und Grenzen](docs/DOKUMENTPRUEFUNG.md).
 
 [Website auf Deutsch](https://it-worlds.maki26.workers.dev) · [Website in English](https://it-worlds.maki26.workers.dev/en/) · [Übungseditoren](https://it-worlds.maki26.workers.dev/uebungen/) · [English README](README.en.md)
 
-IT-Worlds ist eine deutsch-englische IT-Lernplattform mit zehn Themenwelten. Alle Inhalte, Quellen und Quizfragen sind ohne Anmeldung zugänglich. Ein freiwilliger Account speichert gelesene Einstiege und Kapitel, bearbeitete Fragen und richtig beantwortete Fragen geräteübergreifend. Ein optionales dunkles Design ergänzt das helle Design; die Auswahl bleibt im Browser gespeichert.
+IT-Worlds ist eine deutsch-englische IT-Lernplattform mit 13 Themenwelten. Alle Inhalte, Quellen und Quizfragen sind ohne Anmeldung zugänglich. Ein freiwilliger Account speichert gelesene Einstiege und Kapitel, bearbeitete Fragen und richtig beantwortete Fragen geräteübergreifend. Ein optionales dunkles Design ergänzt das helle Design; die Auswahl bleibt im Browser gespeichert.
 
-**Stand (24.10.2026):** Zehn Themenwelten, zehn Einstiegsartikel, 23 lokale Editor-Aufgaben (zehn Themen-Einstiege und 13 kursbezogene Aufgaben) und fünfzehn verfügbare Kursfolgen mit **122 Kapiteln, 254 erklärten Quizfragen und 204 Primärquellen**. Neue Folgen: IT-Grundlagen, TypeScript, Python, Webentwicklung, Linux, Netzwerke, Sicherheit und Betriebssystemkonzepte. Markdown und Typst ergänzen nun die Auszeichnungs-/Satzsprachen. SQL, APIs, KI und LaTeX bleiben integriert. Cloud & DevOps ergänzt nun acht Kapitel; drei geführte Lernwege verbinden vorhandene Kapitel durchgehend zu konkreten Projektzielen. Ein unabhängiges Fachreview steht aus.
+**Inhaltsstand (25.10.2026):** 13 Themenwelten, 18 Kursfolgen mit **145 Kapiteln, 300 erklärten Quizfragen und 238 Primärquellen**. Hardware, lokale Schreibübungen und Spielegrundlagen ergänzen die bisherigen zehn IT-Themen. Das noch ungeprüfte Online-Ranking bleibt deaktiviert und benötigt eine separate Backendfreigabe. Drei geführte Lernwege, lokale Praxisaufgaben und Quellen unterstützen das Lernen; ein unabhängiges Fachreview steht aus.
 
 **Orientierung:** [Lernstart](https://it-worlds.maki26.workers.dev/lernen/) → [Kurskatalog](https://it-worlds.maki26.workers.dev/lernpfade/) → Kapitel mit Aufgaben, Lösungen und Quiz. Die Suche durchsucht auch Kapiteltexte und lädt ihren Index erst bei Bedarf. Quizfilter grenzen Kurse/Kapitel und optional den gespeicherten Lösungsstand ein; der persönliche Lernstand gruppiert Inhalte und führt zum nächsten offenen Schritt.
 
@@ -16,7 +16,7 @@ IT-Worlds ist eine deutsch-englische IT-Lernplattform mit zehn Themenwelten. All
 
 ## Themenwelten
 
-Programmiersprachen · Datenbanken · Website bauen · KI & neuronale Netze · APIs & Schnittstellen · IT-Grundlagen · Internet & Netzwerke · IT-Sicherheit · Cloud & DevOps · Betriebssysteme & Linux.
+Programmiersprachen · Datenbanken · Website bauen · KI & neuronale Netze · APIs & Schnittstellen · IT-Grundlagen · Internet & Netzwerke · IT-Sicherheit · Cloud & DevOps · Betriebssysteme & Linux · Hardware · 10-Finger-Schreiben · Spieleentwicklung.
 
 LaTeX, Typst und Markdown gehören unter **Programmiersprachen → Auszeichnungs- & Satzsprachen**. Die Inhalte unterscheiden Programmierung, Dokumentstruktur und Textsatz.
 
@@ -63,7 +63,7 @@ Astro erzeugt statische Seiten mit TypeScript und CSS. Ein kleiner TypeScript-Wo
 | [Accounts](docs/ACCOUNTS.md) | Neon, Rollen, Migrationen, Sessions und Mailkonfiguration |
 | [Cloudflare](docs/CLOUDFLARE.md) | Bestandsprüfung, Secrets und Veröffentlichung |
 | [Übungseditoren](docs/EDITOR.md) | Aufgabenformate, Bedienung und Grenzen |
-| [Dokumentprüfung](docs/DOKUMENTPRUEFUNG.md) | LaTeX/Typst-Upload, Analyse, isolierte Kompilierung, Datenschutz und Freigabe |
+| [Dokumentprüfung](docs/DOKUMENTPRUEFUNG.md) | Externe Editoren, Quellen-/ZIP-Import, lokale Aufgabenprüfung, Datenschutz und Grenzen |
 | [SEO](docs/SEO.md) | Sitemap, Indexierbarkeit und Suchmaschinen |
 | [Quellen](docs/QUELLEN.md) | Tatsächlich gelesene Primärquellen und Grenzen des Reviews |
 | [Validierung](docs/VALIDIERUNG.md) | Durchgeführte Prüfungen und Deployment-Nachweis |

@@ -1,6 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Breadcrumbs from './Breadcrumbs.astro';
+import ProgressToggle from './ProgressToggle.astro';
+import {documentTasks} from '../data/document-tasks.ts';
 import {translate, localePath, type Locale} from '../lib/i18n.ts';
 import '../styles/documents.css';
 interface Props {locale?:Locale}
@@ -19,6 +21,8 @@ const locale=Astro.props.locale??'de';const t=translate(locale);
   <section class="document-panel"><h2>{t('2 · Projekt auswählen','2 · Select a project')}</h2>
    <p id="document-privacy">{t('Die lokale Prüfung findet in diesem Browser statt. Quellen und Ergebnisse werden weder hochgeladen noch dauerhaft gespeichert. „Projekt entfernen“ oder das Schließen der Seite entfernt sie aus dieser Ansicht.','Local checks run in this browser. Sources and results are neither uploaded nor persistently stored. “Remove project” or closing the page removes them from this view.')}</p>
    <label>{t('Textsatzsystem','Typesetting system')}<select data-doc-format><option value="typst">Typst</option><option value="latex">LaTeX</option></select></label>
+   <label>{t('Passende Kursaufgabe (optional)','Matching course task (optional)')}<select data-doc-task><option value="">{t('Allgemeine Projektprüfung','General project check')}</option>{documentTasks.map(task=><option value={task.id} data-format={task.format}>{task.format==='latex'?'LaTeX':'Typst'} · {task.title[locale]}</option>)}</select></label>
+   <p class="muted">{t('Aufgabenprüfungen suchen nach ausgewählten Konstruktionen aus dem Kapitel. Ob deine Lösung fachlich richtig ist und alle Lernziele erfüllt, kontrollierst du mit der Aufgabe und Musterlösung.','Task checks look for selected constructs from the chapter. Compare your work with the exercise and model solution to assess correctness and all learning goals.')}</p>
    <div class="document-file-options">
     <label>{t('Einzeldateien oder ein ZIP','Individual files or one ZIP')}<input type="file" multiple data-doc-files aria-describedby="document-privacy document-limits"/></label>
     <label>{t('Alternativ: Projektordner auswählen','Alternatively: select a project folder')}<input type="file" multiple data-doc-folder aria-describedby="document-privacy document-limits"/></label>
@@ -33,16 +37,15 @@ const locale=Astro.props.locale??'de';const t=translate(locale);
   <section class="document-panel" data-doc-results hidden aria-labelledby="document-result-title"><h2 id="document-result-title" tabindex="-1">{t('3 · Ergebnisse und nächste Schritte','3 · Results and next steps')}</h2>
    <p data-doc-summary></p>
    <p class="document-boundary">{t('Statische Analyse prüft ausgewählte, direkt erkennbare Muster. Sie ist kein vollständiger Syntaxparser, expandiert keine Makros und wertet keinen Typst-Code aus. Hinweise können bei dynamischen Pfaden oder Marken unvollständig sein. Kein Fund bedeutet weder „kompilierbar“ noch „inhaltlich richtig“.','Static analysis checks selected directly recognisable patterns. It is not a complete syntax parser, does not expand macros and does not evaluate Typst code. Dynamic paths or labels can make findings incomplete. No finding means neither “compiles” nor “correct content”.')}</p>
-   <p data-doc-compilation>{t('Kompilierung: nicht ausgeführt. Eine vollständige Prüfung benötigt einen echten Compiler in einer isolierten Laufzeit.','Compilation: not run. Full checking requires a real compiler in an isolated runtime.')}</p>
-   <div data-doc-output></div>
-   <button class="button secondary" data-doc-compile>{t('Isolierte Kompilierung anfragen','Request isolated compilation')}</button>
-   <p class="muted">{t('Nur auf ausdrückliche Anfrage werden Quellen an den eigenen Prüfdienst übertragen. Ist keine isolierte Laufzeit eingerichtet, bleiben sie lokal und du erhältst eine klare Meldung.','Sources are sent to our own compilation service only on explicit request. If no isolated runtime is configured, they remain local and you receive a clear message.')}</p>
+   <p class="document-boundary">{t('Kompilierung und PDF-Kontrolle finden ausschließlich im externen Editor statt. IT-Worlds führt keine TeX-/Typst-Befehle aus und erzeugt kein PDF.','Compilation and PDF review take place exclusively in the external editor. IT-Worlds executes no TeX/Typst commands and generates no PDF.')} <a data-doc-editor href="https://typst.app/" target="_blank" rel="noopener noreferrer">{t('Im externen Editor weiterarbeiten ↗','Continue in the external editor ↗')}</a></p>
+   <section data-doc-task-results hidden><h3>{t('Hinweise zur Kursaufgabe','Course task findings')}</h3><ul class="document-diagnostics" data-doc-requirements></ul></section>
    <ul class="document-diagnostics" data-doc-diagnostics></ul>
    <details><summary>{t('Dateien und Abhängigkeiten','Files and dependencies')}</summary><p data-doc-inventory></p></details>
    <label>{t('Quelldatei ansehen (wird nicht ausgeführt)','Inspect a source file (not executed)')}<select data-doc-source></select></label>
    <label>{t('Quelle; Fehler anklicken, um die Stelle zu markieren','Source; click a finding to highlight its position')}<textarea data-doc-preview readonly rows="12" spellcheck="false"></textarea></label>
    <p><button class="button secondary" data-doc-download>{t('Prüfbericht herunterladen','Download check report')}</button></p>
-   <p>{t('Übertrage Verbesserungen in deinen Editor und exportiere danach neu. Vergleiche Compilerfehler, Warnungen und fachliche Aussagen getrennt. Markiere die Kursaufgabe erst nach eigener Kontrolle als gelesen.','Apply improvements in your editor and export again. Review compiler errors, warnings and subject claims separately. Mark the course task as read only after your own review.')}</p>
+   <p>{t('Übertrage Verbesserungen in deinen Editor und exportiere danach neu. Kontrolliere dort Compilerwarnungen und PDF sowie hier die Aufgabe und Lösung. Der optionale Lernfortschritt speichert nur deine bewusste Kapitelmarkierung, keine Dokumente oder Prüfberichte. Es erfolgt keine automatische Benotung.','Apply improvements in your editor and export again. Check compiler warnings and the PDF there, and the task and solution here. Optional learning progress saves only your explicit chapter completion, never documents or check reports. No automatic grading takes place.')}</p>
+   {documentTasks.map(task=><div data-doc-task-progress={task.id} hidden><ProgressToggle kind="lesson" contentId={task.progressId} locale={locale} label={t('Kapitel nach eigener Kontrolle als gelesen markieren','Mark chapter as read after your own review')}/></div>)}
    <p><a data-doc-course href={localePath(locale,'/themen/programmiersprachen/typst/projektpruefung/')}>{t('Zur passenden Kursaufgabe →','Go to the matching course task →')}</a></p>
   </section>
  </div>

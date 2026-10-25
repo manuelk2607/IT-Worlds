@@ -1,0 +1,18 @@
+---
+import type {Exercise} from '../data/exercise-types.ts';
+import {translate,localePath,type Locale} from '../lib/i18n.ts';
+import CodeExample from './CodeExample.astro';
+interface Props {exercise:Exercise;locale:Locale}
+const {exercise,locale}=Astro.props;const t=translate(locale);
+---
+<section class="exercise-editor" data-external-document-exercise={exercise.id}>
+ <h2>{t('Extern bearbeiten, hier prüfen','Edit externally, check here')}</h2>
+ <p>{exercise.task[locale]}</p>
+ <p><a class="button primary" href="https://typst.app/" target="_blank" rel="noopener noreferrer">{t('Aufgabe in typst.app bearbeiten ↗','Work on the task in typst.app ↗')}</a> <a class="button secondary" href={localePath(locale,'/dokumentpruefung/?format=typst&aufgabe=typst-verweis')}>{t('Exportierte Quellen prüfen →','Check exported sources →')}</a></p>
+ <p>{t('Übertrage die Vorlage in den offiziellen Editor. Kontrolliere dort Compilerdiagnosen und PDF, exportiere anschließend die Quelle oder das vollständige Projekt als ZIP. IT-Worlds prüft ausgewählte Muster und Verweisziele, führt aber keinen Typst-Code aus.','Copy the starter into the official editor. Check compiler diagnostics and PDF there, then export the source or complete project ZIP. IT-Worlds checks selected patterns and reference targets, but executes no Typst code.')}</p>
+ <CodeExample code={exercise.starter} language="Typst" locale={locale} label={t('Startvorlage für den externen Editor','Starter for the external editor')}/>
+ <p><button class="button secondary" data-legacy-draft-download hidden>{t('Früheren lokalen Entwurf als .typ herunterladen','Download a previous local draft as .typ')}</button></p>
+ <details><summary>{t('Hinweis anzeigen','Show hint')}</summary><p>{exercise.hint[locale]}</p></details>
+ <details><summary>{t('Musterlösung anzeigen','Show a solution')}</summary><CodeExample code={exercise.solution} language="Typst" locale={locale}/></details>
+</section>
+<script src="../scripts/external-document-exercise.ts"></script>

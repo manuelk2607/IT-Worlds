@@ -1,5 +1,15 @@
 # Validierung
 
+## Schlanke Dokumentprüfung · 25. Oktober 2026 · Releaseprüfung
+
+Externe Bearbeitung/PDF-Kompilierung in Overleaf und typst.app; lokale sichere Einzeldatei-/ZIP-Prüfung, 30 Kapitelprofile plus bestehende Typst-Verweisaufgabe, Fundstellen/Erklärungen und bewusst bestätigter vorhandener Kapitel-Lernfortschritt. Eigene Compilerinfrastruktur/API/zusätzlicher CI-Job entfernt. Keine neuen Abhängigkeiten, Secrets, Dienste oder Datenbankmigration. Vorheriges ungeprüftes Ranglistenbackend deaktiviert; lokale Übungen erhalten.
+
+83 Tests: 78 bestanden, fünf optionale lokale Laufzeittests (Docker, PostgreSQL und Typst-CLI) übersprungen. Strikte Typprüfung: 191 Dateien ohne Fehler/Warnungen/Hinweise. Build: 444 HTML-Seiten. Release-Dry-Run: 438 kanonische Sprachseiten, 31.728 interne Links/Assets/Anker, keine Synchronisationskopien. Aktuelle Quellen mit GitHub abgeglichen; Cloudflare-Anmeldung erfolgreich erneuert. Vorhandener Account ec3c070d8e4f88d2fc533d7d797f2daa, Subdomain maki26, Worker it-worlds und vier Bindings vorab gelesen; keine Compiler-Secrets vorhanden.
+
+Browser lokal: echte LaTeX- und Typst-Mehrdatei-ZIPs über den nativen Dateidialog, Hauptdatei, erreichbare Teilquellen, Aufgabenmerkmale und Quellsprung. Fehlerhafte .tex- und .typ-Dateien liefern konkrete Diagnosen; ZIP mit ../-Pfad wird abgewiesen. Quellenansicht schreibgeschützt, kein Compilerbutton, genau eine passende Fortschrittskontrolle. Entfernen leert Quellen/Ergebnisse/Fortschrittspanels. DE/EN-Wechsel, hell/dunkel, Mobilmenü/Escape sowie 390px ohne horizontalen Seitenüberlauf geprüft. Die erhaltene Typst-Verweisübung bietet externen Editor, Vorlage, Hinweis, Lösung und Quellenimport ohne eigenen Editor. Kein neuer echter Accounttest in diesem Durchlauf; Kapitel-IDs/API-Verträge werden automatisiert geprüft, Datenmodell und Auth bleiben unverändert. HTTP: neue Routen 200, beide unbekannten Sprachrouten 404, ungeprüfte Ranking-API 503 ohne DB-Zugriff.
+
+Veröffentlichungsnachweis wird nach dem tatsächlichen Deploy ergänzt. Die folgenden Abschnitte dokumentieren frühere Zustände und sind keine Beschreibung der aktuellen Architektur.
+
 ## Lokale Textsatz-Erweiterung · 25. Oktober 2026 · nicht veröffentlicht
 
 Typst 16 Kapitel/32 Fragen, LaTeX 14/28; insgesamt 13 Themen, 18 Kurse, 145 Kapitel, 300 Quizfragen, 238 Quellen. Gemeinsame DE/EN-Projektprüfung, Einzeldateien/ZIP, explizite Hauptdatei, statische Befunde mit Positionen und getrennte Kompilierung. Neues eigenes Compilerimage; keine bestehenden Container verändert. Echte Kompilierung aller 30 LaTeX-/Typst-Beispiele inklusive Literatur/Biber erfolgreich. Zusätzlich fehlerhafte Syntax, fehlende Pakete, ausbrechender Typst-Pfad, Endlosschleife und tatsächlich deaktiviertes TeX-Shell-Escape geprüft. Privater Dienst: Bearer-Pflicht, ungültige Projekte abgewiesen, gültiges PDF/PNG; automatische Löschung eigener verwaister Jobs geprüft. Sieben separate Compiler-/Diensttests bestanden. Neue CI-Prüfung vorbereitet, noch nicht auf GitHub ausgeführt.

@@ -4,16 +4,18 @@ Die Reihenfolge beschreibt vorgeschlagene Ausbaustufen, keine zugesagten Termine
 
 ## Lokaler Entwicklungsstand · 25. Oktober 2026
 
-18 Kurse mit 145 Kapiteln, insgesamt 300 Quizfragen und 238 Quellen; noch nicht veröffentlicht. Typst umfasst 16 Kapitel/32 Fragen, LaTeX 14/28. Der zuletzt dokumentierte öffentliche Stand bleibt separat in VALIDIERUNG.md festgehalten. Die historischen Phasen unten sind keine Freigabe des lokalen Zwischenstands.
+18 Kurse mit 145 Kapiteln, insgesamt 300 Quizfragen und 238 Quellen. Veröffentlichung der vereinfachten Dokumentprüfung wird in VALIDIERUNG.md nachgewiesen. Typst umfasst 16 Kapitel/32 Fragen, LaTeX 14/28. Der zuletzt dokumentierte öffentliche Stand bleibt separat in VALIDIERUNG.md festgehalten. Die historischen Phasen unten sind keine Freigabe des lokalen Zwischenstands.
 
 - [x] Gemeinsamen Textsatz-Einstieg, prominentere Typst-/LaTeX-Navigation, Kursvergleiche und Querverweise ergänzen; bestehende URLs und Fortschrittskennungen erhalten.
 - [x] Typst um Programmierung, Module/Pakete, Datenberichte, Kontext, wissenschaftliche Publikationen, Präsentationen, automatisierte Builds und Projektabgabe erweitern; LaTeX-Diagnosekapitel ergänzen.
 - [x] Einzeldatei-/ZIP-Workflows mit Hauptdateiauswahl, lokaler Analyse, positionsbezogenen Hinweisen und Prüfreport für LaTeX und Typst implementieren.
-- [x] Separaten isolierten Compilerdienst mit PDF-Download und gerasterter Vorschau implementieren und lokal testen; alle 30 Kursbeispiele einschließlich BibLaTeX/Biber kompilieren.
-- [ ] P1: Dauerhaften separaten Compilerhost bereitstellen, unabhängig sicherheitsprüfen, TLS-Proxy/Ratenlimits und zusätzliche Worker-Secrets einrichten; anschließend öffentlich Ende-zu-Ende prüfen. Bis dahin keine öffentliche Kompilierfunktion behaupten.
-- [ ] P1: Vorherigen Hardware-/Schreibtrainer-/Spiele-Zwischenstand freigeben: echte Ranking-/Zwei-Account-/RLS-/Timing-/Replaytests, Godot-Ausführung und ausstehende Browserprüfungen; erst danach Produktionsmigration/Release. Details: [DREI-LERNBEREICHE.md](DREI-LERNBEREICHE.md) und [PROGRESS.md](../PROGRESS.md).
+- [x] P0: Overleaf/typst.app direkt in Kursen und Aufgaben verlinken; Quellen ausschließlich sicher lokal im Browser prüfen und verständlich erklären.
+- [x] P1: Mehrteilige Projekte/ZIPs, 30 Kapitel-Aufgabenprofile und bewusste bestehende Lernfortschrittsmarkierung integrieren.
+- [x] Eigenen Kompilierungsdienst samt API/CI/Setup zugunsten des einfachen kostenlosen Browserworkflows entfernen. PDF und tatsächliche Kompilierung bleiben im externen Editor.
+- [ ] P2: Zusätzliche Diagnostik/PDF-Vorschau ausschließlich ohne zusätzliche laufende Kosten und bei geringem Wartungsaufwand prüfen. Kein Compilerhost ist Voraussetzung für diesen Release.
+- [ ] P1: Vorherigen Hardware-/Schreibtrainer-/Spiele-Zwischenstand freigeben: echte Ranking-/Zwei-Account-/RLS-/Timing-/Replaytests, Godot-Ausführung und ausstehende Browserprüfungen; erst danach Produktionsmigration und Aktivierung der Online-Rangliste. Der aktuelle Release hält diese Funktionen deaktiviert; lokale Übungen bleiben verfügbar. Details: [DREI-LERNBEREICHE.md](DREI-LERNBEREICHE.md) und [PROGRESS.md](../PROGRESS.md).
 - [ ] P2: Unabhängiges Fachreview, assistive Nutzerprüfung und Erprobung der erweiterten Textsatz-Lernwege.
-- [ ] P3: Kursspezifische fachliche Bewertungsrubriken, weitere Visualisierungen und zusätzliche geprüfte Offline-Pakete. Kompilierung bleibt von fachlicher Bewertung getrennt.
+- [ ] P3: Über die 30 statischen Kapitelprofile hinausgehende fachliche Bewertungsrubriken und weitere Visualisierungen. Kompilierung bleibt von fachlicher Bewertung getrennt.
 
 Architektur, Datenschutz, Limits, lokale Bedienung und aktuelle Freigabegrenzen: [DOKUMENTPRUEFUNG.md](DOKUMENTPRUEFUNG.md).
 
@@ -30,7 +32,7 @@ Architektur, Datenschutz, Limits, lokale Bedienung und aktuelle Freigabegrenzen:
 - [x] KI- und LaTeX-Kursfolgen mit 27 Kapiteln, 54 zusätzlichen Fragen und Belegen ausarbeiten.
 - [x] Drei themenübergreifende Lernwege mit 13/14/10 verfügbaren Kapitelschritten ausarbeiten.
 
-Fünfzehn Kursfolgen mit 122 Kapiteln und drei vollständige geführte Lernwege stehen bereit. Markdown und Typst sind mit sechs bzw. acht Kapiteln verfügbar; ein größeres Betriebsprojekt bleibt offen. Details im [Website-Aufbau](WEBSITE-AUFBAU.md).
+18 Kursfolgen mit 145 Kapiteln und drei vollständige geführte Lernwege stehen bereit. Markdown und Typst sind mit sechs bzw. 16 Kapiteln verfügbar; ein größeres Betriebsprojekt bleibt offen. Details im [Website-Aufbau](WEBSITE-AUFBAU.md).
 
 - [x] Zehn lokale Übungseditoren mit Hinweisen und Musterlösungen ergänzen.
 - [x] Sitemap, Canonicals, Sprachbezüge und Social-Metadaten ergänzen.
@@ -93,7 +95,7 @@ Der Einstieg braucht noch keine Anmeldung, öffentliche Rangliste, automatische 
 
 ### LaTeX-/Typst-Projektprüfung · von Planung zur lokalen Implementierung
 
-Der frühere P2-Plan wurde mit dem Nutzerauftrag vom 25. Oktober zur Umsetzung freigegeben. Export-/Upload-Workflow, begrenzte statische Analyse, sichere Projektaufnahme, didaktische Diagnostik, isolierte Kompilierung und PDF-Rastervorschau sind lokal implementiert und geprüft. Öffentlicher Compilerhost, Sicherheitsreview und Veröffentlichung bleiben als P1 oben offen. Inhaltliche Qualitätsbewertung bleibt eine eigene zukünftige Erweiterung; sie wird nicht durch einen erfolgreichen Build ersetzt.
+Der aktualisierte Nutzerauftrag vom 25. Oktober vereinfacht die Umsetzung: externe Bearbeitung/Compiler in Overleaf und typst.app, sichere lokale Quellen-/ZIP-Analyse in IT-Worlds mit Aufgabenmerkmalen und optionaler bewusster Kapitelmarkierung. Der frühere eigene Compilerprototyp wurde entfernt. Kein zusätzlicher Compilerhost und keine neuen laufenden Kosten erforderlich. PDF-Vorschau bleibt P2 unter den oben genannten Aufwand-/Kostenbedingungen; vollständige fachliche Bewertung bleibt getrennt.
 
 ### P2 · Schreibtrainer mit zusammenhängenden Texten
 

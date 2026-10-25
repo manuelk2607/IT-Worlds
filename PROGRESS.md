@@ -1,4 +1,16 @@
-# Aktiver Auftrag · LaTeX-/Typst-Dokumentprüfung · 25.10.2026
+# Aktiver Auftrag · Schlanke Dokumentprüfung · 25.10.2026
+
+Ziel: ausschließlich externe Bearbeitung in Overleaf/typst.app; sichere lokale Quellen-/ZIP-Prüfung ohne eigenen Kompilierungsdienst oder zusätzliche laufende Kosten. P0: Editorlinks/Import/Diagnostik. P1: Mehrteiler/Aufgabenprüfungen/manuell bestätigter bestehender Kapitel-Lernfortschritt. Danach Tests, Browserprüfung, GitHub-Push und Deploy mit erhaltenen Einstellungen. Keine Dokument- oder Datenbankmigration geplant. Der bislang unveröffentlichte Ranking-Backendstand darf ohne seine ausstehenden Prüfungen nicht aktiviert werden.
+
+Implementiert: externer Editor-/Export-/Quellenimport für beide Formate, Compilerdienst/Proxy/CI entfernt, 30 Kapitelprofile plus bestehende Typst-Verweisaufgabe. Gemeinsame sichere Projektaufnahme/ZIPs/Workerlimits erhalten. Bewusster bestehender Kapitel-Lernfortschritt; kein neues Schema oder Dokumentenspeicher. Alte Typst-Editorentwürfe read-only als Download verfügbar. Ungeprüftes Rankingbackend samt Online-UI deaktiviert, lokale Übungen erhalten.
+
+Verifiziert: 83 Tests (78 pass/5 optionale Laufzeit-Skips), 191 Dateien strikt ohne Meldungen, 444 HTML-Seiten, Dry-Run/438 Sprachseiten/31.728 interne Links. Browser: tatsächliche ZIP-Importe beider Formate, fehlerhafte Quellen, unsicherer ZIP-Pfad, Fundstellen, Entfernen, DE/EN, hell/dunkel und mobil. CF-Account/Subdomain/vier Bindings gelesen, Einstellungen für Nachvergleich gesichert; Login erneuert. Keine bestehenden Docker-Container oder Images verändert.
+
+Nächster Schritt: finalen Git-Commit pushen, beauftragten Deploy durchführen, öffentliche Auslieferung/Interaktionen und erhaltene Einstellungen prüfen. Ergebnis und Version anschließend hier und in docs/VALIDIERUNG.md dokumentieren.
+
+---
+
+# Vorheriger Auftrag · LaTeX-/Typst-Dokumentprüfung · 25.10.2026
 
 Auftrag: LaTeX-Restaufgaben, gemeinsamer Export-/Upload-/Prüfworkflow, Typst vertiefen und hervorheben. Vorherige Roadmap-Änderungen erhalten. Details und Freigabegrenzen: docs/DOKUMENTPRUEFUNG.md.
 

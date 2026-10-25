@@ -10,21 +10,6 @@ concurrency:
   group: quality-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 jobs:
-  document-compiler:
-    name: Isolated LaTeX and Typst examples
-    runs-on: ubuntu-latest
-    timeout-minutes: 20
-    env:
-      IT_WORLDS_COMPILER_TEST: '1'
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          persist-credentials: false
-      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
-        with:
-          node-version: '22.22.0'
-      - run: docker build -t it-worlds-document-compiler:2026-10-25 services/document-compiler
-      - run: node --experimental-strip-types --test tests/document-compiler.test.ts tests/document-service.test.ts
   validate:
     name: Node ${{ matrix.node }}
     runs-on: ubuntu-latest
