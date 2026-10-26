@@ -8,6 +8,7 @@ import {practiceTools} from '../data/practice-topics.ts';
 import ProgressToggle from './ProgressToggle.astro';
 import ExerciseLinks from './ExerciseLinks.astro';
 import { courses, coursePath, chapterProgressId } from '../data/courses.ts';
+import { isTypesettingCourse, TYPESETTING_TOPIC_PATH, typesettingTopic } from '../data/topic-categories.ts';
 import type { Course, Chapter } from '../data/course-types.ts';
 import { getContent, translate, localePath, type Locale } from '../lib/i18n.ts';
 import katex from 'katex';
@@ -26,12 +27,16 @@ const quizUrl = localePath(locale, `/quiz/?kurs=${course.id}${chapter ? `&kapite
 const defaults: Partial<Record<Course['id'],Course['id']>>={ki:'latex',latex:'ki',datenbanken:'apis',apis:'datenbanken',typescript:'apis'};
 const related=(course.related ?? (defaults[course.id]?[defaults[course.id]!]:[])).map(id=>courses.find(item=>item.id===id)).filter((item):item is Course=>!!item);
 const other=related[0];
+const typesetting=isTypesettingCourse(course);
+const parentTitle=typesetting?typesettingTopic(locale).title:topicById(course.topic)!.title;
+const parentPath=typesetting?TYPESETTING_TOPIC_PATH:`/themen/${course.topic}/`;
+const breadcrumbRoot=typesetting?{title:t('Themenwelten','Topics'),href:'/#themenwelten'}:{title:t('Kurse','Courses'),href:'/lernpfade/'};
 ---
-<Layout locale={locale} title={title} description={description} active="pfade">
-  <Breadcrumbs locale={locale} items={[{title:t("Kurse", "Courses"),href:"/lernpfade/"},{title:topicById(course.topic)!.title,href:`/themen/${course.topic}/`}, ...(chapter ? [{title:course.title[locale],href:coursePath(course)},{title:chapter.title[locale]}] : [{title:course.title[locale]}])]} />
+<Layout locale={locale} title={title} description={description} active={typesetting?'themen':'pfade'}>
+  <Breadcrumbs locale={locale} items={[breadcrumbRoot,{title:parentTitle,href:parentPath}, ...(chapter ? [{title:course.title[locale],href:coursePath(course)},{title:chapter.title[locale]}] : [{title:course.title[locale]}])]} />
   <header class="container page-top course-header">
-    <a class="back-link" href={localePath(locale, chapter ? coursePath(course) : `/themen/${course.topic}/`)}>{t('← Zur Übersicht', '← Back to overview')}</a>
-    <p class="eyebrow">{topicById(course.topic)!.title} · {['latex','typst','markdown'].includes(course.id) ? t('AUSZEICHNUNGS- & SATZSPRACHEN', 'MARKUP & TYPESETTING') : t('LERNKURS', 'LEARNING COURSE')}</p>
+    <a class="back-link" href={localePath(locale, chapter ? coursePath(course) : parentPath)}>{t('← Zur Übersicht', '← Back to overview')}</a>
+    <p class="eyebrow">{parentTitle} · {typesetting ? t('TEXTSATZSYSTEM', 'TYPESETTING SYSTEM') : t('LERNKURS', 'LEARNING COURSE')}</p>
     <h1>{title}</h1>
     {!chapter && <p class="page-lead">{description}</p>}
     <div class="course-meta">

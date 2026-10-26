@@ -29,3 +29,10 @@ test('each language canonicalises itself and only personal/error pages are noind
   assert(graph.some((entry:{'@type':string[]|string})=>Array.isArray(entry['@type'])&&entry['@type'].includes('LearningResource')));
   assert.equal(graph.at(-1).itemListElement[0].item,`${SITE_URL}/en/`);
 });
+test('typesetting course metadata follows the visible topic hierarchy while preserving course URLs',()=>{
+  const typst=courses.find(course=>course.id==='typst')!;
+  const graph=JSON.parse(pageSeo(`/themen/programmiersprachen/typst/`,'de',typst.title.de,typst.description.de).structuredData)['@graph'];
+  const crumbs=graph.find((entry:{'@type':string})=>entry['@type']==='BreadcrumbList').itemListElement;
+  assert.deepEqual(crumbs.map((entry:{name:string})=>entry.name),['Startseite','Themenwelten','Textsatz & Dokumentenerstellung',typst.title.de]);
+  assert.equal(crumbs[2].item,`${SITE_URL}/textsatz/`);
+});

@@ -9,7 +9,7 @@ interface Props {locale?:Locale}
 const locale=Astro.props.locale??'de';const t=translate(locale);
 ---
 <Layout locale={locale} title={t('LaTeX- & Typst-Projekte prüfen','Check LaTeX & Typst projects')} description={t('Prüfe lokale LaTeX- und Typst-Projektdateien auf typische Struktur-, Referenz- und Ressourcenprobleme. Mit verständlichen Hinweisen und Fehlerpositionen.','Check local LaTeX and Typst projects for common structure, reference and resource issues. With understandable guidance and source positions.')} active="uebungen">
- <Breadcrumbs locale={locale} items={[{title:t('Textsatz lernen','Learn typesetting'),href:'/textsatz/'},{title:t('Dokumentprüfung','Document check')}]}/>
+ <Breadcrumbs locale={locale} items={[{title:t('Themenwelten','Topics'),href:'/#themenwelten'},{title:t('Textsatz & Dokumentenerstellung','Typesetting & document creation'),href:'/textsatz/'},{title:t('Dokumentprüfung','Document check')}]}/>
  <header class="container page-top"><p class="eyebrow">{t('VOM EDITOR ZUM GEPRÜFTEN PROJEKT','FROM EDITOR TO REVIEWED PROJECT')}</p><h1>{t('Dein Dokument verstehen und verbessern','Understand and improve your document')}</h1><p class="page-lead">{t('Schreibe extern, exportiere die Quellen und untersuche dein Projekt hier. Die lokale Analyse führt keine Dokumentbefehle aus.','Write externally, export the sources and inspect your project here. Local analysis executes no document commands.')}</p></header>
  <div class="container section document-check" data-document-check data-locale={locale}>
   <section class="document-panel"><h2>{t('1 · Erstellen und exportieren','1 · Create and export')}</h2>

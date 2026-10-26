@@ -27,6 +27,8 @@ test('global search finds source metadata and routes to a visible evidence card 
   assert.equal(url.searchParams.get('suche'),sources.exerciseCount.title);
   assert.ok(searchEntries(entries,'versionskonflikt','exercise').some(entry=>entry.id==='exercise-api-versionskonflikt'));
   assert.ok(searchEntries(entries,'3.12 sum','source').some(entry=>entry.id==='source-pythonBuiltins'));
+  const typesetting=searchEntries(entries,locale==='de'?'Dokumentenerstellung Typst':'document creation Typst','topic').find(entry=>entry.id==='typesetting');
+  assert.equal(typesetting?.url,locale==='en'?'/en/textsatz/':'/textsatz/');
  }
 });
 test('search combines words, folds accents and finds concepts inside chapter text',()=>{

@@ -1,6 +1,6 @@
 # Kursarchitektur und Lernfolgen
 
-Stand: 25. Oktober 2026; Veröffentlichung siehe VALIDIERUNG.md. 18 Kursfolgen mit 145 Kapiteln und 290 Kursfragen; einschließlich der Einstiegsfragen insgesamt 300 Quizfragen. Die Folgen decken ihren jeweils beschriebenen Umfang ab; sie sind keine vollständige Expertenausbildung in sämtlichen Fachgebieten. Alle Kapitel stehen auf Deutsch und Englisch ohne Account bereit. LaTeX, Typst und Markdown bleiben unter Programmiersprachen → Auszeichnungs- & Satzsprachen. Die öffentliche Referenzversion ist getrennt in VALIDIERUNG.md dokumentiert.
+Stand: 26. Oktober 2026; Veröffentlichung siehe VALIDIERUNG.md. 18 Kursfolgen mit 145 Kapiteln und 290 Kursfragen; einschließlich der Einstiegsfragen insgesamt 300 Quizfragen. Die Folgen decken ihren jeweils beschriebenen Umfang ab; sie sind keine vollständige Expertenausbildung in sämtlichen Fachgebieten. Alle Kapitel stehen auf Deutsch und Englisch ohne Account bereit. Typst und LaTeX werden unter „Textsatz & Dokumentenerstellung“ geführt, Typst zuerst; Markdown bleibt bei Programmiersprachen. Die historischen Typst-/LaTeX-Kurs-URLs und alle Fortschrittskennungen bleiben stabil. Die öffentliche Referenzversion ist getrennt in VALIDIERUNG.md dokumentiert.
 
 | Folge | Kapitel | Schwerpunkt |
 | --- | --- | --- |

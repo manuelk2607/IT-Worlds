@@ -1,4 +1,18 @@
-# Aktiver Auftrag · P1-Abschluss · 25.10.2026
+# Abgeschlossen · Textsatz als Themenkategorie · 26.10.2026
+
+Ziel: den Hauptmenüpunkt „LaTeX & Typst“ entfernen und beide Lernbereiche als eigenständige Themenkachel „Textsatz & Dokumentenerstellung“ in Navigation, Suche, Filter und Breadcrumbs integrieren, ohne Inhalte, URLs oder Lernfortschritt zu verlieren.
+
+Umgesetzt: DE/EN-Themenportal unter den bestehenden `/textsatz/`-Routen, responsive Themenkachel mit eigenem Dokument-Icon und 30 verfügbaren Kapiteln, Typst als empfohlener Einstieg vor LaTeX, direkte Links zu typst.app/Overleaf und zur lokalen Dokumentprüfung. Haupt- und Mobilnavigation enthalten keinen eigenen Textsatz-Reiter mehr; auf Portal- und Kursseiten ist „Themenwelten“ aktiv. Programmiersprachen zeigen nur TypeScript, Python und Markdown; LaTeX/Typst werden dort nicht mehr als zweite Kategorie angeboten. Suche sowie Kurs-, Übungs-, Quiz-, Fortschritts- und Quellenfilter verwenden die neue sichtbare Kategorie aus einer gemeinsamen Metadatenquelle. Breadcrumbs der Kurse und Dokumentprüfung führen über das Portal.
+
+Kompatibilität: Die vorhandenen DE/EN-Kurs- und Kapitel-URLs unter `/themen/programmiersprachen/{typst,latex}/` bleiben unverändert erreichbar. Kurs-, Kapitel-, Aufgaben- und Frage-IDs sowie gespeicherte Fortschrittsdaten wurden nicht geändert. Keine Datenbank-, Worker- oder Deploymentänderung.
+
+Verifiziert: 87 Tests (80 bestanden, 7 optionale Laufzeit-Skips), Astro-Check für 197 Dateien ohne Fehler/Warnungen/Hinweise, Build mit 444 Seiten, Release-Dry-Run mit 438 kanonischen zweisprachigen Seiten und 30.778 internen Links/Assets/Ankern. Browser: Haupt- und Mobilnavigation ohne alten Reiter, DE/EN-Portal, 390×844, Themenkachel, Typst-Hervorhebung, externe Editor-/Prüflinks, Suchtreffer, Quizfilter mit 60 Typst-/LaTeX-Fragen, Quellenfilter mit 46 zugeordneten Belegen, Programmiersprachen ohne doppelte Kurse sowie unveränderte Typst-Kompatibilitätsroute und sichtbare/strukturierte Breadcrumbs über Themenwelten → Textsatz geprüft. Lokal implementiert, noch nicht gepusht oder veröffentlicht.
+
+Offen bleibt ausschließlich der zuvor dokumentierte externe P1-Bedarf: unabhängige fachkundige/assistive Prüfpersonen und ein kontrolliertes development-Testpostfach. Die Textsatz-Navigation selbst hat keine bekannte offene Aufgabe.
+
+---
+
+# Vorheriger Auftrag · P1-Abschluss · 25.10.2026
 
 Ziel: die fünf konsolidierten P1-Pakete unten abarbeiten, keine P2/P3-Erweiterung. Vorhandener Dokumentationsdiff bleibt erhalten. Reihenfolge: (1) Ranking-Audit/echte development-Sessions und Fehler beheben, (2) Godot-Engine-/Browserprüfungen, (3) reproduzierbares Linux-/systemd-Labor, (4) Auth-Reset-Fehlerpfade und erreichbare technische Accessibility-Prüfungen, (5) Gesamttests/Check/Build und präziser Abschluss.
 

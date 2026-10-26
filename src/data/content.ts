@@ -269,8 +269,8 @@ const baseTopics: Topic[] = [
     color: "blue",
     group: "bauen",
     description:
-      "Lerne, Probleme in kleine Schritte zu zerlegen und Lösungen in Code auszudrücken. Python und TypeScript besitzen eigene Kursfolgen; Java, C/C++, Go und Rust ergänzen die weitere Sprachlandkarte. Ein ergänzender Unterbereich behandelt LaTeX, Typst und Markdown für Dokumente und Textsatz.",
-    tags: ["Python", "TypeScript", "Typst", "LaTeX"],
+      "Lerne, Probleme in kleine Schritte zu zerlegen und Lösungen in Code auszudrücken. Python und TypeScript besitzen eigene Kursfolgen; Java, C/C++, Go und Rust ergänzen die weitere Sprachlandkarte. Markdown ergänzt die Programmierpraxis für einfache strukturierte Dokumentation.",
+    tags: ["Python", "TypeScript", "Markdown", "Algorithmen"],
     prerequisites:
       "Für den Einstieg genügt Neugier. Vertiefungen bauen auf Variablen, Funktionen und grundlegenden Datenstrukturen auf.",
     curriculum: {
@@ -278,31 +278,22 @@ const baseTopics: Topic[] = [
         "Variablen & Rechenoperatoren",
         "Bedingungen, Schleifen & Funktionen",
         "Erste Schritte mit Python und TypeScript",
-        "Dokumente strukturieren: Markdown, LaTeX & Typst",
+        "Dokumentation mit Markdown strukturieren",
       ],
       vertiefung: [
         "Datenstrukturen & Algorithmen",
         "Typsysteme, Fehlerbehandlung & Tests",
         "Sprachvergleich: Java, C/C++, Go & Rust",
-        "Textsatz: Formeln, Querverweise & Literaturverzeichnisse",
+        "Programme dokumentieren & verständlich erklären",
       ],
       profi: [
         "Nebenläufigkeit & Speichermodelle",
         "Compiler, Laufzeiten & Profiling",
         "Softwarearchitektur & Entwurfsmuster",
-        "Dokument-Workflows: LaTeX-Makros, Typst-Funktionen & Vorlagen",
+        "Werkzeuge, Laufzeiten & Sprachdesign vergleichen",
       ],
     },
-    sources: ["python", "git", "typescript", "latex", "typst", "markdown"],
-    subareas: [
-      {
-        title: "Auszeichnungs- & Satzsprachen",
-        description:
-          "Typst und LaTeX sind programmierbare Textsatzsysteme für strukturierte Publikationen. Typst verbindet Markup mit einer integrierten Skriptsprache; LaTeX setzt auf das TeX-Makro- und Paketökosystem. Markdown dient zum Schreiben einfacher strukturierter Dokumente in Klartext. Eigene Kurse erklären Syntax, Gestaltung, Literatur und den Weg zum prüfbaren Projekt.",
-        languages: ["Typst", "LaTeX", "Markdown"],
-        sources: ["latex", "typst", "markdown"],
-      },
-    ],
+    sources: ["python", "git", "typescript", "markdown"],
     lesson: {
       title: "Wie rechnet Python?",
       goal: "Du kannst /, // und % an einem einfachen Beispiel unterscheiden.",

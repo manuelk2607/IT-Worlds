@@ -16,6 +16,7 @@ import Icon from "../../components/Icon.astro";
 import SourceCard from "../../components/SourceCard.astro";
 import { topics as staticTopics, type Topic } from "../../data/content";
 import { courses, coursePath } from '../../data/courses.ts';
+import { courseCatalogTopic } from '../../data/topic-categories.ts';
 import '../../styles/courses.css';
 export function getStaticPaths() {
   return staticTopics.map((topic) => ({
@@ -25,7 +26,7 @@ export function getStaticPaths() {
 }
 interface Props { locale?: Locale; topic: Topic }
 const { topic } = Astro.props;
-const topicCourses = courses.filter(course => course.topic === topic.id);
+const topicCourses = courses.filter(course => courseCatalogTopic(course) === topic.id);
 const question = questions.find((question) => question.topic === topic.id);
 const reviewDates = [...new Set(topic.lesson?.sources.map(id=>sources[id].reviewedAt))].sort().map(date=>new Intl.DateTimeFormat(locale,{dateStyle:"medium",timeZone:"UTC"}).format(new Date(date))).join(" · ");
 ---

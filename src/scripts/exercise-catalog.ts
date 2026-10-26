@@ -1,5 +1,5 @@
 import { exercises } from '../data/exercises.ts';
-import { exerciseSelectionUrl, matchesExercise, readExerciseSelection, type ExerciseSelection } from '../lib/exercise-catalog.ts';
+import { exerciseCatalogTopic, exerciseSelectionUrl, matchesExercise, readExerciseSelection, type ExerciseSelection } from '../lib/exercise-catalog.ts';
 import { t, locale } from './browser-i18n.ts';
 const root = document.querySelector<HTMLElement>('[data-exercise-catalog]')!;
 const search = root.querySelector<HTMLInputElement>('#exercise-search')!;
@@ -8,8 +8,8 @@ const course = root.querySelector<HTMLSelectElement>('#exercise-course')!;
 const level = root.querySelector<HTMLSelectElement>('#exercise-level')!;
 const cards = [...root.querySelectorAll<HTMLElement>('[data-exercise-card]')];
 function filter() {
-  if (course.value !== 'alle' && !exercises.some(item=>item.course===course.value && (topic.value==='alle'||item.topic===topic.value))) course.value='alle';
-  for (const option of course.options) option.disabled = option.value !== 'alle' && topic.value !== 'alle' && !exercises.some(item=>item.course===option.value && item.topic===topic.value);
+  if (course.value !== 'alle' && !exercises.some(item=>item.course===course.value && (topic.value==='alle'||exerciseCatalogTopic(item)===topic.value))) course.value='alle';
+  for (const option of course.options) option.disabled = option.value !== 'alle' && topic.value !== 'alle' && !exercises.some(item=>item.course===option.value && exerciseCatalogTopic(item)===topic.value);
   const selection:ExerciseSelection = {search:search.value,topic:topic.value,course:course.value,level:level.value};
   let count = 0;
   for (const card of cards) {

@@ -103,6 +103,9 @@ test('exercise filters reconcile topic/course, preserve unrelated URL state and 
   assert.equal(url.searchParams.get('kurs'),'python');
   const reset=exerciseSelectionUrl(url,emptyExerciseSelection());assert.equal(reset.search,'?keep=1');
   assert.ok(matchesExercise(exercises.find(item=>item.id==='web-formularlabel')!,{...emptyExerciseSelection(),search:'explicit label'},'en'));
+  const typesetting=readExerciseSelection(new URLSearchParams('thema=textsatz-dokumentenerstellung&kurs=typst'),exercises);
+  assert.equal(typesetting.topic,'textsatz-dokumentenerstellung');assert.equal(typesetting.course,'typst');
+  assert.equal(exercises.filter(item=>matchesExercise(item,typesetting,'de')).length,1);
 });
 test('systems and operations models require correct types, fixed givens and computed results',()=>{
   const cases:[string,string][]=[

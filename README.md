@@ -6,9 +6,9 @@
 
 [Website auf Deutsch](https://it-worlds.maki26.workers.dev) · [Website in English](https://it-worlds.maki26.workers.dev/en/) · [Übungseditoren](https://it-worlds.maki26.workers.dev/uebungen/) · [English README](README.en.md)
 
-IT-Worlds ist eine deutsch-englische IT-Lernplattform mit 13 Themenwelten. Alle Inhalte, Quellen und Quizfragen sind ohne Anmeldung zugänglich. Ein freiwilliger Account speichert gelesene Einstiege und Kapitel, bearbeitete Fragen und richtig beantwortete Fragen geräteübergreifend. Ein optionales dunkles Design ergänzt das helle Design; die Auswahl bleibt im Browser gespeichert.
+IT-Worlds ist eine deutsch-englische IT-Lernplattform mit 14 Themenkacheln. Alle Inhalte, Quellen und Quizfragen sind ohne Anmeldung zugänglich. Ein freiwilliger Account speichert gelesene Einstiege und Kapitel, bearbeitete Fragen und richtig beantwortete Fragen geräteübergreifend. Ein optionales dunkles Design ergänzt das helle Design; die Auswahl bleibt im Browser gespeichert.
 
-**Inhaltsstand (25.10.2026):** 13 Themenwelten, 18 Kursfolgen mit **145 Kapiteln, 300 erklärten Quizfragen und 239 Primärquellen**. Hardware, Schreibübungen und Spielegrundlagen ergänzen die bisherigen zehn IT-Themen. Der Schreibtrainer bietet optionale private Konto-Ergebnisse und eine freiwillige pseudonyme Rangliste mit serverseitiger Auswertung. Godot-Spielablauf und Linux/systemd-Benutzerlabor werden in der CI tatsächlich ausgeführt. Ein unabhängiges Fachreview steht aus. [P1-Prüfungen und Grenzen](docs/P1-PRUEFUNGEN.md), [Veröffentlichungsnachweis](docs/VALIDIERUNG.md).
+**Inhaltsstand (26.10.2026):** 14 Themenkacheln, 18 Kursfolgen mit **145 Kapiteln, 300 erklärten Quizfragen und 239 Primärquellen**. „Textsatz & Dokumentenerstellung“ bündelt Typst und LaTeX in einem eigenen Portal; die bisherigen Kurs-URLs bleiben kompatibel. Hardware, Schreibübungen und Spielegrundlagen ergänzen die ursprünglichen IT-Themen. Der Schreibtrainer bietet optionale private Konto-Ergebnisse und eine freiwillige pseudonyme Rangliste mit serverseitiger Auswertung. Godot-Spielablauf und Linux/systemd-Benutzerlabor werden in der CI tatsächlich ausgeführt. Ein unabhängiges Fachreview steht aus. [P1-Prüfungen und Grenzen](docs/P1-PRUEFUNGEN.md), [Veröffentlichungsnachweis](docs/VALIDIERUNG.md).
 
 **Orientierung:** [Lernstart](https://it-worlds.maki26.workers.dev/lernen/) → [Kurskatalog](https://it-worlds.maki26.workers.dev/lernpfade/) → Kapitel mit Aufgaben, Lösungen und Quiz. Die Suche durchsucht auch Kapiteltexte und lädt ihren Index erst bei Bedarf. Quizfilter grenzen Kurse/Kapitel und optional den gespeicherten Lösungsstand ein; der persönliche Lernstand gruppiert Inhalte und führt zum nächsten offenen Schritt.
 
@@ -18,7 +18,7 @@ IT-Worlds ist eine deutsch-englische IT-Lernplattform mit 13 Themenwelten. Alle 
 
 Programmiersprachen · Datenbanken · Website bauen · KI & neuronale Netze · APIs & Schnittstellen · IT-Grundlagen · Internet & Netzwerke · IT-Sicherheit · Cloud & DevOps · Betriebssysteme & Linux · Hardware · 10-Finger-Schreiben · Spieleentwicklung.
 
-LaTeX, Typst und Markdown gehören unter **Programmiersprachen → Auszeichnungs- & Satzsprachen**. Die Inhalte unterscheiden Programmierung, Dokumentstruktur und Textsatz.
+Typst und LaTeX stehen unter **Textsatz & Dokumentenerstellung**; Typst ist der empfohlene moderne Einstieg. Markdown bleibt als Dokumentationssprache bei **Programmiersprachen**. Die Inhalte unterscheiden Programmierung, Dokumentstruktur und Textsatz.
 
 ## Lokal entwickeln
 

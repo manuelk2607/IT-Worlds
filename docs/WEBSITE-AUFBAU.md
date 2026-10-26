@@ -28,7 +28,7 @@ Die Hauptnavigation wird von `src/scripts/navigation.ts` gesteuert. Auf der Star
 
 Die fünf gewünschten Kernbereiche sind **Programmiersprachen**, **Datenbanken**, **Website bauen**, **KI und neuronale Netze** sowie **APIs und Schnittstellen**. Als ergänzende Grundlagen sind **IT-Grundlagen**, **Internet und Netzwerke**, **IT-Sicherheit**, **Cloud und DevOps** sowie **Betriebssysteme und Linux** angelegt. Git, Testing, Algorithmen, Softwarearchitektur, Datenschutz und Barrierefreiheit sind als Querschnittsthemen eingebunden.
 
-Unter **Programmiersprachen → Auszeichnungs- & Satzsprachen** stehen außerdem LaTeX, Typst und Markdown. LaTeX wird als System zur Dokumentaufbereitung und zum Textsatz eingeordnet; Typst verbindet Markup, Textsatz und Scripting, Markdown strukturiert Dokumente in Klartext. LaTeX besitzt 13 verfügbare Kapitel zu Einrichtung, Text- und Formelsatz, Tabellen, Grafiken, Literatur und komplexen Dokumenten. Eine zusätzliche Themenwelt ist dafür nicht nötig.
+Die eigene Themenkachel **Textsatz & Dokumentenerstellung** bündelt Typst und LaTeX. Typst steht als empfohlener moderner Einstieg zuerst; LaTeX folgt als etabliertes TeX- und Vorlagenökosystem. Markdown bleibt als Klartext-Dokumentationssprache bei **Programmiersprachen**. Die Kachel führt zum bestehenden Portal `/textsatz/`; frühere Kurs-URLs unter `/themen/programmiersprachen/` bleiben als stabile Kompatibilitätsrouten bestehen und verwenden weiterhin dieselben Fortschrittskennungen.
 
 Die Web-Lernwege verwenden TypeScript. JavaScript wird dort nur bei Bedarf als zugrunde liegende Browser-Laufzeit oder zum Vergleich erklärt. Astro baut die Website; TypeScript bleibt die Sprache für Anwendungslogik, Tests, Hilfsskripte und Konfiguration.
 

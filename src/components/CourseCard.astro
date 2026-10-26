@@ -1,13 +1,14 @@
 ---
 import {translate,localePath,type Locale} from '../lib/locale.ts';
 import {coursePath,chapterProgressId,type Course} from '../data/course-types.ts';
+import {courseCatalogTopic} from '../data/topic-categories.ts';
 import Icon from './Icon.astro';
 interface Props {course: Course;locale?: Locale;heading?:'h2'|'h3'}
 const {course,locale='de',heading:Heading='h3'}=Astro.props;
 const t=translate(locale);
 const steps=course.chapters.map(chapter=>({id:chapterProgressId(course,chapter),url:localePath(locale,coursePath(course,chapter)),title:chapter.title[locale]}));
 ---
-<article class="catalog-course" data-catalog-course data-course={course.id} data-title={`${course.title[locale]} ${course.description[locale]}`.toLocaleLowerCase(locale)} data-topic={course.topic}>
+<article class="catalog-course" data-catalog-course data-course={course.id} data-title={`${course.title[locale]} ${course.description[locale]}`.toLocaleLowerCase(locale)} data-topic={courseCatalogTopic(course)}>
  <div class="catalog-course-meta"><span class="available-badge">{t('Alle Kapitel verfügbar','All chapters available')}</span><span>{course.chapters.length} {t('Kapitel','chapters')}</span></div>
  <Heading><a href={localePath(locale,coursePath(course))}>{course.title[locale]}</a></Heading>
  <p>{course.description[locale]}</p>

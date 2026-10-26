@@ -2,9 +2,10 @@
 import '../styles/exercises.css';
 import { exercises, exercisePath } from '../data/exercises.ts';
 import { translate, localePath, getContent, type Locale } from '../lib/i18n.ts';
+import {exerciseCatalogTopic} from '../lib/exercise-catalog.ts';
 interface Props { locale: Locale; course?: string; chapter?: string; topic?: string }
 const {locale,course,chapter,topic} = Astro.props;
-const selected = exercises.filter(item => item.course && (!course || item.course === course) && (!chapter || item.chapter === chapter) && (!topic || item.topic === topic));
+const selected = exercises.filter(item => item.course && (!course || item.course === course) && (!chapter || item.chapter === chapter) && (!topic || exerciseCatalogTopic(item) === topic));
 const t = translate(locale);
 const {levelName} = getContent(locale);
 ---

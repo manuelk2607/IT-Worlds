@@ -5,11 +5,14 @@ import { exercises, exercisePath } from '../data/exercises.ts';
 import { courses } from '../data/courses.ts';
 import { getContent, translate, localePath, type Locale } from '../lib/i18n.ts';
 import '../styles/exercises.css';
+import {exerciseCatalogTopic} from '../lib/exercise-catalog.ts';
+import {TYPESETTING_TOPIC_ID,typesettingTopic} from '../data/topic-categories.ts';
 interface Props { locale?: Locale }
 const locale: Locale = Astro.props.locale ?? 'de';
 const t=translate(locale);
 const {topics,topicById,levels,levelName}=getContent(locale);
 const practiceCourses=courses.filter(course=>exercises.some(exercise=>exercise.course===course.id));
+const typesetting=typesettingTopic(locale);
 ---
 <Layout locale={locale} title={t('Übungen mit lokalem Code-Editor', 'Exercises with a local code editor')} description={t('Finde kleine Übungen nach Thema, Kurs und Lernstufe. Bearbeite Code oder Daten direkt im Browser, mit Hinweisen, lokalen Ergebnissen und Musterlösungen.', 'Find small exercises by topic, course and level. Edit code or data directly in the browser, with hints, local results and sample solutions.')} active="uebungen">
   <header class="container page-top practice-intro"><p class="eyebrow">{t('LESEN. ÄNDERN. VERSTEHEN.', 'READ. EDIT. UNDERSTAND.')}</p><h1>{t('Übungen für deinen Lernweg', 'Exercises for your learning route')}</h1><p class="page-lead">{t('Finde Aufgaben nach Thema, Kurs und Lernstufe. Bearbeite die Vorlage und prüfe dein Ergebnis mit Hinweis und Musterlösung.', 'Find tasks by topic, course and level. Edit the template and check your result with a hint and sample solution.')}</p><p class="muted">{t('Lokale Modellprüfung ohne Codeausführung. Alle Aufgaben sind frei zugänglich; Entwürfe bleiben auf diesem Gerät.', 'Local model checking without code execution. Every task is freely accessible; drafts stay on this device.')}</p></header>
@@ -17,7 +20,7 @@ const practiceCourses=courses.filter(course=>exercises.some(exercise=>exercise.c
     <h2 id="exercise-catalog-title">{t('Die passende Aufgabe finden', 'Find the right task')}</h2>
     <div class="catalog-toolbar">
       <label for="exercise-search">{t('Aufgabe suchen','Search tasks')}<input id="exercise-search" type="search" placeholder={t('Zum Beispiel Filter, NULL, DNS …','For example filter, NULL, DNS …')} /></label>
-      <label for="exercise-topic">{t('Themenwelt','Topic')}<select id="exercise-topic"><option value="alle">{t('Alle Themenwelten','All topics')}</option>{topics.map(topic=><option value={topic.id}>{topic.title}</option>)}</select></label>
+      <label for="exercise-topic">{t('Themenwelt','Topic')}<select id="exercise-topic"><option value="alle">{t('Alle Themenwelten','All topics')}</option>{topics.map(topic=><option value={topic.id}>{topic.title}</option>)}<option value={TYPESETTING_TOPIC_ID}>{typesetting.title}</option></select></label>
       <label for="exercise-course">{t('Kurs','Course')}<select id="exercise-course"><option value="alle">{t('Alle Kurse & Einstiege','All courses & introductions')}</option>{practiceCourses.map(course=><option value={course.id}>{course.title[locale]}</option>)}</select></label>
       <label for="exercise-level">{t('Lernstufe','Level')}<select id="exercise-level"><option value="alle">{t('Alle Lernstufen','All levels')}</option>{levels.map(level=><option value={level.id}>{level.name}</option>)}</select></label>
       <button class="button secondary" data-reset-exercise-filter>{t('Filter zurücksetzen','Reset filters')}</button>
@@ -25,9 +28,10 @@ const practiceCourses=courses.filter(course=>exercises.some(exercise=>exercise.c
     <p role="status" data-exercise-count>{t(`${exercises.length} Aufgaben verfügbar`,`${exercises.length} tasks available`)}</p>
     <div class="catalog-grid">{exercises.map(exercise=>{
       const course=practiceCourses.find(item=>item.id===exercise.course);
-      const context=`${topicById(exercise.topic)!.title} ${course?.title[locale]??''}`;
+      const category=exerciseCatalogTopic(exercise)===TYPESETTING_TOPIC_ID?typesetting.title:topicById(exercise.topic)!.title;
+      const context=`${category} ${course?.title[locale]??''}`;
       return <article class="progress-entry exercise-card" data-exercise-card={exercise.id} data-context={context}>
-        <p class="eyebrow">{topicById(exercise.topic)!.title}</p><h3><a href={localePath(locale,exercisePath(exercise))}>{exercise.title[locale]}</a></h3>
+        <p class="eyebrow">{category}</p><h3><a href={localePath(locale,exercisePath(exercise))}>{exercise.title[locale]}</a></h3>
         <p class="exercise-card-meta">{levelName(exercise.level)} · {exercise.format}</p><p>{course?.title[locale]??t('Erster Einstieg','First introduction')}</p>
         <p class="exercise-card-description">{exercise.task[locale]}</p><a class="text-link" href={localePath(locale,exercisePath(exercise))}>{t('Im Editor üben →', 'Open practice editor →')}</a>
       </article>;

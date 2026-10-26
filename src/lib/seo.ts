@@ -3,6 +3,7 @@ import {getContent} from './i18n.ts';
 import { topics, paths, sources } from '../data/content.ts';
 import { courses, courseChapters, coursePath } from '../data/courses.ts';
 import { localePath, type Locale } from './locale.ts';
+import {isTypesettingCourse,TYPESETTING_TOPIC_PATH} from '../data/topic-categories.ts';
 export const SITE_URL = 'https://it-worlds.maki26.workers.dev';
 export const publicPaths = ['/', '/lernen/', '/lernpfade/', '/quiz/', '/quellen/', '/uebungen/', '/schreibtrainer/', '/textsatz/', '/dokumentpruefung/',
   ...exercises.filter(exercise=>exercise.id!==exercise.topic).map(exercisePath), ...topics.map(topic=>`/themen/${topic.id}/`), ...paths.map(path=>`/lernpfade/${path.id}/`), ...courses.map(course => coursePath(course)), ...courseChapters.map(chapter => chapter.url)];
@@ -20,7 +21,7 @@ export function pageSeo(pathname: string, locale: Locale, title: string, descrip
   const localized = getContent(locale);
   const breadcrumbItems = [{name:locale==='de'?'Startseite':'Home',path:'/'}];
   if(exercise) {breadcrumbItems.push({name:locale==='de'?'Übungen':'Exercises',path:'/uebungen/'});const parent=courses.find(item=>item.id===exercise.course);if(parent)breadcrumbItems.push({name:parent.title[locale],path:coursePath(parent)});}
-  if(course){breadcrumbItems.push({name:locale==='de'?'Kurse':'Courses',path:'/lernpfade/'},{name:localized.topicById(course.topic)!.title,path:`/themen/${course.topic}/`});if(chapter)breadcrumbItems.push({name:course.title[locale],path:coursePath(course)});}
+  if(course){const typesetting=isTypesettingCourse(course);breadcrumbItems.push(typesetting?{name:locale==='de'?'Themenwelten':'Topics',path:'/#themenwelten'}:{name:locale==='de'?'Kurse':'Courses',path:'/lernpfade/'},typesetting?{name:locale==='de'?'Textsatz & Dokumentenerstellung':'Typesetting & document creation',path:TYPESETTING_TOPIC_PATH}:{name:localized.topicById(course.topic)!.title,path:`/themen/${course.topic}/`});if(chapter)breadcrumbItems.push({name:course.title[locale],path:coursePath(course)});}
   if(germanPath!=='/')breadcrumbItems.push({name:title,path:germanPath});
   const webPage = {
     '@type': topic?.lesson || chapter || exercise ? ['WebPage','LearningResource'] : ['WebPage'],

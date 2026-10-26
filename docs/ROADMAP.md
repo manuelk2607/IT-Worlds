@@ -28,7 +28,7 @@ Architektur, Datenschutz, Limits, lokale Bedienung und aktuelle Freigabegrenzen:
 - [x] Themen- und Lernpfadsuche sowie Themen- und Stufenfilter bereitstellen.
 - [x] Zehn kurze Einstiegsartikel und zehn passende Quizfragen mit Primärquellen hinterlegen.
 - [x] 200 Originalquellen mit Herausgeber, Version, Abschnitt und Lesedatum dokumentieren.
-- [x] LaTeX, Typst und Markdown als Unterbereich von Programmiersprachen einordnen.
+- [x] Typst und LaTeX als eigene Themenkategorie „Textsatz & Dokumentenerstellung“ bündeln, Typst hervorheben und bisherige Kurs-URLs/Fortschritts-IDs erhalten; Markdown bleibt bei Programmiersprachen.
 - [x] Projektcode einschließlich Tests, Hilfsskripten und Astro-Konfiguration auf TypeScript vereinheitlichen.
 - [ ] Unabhängiges Fachreview der Einstiege und Quizfragen durchführen.
 - [x] KI- und LaTeX-Kursfolgen mit 27 Kapiteln, 54 zusätzlichen Fragen und Belegen ausarbeiten.

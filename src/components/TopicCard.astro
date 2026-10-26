@@ -5,17 +5,20 @@ const t = translate(locale);
 import type { Topic } from "../data/content";
 import Icon from "./Icon.astro";
 import { courses } from "../data/courses.ts";
+import {courseCatalogTopic} from '../data/topic-categories.ts';
 interface Props {
   locale?: Locale;
   topic: Topic;
   index?: number;
+  href?: string;
+  chapterCount?: number;
 }
-const { topic, index = 0 } = Astro.props;
-const chapters=courses.filter(course=>course.topic===topic.id).reduce((sum,course)=>sum+course.chapters.length,0);
+const { topic, index = 0, href = `/themen/${topic.id}/`, chapterCount } = Astro.props;
+const chapters=chapterCount ?? courses.filter(course=>courseCatalogTopic(course)===topic.id).reduce((sum,course)=>sum+course.chapters.length,0);
 ---
 
 <a
-  href={localePath(locale, `/themen/${topic.id}/`)}
+  href={localePath(locale, href)}
   class={`topic-card color-${topic.color}`}
   data-topic-card
   data-group={topic.group}

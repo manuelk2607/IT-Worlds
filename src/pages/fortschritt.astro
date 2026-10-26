@@ -3,12 +3,14 @@ import Layout from '../layouts/Layout.astro';
 import ProgressGroup from '../components/ProgressGroup.astro';
 import { courses, coursePath, chapterProgressId, courseChapters } from '../data/courses.ts';
 import { getContent, translate, localePath, type Locale } from '../lib/i18n';
+import {courseCatalogTopic,TYPESETTING_TOPIC_ID,typesettingTopic} from '../data/topic-categories.ts';
 interface Props { locale?: Locale }
 const locale: Locale = Astro.props.locale ?? 'de';
 const t = translate(locale);
 const { topics, questions, paths } = getContent(locale);
 const lessons = topics.filter(topic => topic.lesson);
 const lessonCount = lessons.length + courseChapters.length;
+const typesetting=typesettingTopic(locale);
 ---
 <Layout locale={locale} title={t('Mein Lernstand', 'My progress')}>
   <section class="container page-top page-intro">
@@ -31,14 +33,14 @@ const lessonCount = lessons.length + courseChapters.length;
     <h2>{t('Deine Lerninhalte', 'Your learning content')}</h2>
     <div class="dashboard-filters">
       <label for="progress-view">{t('Ansicht','View')}<select id="progress-view" disabled><option value="chapters">{t('Kurskapitel','Course chapters')}</option><option value="questions">{t('Quizfragen','Quiz questions')}</option><option value="introductions">{t('Kurze Einstiege','Short introductions')}</option><option value="all">{t('Alle Inhalte','All content')}</option></select></label>
-      <label for="progress-topic">{t('Thema','Topic')}<select id="progress-topic" disabled><option value="all">{t('Alle Themen','All topics')}</option>{topics.map(topic=><option value={topic.id}>{topic.title}</option>)}</select></label>
+      <label for="progress-topic">{t('Thema','Topic')}<select id="progress-topic" disabled><option value="all">{t('Alle Themen','All topics')}</option>{topics.map(topic=><option value={topic.id}>{topic.title}</option>)}<option value={TYPESETTING_TOPIC_ID}>{typesetting.title}</option></select></label>
       <label class="unfinished-filter"><input type="checkbox" id="progress-unfinished" disabled/>{t('Nur offene Inhalte','Only unfinished content')}</label>
     </div>
     <p id="progress-filter-status" role="status"></p>
     <div class="progress-groups">
-      {courses.map(course=><ProgressGroup locale={locale} title={course.title[locale]} topic={course.topic} view="chapters" kind="lesson" href={coursePath(course)} entries={course.chapters.map(chapter=>({id:chapterProgressId(course,chapter),title:chapter.title[locale],href:coursePath(course,chapter)}))}/>)}
+      {courses.map(course=><ProgressGroup locale={locale} title={course.title[locale]} topic={courseCatalogTopic(course)} view="chapters" kind="lesson" href={coursePath(course)} entries={course.chapters.map(chapter=>({id:chapterProgressId(course,chapter),title:chapter.title[locale],href:coursePath(course,chapter)}))}/>)}
       {lessons.map(topic=><ProgressGroup locale={locale} title={topic.title} topic={topic.id} view="introductions" kind="lesson" href={`/themen/${topic.id}/`} entries={[{id:topic.id,title:topic.lesson!.title,href:`/themen/${topic.id}/#einstiegsartikel`}]}/>)}
-      {courses.map(course=><ProgressGroup locale={locale} title={course.title[locale]} topic={course.topic} view="questions" kind="question" href={`/quiz/?kurs=${course.id}`} entries={questions.filter(question=>question.course===course.id).map(question=>({id:question.id,title:question.prompt,href:`/quiz/?frage=${question.id}`}))}/>)}
+      {courses.map(course=><ProgressGroup locale={locale} title={course.title[locale]} topic={courseCatalogTopic(course)} view="questions" kind="question" href={`/quiz/?kurs=${course.id}`} entries={questions.filter(question=>question.course===course.id).map(question=>({id:question.id,title:question.prompt,href:`/quiz/?frage=${question.id}`}))}/>)}
       {topics.filter(topic=>questions.some(question=>!question.course&&question.topic===topic.id)).map(topic=><ProgressGroup locale={locale} title={t(`${topic.title} · Einstiegsfragen`,`${topic.title} · introductory questions`)} topic={topic.id} view="questions" kind="question" href={`/quiz/?thema=${topic.id}`} entries={questions.filter(question=>!question.course&&question.topic===topic.id).map(question=>({id:question.id,title:question.prompt,href:`/quiz/?frage=${question.id}`}))}/>)}
     </div>
     <h2>{t('Deine Lernpfade', 'Your learning paths')}</h2>

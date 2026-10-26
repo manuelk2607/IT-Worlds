@@ -10,6 +10,8 @@ import Layout from "../layouts/Layout.astro";
 import SourceCard from "../components/SourceCard.astro";
 import Icon from "../components/Icon.astro";
 import type { SourceId } from "../data/content";
+import {TYPESETTING_TOPIC_ID,typesettingTopic} from '../data/topic-categories.ts';
+const typesetting=typesettingTopic(locale);
 ---
 
 <Layout locale={locale} title={t("Quellen & Qualität", "Sources & quality")} active="quellen">
@@ -62,7 +64,7 @@ import type { SourceId } from "../data/content";
     </div>
     <div class="catalog-toolbar">
       <label for="source-search">{t('Quelle suchen','Search sources')}<input id="source-search" type="search" placeholder={t('Titel, Abschnitt, Version …','Title, section, version …')} /></label>
-      <label for="source-topic">{t('Themenwelt','Topic')}<select id="source-topic"><option value="alle">{t('Alle Themenwelten','All topics')}</option>{topics.map(topic=><option value={topic.id}>{topic.title}</option>)}</select></label>
+      <label for="source-topic">{t('Themenwelt','Topic')}<select id="source-topic"><option value="alle">{t('Alle Themenwelten','All topics')}</option>{topics.map(topic=><option value={topic.id}>{topic.title}</option>)}<option value={TYPESETTING_TOPIC_ID}>{typesetting.title}</option></select></label>
       <label for="source-publisher">{t('Herausgeber','Publisher')}<select id="source-publisher"><option value="alle">{t('Alle Herausgeber','All publishers')}</option>{sourcePublishers.map(publisher=><option value={publisher}>{publisher}</option>)}</select></label>
       <button class="button secondary" data-reset-sources>{t('Filter zurücksetzen','Reset filters')}</button>
     </div>

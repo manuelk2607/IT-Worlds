@@ -7,14 +7,13 @@ type TopicText = Pick<Topic, 'title' | 'short' | 'description' | 'tags' | 'prere
 const text: Record<string, TopicText> = {
   programmiersprachen: {
     title: 'Programming languages', short: 'From your first line to thoughtful code.',
-    description: 'Learn to break problems into small steps and express solutions in code. Python and TypeScript have their own course sequences; Java, C/C++, Go and Rust extend the future language map. A complementary section covers LaTeX, Typst and Markdown for documents and typesetting.',
-    tags: ['Python', 'TypeScript', 'Typst', 'LaTeX'], prerequisites: 'Curiosity is enough to get started. Further lessons build on variables, functions and basic data structures.',
+    description: 'Learn to break problems into small steps and express solutions in code. Python and TypeScript have their own course sequences; Java, C/C++, Go and Rust extend the future language map. Markdown complements programming practice for simple structured documentation.',
+    tags: ['Python', 'TypeScript', 'Markdown', 'Algorithms'], prerequisites: 'Curiosity is enough to get started. Further lessons build on variables, functions and basic data structures.',
     curriculum: {
-      einstieg: ['Variables & arithmetic operators', 'Conditions, loops & functions', 'First steps with Python and TypeScript', 'Structuring documents: Markdown, LaTeX & Typst'],
-      vertiefung: ['Data structures & algorithms', 'Type systems, error handling & tests', 'Comparing Java, C/C++, Go & Rust', 'Typesetting: equations, cross-references & bibliographies'],
-      profi: ['Concurrency & memory models', 'Compilers, runtimes & profiling', 'Software architecture & design patterns', 'Document workflows: LaTeX macros, Typst functions & templates'],
+      einstieg: ['Variables & arithmetic operators', 'Conditions, loops & functions', 'First steps with Python and TypeScript', 'Structuring documentation with Markdown'],
+      vertiefung: ['Data structures & algorithms', 'Type systems, error handling & tests', 'Comparing Java, C/C++, Go & Rust', 'Documenting and explaining programs clearly'],
+      profi: ['Concurrency & memory models', 'Compilers, runtimes & profiling', 'Software architecture & design patterns', 'Comparing tools, runtimes & language design'],
     },
-    subareas: [{ title: 'Markup & typesetting languages', description: 'Typst and LaTeX are programmable typesetting systems for structured publications. Typst combines markup with an integrated scripting language; LaTeX uses the TeX macro and package ecosystem. Markdown supports simple structured plain-text documents. Dedicated courses cover syntax, styling, bibliography and the path to a reviewable project.', languages: ['Typst', 'LaTeX', 'Markdown'], sources: ['latex', 'typst', 'markdown'] }],
     lesson: { title: 'How does Python calculate?', goal: 'You can distinguish /, // and % using a simple example.', paragraphs: ['Python can calculate directly with numbers. Whole numbers such as 17 have the type int. Dividing these numbers with / returns a floating-point number (float).', 'The // operator gives the quotient rounded down; % gives the remainder. For positive integers, think of it as “How many times does this number fit, and what is left over?” This example uses positive integers.'], code: '17 / 3   # 5.666666666666667\n17 // 3  # 5\n17 % 3   # 2', language: 'Python 3.14', takeaway: 'Division, the quotient rounded down and the remainder are three different operations.' },
   },
   datenbanken: {

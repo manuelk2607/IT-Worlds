@@ -5,6 +5,7 @@ import ExerciseEditor from './ExerciseEditor.astro';
 import ExternalDocumentExercise from './ExternalDocumentExercise.astro';
 import SourceCard from './SourceCard.astro';
 import { courses, coursePath } from '../data/courses.ts';
+import {isTypesettingCourse} from '../data/topic-categories.ts';
 import type { Exercise } from '../data/exercise-types.ts';
 import { getContent, translate, localePath, type Locale } from '../lib/i18n.ts';
 interface Props {exercise: Exercise; locale?: Locale}
@@ -17,7 +18,7 @@ const description = exercise.title[locale] + '. ' + (exercise.course==='typst'?t
 ---
 <Layout locale={locale} title={exercise.title[locale]} description={description} active="uebungen">
   <Breadcrumbs locale={locale} items={[{title:t('Übungen','Exercises'),href:'/uebungen/'}, ...(course ? [{title:course.title[locale],href:coursePath(course)}] : []), {title:exercise.title[locale]}]} />
-  <header class="container page-top"><a class="back-link" href={localePath(locale,`/uebungen/?${course ? `kurs=${course.id}` : `thema=${exercise.topic}`}`)}>{t('← Passende Übungen', '← Matching exercises')}</a><p class="eyebrow">{topicById(exercise.topic)!.title} · {levelName(exercise.level)}</p><h1>{exercise.title[locale]}</h1>{course && <p>{t('Vorbereitung:', 'Preparation:')} <a class="text-link" href={localePath(locale,coursePath(course,chapter))}>{course.title[locale]}{chapter ? ` · ${chapter.title[locale]}` : ''} →</a></p>}</header>
+  <header class="container page-top"><a class="back-link" href={localePath(locale,`/uebungen/?${course ? `kurs=${course.id}` : `thema=${exercise.topic}`}`)}>{t('← Passende Übungen', '← Matching exercises')}</a><p class="eyebrow">{course&&isTypesettingCourse(course)?t('Textsatz & Dokumentenerstellung','Typesetting & document creation'):topicById(exercise.topic)!.title} · {levelName(exercise.level)}</p><h1>{exercise.title[locale]}</h1>{course && <p>{t('Vorbereitung:', 'Preparation:')} <a class="text-link" href={localePath(locale,coursePath(course,chapter))}>{course.title[locale]}{chapter ? ` · ${chapter.title[locale]}` : ''} →</a></p>}</header>
   <div class="container exercise-page">{exercise.course==='typst'?<ExternalDocumentExercise exercise={exercise} locale={locale}/>:<ExerciseEditor exerciseId={exercise.id} locale={locale} standalone />}</div>
   <section class="container exercise-page section"><h2>{t('Quellen & Prüfstand', 'Sources & review status')}</h2>{exercise.sources.map(id=><SourceCard id={id} locale={locale} compact />)}</section>
 </Layout>

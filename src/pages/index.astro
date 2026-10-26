@@ -8,6 +8,10 @@ import Layout from "../layouts/Layout.astro";
 import Icon from "../components/Icon.astro";
 import TopicCard from "../components/TopicCard.astro";
 import KnowledgeMap from "../components/KnowledgeMap.astro";
+import { courses } from '../data/courses.ts';
+import { TYPESETTING_TOPIC_PATH, typesettingTopic as getTypesettingTopic } from '../data/topic-categories.ts';
+const typesettingTopic=getTypesettingTopic(locale);
+const typesettingChapterCount = courses.filter(course => course.id === 'typst' || course.id === 'latex').reduce((sum, course) => sum + course.chapters.length, 0);
 
 ---
 
@@ -55,7 +59,7 @@ import KnowledgeMap from "../components/KnowledgeMap.astro";
         <strong>{t("Hier findest du die Zusammenhänge.", "Find the connections here.")}</strong>
       </p>
       <span>
-        {t(`${topics.length} Themenwelten`, `${topics.length} topics`)} <span class="dot-separator">·</span> {t("3 Lernstufen", "3 levels")}{" "}
+        {t(`${topics.length + 1} Themenwelten`, `${topics.length + 1} topics`)} <span class="dot-separator">·</span> {t("3 Lernstufen", "3 levels")}{" "}
         <span class="dot-separator">·</span> {t("Deine Neugier", "Your curiosity")}
       </span>
     </div>
@@ -80,7 +84,7 @@ import KnowledgeMap from "../components/KnowledgeMap.astro";
           data-topic-filter="alle"
           aria-pressed="true"
         >
-          {t("Alle Themen", "All topics")} <span>10</span>
+          {t("Alle Themen", "All topics")} <span>{topics.length + 1}</span>
         </button>
         <button
           class="filter-chip"
@@ -115,12 +119,13 @@ import KnowledgeMap from "../components/KnowledgeMap.astro";
       </label>
     </div>
     <p class="sr-only" id="topic-result-count" role="status">
-      {t(`${topics.length} Themenwelten`, `${topics.length} topics`)}
+      {t(`${topics.length + 1} Themenwelten`, `${topics.length + 1} topics`)}
     </p>
     <div class="topic-grid">
       {topics.map((topic, index) => (
         <TopicCard locale={locale} topic={topic} index={index} />
       ))}
+      <TopicCard locale={locale} topic={typesettingTopic} index={topics.length} href={TYPESETTING_TOPIC_PATH} chapterCount={typesettingChapterCount} />
       <aside class="curiosity-card" data-grid-note>
         <span>{t("DEIN WISSEN. DEIN WEG.", "YOUR KNOWLEDGE. YOUR JOURNEY.")}</span>
         <h3>

@@ -1,10 +1,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import katex from 'katex';
-import { courses, courseChapters, coursePath, courseQuestions } from '../src/data/courses.ts';
+import { courses, courseChapters, coursePath, courseQuestions, chapterProgressId } from '../src/data/courses.ts';
 import { sources, questions } from '../src/data/content.ts';
 import { parseProgressChange, isCorrectAnswer } from '../src/lib/progress.ts';
 import { matchesQuizFilter } from '../src/lib/quiz-filter.ts';
+import {courseCatalogTopic,TYPESETTING_TOPIC_ID,TYPESETTING_TOPIC_PATH} from '../src/data/topic-categories.ts';
 
 test('course chapters are bilingual, sourced, navigable and eligible for progress', () => {
   assert.equal(new Set(courseChapters.map(item => item.id)).size, courseChapters.length);
@@ -34,6 +35,14 @@ test('every course answer can be recorded and is graded against its stable ID', 
     assert(!isCorrectAnswer({...change,selectedOption:(question.answer+1)%question.options.length}));
     assert.equal(questions.filter(item=>item.id===question.id).length,1);
   }
+});
+test('typesetting is a separate visible topic while legacy course URLs and progress IDs stay stable',()=>{
+ const latex=courses.find(course=>course.id==='latex')!;const typst=courses.find(course=>course.id==='typst')!;
+ assert.equal(courseCatalogTopic(latex),TYPESETTING_TOPIC_ID);assert.equal(courseCatalogTopic(typst),TYPESETTING_TOPIC_ID);
+ assert.equal(TYPESETTING_TOPIC_PATH,'/textsatz/');
+ assert.equal(coursePath(latex),'/themen/programmiersprachen/latex/');
+ assert.equal(coursePath(typst),'/themen/programmiersprachen/typst/');
+ assert.equal(chapterProgressId(latex,latex.chapters[0]),`latex-${latex.chapters[0].id}`);
 });
 test('quiz filters combine topic, course, level, chapter and exact question without fallback', () => {
   const items = questions.map(q => ({topic:q.topic,course:q.course,level:q.level,chapter:q.course ? `${q.course}-${q.chapter}` : '',question:q.id}));
