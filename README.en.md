@@ -6,7 +6,7 @@
 
 [English website](https://it-worlds.maki26.workers.dev/en/) · [German website](https://it-worlds.maki26.workers.dev/) · [Practice editors](https://it-worlds.maki26.workers.dev/en/uebungen/) · [Deutsche README](README.md)
 
-A German/English learning platform covering 13 IT topics, from programming and databases to AI, networks, security and Linux. All learning content and quizzes remain accessible without signing in. An optional account synchronises read introductions and chapters, practised questions and correct answers across devices. Light and dark modes are available, with the choice saved in your browser.
+A German/English learning platform covering 14 topic groups, from programming and databases to AI, networks, security, Linux and typesetting. All learning content and quizzes remain accessible without signing in. An optional account synchronises read introductions and chapters, practised questions and correct answers across devices. Light and dark modes are available, with the choice saved in your browser.
 
 The current content includes 14 topic cards, 18 courses, 145 chapters, 300 explained quiz questions and 239 primary sources. “Typesetting & document creation” brings Typst and LaTeX together in a dedicated portal while retaining the existing course URLs. Hardware, typing practice and game-development foundations extend the original topics. Typing offers optional private account results and an opt-in pseudonymous leaderboard with server-side scoring. CI runs actual Godot gameplay and the Linux/systemd user lab. Independent expert review is pending. [P1 checks and limits](docs/P1-PRUEFUNGEN.md), [release evidence](docs/VALIDIERUNG.md).
 
