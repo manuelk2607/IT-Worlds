@@ -49,6 +49,8 @@ document.querySelector('[data-close-search]')!.addEventListener('click',()=>dial
 retry.addEventListener('click',()=>{void loadIndex();});
 input.addEventListener('input',render);filter.addEventListener('change',render);
 dialog.addEventListener('click',event=>{
+ // Same-page fragment links do not reload the page, so close the modal before navigation.
+ if(event.button===0&&!event.metaKey&&!event.ctrlKey&&!event.shiftKey&&!event.altKey&&event.target instanceof Element&&event.target.closest('a[href]'))dialog.close();
  if(event.target===dialog){const box=dialog.getBoundingClientRect();if(event.clientX<box.left||event.clientX>box.right||event.clientY<box.top||event.clientY>box.bottom)dialog.close();}
 });
 document.addEventListener('keydown',event=>{

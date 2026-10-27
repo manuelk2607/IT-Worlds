@@ -16,7 +16,15 @@ if(root) {
  const error=(code:string)=>{status.textContent=code in documentMessages?documentMessages[code as keyof typeof documentMessages][locale]:t('Prüfung fehlgeschlagen. Bitte Projekt erneut auswählen.','Check failed. Select the project again.');};
  const clear=()=>{generation++;stop();files=[];zip=undefined;report=undefined;input.value='';folder.value='';preview.value='';source.replaceChildren();main.replaceChildren(new Option(t('Zuerst Projekt auswählen','Select a project first'),''));main.disabled=true;run.disabled=true;results.hidden=true;hideProgress();status.textContent='';};
  const selectedFormat=()=>format.value==='latex'?'latex':'typst';
- const hideProgress=()=>root.querySelectorAll<HTMLElement>('[data-doc-task-progress]').forEach(panel=>panel.hidden=true);
+ const hideProgress=()=>{root.querySelectorAll<HTMLElement>('[data-doc-task-progress],[data-doc-review]').forEach(panel=>panel.hidden=true);root.querySelectorAll<HTMLInputElement>('[data-doc-review-criterion]').forEach(input=>input.checked=false);};
+ const reviewPanel=()=>Array.from(root.querySelectorAll<HTMLElement>('[data-doc-review]')).find(panel=>panel.dataset.docReview===report?.task?.id);
+ const updateReview=()=>{
+  const panel=reviewPanel();if(!panel)return;
+  const checks=Array.from(panel.querySelectorAll<HTMLInputElement>('[data-doc-review-criterion]'));const count=checks.filter(input=>input.checked).length;
+  panel.querySelector<HTMLElement>('[data-doc-review-status]')!.textContent=t(`${count} von ${checks.length} Kriterien von dir bestätigt.`,`${count} of ${checks.length} criteria confirmed by you.`)+(count===checks.length?t(' Du kannst das Kapitel jetzt bewusst als gelesen markieren.',' You can now explicitly mark the chapter as read.'):'');
+  root.querySelectorAll<HTMLElement>('[data-doc-task-progress]').forEach(progress=>progress.hidden=progress.dataset.docTaskProgress!==report?.task?.id||count!==checks.length);
+ };
+ root.addEventListener('change',event=>{if(event.target instanceof HTMLInputElement&&event.target.hasAttribute('data-doc-review-criterion'))updateReview();});
  const refreshTasks=()=>{const previous=task.value;task.replaceChildren(new Option(t('Allgemeine Projektprüfung','General project check'),''),...documentTasks.filter(item=>item.format===selectedFormat()).map(item=>new Option(item.title[locale],item.id)));if(documentTasks.some(item=>item.id===previous&&item.format===selectedFormat()))task.value=previous;};
  const syncSelection=()=>{const params=new URLSearchParams({format:selectedFormat()});if(task.value)params.set('aufgabe',task.value);history.replaceState(null,'',`${location.pathname}?${params}`);};
  const showSource=(path:string,line=1,column=1)=>{
@@ -50,7 +58,7 @@ if(root) {
     const help=document.createElement('p');help.textContent=rule.help[locale];li.append(title,help);
     if(finding.file){const jump=document.createElement('button');jump.type='button';jump.textContent=`${finding.file}:${finding.line}:${finding.column}`;jump.addEventListener('click',()=>showSource(finding.file!,finding.line,finding.column));li.append(jump);}requirements.append(li);
    }
-   root.querySelectorAll<HTMLElement>('[data-doc-task-progress]').forEach(panel=>panel.hidden=panel.dataset.docTaskProgress!==selected?.id);
+   root.querySelectorAll<HTMLElement>('[data-doc-review]').forEach(panel=>panel.hidden=panel.dataset.docReview!==selected?.id);updateReview();
    const params=new URLSearchParams({format:value.format});if(selected)params.set('aufgabe',selected.id);history.replaceState(null,'',`${location.pathname}?${params}`);
    get<HTMLAnchorElement>('course').href=`${locale==='en'?'/en':''}/themen/programmiersprachen/${value.format}/${selected?.chapter??'projektpruefung'}/#aufgabe`;
    status.textContent=t('Lokale Analyse abgeschlossen.','Local analysis complete.');
@@ -87,7 +95,7 @@ if(root) {
  format.addEventListener('change',()=>{generation++;stop();report=undefined;results.hidden=true;hideProgress();refreshTasks();syncSelection();if(files.length||zip)job(false);});task.addEventListener('change',()=>{generation++;stop();report=undefined;results.hidden=true;hideProgress();syncSelection();main.disabled=main.options.length<2;run.disabled=!main.value;status.textContent='';if((files.length||zip)&&main.options.length<2)job(false);});main.addEventListener('change',()=>{stop();generation++;report=undefined;results.hidden=true;hideProgress();run.disabled=!main.value;});
  run.addEventListener('click',()=>job(true));get('clear').addEventListener('click',clear);source.addEventListener('change',()=>showSource(source.value));
  get('demo').addEventListener('click',()=>{clear();const latex=selectedFormat()==='latex';files=[{path:latex?'main.tex':'main.typ',bytes:new TextEncoder().encode(latex?'\\documentclass{article}\n\\begin{document}\n\\section{Test}\\label{intro}\nSee \\ref{missing}.\n\\includegraphics{missing.png}\n\\end{document}':'= Example <intro>\nSee @missing.\n#image("missing.png")')}];job(false);});
- get('download').addEventListener('click',()=>{if(!report)return;const url=URL.createObjectURL(new Blob([JSON.stringify(report,null,2)],{type:'application/json'}));const link=document.createElement('a');link.href=url;link.download='it-worlds-document-report.json';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);});
+ get('download').addEventListener('click',()=>{if(!report)return;const selfReview=reviewPanel();const review=selfReview?{kind:'self-assessment',confirmed:Array.from(selfReview.querySelectorAll<HTMLInputElement>('[data-doc-review-criterion]')).filter(input=>input.checked).map(input=>input.dataset.docReviewCriterion)}:undefined;const url=URL.createObjectURL(new Blob([JSON.stringify({...report,review},null,2)],{type:'application/json'}));const link=document.createElement('a');link.href=url;link.download='it-worlds-document-report.json';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);});
  const params=new URLSearchParams(location.search);const initial=params.get('format');if(initial==='latex'||initial==='typst')format.value=initial;refreshTasks();
  const initialTask=params.get('aufgabe');if(documentTasks.some(item=>item.id===initialTask&&item.format===selectedFormat()))task.value=initialTask!;
  const example=params.get('beispiel');

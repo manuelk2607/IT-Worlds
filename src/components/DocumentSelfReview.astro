@@ -1,0 +1,15 @@
+---
+import type {DocumentTask} from '../data/document-tasks.ts';
+import {documentReview} from '../lib/document-review.ts';
+import {translate,type Locale} from '../lib/i18n.ts';
+interface Props {task:DocumentTask;locale:Locale}
+const {task,locale}=Astro.props;const t=translate(locale);const review=documentReview(task);
+---
+<section data-doc-review={task.id} hidden>
+ <h3>{t('Selbstprüfung deiner Lösung','Review your own solution')}</h3>
+ <p>{t('Die Merkmalsuche bewertet keine fachliche Qualität. Prüfe die Aufgabe und bestätige selbst, welche Lernziele deine Lösung erfüllt. Die Häkchen gelten nur für diesen Prüflauf.','Construct detection does not judge content quality. Review the assignment and confirm which learning goals your solution meets. These checks apply only to this review.')}</p>
+ <p><strong>{t('Kursaufgabe: ','Course assignment: ')}</strong>{review.exercise[locale]}</p>
+ <details><summary>{t('Musterlösung und Begründung vergleichen','Compare model solution and reasoning')}</summary>{review.code?<pre><code>{review.solution[locale]}</code></pre>:<p>{review.solution[locale]}</p>}</details>
+ <fieldset><legend>{t('Von dir bestätigte Prüfkriterien','Criteria confirmed by you')}</legend>{review.criteria.map(criterion=><label class="document-review-check"><input type="checkbox" data-doc-review-criterion={criterion.id}/><span>{criterion.label[locale]}</span></label>)}</fieldset>
+ <p data-doc-review-status role="status"></p>
+</section>

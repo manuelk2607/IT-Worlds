@@ -10,6 +10,8 @@ IT-Worlds ist eine deutsch-englische IT-Lernplattform mit 14 Themenkacheln. Alle
 
 **Inhaltsstand (26.10.2026):** 14 Themenkacheln, 18 Kursfolgen mit **145 Kapiteln, 300 erklärten Quizfragen und 239 Primärquellen**. „Textsatz & Dokumentenerstellung“ bündelt Typst und LaTeX in einem eigenen Portal; die bisherigen Kurs-URLs bleiben kompatibel. Hardware, Schreibübungen und Spielegrundlagen ergänzen die ursprünglichen IT-Themen. Der Schreibtrainer bietet optionale private Konto-Ergebnisse und eine freiwillige pseudonyme Rangliste mit serverseitiger Auswertung. Godot-Spielablauf und Linux/systemd-Benutzerlabor werden in der CI tatsächlich ausgeführt. Ein unabhängiges Fachreview steht aus. [P1-Prüfungen und Grenzen](docs/P1-PRUEFUNGEN.md), [Veröffentlichungsnachweis](docs/VALIDIERUNG.md).
 
+**Praxis und Orientierung (27.10.2026):** Drei vollständige, herunterladbare Referenzprojekte verbinden Web-/TypeScript-, SQL- und API-/Betriebskurse mit realen lokalen Tests: [mehrseitiger Kurskatalog](https://it-worlds.maki26.workers.dev/projekte/kurskatalog/), [SQL-Lernbericht](https://it-worlds.maki26.workers.dev/projekte/lernbericht/) und [HTTP-Abnahme](https://it-worlds.maki26.workers.dev/projekte/auslieferung/). Das [Glossar](https://it-worlds.maki26.workers.dev/glossar/) verknüpft 15 Begriffe mit Kursen und Primärquellen. Zwölf Trainerstufen führen bis zu zusammenhängenden DE/EN-Texten; Textsatzaufgaben ergänzen explizite Selbstprüfrubriken ohne automatische fachliche Benotung.
+
 **Orientierung:** [Lernstart](https://it-worlds.maki26.workers.dev/lernen/) → [Kurskatalog](https://it-worlds.maki26.workers.dev/lernpfade/) → Kapitel mit Aufgaben, Lösungen und Quiz. Die Suche durchsucht auch Kapiteltexte und lädt ihren Index erst bei Bedarf. Quizfilter grenzen Kurse/Kapitel und optional den gespeicherten Lösungsstand ein; der persönliche Lernstand gruppiert Inhalte und führt zum nächsten offenen Schritt.
 
 [Markdown-Kurs](https://it-worlds.maki26.workers.dev/themen/programmiersprachen/markdown/) · [Typst-Kurs](https://it-worlds.maki26.workers.dev/themen/programmiersprachen/typst/) · [Python-Kurs](https://it-worlds.maki26.workers.dev/themen/programmiersprachen/python/) · [SQL-Kurs](https://it-worlds.maki26.workers.dev/themen/datenbanken/kurs/) · [API-Kurs](https://it-worlds.maki26.workers.dev/themen/apis/kurs/) · [KI-Kurs](https://it-worlds.maki26.workers.dev/themen/ki-neuronale-netze/kurs/) · [LaTeX-Kurs](https://it-worlds.maki26.workers.dev/themen/programmiersprachen/latex/) · [Kursarchitektur](docs/KURSE.md) · [Prioritäten und offene Inhalte](docs/AUSBAU.md)
@@ -64,6 +66,7 @@ Astro erzeugt statische Seiten mit TypeScript und CSS. Ein kleiner TypeScript-Wo
 | [Cloudflare](docs/CLOUDFLARE.md) | Bestandsprüfung, Secrets und Veröffentlichung |
 | [Übungseditoren](docs/EDITOR.md) | Aufgabenformate, Bedienung und Grenzen |
 | [Dokumentprüfung](docs/DOKUMENTPRUEFUNG.md) | Externe Editoren, Quellen-/ZIP-Import, lokale Aufgabenprüfung, Datenschutz und Grenzen |
+| [Schreibtrainer](docs/SCHREIBTRAINER.md) | Stufen, Texte, Messregeln, Historie und Konto-Prüfnachweise |
 | [SEO](docs/SEO.md) | Sitemap, Indexierbarkeit und Suchmaschinen |
 | [Quellen](docs/QUELLEN.md) | Tatsächlich gelesene Primärquellen und Grenzen des Reviews |
 | [Validierung](docs/VALIDIERUNG.md) | Durchgeführte Prüfungen und Deployment-Nachweis |

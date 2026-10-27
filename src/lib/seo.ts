@@ -4,8 +4,10 @@ import { topics, paths, sources } from '../data/content.ts';
 import { courses, courseChapters, coursePath } from '../data/courses.ts';
 import { localePath, type Locale } from './locale.ts';
 import {isTypesettingCourse,TYPESETTING_TOPIC_PATH} from '../data/topic-categories.ts';
+import {practiceProjects} from '../data/practice-projects.ts';
 export const SITE_URL = 'https://it-worlds.maki26.workers.dev';
 export const publicPaths = ['/', '/lernen/', '/lernpfade/', '/quiz/', '/quellen/', '/uebungen/', '/schreibtrainer/', '/textsatz/', '/dokumentpruefung/',
+  '/glossar/',...practiceProjects.map(project=>project.path),
   ...exercises.filter(exercise=>exercise.id!==exercise.topic).map(exercisePath), ...topics.map(topic=>`/themen/${topic.id}/`), ...paths.map(path=>`/lernpfade/${path.id}/`), ...courses.map(course => coursePath(course)), ...courseChapters.map(chapter => chapter.url)];
 export const publicUrls = publicPaths.flatMap(path=>(['de','en'] as const).map(locale=>new URL(localePath(locale,path),SITE_URL).href));
 export function pageSeo(pathname: string, locale: Locale, title: string, description: string) {
@@ -19,17 +21,21 @@ export function pageSeo(pathname: string, locale: Locale, title: string, descrip
   const chapter = chapterEntry?.chapter;
   const course = chapterEntry?.course ?? courses.find(item=>coursePath(item)===germanPath);
   const localized = getContent(locale);
+  const project=practiceProjects.find(item=>item.path===germanPath);
   const breadcrumbItems = [{name:locale==='de'?'Startseite':'Home',path:'/'}];
+  if(germanPath==='/glossar/')breadcrumbItems.push({name:locale==='de'?'Lernstart':'Getting started',path:'/lernen/'});
   if(exercise) {breadcrumbItems.push({name:locale==='de'?'Übungen':'Exercises',path:'/uebungen/'});const parent=courses.find(item=>item.id===exercise.course);if(parent)breadcrumbItems.push({name:parent.title[locale],path:coursePath(parent)});}
+  if(project)breadcrumbItems.push({name:locale==='de'?'Übungen':'Practice',path:'/uebungen/'});
   if(course){const typesetting=isTypesettingCourse(course);breadcrumbItems.push(typesetting?{name:locale==='de'?'Themenwelten':'Topics',path:'/#themenwelten'}:{name:locale==='de'?'Kurse':'Courses',path:'/lernpfade/'},typesetting?{name:locale==='de'?'Textsatz & Dokumentenerstellung':'Typesetting & document creation',path:TYPESETTING_TOPIC_PATH}:{name:localized.topicById(course.topic)!.title,path:`/themen/${course.topic}/`});if(chapter)breadcrumbItems.push({name:course.title[locale],path:coursePath(course)});}
   if(germanPath!=='/')breadcrumbItems.push({name:title,path:germanPath});
   const webPage = {
-    '@type': topic?.lesson || chapter || exercise ? ['WebPage','LearningResource'] : ['WebPage'],
+    '@type': topic?.lesson || chapter || exercise || project ? ['WebPage','LearningResource'] : ['WebPage'],
     '@id':`${canonical}#page`,url:canonical,name:title,description,inLanguage:locale,
     isPartOf:{'@id':`${SITE_URL}/#website`},isAccessibleForFree:true,
     ...(topic?.lesson ? {learningResourceType:'Introductory article',educationalLevel:'Beginner',citation:topic.lesson.sources.map(id=>sources[id].url)} : {}),
     ...(exercise ? {learningResourceType:'Practice exercise',educationalLevel:localized.levelName(exercise.level),citation:exercise.sources.map(id=>sources[id].url)} : {}),
     ...(chapter ? {learningResourceType:'Lesson',educationalLevel:localized.levelName(chapter.level),citation:chapter.sources.map(id=>sources[id].url)} : {}),
+    ...(project ? {learningResourceType:'Practice project',educationalLevel:'Advanced',citation:project.sources.map(id=>sources[id].url)} : {}),
   };
   const graph = [
     {'@type':'WebSite','@id':`${SITE_URL}/#website`,url:`${SITE_URL}/`,name:'IT-Worlds',inLanguage:['de','en'],publisher:{'@id':`${SITE_URL}/#organization`}},

@@ -1,6 +1,10 @@
 ---
 import Exercises from '../uebungen.astro';
 import Typesetting from '../textsatz.astro';
+import DeliveryProject from '../projekte/auslieferung.astro';
+import SqlProject from '../projekte/lernbericht.astro';
+import WebProject from '../projekte/kurskatalog.astro';
+import Glossary from '../glossar.astro';
 import DocumentCheck from '../../components/DocumentCheck.astro';
 import CourseView from '../../components/CourseView.astro';
 import { courses } from '../../data/courses.ts';
@@ -24,7 +28,7 @@ export function getStaticPaths() {
       { params: { page: `themen/${course.topic}/${course.slug}` }, props: { view: 'course', course } },
       ...course.chapters.map(chapter => ({ params: { page: `themen/${course.topic}/${course.slug}/${chapter.id}` }, props: { view: 'course', course, chapter } })),
     ]),
-    ...[undefined, 'lernen', 'quiz', 'uebungen', 'quellen', 'lernpfade', 'konto', 'fortschritt', '404', 'textsatz', 'dokumentpruefung'].map(page => ({ params: { page }, props: { view: page ?? 'home' } })),
+    ...[undefined, 'lernen', 'quiz', 'uebungen', 'quellen', 'lernpfade', 'konto', 'fortschritt', '404', 'textsatz', 'dokumentpruefung', 'glossar', 'projekte/auslieferung', 'projekte/lernbericht', 'projekte/kurskatalog'].map(page => ({ params: { page }, props: { view: page ?? 'home' } })),
     ...topics.map(topic => ({ params: { page: `themen/${topic.id}` }, props: { view: 'topic', topic } })),
     ...paths.map(path => ({ params: { page: `lernpfade/${path.id}` }, props: { view: 'path', path } })),
   ];
@@ -34,6 +38,10 @@ const { view, topic, path, course, chapter } = Astro.props;
 {view === 'home' && <Home locale="en" />}
 {view === 'lernen' && <Start locale="en" />}
 {view === 'textsatz' && <Typesetting locale="en" />}
+{view === 'projekte/auslieferung' && <DeliveryProject locale="en" />}
+{view === 'projekte/lernbericht' && <SqlProject locale="en" />}
+{view === 'projekte/kurskatalog' && <WebProject locale="en" />}
+{view === 'glossar' && <Glossary locale="en" />}
 {view === 'dokumentpruefung' && <DocumentCheck locale="en" />}
 {view === 'course' && course && <CourseView locale="en" course={course} chapter={chapter} />}
 {view === 'uebungen' && <Exercises locale="en" />}

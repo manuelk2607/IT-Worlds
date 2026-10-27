@@ -2,7 +2,7 @@
 
 Die Reihenfolge beschreibt vorgeschlagene Ausbaustufen, keine zugesagten Termine. Umfang und Prioritäten werden nach Rückmeldungen angepasst.
 
-## Entwicklungsstand · 25. Oktober 2026
+## Entwicklungsstand · 27. Oktober 2026
 
 18 Kurse mit 145 Kapiteln, insgesamt 300 Quizfragen und 239 Quellen. Typst umfasst 16 Kapitel/32 Fragen, LaTeX 14/28. Der öffentliche Versionsstand steht in VALIDIERUNG.md. Die technischen P1-Prüfungen für Rangliste, Godot und Linux/systemd sind abgeschlossen; unabhängiges Review und tatsächlicher Reset-Mailempfang bleiben gesondert offen.
 
@@ -17,7 +17,10 @@ Die Reihenfolge beschreibt vorgeschlagene Ausbaustufen, keine zugesagten Termine
 - [x] P1: Linux/systemd-Benutzerlabor mit eigener transienter Unit und Fehler-/Journalnachweis, DE/EN und echter Linux-CI-Prüfung ergänzen.
 - [ ] P1 · extern blockiert: unabhängiges Fachreview und assistive Nutzerprüfung; geeignete externe Prüfpersonen fehlen.
 - [ ] P1 · extern blockiert: vollständige Passwort-Wiederherstellung einschließlich tatsächlichem Mailempfang; kontrolliertes Testpostfach fehlt. Negative API-Pfade sind geprüft. [Prüfabläufe](P1-PRUEFUNGEN.md).
-- [ ] P3: Über die 30 statischen Kapitelprofile hinausgehende fachliche Bewertungsrubriken und weitere Visualisierungen. Kompilierung bleibt von fachlicher Bewertung getrennt.
+- [x] Aufgabenbezogene Selbstprüfrubriken für alle 30 Textsatzkapitel und die Typst-Verweisaufgabe: vorhandene Lernziele, Aufgabe/Musterlösung, bewusste Compiler-/Ausgabekontrolle und bestehende Fortschrittsmarkierung; keine automatische fachliche Benotung.
+- [x] Drei vollständige lokale Praxisprojekte mit getesteten Referenzen/ZIPs und DE/EN-Anleitungen: mehrseitiger Webkatalog, relationaler SQL-Lernbericht und HTTP-Abnahme mit Fehlerdiagnose/Wiederanlauf.
+- [x] Kleines DE/EN-Glossar mit 15 quellengebundenen Begriffen, kombinierten Filtern, Kursverknüpfungen und globaler Suche ergänzen. Suchbeschreibungen/Lernziele tatsächlich durchsuchen.
+- [ ] P3: Weitere Visualisierungen nach Bedarf. Kompilierung bleibt von fachlicher Bewertung getrennt.
 
 Architektur, Datenschutz, Limits, lokale Bedienung und aktuelle Freigabegrenzen: [DOKUMENTPRUEFUNG.md](DOKUMENTPRUEFUNG.md).
 
@@ -34,7 +37,7 @@ Architektur, Datenschutz, Limits, lokale Bedienung und aktuelle Freigabegrenzen:
 - [x] KI- und LaTeX-Kursfolgen mit 27 Kapiteln, 54 zusätzlichen Fragen und Belegen ausarbeiten.
 - [x] Drei themenübergreifende Lernwege mit 13/14/10 verfügbaren Kapitelschritten ausarbeiten.
 
-18 Kursfolgen mit 145 Kapiteln und drei vollständige geführte Lernwege stehen bereit. Markdown und Typst sind mit sechs bzw. 16 Kapiteln verfügbar; ein größeres Betriebsprojekt bleibt offen. Details im [Website-Aufbau](WEBSITE-AUFBAU.md).
+18 Kursfolgen mit 145 Kapiteln und drei vollständige geführte Lernwege stehen bereit. Hinzu kommen drei vollständige lokale Praxisprojekte: HTTP-Abnahme mit Fehlerdiagnose/Wiederanlauf, relationaler SQL-Lernbericht und mehrseitiger TypeScript-Katalog mit Suche/Filtern/Lesezeichen. Archive enthalten die tatsächlich getesteten Quellen; eigene DE/EN-Projektanleitungen verbinden sie mit den bestehenden Kursen. Details im [Website-Aufbau](WEBSITE-AUFBAU.md).
 
 - [x] Zehn lokale Übungseditoren mit Hinweisen und Musterlösungen ergänzen.
 - [x] Sitemap, Canonicals, Sprachbezüge und Social-Metadaten ergänzen.
@@ -101,10 +104,10 @@ Der aktualisierte Nutzerauftrag vom 25. Oktober vereinfacht die Umsetzung: exter
 
 ### P2 · Schreibtrainer mit zusammenhängenden Texten
 
-- [ ] Die späteren Herausforderungen des 10-Finger-Trainers um zusammenhängende Texte ergänzen. Der Lernweg soll von Zeichen und Buchstabengruppen über Wörter und Sätze bis zu kurzen, realistischen Absätzen führen, statt dauerhaft nur einzelne Zeichenfolgen zu verwenden.
-- [ ] Texte nach bereits eingeführten Tasten, Länge, Zeichensetzung, Großschreibung, Zahlen, Sonderzeichen und Schwierigkeitsgrad staffeln. Neue Zeichen dürfen erst verlangt werden, wenn sie im Lernpfad eingeführt wurden.
-- [ ] Für Textlektionen Fortschritt, Genauigkeit, Fehlerstellen, WPM/KPM und wiederkehrende Schwächen verständlich auswerten. Korrekturen und übersprungene Zeichen müssen konsistent mit den vorhandenen Messregeln behandelt werden.
-- [ ] Deutsche und englische Übungstexte eigenständig und sprachgerecht verfassen, ihre Schwierigkeit vergleichbar halten und Rechte sowie Quellen vor einer Veröffentlichung klären.
+- [x] Zusammenhängende Sätze, einen vollständigen Absatz und einen Alltagstext mit Zahlen und Sonderzeichen ergänzen. Zwölf gestufte Lektionen plus adaptive/eigene Texte; vorhandene IDs und Ranglistentexte erhalten.
+- [x] Zeichenmengen und Voraussetzungen ausdrücklich definieren; fehlende G/H-/Ä-/ß-Einführung ergänzen. Regressionstest stellt sicher, dass kein Übungstext unbekannte Zeichen verlangt.
+- [x] Textfortschritt, verbleibende Fehlerpositionen, korrigierte Fehlanschläge und vollständigen Endtext anzeigen. Bestwerte für denselben tatsächlichen Text und dieselbe Sprache vergleichen; alte Historie erhalten.
+- [x] Eigene DE/EN-Texte mit vergleichbarer Länge erstellen; keine fremden Textpassagen übernommen. Beschreibung und Grenzen: [SCHREIBTRAINER.md](SCHREIBTRAINER.md).
 
 ## Offene Entscheidungen
 
@@ -121,4 +124,4 @@ Konkrete nächste Arbeitspakete: die verfügbaren Inhalte unabhängig fachlich g
 
 Aktuelle Prioritäten, abgeschlossene Teilbereiche und verbleibende fachliche Lücken: [AUSBAU.md](AUSBAU.md).
 
-Aktuell: fünfzehn Kursfolgen/122 Kapitel/254 Fragen. Lernstart, Kursfilter, Kapitelsuche, synchronisierte Quizfilter und gruppierter Lernstand umgesetzt. Cloud-&-DevOps-Kurs und drei durchgängige Querverbindungspfade sind ergänzt. Python und Betriebssystemkonzepte sind ergänzt; unabhängiges Fachreview, weitere Praxisprojekte und assistive Nutzerprüfungen folgen.
+Aktuell: 18 Kursfolgen/145 Kapitel/300 Fragen/239 Quellen, 14 Themenkacheln und drei zusätzliche Praxisprojekte. Verbindlicher aktueller Paket- und Veröffentlichungsstand: [PROGRESS.md](../PROGRESS.md). Unabhängiges Fachreview und assistive Nutzerprüfungen bleiben offen; zusätzliche Projekte über die drei Referenzprojekte hinaus erst anhand von Lernendenfeedback priorisieren.

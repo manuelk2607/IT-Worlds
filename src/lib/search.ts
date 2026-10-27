@@ -1,4 +1,4 @@
-export type SearchKind = 'topic' | 'course' | 'chapter' | 'path' | 'exercise' | 'source';
+export type SearchKind = 'topic' | 'course' | 'chapter' | 'path' | 'exercise' | 'source' | 'glossary';
 export interface SearchEntry {
  id: string;
  kind: SearchKind;
@@ -14,7 +14,7 @@ export function normalizeSearch(value: string): string {
 const prepared=new WeakMap<SearchEntry,{title:string;context:string;haystack:string}>();
 function prepare(entry:SearchEntry) {
  let value=prepared.get(entry);
- if(!value){const title=normalizeSearch(entry.title),context=normalizeSearch(entry.context);value={title,context,haystack:`${title} ${context} ${normalizeSearch(entry.text)}`};prepared.set(entry,value);}
+ if(!value){const title=normalizeSearch(entry.title),context=normalizeSearch(entry.context);value={title,context,haystack:`${title} ${context} ${normalizeSearch(entry.description)} ${normalizeSearch(entry.text)}`};prepared.set(entry,value);}
  return value;
 }
 export function searchEntries(entries: SearchEntry[], query: string, kind = 'all', limit = 12): SearchEntry[] {
@@ -32,5 +32,5 @@ export function isSearchEntry(value: unknown): value is SearchEntry {
  if(!value||typeof value!=='object')return false;
  for(const key of ['id','kind','title','description','context','url','text'])if(!(key in value)||typeof (value as Record<string,unknown>)[key]!=='string')return false;
  const item=value as Record<string,string>;
- return ['topic','course','chapter','path','exercise','source'].includes(item.kind)&&/^\/(?!\/)/.test(item.url)&&!/[\\\u0000-\u0020]/.test(item.url);
+ return ['topic','course','chapter','path','exercise','source','glossary'].includes(item.kind)&&/^\/(?!\/)/.test(item.url)&&!/[\\\u0000-\u0020]/.test(item.url);
 }

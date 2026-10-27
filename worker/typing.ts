@@ -1,6 +1,6 @@
 import {neon} from '@neondatabase/serverless';
 import {parseSessionData} from '@neondatabase/auth/server';
-import {parseTypingTrace,rankedText,rankedTraceValid,scoreTyping,typingLessons,typingTexts} from '../src/lib/typing.ts';
+import {parseTypingTrace,rankedText,rankedTraceValid,scoreTyping,typingLessons,typingLessonText} from '../src/lib/typing.ts';
 import type {Env} from './index.ts';
 const object=(v:unknown):Record<string,unknown>=>v!==null&&typeof v==='object'&&!Array.isArray(v)?v as Record<string,unknown>:{};
 const reply=(body:unknown,status=200)=>Response.json(body,{status,headers:{'Cache-Control':'no-store','X-Content-Type-Options':'nosniff'}});
@@ -25,7 +25,8 @@ export async function typingRequest(request:Request,env:Env,getSession:()=>Promi
  if(path==='start'){
   if(data.locale!=='de'&&data.locale!=='en'||data.mode!=='practice'&&data.mode!=='ranked')return send({error:'INVALID_TEST'},400);
   const lesson=typingLessons.find(l=>l.id===data.lesson&&!['free','adaptive'].includes(l.id));if(!lesson)return send({error:'INVALID_LESSON'},400);
-  const target=data.mode==='ranked'?rankedText(data.locale):lesson.id==='text'?typingTexts[data.locale].repeat(8):lesson.text;
+  const target=data.mode==='ranked'?rankedText(data.locale):typingLessonText(lesson.id,data.locale);
+  if(!target)return send({error:'INVALID_LESSON'},400);
   const [,,rows]=await sql.transaction([sql`SELECT set_config('app.user_id',${user},true)`,sql`SELECT pg_advisory_xact_lock(hashtextextended(${user},3))`,sql`INSERT INTO public.typing_runs(user_id,mode,locale,lesson,target) SELECT ${user},${data.mode},${data.locale},${lesson.id},${target} WHERE NOT EXISTS(SELECT 1 FROM public.typing_runs WHERE user_id=${user} AND started_at>now()-interval '10 seconds') AND (SELECT count(*) FROM public.typing_runs WHERE user_id=${user} AND started_at>now()-interval '5 minutes')<10 RETURNING id,target`]);
   return rows.length?send({id:rows[0].id,text:rows[0].target,duration:60000}):send({error:'RATE_LIMITED'},429);
  }

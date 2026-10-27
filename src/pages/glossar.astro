@@ -1,0 +1,17 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import {glossary} from '../data/glossary.ts';
+import {typesettingTopic} from '../data/topic-categories.ts';
+import {getContent,translate,localePath,type Locale} from '../lib/i18n.ts';
+import '../styles/exercises.css';
+interface Props {locale?:Locale}const locale=Astro.props.locale??'de';const t=translate(locale);const {topics,sources}=getContent(locale);
+const categories=[...topics,typesettingTopic(locale)].filter(topic=>glossary.some(term=>term.topic===topic.id));
+const terms=[...glossary].sort((a,b)=>a.title[locale].localeCompare(b.title[locale],locale));
+---
+<Layout locale={locale} title={t('Glossar: IT-Begriffe verständlich erklärt','Glossary: IT terms clearly explained')} description={t('Schlage zentrale Begriffe zu Programmierung, Datenbanken, APIs und Textsatz nach. Mit Primärquellen und passenden Kurskapiteln.','Look up key terms in programming, databases, APIs and typesetting. With primary sources and matching course chapters.')}>
+ <Breadcrumbs locale={locale} items={[{title:t('Lernstart','Getting started'),href:'/lernen/'},{title:t('Glossar','Glossary')}]}/>
+ <header class="container page-top"><h1>{t('Ein Begriff. Ein klarer Einstieg.','One term. A clear starting point.')}</h1><p class="page-lead">{t('Kurze Erklärungen helfen dir beim Nachschlagen. Im verknüpften Kapitel findest du Beispiele und die ausführliche Einordnung.','Short explanations help you look things up. Follow the linked chapter for examples and fuller context.')}</p></header>
+ <section class="container section" data-glossary><div class="catalog-toolbar"><label>{t('Begriff suchen','Find a term')}<input type="search" maxlength="100" data-glossary-search/></label><label>{t('Thema','Topic')}<select data-glossary-topic><option value="all">{t('Alle Themen','All topics')}</option>{categories.map(topic=><option value={topic.id}>{topic.title}</option>)}</select></label><button class="button secondary" data-glossary-reset>{t('Zurücksetzen','Reset')}</button></div><p role="status" data-glossary-status>{t(`${terms.length} Begriffe`,`${terms.length} terms`)}</p><div class="catalog-grid">{terms.map(term=>{const source=sources[term.source];return <article class="progress-entry" tabindex="-1" id={`begriff-${term.id}`} data-glossary-item data-topic={term.topic} data-search={[term.title.de,term.title.en,term.definition[locale],...term.aliases].join(' ')}><h2>{term.title[locale]}</h2><p>{term.definition[locale]}</p><a href={localePath(locale,term.href)}>{t('Im Kurs vertiefen →','Learn more in the course →')}</a><details><summary>{t('Quelle und Prüfstand','Source and review status')}</summary><p><a href={source.url} target="_blank" rel="noopener noreferrer">{source.title} ↗</a></p><p>{source.publisher} · {source.version} · {source.section} · {t('gelesen','read')} {source.reviewedAt}</p><a href={localePath(locale,`/quellen/#quelle-${term.source}`)}>{t('Vollständigen Beleg ansehen →','View the full source record →')}</a></details></article>})}</div><p hidden data-glossary-empty>{t('Kein Begriff passt. Kürze die Suche oder setze den Themenfilter zurück.','No terms match. Shorten the search or reset the topic filter.')}</p><noscript>{t('Alle Begriffe sind auch ohne Browser-Skripte lesbar.','All terms remain readable without browser scripting.')}</noscript></section>
+ <script src="../scripts/glossary.ts"></script>
+</Layout>

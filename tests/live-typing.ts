@@ -5,7 +5,7 @@ import {setTimeout} from 'node:timers/promises';
 import {neon} from '@neondatabase/serverless';
 import {parseSessionData} from '@neondatabase/auth/server';
 import {Client} from './live-accounts.ts';
-import {rankedText} from '../src/lib/typing.ts';
+import {rankedText,typingLessonText,scoreTyping} from '../src/lib/typing.ts';
 
 let phase='configuration';
 function ensure(value:unknown,label:string):asserts value {if(!value)throw new Error(label);}
@@ -90,6 +90,19 @@ async function main(){
   ensure((await a.request('/api/typing/profile',{name,visible:false})).status===200,'Opt-out');
   ensure(!items((await guest.request('/api/typing/leaderboard?locale=de&period=all')).data).some(row=>row.display_name===name),'Opt-out immediate');
   const me=record((await a.request('/api/typing/me')).data);ensure(Array.isArray(me.runs)&&me.runs.length>0,'Account history');
+  phase='new bilingual practice lessons';
+  for(const [index,lesson]of ['sentences','paragraphs','technical'].entries()){
+   if(index)await setTimeout(10100);
+   await Promise.all(clients.map(async(client,clientIndex)=>{
+    const locale=clientIndex===0?'de':'en';const response=await client.request('/api/typing/start',{mode:'practice',locale,lesson});ensure(response.status===200,'Practice start');const started=record(response.data);
+    ensure(started.text===typingLessonText(lesson,locale),'Practice API and browser use the same lesson text');
+    const keys=String(started.text).slice(0,24),times=Array.from(keys,(_,i)=>10+i*20),elapsed=1000;
+    const finish=await client.request('/api/typing/finish',{id:started.id,keys,times,elapsed});ensure(finish.status===200,'Practice finish');const result=record(finish.data),actual=record(result.score),expected=scoreTyping(String(started.text),{keys,times},elapsed);
+    ensure(result.ranked===false&&expected&&actual.wpm===expected.wpm&&actual.accuracy===100,'Practice score and non-ranking boundary');
+    const me=record((await client.request('/api/typing/me')).data);ensure(Array.isArray(me.runs)&&me.runs.some(value=>{const run=record(value);return run.lesson===lesson&&run.locale===locale&&run.mode==='practice';}),'New lesson in private account history');
+   }));
+  }
+  console.log('PASS: all three new practice texts in DE/EN through live sessions; matching server text, score, private account history and no ranked eligibility.');
   phase='sign-out revocation';const stale=new Client(base);stale.cookies=new Map(a.cookies);
   ensure((await a.request('/api/auth/sign-out',{})).status===200,'Sign out');
   ensure((await stale.request('/api/typing/me')).status===401,'Revoked session');

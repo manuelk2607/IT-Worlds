@@ -90,7 +90,7 @@ jobs:
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: '22.22.0'
-      - run: node --experimental-strip-types --test tests/sql-examples.test.ts
+      - run: node --experimental-strip-types --test tests/sql-examples.test.ts tests/sql-project.test.ts
   systemd-example:
     name: Published user systemd lab
     runs-on: ubuntu-24.04

@@ -1,0 +1,5 @@
+{
+ "name":"it-worlds-catalog-project","private":true,"type":"module",
+ "scripts":{"build":"tsc -p tsconfig.json","start":"node --experimental-strip-types serve.ts","test":"node --experimental-strip-types --test catalog.test.ts"},
+ "devDependencies":{"typescript":"6.0.3"}
+}

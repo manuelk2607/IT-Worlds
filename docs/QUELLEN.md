@@ -1,5 +1,9 @@
 # Quellenprotokoll
 
+## Glossar und Praxisprojekte · 27. Oktober 2026
+
+Das Glossar verwendet 15 kurze eigenständige DE/EN-Definitionen aus dem bestehenden Register; keine zusätzlichen Quellen wurden erfunden. Erneut tatsächlich gelesen: PostgreSQL 18 (Constraints 5.5.4–5, Tutorial Joins/Aggregate/Transaktionen einschließlich Savepoints, Vergleiche/NULL, Indexkosten); Microsoft TypeScript Handbook (Static Type Checker, Narrowing); Pro Git 2 (Recording Changes/Committing); OWASP API1:2023 (Object Level Authorization); LaTeX Project (About/Features); Typst 0.15.1 README (Overview/Compiler/Web-App). Die Begriffskarten zeigen Herausgeber, Ausgabe, Abschnitt, URL und den bisherigen Quellenlesestand. Diese erneute Sichtung am 27.10. ist Quellenabgleich, kein unabhängiges Fachreview. Die drei Praxisprojekte verwenden dieselben bereits gelesenen Kursquellen und zusätzlich reale lokale Tests; sie behaupten keine vollständige fachliche Freigabe.
+
 ## P1-Linux-Benutzerlabor · 25. Oktober 2026
 
 Registerstand: 239 Quellen. Neu tatsächlich gelesen: systemd project, systemd 262, systemd-run, Abschnitte Description, --user, --unit, --wait und transienter Dienst-/Rückgabestatus; URL und Lesedatum in `course-linux-sources.ts`. Vorhandene systemctl-/journalctl-Belege werden wiederverwendet. Der veröffentlichte Benutzerlaborblock wird auf echtem Linux mit Benutzer-systemd und Journal ausgeführt (Quality 40215505510 erfolgreich). Quellenabgleich und automatisierte Tests ersetzen kein unabhängiges Fachreview.

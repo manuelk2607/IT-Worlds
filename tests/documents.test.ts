@@ -1,4 +1,5 @@
 import test from 'node:test';
+import {bibliographyEntries} from '../src/lib/document-bibliography.ts';
 import assert from 'node:assert/strict';
 import {deflateRawSync} from 'node:zlib';
 import {readProjectZip,crc32,projectPath,validateProject,sourceText,resolveProjectPath,ProjectError} from '../src/lib/document-project.ts';
@@ -81,4 +82,18 @@ test('Typst URLs and comment markers inside quoted values remain intact while re
 test('LaTeX includes share the main working directory, including a surrounding exported project folder',()=>{
  const report=analyzeDocument([file('project/main.tex','\\documentclass{article}\n\\begin{document}\n\\input{chapters/one}\n\\end{document}'),file('project/chapters/one.tex','\\input{chapters/two}'),file('project/chapters/two.tex','\\section{Result}')],'latex','project/main.tex');
  assert.deepEqual(report.checkedFiles,['project/main.tex','project/chapters/one.tex','project/chapters/two.tex']);assert(!report.diagnostics.some(d=>d.code==='MISSING_FILE'));
+});
+test('LaTeX labels cannot satisfy citations and bibliography keys cannot satisfy internal references',()=>{
+ const report=analyzeDocument([file('main.tex','\\documentclass{article}\n\\addbibresource{refs.bib}\n\\begin{document}\n\\label{internal}\n\\cite{internal}\n\\ref{paper}\n\\cite{paper}\n\\ref{internal}\n\\end{document}'),file('refs.bib','@book{paper,title={A}}')],'latex','main.tex');
+ assert.deepEqual(report.diagnostics.filter(d=>['CITATION','REFERENCE'].includes(d.code)).map(d=>({code:d.code,line:d.line,detail:d.detail})),[{code:'CITATION',line:5,detail:'internal'},{code:'REFERENCE',line:6,detail:'paper'}]);
+ const same=analyzeDocument([file('main.tex','\\documentclass{article}\n\\addbibresource{refs.bib}\n\\begin{document}\\label{same}\\cite{same}\\ref{same}\\end{document}'),file('refs.bib','@book{same,title={A}}')],'latex','main.tex');
+ assert(!same.diagnostics.some(d=>['DUPLICATE_LABEL','DUPLICATE_CITATION','CITATION','REFERENCE'].includes(d.code)));
+});
+test('BibTeX keys ignore commented entries, strings and entry-looking field contents',()=>{
+ const input='% @book{commented,title={Fake}}\n@comment{ @book{also-fake,title={X}} }\n@string{journal="name"}\n@preamble{"prefix"}\n@book{real, title={Nested @article{not-an-entry, title={X}}}}\n@article(second,title="Quoted @book{fake, text}")';
+ assert.deepEqual(bibliographyEntries(input).map(entry=>entry.key),['real','second']);
+ const report=analyzeDocument([file('main.typ','= Test\n#bibliography("refs.bib")\n#cite(<real>)\n#cite(<missing>)'),file('refs.bib',input)],'typst','main.typ');
+ assert.equal(report.diagnostics.filter(d=>d.code==='CITATION').length,1);
+ assert.equal(report.diagnostics.find(d=>d.code==='CITATION')?.detail,'missing');
+ assert(!report.diagnostics.some(d=>d.code==='DUPLICATE_LABEL'));
 });

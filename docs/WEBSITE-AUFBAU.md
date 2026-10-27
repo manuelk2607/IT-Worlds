@@ -6,15 +6,19 @@ Der erste Rahmen macht die breite Themenlandkarte benutzbar. Das Ziel ist Wissen
 
 | Seite                | Inhalt                                                                                                    |
 | -------------------- | --------------------------------------------------------------------------------------------------------- |
-| `/`                  | Einstieg, zehn durchsuchbare Themenwelten, Gruppenfilter, Lernpfade, Quellenanspruch, Quiz-Einstieg       |
+| `/`                  | Einstieg, 14 Themenkacheln, Gruppenfilter, Lernpfade, Quellenanspruch, Quiz-Einstieg       |
 | `/themen/[slug]/`    | Beschreibung, Voraussetzungen, drei Lernstufen, gegebenenfalls erster Artikel, passende Quellen           |
-| `/lernpfade/`        | Fünfzehn verfügbare Kursfolgen mit Themen-/Titelfilter und drei vollständig verfügbare Querverbindungspfade                                                            |
+| `/lernpfade/`        | 18 verfügbare Kursfolgen mit Themen-/Titelfilter und drei vollständig verfügbare Querverbindungspfade                                                            |
 | `/lernpfade/[slug]/` | Voraussetzungen, Schritte, tatsächliche Verfügbarkeit und Verknüpfung zur Themenwelt                      |
 | `/uebungen/` | Zehn Editor-Aufgaben mit lokalem Prüfer, Hinweisen und Musterlösungen |
-| `/quiz/`             | 254 Fragen, Themen-, Kurs-, Kapitel- und Stufenwahl, Erklärung zu jeder Antwort, Beleg, Runden mit 5/10/20/allen Fragen, reproduzierbares Mischen und gezielte Wiederholung                      |
-| `/quellen/`          | 200 Originalquellen mit Herausgeber, Version, Abschnitt, Lesedatum und gelesenem Dokumentationsquelltext |
+| `/projekte/{kurskatalog,lernbericht,auslieferung}/` | Drei vollständige Praxisprojekte mit DE/EN-Anleitung, Abnahme, getesteten Referenzdateien und ZIP-Download |
+| `/glossar/` | 15 zweisprachige Begriffe mit Suche, Themenfilter, Primärbeleg und Kurs-/Projektverknüpfung |
+| `/schreibtrainer/` | Zwölf gestufte QWERTZ-Lektionen plus adaptive/eigene Texte, Textfortschritt, lokale Historie, optionale Konto-Ergebnisse und Rangliste |
+| `/dokumentpruefung/` | Sicherer lokaler Quellen-/ZIP-Import für LaTeX/Typst, statische Diagnostik und 31 Selbstprüfprofile mit bewusster Kapitelmarkierung |
+| `/quiz/`             | 300 Fragen, Themen-, Kurs-, Kapitel- und Stufenwahl, Erklärung zu jeder Antwort, Beleg, Runden mit 5/10/20/allen Fragen, reproduzierbares Mischen und gezielte Wiederholung                      |
+| `/quellen/`          | 239 Originalquellen mit Herausgeber, Version, Abschnitt, Lesedatum und gelesenem Dokumentationsquelltext |
 
-Die globale Suche lädt ihren sprachspezifischen JSON-Index erst beim Öffnen und durchsucht Themen, Kurse, alle 122 Kapiteltexte, Lernpfade und Übungen. Mehrere Wörter werden kombiniert; Titel sind höher gewichtet. Ein Inhaltstypfilter sowie Pfeiltasten, Enter und Escape unterstützen die Bedienung. /lernen/ bietet Orientierung; /lernpfade/ bietet verfügbare Kurse und durchgehende Querverbindungspfade.
+Die globale Suche lädt ihren sprachspezifischen JSON-Index erst beim Öffnen und durchsucht Themen, Kurse, alle 145 Kapiteltexte einschließlich Lernzielen, Lernpfade, Übungen/Projekte, Quellen und Glossarbegriffe. Mehrere Wörter werden kombiniert; Titel sind höher gewichtet. Ein Inhaltstypfilter sowie Pfeiltasten, Enter und Escape unterstützen die Bedienung. /lernen/ bietet Orientierung; /lernpfade/ bietet verfügbare Kurse und durchgehende Querverbindungspfade. Glossarfilter bleiben in der URL und beim Sprachwechsel erhalten; die vollständigen Begriffe sind auch ohne Skripte lesbar.
 
 Die Seiten stehen zusätzlich unter `/en/` vollständig auf Englisch bereit. Der Sprachschalter erhält die entsprechende Seite, Suchparameter und Sprungmarken. Jede Themenwelt enthält unter `#uebungseditor` eine passende Aufgabe. Eingaben werden lokal in einem begrenzten Lernmodell geprüft; der Quiz-/Lesefortschritt wird dadurch nicht automatisch geändert.
 
@@ -42,7 +46,9 @@ Lernstufe und Vorwissen werden getrennt angegeben. Beispielsweise ist das vorhan
 
 ## Verfügbare und geplante Inhalte
 
-Verfügbar sind zehn Einstiege und 122 Kurskapitel: Grundlagen 7, Betriebssystemkonzepte 6, Linux 6, Netzwerke 8, Sicherheit 7, TypeScript 8, Python 8, Markdown 6, Typst 8, Web 8, SQL 8, APIs 7, Cloud/DevOps 8, KI 14 und LaTeX 13. Insgesamt 254 Fragen und 200 Quellen. Fortschritt zählt 132 lesbare Inhalte und 254 Fragen mit stabilen IDs. Kursgruppen, Ansicht-/Themenfilter und der nächste offene Schritt verbessern die Übersicht. Alle zehn Themenwelten besitzen nun mindestens eine vollständig verfügbare Kursfolge. Drei Querverbindungspfade nutzen 13, 14 und 10 vorhandene Kapitel mit identischen Fortschrittskennungen.
+Verfügbar sind zehn Einstiege und 145 Kurskapitel: Hardware 6, Tastschreiben 3, Spieleentwicklung 5, Grundlagen 7, Betriebssystemkonzepte 6, Linux 6, Netzwerke 8, Sicherheit 7, TypeScript 8, Python 8, Markdown 6, Typst 16, Web 8, SQL 8, APIs 7, Cloud/DevOps 8, KI 14 und LaTeX 14. Insgesamt 300 Fragen und 239 Quellen. Fortschritt zählt 155 lesbare Inhalte und 300 Fragen mit stabilen IDs. Kursgruppen, Ansicht-/Themenfilter und der nächste offene Schritt verbessern die Übersicht. Alle Themenbereiche besitzen eine verfügbare Kursfolge. Drei Querverbindungspfade nutzen 13, 14 und 10 vorhandene Kapitel mit identischen Fortschrittskennungen. Die zusätzlichen Projekte werden mit den zugehörigen Kursen verlinkt; sie erzeugen keine neuen Fortschritts-IDs und verändern keine gespeicherten Daten.
+
+Projektmetadaten und Archive werden zentral in `src/data/practice-projects.ts` geführt. `npm run package:projects` erstellt die ZIPs aus den gepflegten Referenzquellen; Tests vergleichen jeden Archiveintrag mit seiner Quelle. Der Webkatalog liegt unter `examples/webcatalog/`, SQL-/HTTP-Dateien unter `public/projekte/`. Ausführbare SQL- und HTTP-Tests prüfen reale Fehlerfälle; keine simulierte Cloud-Veröffentlichung wird als echte Abnahme ausgegeben. Das Glossar liegt in `src/data/glossary.ts` und verwendet das bestehende Quellenregister.
 
 Kapitelrouten, Datenmodell und Erweiterung sind in [KURSE.md](KURSE.md) beschrieben.
 

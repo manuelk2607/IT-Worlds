@@ -4,6 +4,7 @@ import {createSearchIndex} from '../src/lib/search-index.ts';
 import {normalizeSearch,searchEntries,isSearchEntry} from '../src/lib/search.ts';
 import {courses,courseChapters} from '../src/data/courses.ts';
 import {sources} from '../src/data/content.ts';
+import {glossary} from '../src/data/glossary.ts';
 
 test('search indexes every available chapter once and keeps language-specific links',()=>{
  for(const locale of ['de','en'] as const){
@@ -49,4 +50,13 @@ test('search ranks exact titles and rejects malformed or unsafe result URLs',()=
  for(const url of ['/\\other.test','/\t/other.test','/\n/other.test',' /themen/'])assert(!isSearchEntry({...entry,url}),JSON.stringify(url));
  assert(!isSearchEntry({...entry,kind:'unknown'}));
  assert(!isSearchEntry({...entry,title:123}));
+});
+test('search includes descriptions and bilingual glossary aliases with stable anchor links',()=>{
+ const entry={id:'description-only',kind:'chapter' as const,title:'Example',description:'an otherwise unindexed learning goal',context:'Course',url:'/example/',text:''};
+ assert.equal(searchEntries([entry],'unindexed learning goal')[0]?.id,entry.id);
+ for(const locale of ['de','en']as const){
+  const index=createSearchIndex(locale);assert.equal(index.filter(item=>item.kind==='glossary').length,glossary.length);
+  assert(searchEntries(index,'foreign key','glossary').some(item=>item.url===`${locale==='en'?'/en':''}/glossar/#begriff-fremdschluessel`));
+  assert(glossary.every(term=>term.title.de&&term.title.en&&term.definition.de&&term.definition.en&&sources[term.source]));
+ }
 });

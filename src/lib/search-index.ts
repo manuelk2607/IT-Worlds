@@ -4,10 +4,14 @@ import { courses, coursePath } from '../data/courses.ts';
 import { exercises, exercisePath } from '../data/exercises.ts';
 import type { SearchEntry } from './search.ts';
 import {courseCatalogTopic,TYPESETTING_TOPIC_PATH,typesettingTopic} from '../data/topic-categories.ts';
+import {practiceProjects} from '../data/practice-projects.ts';
+import {glossary} from '../data/glossary.ts';
 export function createSearchIndex(locale: Locale): SearchEntry[] {
  const {topics,paths,levelName,sources}=getContent(locale);
  const typesetting=typesettingTopic(locale);
  return [
+  ...glossary.map(term=>({id:`glossary-${term.id}`,kind:'glossary' as const,title:term.title[locale],description:term.definition[locale],context:locale==='de'?'Glossar · Begriff mit Kursverknüpfung':'Glossary · term linked to a course',url:localePath(locale,`/glossar/#begriff-${term.id}`),text:[term.title.de,term.title.en,...term.aliases].join(' ')})),
+  ...practiceProjects.map(project=>({id:`project-${project.id}`,kind:'exercise' as const,title:project.title[locale],description:project.description[locale],context:locale==='de'?'Vollständiges Praxisprojekt':'Complete practice project',url:localePath(locale,project.path),text:project.courses.join(' ')+' '+project.description[locale]})),
   {id:'typesetting',kind:'topic' as const,title:typesetting.title,description:typesetting.description,context:locale==='de'?'Themenwelt · Typst empfohlen':'Topic · Typst recommended',url:localePath(locale,TYPESETTING_TOPIC_PATH),text:`${typesetting.tags.join(' ')} ${Object.values(typesetting.curriculum).flat().join(' ')} Overleaf Präsentation Bericht wissenschaftlich documents`},
   {id:'document-check',kind:'exercise' as const,title:locale==='de'?'LaTeX- & Typst-Projektprüfung':'LaTeX & Typst project check',description:locale==='de'?'Quelldateien und ZIP-Projekte lokal analysieren.':'Analyse source files and ZIP projects locally.',context:locale==='de'?'Interaktives Lernwerkzeug':'Interactive learning tool',url:localePath(locale,'/dokumentpruefung/'),text:'Upload ZIP tex typ Overleaf Syntax Referenzen Pakete diagnostics'},
   ...practiceTools.map(tool=>({id:tool.id,kind:'exercise' as const,title:tool.title[locale],description:tool.title[locale],context:locale==='de'?'Interaktives Lernwerkzeug':'Interactive learning tool',url:localePath(locale,tool.url),text:tool.title[locale]})),

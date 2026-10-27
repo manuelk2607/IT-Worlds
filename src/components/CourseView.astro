@@ -8,7 +8,9 @@ import {practiceTools} from '../data/practice-topics.ts';
 import ProgressToggle from './ProgressToggle.astro';
 import ExerciseLinks from './ExerciseLinks.astro';
 import { courses, coursePath, chapterProgressId } from '../data/courses.ts';
-import { isTypesettingCourse, TYPESETTING_TOPIC_PATH, typesettingTopic } from '../data/topic-categories.ts';
+import { isTypesettingCourse, courseCatalogTopic, TYPESETTING_TOPIC_PATH, typesettingTopic } from '../data/topic-categories.ts';
+import {practiceProjects} from '../data/practice-projects.ts';
+import {glossary} from '../data/glossary.ts';
 import type { Course, Chapter } from '../data/course-types.ts';
 import { getContent, translate, localePath, type Locale } from '../lib/i18n.ts';
 import katex from 'katex';
@@ -28,6 +30,7 @@ const defaults: Partial<Record<Course['id'],Course['id']>>={ki:'latex',latex:'ki
 const related=(course.related ?? (defaults[course.id]?[defaults[course.id]!]:[])).map(id=>courses.find(item=>item.id===id)).filter((item):item is Course=>!!item);
 const other=related[0];
 const typesetting=isTypesettingCourse(course);
+const catalogTopic=courseCatalogTopic(course);
 const parentTitle=typesetting?typesettingTopic(locale).title:topicById(course.topic)!.title;
 const parentPath=typesetting?TYPESETTING_TOPIC_PATH:`/themen/${course.topic}/`;
 const breadcrumbRoot=typesetting?{title:t('Themenwelten','Topics'),href:'/#themenwelten'}:{title:t('Kurse','Courses'),href:'/lernpfade/'};
@@ -38,6 +41,7 @@ const breadcrumbRoot=typesetting?{title:t('Themenwelten','Topics'),href:'/#theme
     <a class="back-link" href={localePath(locale, chapter ? coursePath(course) : parentPath)}>{t('← Zur Übersicht', '← Back to overview')}</a>
     <p class="eyebrow">{parentTitle} · {typesetting ? t('TEXTSATZSYSTEM', 'TYPESETTING SYSTEM') : t('LERNKURS', 'LEARNING COURSE')}</p>
     <h1>{title}</h1>
+    {glossary.some(term=>term.topic===catalogTopic)&&<p><a class="text-link" href={localePath(locale,`/glossar/?thema=${catalogTopic}`)}>{t('Begriffe im Glossar nachschlagen →','Look up terms in the glossary →')}</a></p>}
     {!chapter && <p class="page-lead">{description}</p>}
     <div class="course-meta">
       <span>{chapter ? levelName(chapter.level) : t('Einstieg → Vertiefung → Profi', 'Beginner → Intermediate → Advanced')}</span>
@@ -56,6 +60,7 @@ const breadcrumbRoot=typesetting?{title:t('Themenwelten','Topics'),href:'/#theme
       </details>
     </aside>
     <div class="course-content">
+      {practiceProjects.filter(project=>project.courses.includes(course.id)&&(!chapter||chapter.id==='abschluss')).map(project=><section class="prerequisite"><div><h2>{project.title[locale]}</h2><p>{project.description[locale]}</p><a class="button secondary" href={localePath(locale,project.path)}>{t('Vollständiges Praxisprojekt öffnen →','Open the complete practice project →')}</a></div></section>)}
       {['typst','latex'].includes(course.id) && <section class="prerequisite"><div><h2>{t('Dokumente selbst erstellen und prüfen','Create and check your own documents')}</h2><p>{t('Bearbeite dein Projekt extern und lade die Quellen zur Prüfung. IT-Worlds prüft lokal ausgewählte Muster und Aufgabenmerkmale. Kompiliere und kontrolliere das PDF im externen Editor.','Edit externally and load the sources for checking. IT-Worlds checks selected patterns and task constructs locally. Compile and review the PDF in the external editor.')}</p><p><a class="button primary" href={course.id==='latex'?'https://www.overleaf.com/':'https://typst.app/'} target="_blank" rel="noopener noreferrer">{course.id==='latex'?t('In Overleaf bearbeiten ↗','Edit in Overleaf ↗'):t('In typst.app bearbeiten ↗','Edit in typst.app ↗')}</a> <a class="button secondary" href={localePath(locale,`/dokumentpruefung/?format=${course.id}${chapter?`&aufgabe=${chapterProgressId(course,chapter)}`:''}`)}>{t('Projekt prüfen →','Check project →')}</a> <a class="text-link" href={localePath(locale,'/textsatz/')}>{t('Typst & LaTeX vergleichen','Compare Typst & LaTeX')}</a></p></div></section>}
       {!chapter ? <>
         <LearningRoute locale={locale} steps={course.chapters.map(chapter=>({id:chapterProgressId(course,chapter),title:chapter.title[locale],url:coursePath(course,chapter)}))}/>

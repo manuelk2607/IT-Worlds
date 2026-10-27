@@ -22,3 +22,4 @@
 .typesetting-comparison th, .typesetting-comparison td { padding: .8rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
 .table-scroll { max-width: 100%; overflow-x: auto; }
 .document-panel :is(code, p, label) { overflow-wrap: anywhere; }
+.document-review-check{display:flex!important;gap:.7rem;align-items:flex-start;margin:1rem 0}.document-review-check input{width:auto!important;flex:0 0 auto;margin-top:.3rem}.document-check fieldset{min-width:0;border:1px solid var(--line);border-radius:8px;padding:1rem}.document-check legend{padding:0 .4rem;font-weight:600}

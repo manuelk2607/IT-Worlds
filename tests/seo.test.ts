@@ -7,7 +7,7 @@ import { GET as robots } from '../src/pages/robots.txt.ts';
 import { courseChapters, courses } from '../src/data/courses.ts';
 import { exercises } from '../src/data/exercises.ts';
 test('sitemap pairs every public page and excludes personal/error routes',async()=>{
-  assert.equal(publicUrls.length,2 * (9 + topics.length + paths.length + courses.length + courseChapters.length + exercises.filter(item=>item.id!==item.topic).length));
+  assert.equal(publicUrls.length,2 * (13 + topics.length + paths.length + courses.length + courseChapters.length + exercises.filter(item=>item.id!==item.topic).length));
   assert.equal(new Set(publicUrls).size,publicUrls.length);
   assert(!publicUrls.some(url=>/konto|fortschritt|404|api\//.test(url)));
   const xml=await sitemap().text();

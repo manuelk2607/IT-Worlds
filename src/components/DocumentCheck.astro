@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Breadcrumbs from './Breadcrumbs.astro';
 import ProgressToggle from './ProgressToggle.astro';
 import {documentTasks} from '../data/document-tasks.ts';
+import DocumentSelfReview from './DocumentSelfReview.astro';
 import {translate, localePath, type Locale} from '../lib/i18n.ts';
 import '../styles/documents.css';
 interface Props {locale?:Locale}
@@ -39,12 +40,13 @@ const locale=Astro.props.locale??'de';const t=translate(locale);
    <p class="document-boundary">{t('Statische Analyse prüft ausgewählte, direkt erkennbare Muster. Sie ist kein vollständiger Syntaxparser, expandiert keine Makros und wertet keinen Typst-Code aus. Hinweise können bei dynamischen Pfaden oder Marken unvollständig sein. Kein Fund bedeutet weder „kompilierbar“ noch „inhaltlich richtig“.','Static analysis checks selected directly recognisable patterns. It is not a complete syntax parser, does not expand macros and does not evaluate Typst code. Dynamic paths or labels can make findings incomplete. No finding means neither “compiles” nor “correct content”.')}</p>
    <p class="document-boundary">{t('Kompilierung und PDF-Kontrolle finden ausschließlich im externen Editor statt. IT-Worlds führt keine TeX-/Typst-Befehle aus und erzeugt kein PDF.','Compilation and PDF review take place exclusively in the external editor. IT-Worlds executes no TeX/Typst commands and generates no PDF.')} <a data-doc-editor href="https://typst.app/" target="_blank" rel="noopener noreferrer">{t('Im externen Editor weiterarbeiten ↗','Continue in the external editor ↗')}</a></p>
    <section data-doc-task-results hidden><h3>{t('Hinweise zur Kursaufgabe','Course task findings')}</h3><ul class="document-diagnostics" data-doc-requirements></ul></section>
+   {documentTasks.map(task=><DocumentSelfReview task={task} locale={locale}/>)}
    <ul class="document-diagnostics" data-doc-diagnostics></ul>
    <details><summary>{t('Dateien und Abhängigkeiten','Files and dependencies')}</summary><p data-doc-inventory></p></details>
    <label>{t('Quelldatei ansehen (wird nicht ausgeführt)','Inspect a source file (not executed)')}<select data-doc-source></select></label>
    <label>{t('Quelle; Fehler anklicken, um die Stelle zu markieren','Source; click a finding to highlight its position')}<textarea data-doc-preview readonly rows="12" spellcheck="false"></textarea></label>
    <p><button class="button secondary" data-doc-download>{t('Prüfbericht herunterladen','Download check report')}</button></p>
-   <p>{t('Übertrage Verbesserungen in deinen Editor und exportiere danach neu. Kontrolliere dort Compilerwarnungen und PDF sowie hier die Aufgabe und Lösung. Der optionale Lernfortschritt speichert nur deine bewusste Kapitelmarkierung, keine Dokumente oder Prüfberichte. Es erfolgt keine automatische Benotung.','Apply improvements in your editor and export again. Check compiler warnings and the PDF there, and the task and solution here. Optional learning progress saves only your explicit chapter completion, never documents or check reports. No automatic grading takes place.')}</p>
+   <p>{t('Übertrage Verbesserungen in deinen Editor und exportiere danach neu. Bestätige anschließend die Selbstprüfung. Der optionale Lernfortschritt speichert nur deine bewusste Kapitelmarkierung, keine Dokumente oder Prüfberichte. Es erfolgt keine automatische Benotung.','Apply improvements in your editor and export again. Then confirm the self-review. Optional learning progress saves only your explicit chapter completion, never documents or check reports. No automatic grading takes place.')}</p>
    {documentTasks.map(task=><div data-doc-task-progress={task.id} hidden><ProgressToggle kind="lesson" contentId={task.progressId} locale={locale} label={t('Kapitel nach eigener Kontrolle als gelesen markieren','Mark chapter as read after your own review')}/></div>)}
    <p><a data-doc-course href={localePath(locale,'/themen/programmiersprachen/typst/projektpruefung/')}>{t('Zur passenden Kursaufgabe →','Go to the matching course task →')}</a></p>
   </section>

@@ -32,7 +32,7 @@ try{
   console.log('Development Worker ready at http://localhost:8790; Ctrl-C stops only this test server.');
   await new Promise<void>(resolve=>{process.once('SIGINT',resolve);process.once('SIGTERM',resolve);worker.once('exit',()=>resolve());});
  }else{
-  for(const file of ['tests/live-accounts.ts','tests/live-typing.ts','tests/live-reset.ts']){
+  for(const file of process.argv.includes('--typing-only')?['tests/live-typing.ts']:['tests/live-accounts.ts','tests/live-typing.ts','tests/live-reset.ts']){
    const child=spawn(process.execPath,['--experimental-strip-types',file],{env,stdio:'inherit'});
    const code=await new Promise<number|null>(resolve=>child.once('exit',resolve));
    if(code!==0)throw new Error(`Development checks failed: ${file}`);

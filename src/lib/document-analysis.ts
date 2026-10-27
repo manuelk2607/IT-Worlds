@@ -1,5 +1,6 @@
 import {fileExtension, sourceText, validateProject, projectLimits, resolveProjectPath, type ProjectFile, type DocumentFormat} from './document-project.ts';
 import type {TaskCheck} from './document-task-check.ts';
+import {bibliographyEntries} from './document-bibliography.ts';
 export interface Diagnostic { code:string; severity:'error'|'warning'|'info'; file:string; line:number; column:number; detail:string }
 export interface DocumentReport {
   format:DocumentFormat; main:string; diagnostics:Diagnostic[]; files:string[]; packages:string[]; commands:string[];
@@ -30,7 +31,7 @@ export function analyzeDocument(input:ProjectFile[],format:DocumentFormat,main:s
   if(!sourceCandidates(files,format).includes(main))throw new Error('MAIN');
   const report:DocumentReport={format,main,diagnostics:[],files:files.map(f=>f.path),packages:[],commands:[],compilation:'not-run',truncated:false,checkedFiles:[]};
   const sources=new Map(files.filter(f=>['tex','typ','sty','cls','bib'].includes(fileExtension(f.path))).map(f=>[f.path,sourceText(f)]));
-  const labels=new Map<string,{file:string;offset:number}[]>(),references:{key:string;file:string;offset:number}[]=[];
+  const labels=new Map<string,{file:string;offset:number}[]>(),citations=new Map<string,{file:string;offset:number}[]>(),references:{key:string;file:string;offset:number;kind:'label'|'citation'|'either'}[]=[];
   const generated=new Set<string>();
   let hasHeading=false;
   const visited=new Set<string>(),active=new Set<string>();
@@ -39,7 +40,9 @@ export function analyzeDocument(input:ProjectFile[],format:DocumentFormat,main:s
     const text=sources.get(file)??'';const prefix=text.slice(0,offset);const last=prefix.lastIndexOf('\n');
     report.diagnostics.push({code,severity,file,line:prefix.split('\n').length,column:offset-last,detail});
   };
-  const label=(key:string,file:string,offset:number)=>labels.set(key,[...(labels.get(key)??[]),{file,offset}]);
+  const remember=(map:Map<string,{file:string;offset:number}[]>,key:string,file:string,offset:number)=>{const locations=map.get(key);if(locations)locations.push({file,offset});else map.set(key,[{file,offset}]);};
+  const label=(key:string,file:string,offset:number)=>remember(labels,key,file,offset);
+  const citation=(key:string,file:string,offset:number)=>remember(citations,key,file,offset);
   const link=(file:string,target:string,offset:number,extensions:string[],traverse:boolean)=>{
     const path=resolveProjectPath(format==='latex'?main:file,target);
     if(!path){add('UNSAFE_PATH','error',file,offset,target);return;}
@@ -53,14 +56,14 @@ export function analyzeDocument(input:ProjectFile[],format:DocumentFormat,main:s
     visited.add(file);active.add(file);
     const raw=sources.get(file);if(raw===undefined){active.delete(file);return;}
     report.checkedFiles.push(file);
-    if(fileExtension(file)==='bib') {for(const match of raw.matchAll(/@\w+\s*\{\s*([^,\s]+)\s*,/g))label(match[1]!,file,match.index);active.delete(file);return;}
+    if(fileExtension(file)==='bib') {for(const entry of bibliographyEntries(raw))citation(entry.key,file,entry.offset);active.delete(file);return;}
     const text=maskSource(raw,format);
     if(format==='latex'?/\\(?:section|chapter)\*?\s*\{/.test(text):/^\s*=+\s+\S/m.test(text))hasHeading=true;
     if(format==='latex') {
       for(const match of text.matchAll(/\\begin\{filecontents\*?\}(?:\[[^\]]*\])?\s*\{([^{}\n]+)\}([\s\S]*?)\\end\{filecontents\*?\}/g)){
         const path=resolveProjectPath(main,match[1]!);if(!path){add('UNSAFE_PATH','error',file,match.index,match[1]);continue;}
         generated.add(path);
-        if(path.endsWith('.bib')&&!sources.has(path))for(const entry of match[2]!.matchAll(/@\w+\s*\{\s*([^,\s]+)\s*,/g))label(entry[1]!,file,match.index+match[0].indexOf(match[2]!)+entry.index);
+        if(path.endsWith('.bib')&&!sources.has(path))for(const entry of bibliographyEntries(match[2]!))citation(entry.key,file,match.index+match[0].indexOf(match[2]!)+entry.offset);
         add('STATIC_LIMIT','info',file,match.index);
       }
       const stack:{name:string;index:number}[]=[];const braces:number[]=[];
@@ -81,7 +84,8 @@ export function analyzeDocument(input:ProjectFile[],format:DocumentFormat,main:s
       for(const m of text.matchAll(/\\includegraphics(?:\s*\[[^\]]*\])?\s*\{([^{}]+)\}/g))link(file,m[1]!,m.index,['pdf','png','jpg','jpeg'],false);
       for(const m of text.matchAll(/\\(?:addbibresource|bibliography)(?:\s*\[[^\]]*\])?\s*\{([^{}]+)\}/g))for(const target of m[1]!.split(','))link(file,target.trim(),m.index,['bib'],true);
       for(const m of text.matchAll(/\\label\s*\{([^{}]+)\}/g))label(m[1]!,file,m.index);
-      for(const m of text.matchAll(/\\(?:ref|eqref|pageref|autoref|cref|Cref|cite|parencite|textcite)(?:\s*\[[^\]]*\]){0,2}\s*\{([^{}]+)\}/g))for(const key of m[1]!.split(','))references.push({key:key.trim(),file,offset:m.index});
+      for(const m of text.matchAll(/\\bibitem(?:\s*\[[^\]]*\])?\s*\{([^{}]+)\}/g))citation(m[1]!,file,m.index);
+      for(const m of text.matchAll(/\\(ref|eqref|pageref|autoref|cref|Cref|cite|parencite|textcite)\*?(?:\s*\[[^\]]*\]){0,2}\s*\{([^{}]+)\}/g))for(const key of m[2]!.split(','))references.push({key:key.trim(),file,offset:m.index,kind:/cite$/.test(m[1]!)?'citation':'label'});
       if(file===main){
         if(!/\\documentclass(?:\s*\[[^\]]*\])?\s*\{/.test(text))add('DOCUMENTCLASS','warning',file,0);
         if(!/\\begin\s*\{document\}/.test(text)||!/\\end\s*\{document\}/.test(text))add('DOCUMENT_BODY','warning',file,0);
@@ -95,9 +99,9 @@ export function analyzeDocument(input:ProjectFile[],format:DocumentFormat,main:s
       }
       for(const m of text.matchAll(/\b(?:image|bibliography|read|csv|json|yaml|toml)\s*\(\s*"([^"\n]+)"/g))link(file,m[1]!,m.index,[],m[0].includes('bibliography'));
       // Remove quoted strings before locating labels/references to avoid interpreting URLs and email addresses in data.
-      const visible=text.replace(/"(?:\\.|[^"\\])*"/g,s=>s.replace(/[^\n]/g,' '));
+      const visible=text.replace(/"(?:\\.|[^"\\])*"/g,s=>s.replace(/[^\n]/g,' ')).replace(/\b(cite|ref)\s*\(\s*<([\p{L}\p{N}_:.-]+)>/gu,(match:string,command:string,key:string,offset:number)=>{references.push({key,file,offset,kind:command==='cite'?'citation':'either'});return match.replace(/[^\n]/g,' ');});
       for(const m of visible.matchAll(/<([\p{L}\p{N}_:.-]+)>/gu))label(m[1]!,file,m.index);
-      for(const m of visible.matchAll(/(?<![\p{L}\p{N}_\\])@([\p{L}\p{N}_:.-]+)/gu))references.push({key:m[1]!.replace(/\.+$/,''),file,offset:m.index});
+      for(const m of visible.matchAll(/(?<![\p{L}\p{N}_\\])@([\p{L}\p{N}_:.-]+)/gu))references.push({key:m[1]!.replace(/\.+$/,''),file,offset:m.index,kind:'either'});
       if(/\b(?:eval|plugin|query|state|label)\s*\(/.test(text))add('STATIC_LIMIT','info',file,0);
     }
     active.delete(file);
@@ -105,7 +109,8 @@ export function analyzeDocument(input:ProjectFile[],format:DocumentFormat,main:s
   visit(main);
   if(!hasHeading)add('HEADINGS','info',main,0);
   for(const [key,locations]of labels)if(locations.length>1)for(const loc of locations)add('DUPLICATE_LABEL','warning',loc.file,loc.offset,key);
-  for(const ref of references)if(!labels.has(ref.key))add('REFERENCE','warning',ref.file,ref.offset,ref.key);
+  for(const [key,locations]of citations)if(locations.length>1)for(const loc of locations)add('DUPLICATE_CITATION','warning',loc.file,loc.offset,key);
+  for(const ref of references){const found=ref.kind==='label'?labels.has(ref.key):ref.kind==='citation'?citations.has(ref.key):labels.has(ref.key)||citations.has(ref.key);if(!found)add(ref.kind==='citation'?'CITATION':'REFERENCE','warning',ref.file,ref.offset,ref.key);}
   report.packages=[...new Set(report.packages)];
   report.diagnostics.sort((a,b)=>a.file.localeCompare(b.file)||a.line-b.line||a.column-b.column);
   return report;

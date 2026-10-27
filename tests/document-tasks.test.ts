@@ -5,6 +5,7 @@ import {analyzeDocument} from '../src/lib/document-analysis.ts';
 import {checkDocumentTask} from '../src/lib/document-task-check.ts';
 import {parseProgressChange} from '../src/lib/progress.ts';
 import {courses} from '../src/data/courses.ts';
+import {documentReview} from '../src/lib/document-review.ts';
 const file=(path:string,text:string)=>({path,bytes:new TextEncoder().encode(text)});
 test('every typesetting chapter has a bilingual task profile and an existing progress ID',()=>{
  const chapters=courses.filter(course=>['latex','typst'].includes(course.id)).flatMap(course=>course.chapters.map(chapter=>`${course.id}-${chapter.id}`));
@@ -58,4 +59,13 @@ test('the existing Typst reference exercise keeps its chapter progress and expos
  const corrected=[file('main.typ',starter.replace('@methods','@method'))];
  assert(!analyzeDocument(corrected,'typst','main.typ').diagnostics.some(item=>item.code==='REFERENCE'));
  assert.equal(documentTasks.find(task=>task.id==='typst-verweis')?.progressId,'typst-tabellen-grafiken');
+});
+test('document self-review reuses chapter assignments and requires explicit learning, compiler and output checks',()=>{
+ for(const task of documentTasks){
+  const review=documentReview(task);assert(review.exercise.de&&review.exercise.en&&review.solution.de&&review.solution.en);
+  assert(review.criteria.length>=4);assert.equal(new Set(review.criteria.map(item=>item.id)).size,review.criteria.length);
+  for(const id of ['assignment','compiler','output'])assert(review.criteria.some(item=>item.id===id));
+  if(task.id===task.progressId){const chapter=courses.find(item=>item.id===task.format)!.chapters.find(item=>item.id===task.chapter)!;assert.deepEqual(review.exercise,chapter.exercise);assert.deepEqual(review.solution,chapter.solution);}
+ }
+ const exercise=documentReview(documentTasks.find(item=>item.id==='typst-verweis')!);assert.equal(exercise.code,true);assert(exercise.solution.de.includes('@'));
 });

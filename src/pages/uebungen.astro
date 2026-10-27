@@ -7,6 +7,7 @@ import { getContent, translate, localePath, type Locale } from '../lib/i18n.ts';
 import '../styles/exercises.css';
 import {exerciseCatalogTopic} from '../lib/exercise-catalog.ts';
 import {TYPESETTING_TOPIC_ID,typesettingTopic} from '../data/topic-categories.ts';
+import PracticeProjects from '../components/PracticeProjects.astro';
 interface Props { locale?: Locale }
 const locale: Locale = Astro.props.locale ?? 'de';
 const t=translate(locale);
@@ -38,6 +39,7 @@ const typesetting=typesettingTopic(locale);
     })}</div>
     <p hidden data-exercises-empty>{t('Keine Aufgabe für diese Auswahl. Kürze die Suche oder setze die Filter zurück.','No tasks match this selection. Shorten your search or reset the filters.')}</p>
   </section>
+  <PracticeProjects locale={locale}/>
   <section class="container section"><h2>{t('Interaktive Lernbereiche','Interactive learning areas')}</h2><div class="catalog-grid">{practiceTools.map(tool=><a class="progress-entry" href={localePath(locale,tool.url)}>{tool.title[locale]} →</a>)}</div></section>
   <script src="../scripts/exercise-catalog.ts"></script>
 </Layout>
