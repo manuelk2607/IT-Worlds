@@ -4,7 +4,7 @@ Die Reihenfolge beschreibt vorgeschlagene Ausbaustufen, keine zugesagten Termine
 
 ## Entwicklungsstand · 28. Oktober 2026
 
-22 Kurse mit 169 Kapiteln, insgesamt 348 Quizfragen und 272 Quellen. Typst umfasst 16 Kapitel/32 Fragen, LaTeX 14/28. Der öffentliche Versionsstand steht in VALIDIERUNG.md. Die technischen P1-Prüfungen für Rangliste, Godot und Linux/systemd sind abgeschlossen; unabhängiges Review und tatsächlicher Reset-Mailempfang bleiben gesondert offen.
+22 Kurse mit 169 Kapiteln, insgesamt 348 Quizfragen und 273 Quellen. Typst umfasst 16 Kapitel/32 Fragen, LaTeX 14/28. Der öffentliche Versionsstand steht in VALIDIERUNG.md. Die technischen P1-Prüfungen für Rangliste, Godot und Linux/systemd sind abgeschlossen; unabhängiges Review und tatsächlicher Reset-Mailempfang bleiben gesondert offen.
 
 - [x] Gemeinsamen Textsatz-Einstieg, prominentere Typst-/LaTeX-Navigation, Kursvergleiche und Querverweise ergänzen; bestehende URLs und Fortschrittskennungen erhalten.
 - [x] Typst um Programmierung, Module/Pakete, Datenberichte, Kontext, wissenschaftliche Publikationen, Präsentationen, automatisierte Builds und Projektabgabe erweitern; LaTeX-Diagnosekapitel ergänzen.
@@ -19,6 +19,8 @@ Die Reihenfolge beschreibt vorgeschlagene Ausbaustufen, keine zugesagten Termine
 - [ ] P1 · extern blockiert: vollständige Passwort-Wiederherstellung einschließlich tatsächlichem Mailempfang; kontrolliertes Testpostfach fehlt. Negative API-Pfade sind geprüft. [Prüfabläufe](P1-PRUEFUNGEN.md).
 - [x] Aufgabenbezogene Selbstprüfrubriken für alle 30 Textsatzkapitel und die Typst-Verweisaufgabe: vorhandene Lernziele, Aufgabe/Musterlösung, bewusste Compiler-/Ausgabekontrolle und bestehende Fortschrittsmarkierung; keine automatische fachliche Benotung.
 - [x] Drei vollständige lokale Praxisprojekte mit getesteten Referenzen/ZIPs und DE/EN-Anleitungen: mehrseitiger Webkatalog, relationaler SQL-Lernbericht und HTTP-Abnahme mit Fehlerdiagnose/Wiederanlauf.
+- [x] Übungsübersicht nach Themen/Kursen, sechs kombinierte Filter, Kurs-/Quiz-/Pfadlinks, getrennte lokale Selbst-/Modellstände mit Sicherung und Wiederholhinweisen.
+- [x] Vier weitere vollständige lokale Projekte (Lernzeitbericht, IPv4-Netzplan, Registermaschine, SHA-256-Inventar), wiederaufnehmbare Checklisten für alle sieben Projekte, vier Ablaufaufgaben und fester interaktiver CPU-Trace; DE/EN.
 - [x] Kleines DE/EN-Glossar mit 15 quellengebundenen Begriffen, kombinierten Filtern, Kursverknüpfungen und globaler Suche ergänzen. Suchbeschreibungen/Lernziele tatsächlich durchsuchen.
 - [ ] P3: Weitere Visualisierungen nach Bedarf. Kompilierung bleibt von fachlicher Bewertung getrennt.
 
@@ -37,7 +39,7 @@ Architektur, Datenschutz, Limits, lokale Bedienung und aktuelle Freigabegrenzen:
 - [x] KI- und LaTeX-Kursfolgen mit 27 Kapiteln, 54 zusätzlichen Fragen und Belegen ausarbeiten.
 - [x] Drei themenübergreifende Lernwege mit 13/14/10 verfügbaren Kapitelschritten ausarbeiten.
 
-22 Kursfolgen mit 169 Kapiteln und vier vollständige geführte Lernwege stehen bereit. Hinzu kommen drei vollständige lokale Praxisprojekte: HTTP-Abnahme mit Fehlerdiagnose/Wiederanlauf, relationaler SQL-Lernbericht und mehrseitiger TypeScript-Katalog mit Suche/Filtern/Lesezeichen. Archive enthalten die tatsächlich getesteten Quellen; eigene DE/EN-Projektanleitungen verbinden sie mit den bestehenden Kursen. Details im [Website-Aufbau](WEBSITE-AUFBAU.md).
+22 Kursfolgen mit 169 Kapiteln und vier vollständige geführte Lernwege stehen bereit. Hinzu kommen sieben vollständige lokale Praxisprojekte, darunter: HTTP-Abnahme mit Fehlerdiagnose/Wiederanlauf, relationaler SQL-Lernbericht und mehrseitiger TypeScript-Katalog mit Suche/Filtern/Lesezeichen. Archive enthalten die tatsächlich getesteten Quellen; eigene DE/EN-Projektanleitungen verbinden sie mit den bestehenden Kursen. Details im [Website-Aufbau](WEBSITE-AUFBAU.md).
 
 - [x] Zehn lokale Übungseditoren mit Hinweisen und Musterlösungen ergänzen.
 - [x] Sitemap, Canonicals, Sprachbezüge und Social-Metadaten ergänzen.
@@ -124,7 +126,7 @@ Konkrete nächste Arbeitspakete: die verfügbaren Inhalte unabhängig fachlich g
 
 Aktuelle Prioritäten, abgeschlossene Teilbereiche und verbleibende fachliche Lücken: [AUSBAU.md](AUSBAU.md).
 
-Aktuell: 22 Kursfolgen/169 Kapitel/348 Fragen/272 Quellen, 14 Themenkacheln und drei zusätzliche Praxisprojekte. Verbindlicher aktueller Paket- und Veröffentlichungsstand: [PROGRESS.md](../PROGRESS.md). Unabhängiges Fachreview und assistive Nutzerprüfungen bleiben offen; zusätzliche Projekte über die drei Referenzprojekte hinaus erst anhand von Lernendenfeedback priorisieren.
+Aktuell: 22 Kursfolgen/169 Kapitel/348 Fragen/273 Quellen, 14 Themenkacheln und sieben zusätzliche Praxisprojekte. Verbindlicher aktueller Paket- und Veröffentlichungsstand: [PROGRESS.md](../PROGRESS.md). Unabhängiges Fachreview und assistive Nutzerprüfungen bleiben offen; weitere Projekte anhand von Lernendenfeedback priorisieren.
 
 
 ### Sprach- und Strukturpaket · 27.10.2026

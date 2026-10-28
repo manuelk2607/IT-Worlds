@@ -1,8 +1,10 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import {practiceTools} from '../data/practice-topics.ts';
-import {practiceItems,practiceKindLabels,type PracticeKind} from '../data/practice-catalog.ts';
-import {courses} from '../data/courses.ts';
+import {practiceItems,practiceKindLabels,practiceHierarchy,type PracticeKind} from '../data/practice-catalog.ts';
+import {projectMilestones} from '../data/project-milestones.ts';
+import {coursePath,courses} from '../data/courses.ts';
+import {guidedLearningPaths} from '../data/learning-paths.ts';
 import {typesettingTopic} from '../data/topic-categories.ts';
 import {getContent,translate,localePath,type Locale} from '../lib/i18n.ts';
 import '../styles/exercises.css';
@@ -10,6 +12,7 @@ interface Props {locale?:Locale}
 const locale=Astro.props.locale??'de';const t=translate(locale);
 const {topics,levels,levelName}=getContent(locale);
 const categories=[...topics,typesettingTopic(locale)];
+const hierarchy=practiceHierarchy(practiceItems);const paths=guidedLearningPaths(locale);
 const kinds=Object.keys(practiceKindLabels) as PracticeKind[];
 ---
 <Layout locale={locale} title={t('Übungen, Kapitelaufgaben & Praxisprojekte','Exercises, chapter tasks & practice projects')} description={t('Finde passende Browserübungen, Aufgaben mit Lösungen und vollständige lokale Projekte. Filtere nach Thema, Kurs, Stufe und Arbeitsweise. Alle Aufgaben bleiben frei zugänglich.','Find browser exercises, tasks with solutions and complete local projects. Filter by topic, course, level and working mode. All tasks remain freely accessible.')} active="uebungen">
@@ -19,40 +22,51 @@ const kinds=Object.keys(practiceKindLabels) as PracticeKind[];
   <p class="page-lead">{t('Wähle zuerst, wie du üben möchtest. Aufgaben aus allen Kurskapiteln stehen neben kleinen Browsermodellen und vollständigen lokalen Projekten.','First choose how you want to practise. Tasks from every course chapter sit alongside small browser models and complete local projects.')}</p>
   <nav class="section-shortcuts" aria-label={t('Arbeitsweise wählen','Choose how to practise')}>
    <a href="?format=editor#aufgaben">{t('Im Browser üben','Practise in the browser')}</a>
+   <a href="?format=ordering#aufgaben">{t('Abläufe ordnen','Order sequences')}</a>
    <a href="?format=chapter#aufgaben">{t('Kapitelaufgaben lösen','Solve chapter tasks')}</a>
    <a href="?format=project#aufgaben">{t('Ein Projekt bauen','Build a project')}</a>
    <a href={localePath(locale,'/dokumentpruefung/')}>{t('Dokumente prüfen','Check documents')}</a>
    <a href="#lernwerkzeuge">{t('Interaktive Lernwerkzeuge','Interactive learning tools')}</a>
   </nav>
-  <p class="muted">{t('Browsermodelle prüfen ausgewählte Muster und führen keinen beliebigen Code aus. Native Programme laufen in deiner eigenen Entwicklungsumgebung; Kapitelaufgaben bieten eine erklärte Musterlösung. Persönlicher Lernfortschritt bleibt freiwillig.','Browser models check selected patterns and do not execute arbitrary code. Native programs run in your own development environment; chapter tasks include explained solutions. Personal learning progress remains optional.')}</p>
+  <details class="practice-help"><summary>{t('So funktionieren die Übungen','How these exercises work')}</summary><p class="muted">{t('Browsermodelle prüfen ausgewählte Muster und führen keinen beliebigen Code aus. Native Programme laufen in deiner eigenen Entwicklungsumgebung; Kapitelaufgaben bieten eine erklärte Musterlösung. Persönlicher Lernfortschritt bleibt freiwillig.','Browser models check selected patterns and do not execute arbitrary code. Native programs run in your own development environment; chapter tasks include explained solutions. Personal learning progress remains optional.')}</p></details>
  </header>
  <section class="container section" id="aufgaben" data-practice-catalog aria-labelledby="exercise-catalog-title">
+  <details class="practice-directory"><summary>{t('Nach Themenbereichen stöbern','Browse by topic')}</summary><nav class="practice-topics" aria-label={t('Übungen nach Themen','Exercises by topic')}>{categories.map(topic=><a href={`?thema=${topic.id}#aufgaben`}>{topic.title}<small>{practiceItems.filter(item=>item.topics.includes(topic.id)).length}</small></a>)}</nav></details>
   <h2 id="exercise-catalog-title">{t('Aufgaben gezielt finden','Find tasks deliberately')}</h2>
+  <section class="practice-overview" aria-label={t('Dein Übungsüberblick','Your practice overview')}><p data-practice-summary role="status"></p><details><summary>{t('Was wird gespeichert?','What gets saved?')}</summary><p class="muted">{t('Aufgabenstatus und Projektchecklisten bleiben auf diesem Gerät. Sie sind keine automatische Bewertung und werden nicht mit dem Konto synchronisiert. Der Konto-Quizstand wird getrennt angezeigt.','Task status and project checklists stay on this device. They are not automatic grading and do not synchronise with your account. Account quiz progress is shown separately.')}</p></details><p data-practice-storage-warning hidden role="status"></p><div data-practice-weaknesses></div><details data-practice-backup><summary>{t('Gerätestand sichern & wiederherstellen','Back up & restore device progress')}</summary><p>{t('Die lokale JSON-Sicherung enthält Aufgabenstatus, Prüfzähler und Projektchecklisten. Beim Import siehst du vorab eine Vorschau. Neuere vorhandene Stände bleiben erhalten; importierte Abschlüsse gelten als Selbsteinschätzung. Konto-Lese-/Quizstände bleiben separat.','The local JSON backup contains task status, check counts and project checklists. Import shows a preview first. Newer existing records are preserved; imported completions are self-assessments. Account reading/quiz progress stays separate.')}</p><button disabled class="button secondary" data-practice-export>{t('Sicherung herunterladen','Download backup')}</button><label class="practice-backup-file">{t('Sicherungsdatei auswählen (höchstens 512 KiB)','Choose backup file (maximum 512 KiB)')}<input type="file" accept=".json,application/json" disabled data-practice-import-file/></label><button disabled class="button secondary" data-practice-import-apply>{t('Geprüfte Stände übernehmen','Import reviewed records')}</button><p role="status" data-practice-backup-message></p></details></section>
   <div class="catalog-toolbar">
    <label for="exercise-search">{t('Aufgabe suchen','Search tasks')}<input id="exercise-search" type="search" maxlength="100" placeholder={t('Zum Beispiel Ownership, NULL, Tastatur …','For example ownership, NULL, keyboard …')}/></label>
    <label for="exercise-kind">{t('Arbeitsweise','Working mode')}<select id="exercise-kind"><option value="alle">{t('Alle Arbeitsweisen','All working modes')}</option>{kinds.map(kind=><option value={kind}>{practiceKindLabels[kind][locale]}</option>)}</select></label>
    <label for="exercise-topic">{t('Themenwelt','Topic')}<select id="exercise-topic"><option value="alle">{t('Alle Themenwelten','All topics')}</option>{categories.map(topic=><option value={topic.id}>{topic.title}</option>)}</select></label>
    <label for="exercise-course">{t('Kurs','Course')}<select id="exercise-course"><option value="alle">{t('Alle Kurse & Einstiege','All courses & introductions')}</option>{courses.map(course=><option value={course.id}>{course.title[locale]}</option>)}</select></label>
    <label for="exercise-level">{t('Lernstufe','Level')}<select id="exercise-level"><option value="alle">{t('Alle Lernstufen','All levels')}</option>{levels.map(level=><option value={level.id}>{level.name}</option>)}</select></label>
+   <label for="exercise-status">{t('Bearbeitungsstatus','Working status')}<select id="exercise-status"><option value="alle">{t('Alle Zustände','All statuses')}</option><option value="open">{t('Offen','Not started')}</option><option value="active">{t('In Arbeit','In progress')}</option><option value="review">{t('Wiederholen','Review needed')}</option><option value="complete">{t('Abgeschlossen','Completed')}</option></select></label>
    <button class="button secondary" data-reset-exercise-filter>{t('Filter zurücksetzen','Reset filters')}</button>
   </div>
+  <p role="status" data-practice-action></p>
   <p role="status" data-exercise-count>{t(practiceItems.length+' Aufgaben verfügbar',practiceItems.length+' tasks available')}</p>
-  <div class="catalog-grid" id="practice-results">{practiceItems.map(item=>{
+  <div id="practice-results">{hierarchy.map(group=><section class="practice-topic-group" data-practice-topic-group><header class="section-heading"><h3>{categories.find(topic=>topic.id===group.topic)?.title??t('Themenübergreifende Projekte','Projects connecting topics')}</h3><p data-group-count></p></header>{group.subgroups.map(subgroup=><section class="practice-subgroup" data-practice-course-group><h4>{courses.find(course=>course.id===subgroup.course)?.title[locale]??t('Einstiege und Querverbindungen','Introductions and connections')}</h4><div class="catalog-grid">{subgroup.items.map(item=>{
    const excerpt=Array.from(item.task[locale]);const description=excerpt.slice(0,210).join('')+(excerpt.length>210?'…':'');
    const category=categories.filter(topic=>item.topics.includes(topic.id)).map(topic=>topic.title).join(' · ');
    const associated=courses.filter(course=>item.courses.includes(course.id)).map(course=>course.title[locale]).join(' ');
-   return <article class="progress-entry exercise-card" data-practice-card={item.id} data-topics={item.topics.join(' ')} data-courses={item.courses.join(' ')} data-level={item.level} data-kind={item.kind} data-search={[item.title[locale],item.task[locale],item.context[locale],category,associated].join(' ')}>
+   const chapter=item.chapter?courses.find(course=>course.id===item.courses[0])?.chapters.find(chapter=>chapter.id===item.chapter):undefined;
+   const questionIds=item.courses.flatMap(id=>courses.find(course=>course.id===id)!.chapters.filter(ch=>!item.chapter||ch.id===item.chapter).flatMap(ch=>ch.questions.map((_,index)=>`${id}-${ch.id}-${index+1}`)));
+   const relatedPaths=paths.filter(path=>path.steps.some(step=>item.chapter?step.contentId===`${item.courses[0]}-${item.chapter}`:item.courses.some(id=>step.contentId?.startsWith(id+'-'))));
+   return <article class="progress-entry exercise-card" data-practice-card={item.id} data-topics={item.topics.join(' ')} data-courses={item.courses.join(' ')} data-level={item.level} data-kind={item.kind} data-project-steps={item.kind==='project'?projectMilestones[item.id.slice('project-'.length)]?.map(step=>step.id).join(' '):undefined} data-question-ids={questionIds.join(' ')} data-search={[item.title[locale],item.task[locale],item.context[locale],category,associated].join(' ')}>
     <p class="eyebrow">{practiceKindLabels[item.kind][locale]}</p>
-    <h3><a href={localePath(locale,item.href)}>{item.title[locale]}</a></h3>
+    <h5><a data-practice-title href={localePath(locale,item.href)}>{item.title[locale]}</a></h5>
     <p class="exercise-card-meta">{levelName(item.level)} · {category}</p>
+    <p data-card-status></p>{item.kind!=='project'&&<label class="practice-status-label">{t('Bearbeitungsstatus','Working status')}<select disabled data-card-status-select aria-label={t('Status: ','Status: ')+item.title[locale]}><option value="open">{t('Offen','Not started')}</option><option value="active">{t('In Arbeit','In progress')}</option><option value="review">{t('Wiederholen','Review needed')}</option><option value="complete">{t('Abgeschlossen','Completed')}</option></select></label>}<p data-card-save role="status"></p><p data-card-quiz class="muted"></p>
     <p>{item.context[locale]}</p><p class="exercise-card-description">{description}</p>
-    <a class="text-link" href={localePath(locale,item.href)}>{item.kind==='chapter'?t('Aufgabe & Lösung im Kapitel →','Task & solution in the chapter →'):item.kind==='project'?t('Vollständiges Projekt öffnen →','Open the complete project →'):item.kind==='document'?t('Externe Aufgabe öffnen →','Open the external task →'):t('Im Browser üben →','Practise in the browser →')}</a>
+    <a class="text-link" href={localePath(locale,item.href)}>{item.kind==='ordering'?t('Ablauf ordnen & prüfen →','Order & check the sequence →'):item.kind==='chapter'?t('Aufgabe & Lösung im Kapitel →','Task & solution in the chapter →'):item.kind==='project'?t('Vollständiges Projekt öffnen →','Open the complete project →'):item.kind==='document'?t('Externe Aufgabe öffnen →','Open the external task →'):t('Im Browser üben →','Practise in the browser →')}</a>
+    <details class="practice-connections"><summary>{t('Kurse, Quiz & Lernpfade','Courses, quiz & learning paths')}</summary><ul>{item.courses.map(id=>{const course=courses.find(course=>course.id===id)!;return <li><a href={localePath(locale,coursePath(course))}>{course.title[locale]}</a> · <a href={localePath(locale,`/quiz/?kurs=${id}${chapter?`&kapitel=${chapter.id}`:''}`)}>{t('Quiz','Quiz')}</a></li>})}{relatedPaths.map(path=><li><a href={localePath(locale,`/lernpfade/${path.id}/`)}>{path.title}</a></li>)}</ul></details>
    </article>;
-  })}</div>
+  })}</div></section>)}</section>)}</div>
   <p hidden data-exercises-empty>{t('Keine Aufgabe für diese Auswahl. Ändere Arbeitsweise, Kurs oder Lernstufe oder setze die Filter zurück.','No tasks match this selection. Change working mode, course or level, or reset the filters.')}</p>
   <button hidden class="button secondary practice-more" data-practice-more aria-controls="practice-results">{t('Weitere Aufgaben anzeigen','Show more tasks')}</button>
   <noscript><p>{t('Ohne Browser-Skripte sind alle Aufgaben lesbar; die Filter benötigen Skripte.','Without browser scripts all tasks remain readable; filtering requires scripting.')}</p></noscript>
  </section>
  <section class="container section" id="lernwerkzeuge"><h2>{t('Interaktive Lernwerkzeuge','Interactive learning tools')}</h2><p>{t('Erkunde Hardware und Spielabläufe oder trainiere dein Tippen. Diese Werkzeuge bleiben unabhängig von der Aufgabenfilterung erreichbar.','Explore hardware and gameplay or practise typing. These tools remain accessible independently of task filters.')}</p><div class="catalog-grid">{practiceTools.map(tool=><a class="progress-entry" href={localePath(locale,tool.url)}>{tool.title[locale]} →</a>)}</div></section>
  <script src="../scripts/exercise-catalog.ts"></script>
+ <script src="../scripts/practice-backup.ts"></script>
 </Layout>

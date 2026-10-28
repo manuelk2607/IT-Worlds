@@ -27,7 +27,7 @@ test('shared projects remain discoverable through each associated course and top
  }
  const rust=indexed.filter(item=>matchesPractice(item,{...emptyPracticeSelection(),course:'rust',kind:'chapter'}));
  const documents=indexed.filter(item=>matchesPractice(item,{...emptyPracticeSelection(),kind:'document'}));
- assert.equal(documents.length,30);assert(documents.every(item=>item.courses.every(id=>['typst','latex'].includes(id))));
+ assert.equal(documents.length,31);assert(documents.every(item=>item.courses.every(id=>['typst','latex'].includes(id))));
  assert.equal(rust.length,6);assert(rust.every(item=>item.id.startsWith('chapter-rust-')));
  assert.equal(indexed.filter(item=>matchesPractice(item,{...emptyPracticeSelection(),course:'rust',kind:'editor'})).length,0);
 });
@@ -43,7 +43,7 @@ test('practice filters combine terms and scopes while rejecting unknown or confl
 });
 test('practice URL round trips preserve unrelated parameters, locale and anchors; reset removes filter state',()=>{
  const url=new URL('https://example.test/en/uebungen/?keep=1#aufgaben');
- const value={search:'Borrowing',topic:'programmiersprachen',course:'rust',level:'vertiefung',kind:'chapter'};
+ const value={search:'Borrowing',topic:'programmiersprachen',course:'rust',level:'vertiefung',kind:'chapter',status:'alle'};
  const updated=practiceSelectionUrl(url,value);assert.equal(updated.pathname,url.pathname);assert.equal(updated.hash,url.hash);assert.equal(updated.searchParams.get('keep'),'1');
  assert.deepEqual(readPracticeSelection(updated.searchParams,indexed),value);
  assert.equal(practiceSelectionUrl(updated,emptyPracticeSelection()).href,url.href);

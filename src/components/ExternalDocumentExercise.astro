@@ -1,4 +1,5 @@
 ---
+import PracticeTracker from './PracticeTracker.astro';
 import type {Exercise} from '../data/exercise-types.ts';
 import {translate,localePath,type Locale} from '../lib/i18n.ts';
 import CodeExample from './CodeExample.astro';
@@ -14,5 +15,5 @@ const {exercise,locale}=Astro.props;const t=translate(locale);
  <p><button class="button secondary" data-legacy-draft-download hidden>{t('Früheren lokalen Entwurf als .typ herunterladen','Download a previous local draft as .typ')}</button></p>
  <details><summary>{t('Hinweis anzeigen','Show hint')}</summary><p>{exercise.hint[locale]}</p></details>
  <details><summary>{t('Musterlösung anzeigen','Show a solution')}</summary><CodeExample code={exercise.solution} language="Typst" locale={locale}/></details>
-</section>
+<PracticeTracker locale={locale} id={`editor-${exercise.id}`}/></section>
 <script src="../scripts/external-document-exercise.ts"></script>

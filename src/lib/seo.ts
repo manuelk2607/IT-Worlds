@@ -1,3 +1,4 @@
+import {orderingChallenges,orderingPath} from '../data/practice-challenges.ts';
 import { exercises, exercisePath } from '../data/exercises.ts';
 import {getContent} from './i18n.ts';
 import { topics, paths, sources } from '../data/content.ts';
@@ -7,7 +8,7 @@ import {isTypesettingCourse,TYPESETTING_TOPIC_PATH} from '../data/topic-categori
 import {practiceProjects} from '../data/practice-projects.ts';
 export const SITE_URL = 'https://it-worlds.maki26.workers.dev';
 export const publicPaths = ['/', '/lernen/', '/lernpfade/', '/quiz/', '/quellen/', '/uebungen/', '/schreibtrainer/', '/textsatz/', '/dokumentpruefung/',
-  '/glossar/',...practiceProjects.map(project=>project.path),
+  '/glossar/',...orderingChallenges.map(item=>orderingPath(item.id)),...practiceProjects.map(project=>project.path),
   ...exercises.filter(exercise=>exercise.id!==exercise.topic).map(exercisePath), ...topics.map(topic=>`/themen/${topic.id}/`), ...paths.map(path=>`/lernpfade/${path.id}/`), ...courses.map(course => coursePath(course)), ...courseChapters.map(chapter => chapter.url)];
 export const publicUrls = publicPaths.flatMap(path=>(['de','en'] as const).map(locale=>new URL(localePath(locale,path),SITE_URL).href));
 export function pageSeo(pathname: string, locale: Locale, title: string, description: string) {

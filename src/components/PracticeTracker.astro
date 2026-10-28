@@ -1,0 +1,14 @@
+---
+import {practiceStatuses} from '../lib/practice-record.ts';
+import {translate,type Locale} from '../lib/locale.ts';
+interface Props{id:string;locale:Locale}
+const {id,locale}=Astro.props;const t=translate(locale);
+const labels={open:t('Offen','Not started'),active:t('In Arbeit','In progress'),review:t('Wiederholen','Review needed'),complete:t('Abgeschlossen','Completed')};
+---
+<section class="practice-tracker" data-practice-tracker={id} aria-label={t('Bearbeitungsstatus dieser Aufgabe','Task working status')}>
+ <label>{t('Dein Bearbeitungsstatus','Your working status')}<select disabled data-practice-status>{practiceStatuses.map(status=><option value={status}>{labels[status]}</option>)}</select></label>
+ <p class="muted">{t('Auf diesem Gerät gespeichert, ohne Kontosynchronisierung. „Abgeschlossen“ ist deine Selbsteinschätzung; eine bestandene Browser-Modellprüfung wird ausdrücklich als solche gekennzeichnet. Gelesene Kapitel und Quizstand bleiben davon getrennt.','Saved on this device without account synchronisation. “Completed” is your self-assessment; a passed browser model check is explicitly labelled. Chapter reading and quiz progress remain separate.')}</p>
+ <p role="status" data-practice-save-message></p>
+</section>
+<script src="../scripts/practice-tracker.ts"></script>
+<style>.practice-tracker{padding:1rem;border:1px solid var(--line);border-radius:12px;margin-block:1rem}.practice-tracker label{display:flex;gap:1rem;align-items:center;flex-wrap:wrap;font-weight:600}.practice-tracker select{max-width:100%;min-height:44px;padding:.5rem;background:var(--white);color:var(--ink);border:1px solid var(--line);border-radius:8px}.practice-tracker p{font-size:.9rem}</style>

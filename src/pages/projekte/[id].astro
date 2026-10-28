@@ -1,0 +1,7 @@
+---
+import ProjectGuide from '../../components/ProjectGuide.astro';
+import{projectGuides,type ProjectGuide as Guide}from'../../data/project-guides.ts';
+export function getStaticPaths(){return projectGuides.map(project=>({params:{id:project.id},props:{project}}));}
+interface Props{project:Guide}const{project}=Astro.props;
+---
+<ProjectGuide project={project} locale="de"/>

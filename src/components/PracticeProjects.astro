@@ -1,6 +1,10 @@
 ---
+import {projectMilestones} from '../data/project-milestones.ts';
+import {getContent} from '../lib/i18n.ts';
 import {practiceProjects} from '../data/practice-projects.ts';
 import {translate,localePath,type Locale} from '../lib/i18n.ts';
-interface Props {locale:Locale}const {locale}=Astro.props;const t=translate(locale);
+interface Props {locale:Locale}const {locale}=Astro.props;const t=translate(locale);const{levelName}=getContent(locale);
 ---
-<section class="container section"><h2>{t('Größere Praxisprojekte','Larger practice projects')}</h2><p>{t('Verbinde mehrere Kursthemen in einem vollständigen lokalen Projekt mit Referenzdateien, Fehlerfällen und tatsächlichen Tests.','Connect several course topics in a complete local project with reference files, failure cases and actual tests.')}</p><div class="catalog-grid">{practiceProjects.map(project=><article class="progress-entry"><h3>{project.title[locale]}</h3><p>{project.description[locale]}</p><a class="button secondary" href={localePath(locale,project.path)}>{t('Praxisprojekt öffnen →','Open practice project →')}</a></article>)}</div></section>
+<section class="container section"><h2>{t('Praxisprojekte für deinen Lernweg','Practice projects for your learning route')}</h2><p>{t('Verbinde mehrere Kursthemen in einem vollständigen lokalen Projekt mit Referenzdateien, Fehlerfällen und tatsächlichen Tests.','Connect several course topics in a complete local project with reference files, failure cases and actual tests.')}</p><div class="catalog-grid">{practiceProjects.map(project=><article class="progress-entry" data-project-card={project.id} data-project-steps={projectMilestones[project.id]?.map(step=>step.id).join(' ')}><p class="eyebrow">{levelName(project.level)}</p><h3>{project.title[locale]}</h3><p>{project.description[locale]}</p><p data-project-summary></p><a class="button secondary" href={localePath(locale,project.path)}>{t('Praxisprojekt öffnen →','Open practice project →')}</a></article>)}</div></section>
+
+<script src="../scripts/project-summary.ts"></script>

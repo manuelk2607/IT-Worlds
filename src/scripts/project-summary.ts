@@ -1,0 +1,3 @@
+import{practiceRecord}from'./practice-client.ts';import{t}from'./browser-i18n.ts';
+function render(){for(const card of document.querySelectorAll<HTMLElement>('[data-project-card]')){const steps=(card.dataset.projectSteps??'').split(' ').filter(Boolean),record=practiceRecord(`project-${card.dataset.projectCard}`),done=steps.filter(step=>record.steps.includes(step)).length;card.querySelector('[data-project-summary]')!.textContent=t(`${done}/${steps.length} Schritte auf diesem Gerät selbst bestätigt`,`${done}/${steps.length} steps self-confirmed on this device`);}}
+document.addEventListener('practice-state-change',render);render();

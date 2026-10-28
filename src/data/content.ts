@@ -1,3 +1,4 @@
+import {projectSources} from './project-sources.ts';
 import {practiceTopics} from './practice-topics.ts';
 import {languageSources} from './course-language-sources.ts';
 import {documentSources} from './course-document-sources.ts';
@@ -52,6 +53,7 @@ export type Source = {
   description: string;
 };
 export const sources = {
+  ...projectSources,
   ...languageSources,
   ...documentSources,
   ...practiceSources,

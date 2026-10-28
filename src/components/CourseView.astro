@@ -1,4 +1,5 @@
 ---
+import PracticeTracker from './PracticeTracker.astro';
 import CodeExample from './CodeExample.astro';
 import Layout from '../layouts/Layout.astro';
 import LearningRoute from './LearningRoute.astro';
@@ -80,6 +81,7 @@ const breadcrumbRoot=typesetting?{title:t('Themenwelten','Topics'),href:'/#theme
             {section.code&&['Typst','LaTeX'].includes(section.language??'')&&['latex','typst'].includes(course.id)&&<p><a class="button secondary" href={localePath(locale,`/dokumentpruefung/?format=${course.id}&aufgabe=${chapterProgressId(course,chapter)}&beispiel=${course.id}-${chapter.id}-${index}`)}>{t('Dieses Beispiel lokal prüfen →','Check this example locally →')}</a></p>}
           </section>)}
           <section id="aufgabe" class="course-exercise"><p class="eyebrow">{t('SELBST ANWENDEN', 'APPLY IT YOURSELF')}</p><h2>{t('Deine Aufgabe', 'Your exercise')}</h2><p>{chapter.exercise[locale]}</p>{['latex','typst'].includes(course.id)&&<p><a class="button primary" href={course.id==='latex'?'https://www.overleaf.com/':'https://typst.app/'} target="_blank" rel="noopener noreferrer">{course.id==='latex'?t('Aufgabe in Overleaf bearbeiten ↗','Work on the task in Overleaf ↗'):t('Aufgabe in typst.app bearbeiten ↗','Work on the task in typst.app ↗')}</a> <a class="button secondary" href={localePath(locale,`/dokumentpruefung/?format=${course.id}&aufgabe=${chapterProgressId(course,chapter)}`)}>{t('Exportierte Quellen prüfen →','Check exported sources →')}</a></p>}<details><summary>{t('Lösung & Begründung anzeigen', 'Show solution & reasoning')}</summary><p>{chapter.solution[locale]}</p></details></section>
+          <PracticeTracker locale={locale} id={`chapter-${chapterProgressId(course,chapter)}`}/>
           <ExerciseLinks locale={locale} course={course.id} chapter={chapter.id} />
           <ProgressToggle locale={locale} kind="lesson" contentId={chapterProgressId(course, chapter)} />
           <a class="button primary" href={quizUrl}>{t('Dieses Kapitel im Quiz prüfen', 'Test this chapter in the quiz')} →</a>

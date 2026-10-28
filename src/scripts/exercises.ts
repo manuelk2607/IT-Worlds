@@ -1,3 +1,5 @@
+import {practiceRecord,savePracticeRecord,setPracticeStatus} from './practice-client.ts';
+import {practiceAttempt} from '../lib/practice-record.ts';
 import {exerciseDraftKey,loadExerciseDraft,saveExerciseDraft,type DraftStorage} from '../lib/exercise-draft.ts';
 import { exercises } from '../data/exercises';
 import { checkExercise } from '../lib/exercise-checker';
@@ -24,11 +26,12 @@ for (const element of document.querySelectorAll<HTMLElement>('[data-exercise]'))
   if(restored.status==='outdated')say(t('Die Aufgabe wurde aktualisiert. Du beginnst mit der aktuellen Vorlage.','The exercise was updated. Starting with the current template.'));
   if(restored.status==='unavailable')say(t('Speichern ist hier nicht möglich. Beim Neuladen geht deine Eingabe verloren.','Saving is unavailable here. Reloading will discard your input.'));
   const clear = () => { feedback.textContent='';feedback.classList.remove('passed');output.hidden=true;lines(); };
-  editor.addEventListener('input',()=>{previous=undefined;undo.hidden=true;clear();persist();});
-  const replace=(value:string)=>{if(value!==editor.value){previous=editor.value;undo.hidden=false;}editor.value=value;clear();persist();editor.focus();};
-  undo.addEventListener('click',()=>{if(previous===undefined)return;editor.value=previous;previous=undefined;undo.hidden=true;clear();persist();editor.focus();});
+  editor.addEventListener('input',()=>{setPracticeStatus(`editor-${exercise.id}`,'active');previous=undefined;undo.hidden=true;clear();persist();});
+  const replace=(value:string)=>{if(value!==editor.value){previous=editor.value;undo.hidden=false;}editor.value=value;setPracticeStatus(`editor-${exercise.id}`,'active');clear();persist();editor.focus();};
+  undo.addEventListener('click',()=>{if(previous===undefined)return;editor.value=previous;setPracticeStatus(`editor-${exercise.id}`,'active');previous=undefined;undo.hidden=true;clear();persist();editor.focus();});
   element.querySelector('[data-check-exercise]')!.addEventListener('click',()=>{
     const result=checkExercise(exercise.id,editor.value,locale);
+    savePracticeRecord(`editor-${exercise.id}`,practiceAttempt(practiceRecord(`editor-${exercise.id}`),result.passed));
     feedback.textContent=result.message;
     feedback.classList.toggle('passed',result.passed);
     element.querySelector<HTMLElement>('[data-exercise-output-text]')!.textContent=result.output;

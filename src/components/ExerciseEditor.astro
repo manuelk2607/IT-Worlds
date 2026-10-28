@@ -1,4 +1,5 @@
 ---
+import PracticeTracker from './PracticeTracker.astro';
 import '../styles/exercises.css';
 import { exercises } from '../data/exercises';
 import { getContent, translate, type Locale } from '../lib/i18n';
@@ -24,5 +25,5 @@ const editorId = `editor-${exercise.id}`;
   <details><summary>{t('Hinweis anzeigen', 'Show hint')}</summary><p>{exercise.hint[locale]}</p></details>
   <details><summary>{t('Musterlösung anzeigen', 'Show a solution')}</summary><pre><code>{exercise.solution}</code></pre><button class="text-link" data-load-solution>{t('Musterlösung in den Editor laden', 'Load solution into the editor')}</button></details>
   <p class="exercise-sources">{t('Grundlagen dieser Übung:', 'Sources behind this task:')} {exercise.sources.map(id=><a href={sources[id].url} target="_blank" rel="noopener noreferrer">{sources[id].publisher} · {sources[id].title} ↗</a>)}</p>
-</section>
+<PracticeTracker locale={locale} id={`editor-${exercise.id}`}/></section>
 <script src="../scripts/exercises.ts"></script>

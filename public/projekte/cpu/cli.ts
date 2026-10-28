@@ -1,0 +1,2 @@
+import{parseProgram,runMachine}from'./core.ts';import{readBounded}from'./input.ts';
+try{const [file,...extra]=process.argv.slice(2);if(!file||extra.length)throw new Error('Usage: node --experimental-strip-types cli.ts sample.json');const value:unknown=JSON.parse((await readBounded(file)).toString('utf8'));console.log(JSON.stringify(runMachine(parseProgram(value)),null,2));}catch(error){console.error(error instanceof Error?error.message:'Invalid input');process.exitCode=2;}

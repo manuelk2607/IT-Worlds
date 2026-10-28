@@ -1,3 +1,4 @@
+import {orderingChallenges,orderingPath} from '../data/practice-challenges.ts';
 import {practiceTools} from '../data/practice-topics.ts';
 import { getContent, localePath, type Locale } from './i18n.ts';
 import { courses, coursePath } from '../data/courses.ts';
@@ -10,6 +11,7 @@ export function createSearchIndex(locale: Locale): SearchEntry[] {
  const {topics,paths,levelName,sources}=getContent(locale);
  const typesetting=typesettingTopic(locale);
  return [
+  ...orderingChallenges.map(item=>({id:`ordering-${item.id}`,kind:'exercise' as const,title:item.title[locale],description:item.task[locale],context:locale==='de'?'Ablauf ordnen · erklärtes Lernmodell':'Order a sequence · explained learning model',url:localePath(locale,orderingPath(item.id)),text:item.steps.map(step=>step.title[locale]+' '+step.why[locale]).join(' ')})),
   ...glossary.map(term=>({id:`glossary-${term.id}`,kind:'glossary' as const,title:term.title[locale],description:term.definition[locale],context:locale==='de'?'Glossar · Begriff mit Kursverknüpfung':'Glossary · term linked to a course',url:localePath(locale,`/glossar/#begriff-${term.id}`),text:[term.title.de,term.title.en,...term.aliases].join(' ')})),
   ...practiceProjects.map(project=>({id:`project-${project.id}`,kind:'exercise' as const,title:project.title[locale],description:project.description[locale],context:locale==='de'?'Vollständiges Praxisprojekt':'Complete practice project',url:localePath(locale,project.path),text:project.courses.join(' ')+' '+project.description[locale]})),
   {id:'typesetting',kind:'topic' as const,title:typesetting.title,description:typesetting.description,context:locale==='de'?'Themenwelt · Typst empfohlen':'Topic · Typst recommended',url:localePath(locale,TYPESETTING_TOPIC_PATH),text:`${typesetting.tags.join(' ')} ${Object.values(typesetting.curriculum).flat().join(' ')} Overleaf Präsentation Bericht wissenschaftlich documents`},

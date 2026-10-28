@@ -1,0 +1,2 @@
+export function moveOrderedStep(order:readonly string[],index:number,direction:-1|1):string[]{const next=[...order],target=index+direction;if(!Number.isInteger(index)||index<0||target<0||index>=next.length||target>=next.length)return next;[next[index],next[target]]=[next[target]!,next[index]!];return next;}
+export function checkOrder(expected:readonly string[],actual:readonly string[]){const firstWrong=expected.findIndex((id,index)=>id!==actual[index]);return{passed:actual.length===expected.length&&firstWrong===-1,firstWrong:actual.length===expected.length?firstWrong:0};}

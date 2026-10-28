@@ -1,0 +1,2 @@
+import type{Source}from'./content.ts';
+export const projectSources={projectFileIo:{title:'Node.js · bounded regular-file input',publisher:'Node.js project',version:'Node.js 22.22.0',section:'fsPromises.open/readdir; FileHandle.read/stat/close; O_NOFOLLOW/O_NONBLOCK; bounded reads',url:'https://nodejs.org/download/release/v22.22.0/docs/api/fs.html',evidenceUrl:'https://nodejs.org/download/release/v22.22.0/docs/api/fs.html',reviewedAt:'2026-10-28',description:'File handles, directory entries, file types and explicit read limits for local practice programs.'} satisfies Source};

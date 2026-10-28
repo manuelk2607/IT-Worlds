@@ -1,0 +1,5 @@
+---
+import OrderingChallenge from '../../../components/OrderingChallenge.astro';import{orderingChallenges,type OrderingChallenge as Challenge}from'../../../data/practice-challenges.ts';
+export function getStaticPaths(){return orderingChallenges.map(challenge=>({params:{id:challenge.id},props:{challenge}}));}interface Props{challenge:Challenge}const{challenge}=Astro.props;
+---
+<OrderingChallenge challenge={challenge} locale="de"/>

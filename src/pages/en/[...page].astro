@@ -1,4 +1,8 @@
 ---
+import OrderingChallenge from '../../components/OrderingChallenge.astro';
+import {orderingChallenges} from '../../data/practice-challenges.ts';
+import ProjectGuide from '../../components/ProjectGuide.astro';
+import {projectGuides} from '../../data/project-guides.ts';
 import Exercises from '../uebungen.astro';
 import Typesetting from '../textsatz.astro';
 import DeliveryProject from '../projekte/auslieferung.astro';
@@ -24,6 +28,8 @@ import type { Topic as TopicData, LearningPath } from '../../data/content';
 interface Props { view: string; topic?: TopicData; path?: LearningPath; course?: Course; chapter?: Chapter }
 export function getStaticPaths() {
   return [
+    ...orderingChallenges.map(challenge=>({params:{page:`uebungen/ablauf/${challenge.id}`},props:{view:`uebungen/ablauf/${challenge.id}`}})),
+    ...projectGuides.map(project=>({params:{page:`projekte/${project.id}`},props:{view:`projekte/${project.id}`}})),
     ...courses.flatMap(course => [
       { params: { page: `themen/${course.topic}/${course.slug}` }, props: { view: 'course', course } },
       ...course.chapters.map(chapter => ({ params: { page: `themen/${course.topic}/${course.slug}/${chapter.id}` }, props: { view: 'course', course, chapter } })),
@@ -34,7 +40,11 @@ export function getStaticPaths() {
   ];
 }
 const { view, topic, path, course, chapter } = Astro.props;
+const challenge=orderingChallenges.find(challenge=>view===`uebungen/ablauf/${challenge.id}`);
+const project=projectGuides.find(project=>view===`projekte/${project.id}`);
 ---
+{challenge&&<OrderingChallenge challenge={challenge} locale="en"/>}
+{project&&<ProjectGuide project={project} locale="en"/>}
 {view === 'home' && <Home locale="en" />}
 {view === 'lernen' && <Start locale="en" />}
 {view === 'textsatz' && <Typesetting locale="en" />}

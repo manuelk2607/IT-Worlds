@@ -1,5 +1,9 @@
 # Quellenprotokoll
 
+## Übungsorganisation und lokale Projekte · 28. Oktober 2026
+
+Registerstand: 273 Belege. Neu tatsächlich gelesen: Node.js v22.22.0, File system (fsPromises.open/readdir, FileHandle.read/stat/close sowie O_NOFOLLOW/O_NONBLOCK und deren Plattformgrenzen). Vollständige Herausgeber-/Versions-/Abschnitts-/URL-/Datumsmetadaten in `project-sources.ts`. Erneut gelesen: Node.js crypto.createHash (SHA-256), RFC 4632 §3.1 (IPv4-Präfixnotation) und Nand2Tetris Project 5 (CPU/Memory/Tests); vorhandene TypeScript-/Node-Test- und Dokumentationsnetz-Belege werden wiederverwendet. Der Registermaschinenentwurf ist ein eigenes Lernmodell, keine Nachbildung der Hack-Architektur. IPv4-Bereichsgrößen werden nicht pauschal als nutzbare Hostadressen bezeichnet. Hashvergleich ist keine Authentizitätsprüfung. Reale Kern-/CLI-/Dateisystemtests und ein vertrauenswürdiger fester CPU-Trace ergänzen den Quellenabgleich; sie ersetzen kein unabhängiges Fachreview.
+
 ## Java, C/C++, Go und Rust · 27. Oktober 2026
 
 Registerstand: 272 Belege, davon 33 neue in `course-language-sources.ts`. Tatsächlich gelesen: Oracle Java SE 21 (javac/--release, Records, ArrayList, Function, Integer.parseInt und Math.addExact) sowie die ausdrücklich als JDK-8-Grundlagentutorials gekennzeichneten Variablen-/Kontrollfluss- und try-with-resources-Abschnitte; Microsoft Learn/MSVC 170 (C-main, Arrays, Zeiger, malloc/free, vector, unique_ptr, from_chars); C++ Core Guidelines (R.1/R.5/R.11); GCC-Warnoptionen und LLVM-AddressSanitizer (Nutzung und Nachweisgrenzen); Go Getting Started, Effective Go (Slices und Errors), strconv/testing für Go 1.27.3 sowie der Pipeline-/Cancellation-Beitrag vom 13.03.2014; Rust Book/Edition 2024 (Ownership, Borrowing, Option, Result, Traits, Tests) und Standardbibliothek (str::len, u64::checked_add).
