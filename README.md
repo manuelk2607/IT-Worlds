@@ -41,7 +41,7 @@ Das baut die statischen Seiten und startet den lokalen Cloudflare Worker auf Por
 
 ## Prüfen und veröffentlichen
 
-Die native Compilerregression in `tests/native-languages.test.ts` führt die veröffentlichten Java-/C-/C++-/Go-/Rust-Listings aus. Lokal fehlende Compiler werden übersprungen; der eigene CI-Job installiert die festgelegten Versionen und verlangt jeden Compiler mit `IT_WORLDS_NATIVE_TEST=1`. Optionale lokale Pfade: `IT_WORLDS_JAVAC`, `IT_WORLDS_JAVA`, `IT_WORLDS_CC`, `IT_WORLDS_CXX`, `IT_WORLDS_GO` und `IT_WORLDS_RUSTC`. Nutzerprogramme werden auf der Website nicht ausgeführt.
+Die native Compilerregression in `tests/native-languages.test.ts` führt die veröffentlichten Java-/C-/C++-/Go-/Rust-Listings aus. Lokal fehlende oder für das Ziel zu alte Compiler werden übersprungen; der eigene CI-Job installiert die festgelegten Versionen und verlangt jeden Compiler mit `IT_WORLDS_NATIVE_TEST=1`. Optionale lokale Pfade: `IT_WORLDS_JAVAC`, `IT_WORLDS_JAVA`, `IT_WORLDS_CC`, `IT_WORLDS_CXX`, `IT_WORLDS_GO` und `IT_WORLDS_RUSTC`. Nutzerprogramme werden auf der Website nicht ausgeführt.
 
 ```bash
 npm test

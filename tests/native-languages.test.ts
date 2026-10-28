@@ -18,7 +18,9 @@ test('every new chapter publishes the exact native listing tested here',()=>{
 for(const language of ['Java','C','C++','Go','Rust']as const)test(`published ${language} programs compile and meet output/failure contracts`,context=>{
  const compiler=language==='Java'?process.env.IT_WORLDS_JAVAC??'javac':language==='C'?process.env.IT_WORLDS_CC??'clang':language==='C++'?process.env.IT_WORLDS_CXX??'clang++':language==='Go'?process.env.IT_WORLDS_GO??'go':process.env.IT_WORLDS_RUSTC??'rustc';
  const available=spawnSync(compiler,[language==='Go'?'version':'--version'],{encoding:'utf8',timeout:10000});
- if(available.error||available.status!==0){if(process.env.IT_WORLDS_NATIVE_TEST==='1')assert.fail(`Required compiler unavailable: ${compiler}`);context.skip(`No ${language} compiler; required in dedicated language CI`);return;}
+ // General runners can have an older JDK; availability must include the published target.
+ const javaTooOld=language==='Java'&&Number(/^javac\s+(\d+)/m.exec(available.stdout+available.stderr)?.[1]??0)<21;
+ if(available.error||available.status!==0||javaTooOld){if(process.env.IT_WORLDS_NATIVE_TEST==='1')assert.fail(`Required compiler unavailable or below target: ${compiler}`);context.skip(`No suitable ${language} compiler${javaTooOld?' (JDK 21 required)':''}; required in dedicated language CI`);return;}
  const root=mkdtempSync(join(tmpdir(),'it-worlds-native-'));
  const env={...process.env,GOTOOLCHAIN:'local',GOPROXY:'off',GOSUMDB:'off',GOCACHE:join(root,'go-cache'),GOENV:'off'};
  const run=(command:string,args:string[])=>spawnSync(command,args,{cwd:root,env,encoding:'utf8',timeout:60000,maxBuffer:2*1024*1024});
