@@ -1,0 +1,40 @@
+import type {Source} from './content.ts';
+const source=(url:string,title:string,publisher:string,version:string,section:string):Source=>({url,evidenceUrl:url,title,publisher,version,section,reviewedAt:'2026-10-27',description:section});
+const java=(path:string,title:string,section:string)=>source(`https://docs.oracle.com/en/java/javase/21/${path}`,title,'Oracle · Java SE','Java SE 21',section);
+const rust=(page:string,title:string,section:string)=>source(`https://doc.rust-lang.org/book/${page}.html`,title,'Rust project · The Rust Programming Language','Rust Book · edition 2024 · read 2026-10-27',section);
+const ms=(path:string,title:string,section:string)=>source(`https://learn.microsoft.com/en-us/cpp/${path}?view=msvc-170`,title,'Microsoft Learn','MSVC 170 documentation · read 2026-10-27',section);
+export const languageSources={
+ javaBuild:java('docs/specs/man/javac.html','javac','Description; --release; -d; -Xlint'),
+ javaBasics:source('https://docs.oracle.com/javase/tutorial/java/nutsandbolts/','Java language basics','Oracle · Java Tutorials','JDK 8 tutorial · foundational syntax also used with Java 21','Variables; operators; control flow'),
+ javaRecords:java('language/records.html','Record classes','Components; generated accessors; compact canonical constructor'),
+ javaList:java('docs/api/java.base/java/util/ArrayList.html','ArrayList<E>','List implementation; add; get; size; mutation'),
+ javaResources:source('https://docs.oracle.com/javase/tutorial/essential/exceptions/tryResourceClose.html','The try-with-resources statement','Oracle · Java Tutorials','JDK 8 tutorial · AutoCloseable semantics used with Java 21','AutoCloseable; cleanup on normal and exceptional completion'),
+ javaInteger:java('docs/api/java.base/java/lang/Integer.html','Integer','parseInt; signed int range; NumberFormatException'),
+ javaMath:java('docs/api/java.base/java/lang/Math.html','Math','addExact: overflow raises ArithmeticException'),
+ javaFunction:java('docs/api/java.base/java/util/function/Function.html','Function<T,R>','Functional interface; type parameters; apply'),
+ cMain:ms('c-language/main-function-and-program-execution','C main and program execution','Portable int main(void); calls; return'),
+ cArrays:ms('c-language/array-declarations','C array declarations','Elements; bounds; array declarations and subscripts'),
+ cPointers:ms('c-language/pointer-declarations','C pointer declarations','Pointer variables; pointed-to types; addresses'),
+ cMalloc:ms('c-runtime-library/reference/malloc','malloc','Allocation size; failure returns NULL; check before access'),
+ cFree:ms('c-runtime-library/reference/free','free','Free allocated blocks; NULL; invalid pointers'),
+ cppRaii:source('https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Rr-raii','C++ Core Guidelines · resource management','Bjarne Stroustrup, Herb Sutter and contributors','Living guidelines · 14 June 2026','R.1 RAII; R.5 scoped objects; R.11 avoid explicit new/delete; C++20 focus'),
+ cppVector:ms('standard-library/vector-class','std::vector','Sequence; size/capacity; at; push_back; reallocation invalidates references'),
+ cppUnique:ms('standard-library/unique-ptr-class','std::unique_ptr','Exclusive ownership; move; destruction; deleted copy operations'),
+ cppParse:ms('standard-library/charconv-functions','charconv functions','from_chars: result pointer, errc and integer conversion'),
+ nativeWarnings:source('https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html','GCC warning options','GNU Compiler Collection','Online manual · read 2026-10-27','-Wall; -Wextra; -Wpedantic; -Werror; warnings are not a proof of correctness'),
+ nativeSanitizer:source('https://clang.llvm.org/docs/AddressSanitizer.html','AddressSanitizer','LLVM project · Clang','Online manual · read 2026-10-27','Introduction; Usage; -fsanitize=address; runtime error reports'),
+ goStart:source('https://go.dev/doc/tutorial/getting-started','Get started with Go','Go project','Go documentation · read with Go 1.27.3','go mod init; main package; go run'),
+ goSlices:source('https://go.dev/doc/effective_go#slices','Effective Go · slices','Go project','Living guide · read 2026-10-27','Slices refer to an underlying array; changing elements through a slice'),
+ goErrors:source('https://go.dev/doc/effective_go#errors','Effective Go · errors','Go project','Living guide · read 2026-10-27','error interface; error results; nil'),
+ goParse:source('https://pkg.go.dev/strconv','strconv','Go project','Go 1.27.3','Atoi; error return; integer parsing'),
+ goPipelines:source('https://go.dev/blog/pipelines','Go concurrency patterns: pipelines and cancellation','Sameer Ajmani · Go project','13 March 2014','Channel ownership; close; cancellation; bounded parallelism'),
+ goTesting:source('https://pkg.go.dev/testing','testing','Go project','Go 1.27.3','Test functions; _test.go files; failures; table-driven tests'),
+ rustOwnership:rust('ch04-01-what-is-ownership','What is ownership?','Ownership rules; String move; Copy; scope and drop'),
+ rustBorrowing:{...rust('ch04-02-references-and-borrowing','References and borrowing','Shared/mutable references; lifetimes; dangling references'),evidenceUrl:'https://doc.rust-lang.org/stable/book/ch04-02-references-and-borrowing.html'},
+ rustEnum:rust('ch06-01-defining-an-enum','Defining an enum','Variants; Option<T>; representing absence'),
+ rustResult:rust('ch09-02-recoverable-errors-with-result','Recoverable errors with Result','Ok/Err; match; ? propagation; unwrap panics'),
+ rustTraits:rust('ch10-02-traits','Defining shared behaviour with traits','Trait definitions; implementations; generic trait bounds'),
+ rustTests:rust('ch11-01-writing-tests','How to write tests','#[test]; assertions; cargo test; should_panic'),
+ rustString:source('https://doc.rust-lang.org/std/primitive.str.html#method.len','str::len','Rust project · Standard Library','Rust standard library · read 2026-10-27','len returns UTF-8 byte length, not character or grapheme count'),
+ rustInteger:source('https://doc.rust-lang.org/std/primitive.u64.html#method.checked_add','u64::checked_add','Rust project · Standard Library','Rust standard library · read 2026-10-27','Checked addition returns None on overflow'),
+};

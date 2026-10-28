@@ -1,5 +1,12 @@
 # Quellenprotokoll
 
+## Java, C/C++, Go und Rust · 27. Oktober 2026
+
+Registerstand: 272 Belege, davon 33 neue in `course-language-sources.ts`. Tatsächlich gelesen: Oracle Java SE 21 (javac/--release, Records, ArrayList, Function, Integer.parseInt und Math.addExact) sowie die ausdrücklich als JDK-8-Grundlagentutorials gekennzeichneten Variablen-/Kontrollfluss- und try-with-resources-Abschnitte; Microsoft Learn/MSVC 170 (C-main, Arrays, Zeiger, malloc/free, vector, unique_ptr, from_chars); C++ Core Guidelines (R.1/R.5/R.11); GCC-Warnoptionen und LLVM-AddressSanitizer (Nutzung und Nachweisgrenzen); Go Getting Started, Effective Go (Slices und Errors), strconv/testing für Go 1.27.3 sowie der Pipeline-/Cancellation-Beitrag vom 13.03.2014; Rust Book/Edition 2024 (Ownership, Borrowing, Option, Result, Traits, Tests) und Standardbibliothek (str::len, u64::checked_add).
+
+Die Go-Tour-Seiten lieferten nur eine Skripthülle und wurden deshalb nicht als gelesene Inhaltsbelege eingetragen; Slices und Fehlerwerte sind anhand der lesbaren offiziellen Effective-Go-Abschnitte belegt. Der Borrowing-Beleg weist die tatsächlich gelesene stable-Buchroute separat aus. Jede Quelle enthält Herausgeber, Ausgabe, Abschnitt, URL und Lesedatum. Lerntexte und alle Antworterklärungen sind eigenständig formuliert. Die 24 exakten Listings wurden zusätzlich lokal mit echten Compilern ausgeführt; weder Quellenabgleich noch Compilerlauf ersetzen das noch offene unabhängige Fachreview.
+
+
 ## Glossar und Praxisprojekte · 27. Oktober 2026
 
 Das Glossar verwendet 15 kurze eigenständige DE/EN-Definitionen aus dem bestehenden Register; keine zusätzlichen Quellen wurden erfunden. Erneut tatsächlich gelesen: PostgreSQL 18 (Constraints 5.5.4–5, Tutorial Joins/Aggregate/Transaktionen einschließlich Savepoints, Vergleiche/NULL, Indexkosten); Microsoft TypeScript Handbook (Static Type Checker, Narrowing); Pro Git 2 (Recording Changes/Committing); OWASP API1:2023 (Object Level Authorization); LaTeX Project (About/Features); Typst 0.15.1 README (Overview/Compiler/Web-App). Die Begriffskarten zeigen Herausgeber, Ausgabe, Abschnitt, URL und den bisherigen Quellenlesestand. Diese erneute Sichtung am 27.10. ist Quellenabgleich, kein unabhängiges Fachreview. Die drei Praxisprojekte verwenden dieselben bereits gelesenen Kursquellen und zusätzlich reale lokale Tests; sie behaupten keine vollständige fachliche Freigabe.

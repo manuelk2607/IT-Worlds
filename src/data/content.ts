@@ -1,4 +1,5 @@
 import {practiceTopics} from './practice-topics.ts';
+import {languageSources} from './course-language-sources.ts';
 import {documentSources} from './course-document-sources.ts';
 import {practiceSources} from './practice-sources.ts';
 import { exerciseSources } from './exercise-sources.ts';
@@ -51,6 +52,7 @@ export type Source = {
   description: string;
 };
 export const sources = {
+  ...languageSources,
   ...documentSources,
   ...practiceSources,
   ...exerciseSources,
@@ -269,8 +271,8 @@ const baseTopics: Topic[] = [
     color: "blue",
     group: "bauen",
     description:
-      "Lerne, Probleme in kleine Schritte zu zerlegen und Lösungen in Code auszudrücken. Python und TypeScript besitzen eigene Kursfolgen; Java, C/C++, Go und Rust ergänzen die weitere Sprachlandkarte. Markdown ergänzt die Programmierpraxis für einfache strukturierte Dokumentation.",
-    tags: ["Python", "TypeScript", "Markdown", "Algorithmen"],
+      "Wähle einen verfügbaren Lernkurs: TypeScript für Web-Logik, Python für kleine Werkzeuge, Java für typisierte Modelle, C/C++ für Speicher und Ressourcen, Go für klare Datenflüsse oder Rust für Ownership. Markdown ergänzt die Kurse für einfache Dokumentation. Alle Kurse enthalten Aufgaben, Lösungen und Quizfragen; sie sind keine vollständigen Sprachreferenzen.",
+    tags: ["TypeScript", "Python", "Java", "C/C++", "Go", "Rust", "Markdown"],
     prerequisites:
       "Für den Einstieg genügt Neugier. Vertiefungen bauen auf Variablen, Funktionen und grundlegenden Datenstrukturen auf.",
     curriculum: {

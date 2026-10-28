@@ -1,4 +1,8 @@
 import {hardwareCourse} from './course-hardware.ts';
+import {javaCourse} from './course-java.ts';
+import {cCppCourse} from './course-c-cpp.ts';
+import {goCourse} from './course-go.ts';
+import {rustCourse} from './course-rust.ts';
 import {typingCourse} from './course-typing.ts';
 import {gamesCourse} from './course-games.ts';
 import {osCourse} from './course-os.ts';
@@ -28,7 +32,7 @@ export { coursePath, chapterProgressId } from './course-types.ts';
 
 export const courses: Course[] = [
   hardwareCourse, typingCourse, gamesCourse,
-  basicsCourse, typescriptCourse, pythonCourse, markdownCourse, typstCourse, webCourse, databaseCourse, apiCourse, networkCourse, osCourse, linuxCourse, securityCourse, devopsCourse,
+  basicsCourse, typescriptCourse, pythonCourse, javaCourse, cCppCourse, goCourse, rustCourse, markdownCourse, typstCourse, webCourse, databaseCourse, apiCourse, networkCourse, osCourse, linuxCourse, securityCourse, devopsCourse,
   { ...aiCourse, chapters: [...aiCourse.chapters, ...aiAdvanced, ...aiArchitectures] },
   { ...latexCourse, related:['typst','markdown'], chapters: [...latexCourse.chapters, ...latexTechnical, ...latexAdvanced, ...latexReview] },
 ];

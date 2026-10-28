@@ -22,7 +22,7 @@ interface Props {
 const pageDescriptions: Record<string,string> = {
   '/quiz/': t(`${questions.length} IT-Quizfragen mit Erklärungen, Schwierigkeitsstufen und belegten Lösungen. Prüfe dein Wissen zu KI, LaTeX und weiteren Themen.`, `${questions.length} IT quiz questions with explanations, difficulty levels and sourced solutions. Test your knowledge of AI, LaTeX and other topics.`),
   '/quellen/': t(`${Object.keys(sources).length} Primärquellen mit Herausgeber, Version, Abschnitt und Lesedatum zu unseren Lerntexten und Übungen.`, `${Object.keys(sources).length} primary sources with publisher, version, section and reading date for our lessons and exercises.`),
-  '/lernpfade/': t('Strukturierte Kurse zu allen IT-Themenwelten und drei durchgehende Lernwege für Website, APIs und Systementwurf. Voraussetzungen, Kapitel und nächste Schritte auf einen Blick.', 'Structured courses across all IT topics and three complete learning routes for websites, APIs and system design. Prerequisites, chapters and next steps at a glance.'),
+  '/lernpfade/': t('Strukturierte Kurse zu allen IT-Themenwelten und vier durchgehende Lernwege für Web, APIs, Systementwurf und Speicherzugriff. Voraussetzungen, Kapitel und nächste Schritte auf einen Blick.', 'Structured courses across all IT topics and four complete learning routes for web, APIs, system design and memory access. Prerequisites, chapters and next steps at a glance.'),
 };
 const basePath = Astro.url.pathname.replace(/^\/en(?=\/|$)/, '') || '/';
 const {
@@ -197,7 +197,7 @@ const nav = [
           aria-controls="search-results"
         />
       </div>
-      <div class="search-options"><label for="search-kind">{t('Inhaltstyp', 'Content type')}</label><select id="search-kind"><option value="all">{t('Alles', 'Everything')}</option><option value="course">{t('Kurse', 'Courses')}</option><option value="chapter">{t('Kapitel', 'Chapters')}</option><option value="topic">{t('Themenwelten', 'Topics')}</option><option value="path">{t('Lernpfade', 'Learning paths')}</option><option value="exercise">{t('Übungen & Projekte', 'Exercises & projects')}</option><option value="glossary">{t('Glossar', 'Glossary')}</option><option value="source">{t('Quellen', 'Sources')}</option></select></div>
+      <div class="search-options"><label for="search-kind">{t('Inhaltstyp', 'Content type')}</label><select id="search-kind"><option value="all">{t('Alles', 'Everything')}</option><option value="course">{t('Kurse', 'Courses')}</option><option value="chapter">{t('Kapitel & Aufgaben', 'Chapters & tasks')}</option><option value="topic">{t('Themenwelten', 'Topics')}</option><option value="path">{t('Lernpfade', 'Learning paths')}</option><option value="exercise">{t('Übungen & Projekte', 'Exercises & projects')}</option><option value="glossary">{t('Glossar', 'Glossary')}</option><option value="source">{t('Quellen', 'Sources')}</option></select></div>
       <p id="search-status" class="search-help" role="status"></p>
       <button class="button secondary" data-search-retry hidden>{t('Erneut laden', 'Retry')}</button>
       <div id="search-results"></div>

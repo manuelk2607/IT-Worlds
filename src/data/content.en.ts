@@ -7,8 +7,8 @@ type TopicText = Pick<Topic, 'title' | 'short' | 'description' | 'tags' | 'prere
 const text: Record<string, TopicText> = {
   programmiersprachen: {
     title: 'Programming languages', short: 'From your first line to thoughtful code.',
-    description: 'Learn to break problems into small steps and express solutions in code. Python and TypeScript have their own course sequences; Java, C/C++, Go and Rust extend the future language map. Markdown complements programming practice for simple structured documentation.',
-    tags: ['Python', 'TypeScript', 'Markdown', 'Algorithms'], prerequisites: 'Curiosity is enough to get started. Further lessons build on variables, functions and basic data structures.',
+    description: 'Choose an available course: TypeScript for web logic, Python for small tools, Java for typed models, C/C++ for memory and resources, Go for clear data flow or Rust for ownership. Markdown supports simple documentation. Every course includes tasks, solutions and quizzes; none is a complete language reference.',
+    tags: ['TypeScript', 'Python', 'Java', 'C/C++', 'Go', 'Rust', 'Markdown'], prerequisites: 'Curiosity is enough to get started. Further lessons build on variables, functions and basic data structures.',
     curriculum: {
       einstieg: ['Variables & arithmetic operators', 'Conditions, loops & functions', 'First steps with Python and TypeScript', 'Structuring documentation with Markdown'],
       vertiefung: ['Data structures & algorithms', 'Type systems, error handling & tests', 'Comparing Java, C/C++, Go & Rust', 'Documenting and explaining programs clearly'],

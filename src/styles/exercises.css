@@ -9,6 +9,7 @@
 .exercise-editor summary { cursor: pointer; font-weight: 650; }
 .exercise-editor pre { white-space: pre-wrap; overflow-wrap: anywhere; padding: 1rem; border-radius: 10px; background: #10182a; color: #f0f4ff; }
 .exercise-feedback { min-height: 1.5em; font-weight: 650; }
+.practice-more{margin-top:1.5rem}.exercise-card .eyebrow{font-size:.78rem}.exercise-card h3{line-height:1.4}.exercise-card-description{overflow-wrap:anywhere}
 .exercise-feedback.passed { color: #126346; }
 .exercise-sources { display: flex; flex-wrap: wrap; gap: .5rem 1rem; font-size: .85rem; }
 .exercise-output h3 { font-size: 1rem; }

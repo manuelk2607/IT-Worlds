@@ -9,7 +9,7 @@ export interface CourseSection {
   runtime?: 'browser' | 'node';
   formula?: string;
   code?: string;
-  language?: 'Python' | 'LaTeX' | 'BibTeX' | 'Shell' | 'SQL' | 'TypeScript' | 'HTML' | 'CSS' | 'JSON' | 'YAML' | 'Dockerfile' | 'Markdown' | 'Typst' | 'GDScript' | 'C#' | 'C++';
+  language?: 'Python' | 'LaTeX' | 'BibTeX' | 'Shell' | 'SQL' | 'TypeScript' | 'HTML' | 'CSS' | 'JSON' | 'YAML' | 'Dockerfile' | 'Markdown' | 'Typst' | 'GDScript' | 'C#' | 'C++' | 'C' | 'Java' | 'Go' | 'Rust';
 }
 export interface CourseQuestion {
   prompt: Bilingual;
@@ -29,7 +29,7 @@ export interface Chapter {
   questions: CourseQuestion[];
 }
 export interface Course {
-  id: 'ki' | 'latex' | 'datenbanken' | 'apis' | 'typescript' | 'web' | 'grundlagen' | 'linux' | 'netzwerke' | 'sicherheit' | 'devops' | 'python' | 'betriebssysteme' | 'markdown' | 'typst' | 'hardware' | 'tippen' | 'spiele';
+  id: 'ki' | 'latex' | 'datenbanken' | 'apis' | 'typescript' | 'web' | 'grundlagen' | 'linux' | 'netzwerke' | 'sicherheit' | 'devops' | 'python' | 'betriebssysteme' | 'markdown' | 'typst' | 'hardware' | 'tippen' | 'spiele' | 'java' | 'c-cpp' | 'go' | 'rust';
   topic: string;
   slug: string;
   title: Bilingual;

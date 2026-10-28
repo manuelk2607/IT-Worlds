@@ -1,4 +1,18 @@
-# Fortsetzung · Offene Entwicklungsaufgaben · 27.10.2026
+# Laufend · Sprachkurse und Struktur · 28.10.2026
+
+Neuer Auftrag: technisch umsetzbare Restaufgaben und konkrete zusätzliche Schwächen bearbeiten; insbesondere Java, C/C++, Go und Rust sowie Kurs-/Übungsstruktur. Sauberer Ausgangspunkt a4463a1. Externe P1-Reviews/Reset-Postfach bleiben offen und werden nicht durch Simulation ersetzt. Bestehende Funktionen, IDs und Daten erhalten.
+
+Paket 1 implementiert: vier DE/EN-Kurse Java, C/C++, Go und Rust mit jeweils sechs Kapiteln, 24 vollständigen Listings und 48 erklärten Fragen; 33 neue gelesene Primärquellen. Native Listings sind zentral und werden exakt aus den Kursen übernommen. Java 21-Ziel auf JDK 26, C17/C++20 mit Clang/ASan/UBSan und Rust 1.99.1 bestehen einschließlich CLI-Fehler-/Überlauf- und Compiler-Ablehnungsfällen. Go 1.27.3 ebenfalls vollständig erfolgreich. Keine Website-Abhängigkeiten, SDKs nur privat temporär; keine Nutzer-Codeausführung. Neue native CI-Prüfung ergänzt. Inhaltstests 6/6 bestehen. Gesamt- und Browsernachweis inzwischen abgeschlossen, siehe Verifikation unten; Release noch ausstehend.
+
+Paket 2 implementiert: gruppierter Kurskatalog, zielbezogene Sprachwahl und einheitliche Übungsübersicht mit 195 bestehenden Aufgaben/Projekten. Alle 169 Kapitelaufgaben sind ohne Inhaltsduplikate über stabile #aufgabe-Anker auffindbar; kombinierte URL-Filter, 18er-Nachladen, Leerzustand und Rücksetzen. Mehrfachzuordnungen der drei Projekte erhalten. Globale Suche berücksichtigt Aufgaben/Lösungen. Vierter vollständiger Lernpfad verbindet Hardware, C/C++ und Rust über 14 vorhandene Kapitel; keine neuen Fortschritts-IDs für den Pfad. Native Beispiele vollständig 6/6 verifiziert; Katalog-/Such-/Pfad-/Inhaltstests 16/16. 232 Dateien vor dem letzten Pfad-/Suchabgleich strikt fehlerfrei; erster Build 516 Seiten erfolgreich. Abhängigkeiten mit unveränderter Lockdatei wiederhergestellt.
+
+Verifikation am 28.10.: npm test 114 Tests, 106 bestanden/8 optionale lokale Laufzeit-Skips; alle fünf nativen Compilergruppen ohne Skip erfolgreich. Check 233 Dateien ohne Fehler/Warnungen/Hinweise. Build 518 Seiten, Release-Dry-Run 512 kanonische Sprachseiten/37.325 interne Ziele erfolgreich. Keine separate Lint-Aufgabe im Projekt. Lokaler Browser: kombinierte Filter, 18→36 Nachladen mit Zielfokus, Leerzustand/Reset, Konfliktauflösung, DE/EN-Zustand, Kursgruppen/Suche, neuer 14-Schritte-Pfad, alle vier Sprachfamilien, native Listings/kopierbare Startbefehle, Aufgabe/Lösung, Rust-Quiz falsch/richtig/alle Erklärungen/1-von-2-Abschluss/Neustart und englisches Java-Feedback. Globale Suche findet ParseIntError aus der Aufgabe und öffnet den Rust-Treffer per Enter. Tatsächliche 390px-/1280px-Ansichten, Mobilmenü/Escape und beide Designs ohne Seitenüberlauf. Dokumentfilter-Zuordnung im Browser gefunden, auf alle 30 Textsatz-Kapitel korrigiert und regressiongeprüft; kein neuer Inhalt dort.
+
+Nächster Schritt: Commit/Push, sieben CI-Jobs und tatsächliche Veröffentlichung samt öffentlichem Nachvergleich. Aktuell 22 Kurse, 169 Kapitel, 348 Fragen, 272 Quellen, 195 Aufgaben/Projekte. Neue Pakete noch nicht committed oder veröffentlicht. Bestehende Cloudflare-Anmeldung erneuert; Account/Subdomain und vier vorhandene Bindings vor Release bestätigt, keine Konfiguration geändert. Externe P1-Blocker unverändert; kein zusätzlicher Worktree oder Compilerdienst. Readiness und beide HTTP-404-Sprachen auch nach den Änderungen erfolgreich.
+
+---
+
+# Abgeschlossen · Praxisprojekte, Trainer und Glossar · 27.10.2026
 
 Ziel: die dokumentierten Restaufgaben priorisiert abschließen, bestehende Daten/URLs erhalten. Die folgenden unabhängigen P2-Pakete sind technisch abgeschlossen und veröffentlicht; das Gesamtprojekt wird wegen externer Reviews und weiterer bedarfsabhängiger Aufgaben nicht als abgeschlossen erklärt.
 

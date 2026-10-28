@@ -1,4 +1,5 @@
 .section-shortcuts { display:flex; flex-wrap:wrap; gap:10px; margin-top:24px; }
+.course-groups{display:grid;gap:2.5rem}.course-group>.section-heading{margin-block:1.5rem 1rem}.course-group>.section-heading h3{font-size:1.35rem}.catalog-course h4{font-size:1.35rem;line-height:1.35;margin:0}.catalog-course h4 a:hover{color:var(--blue)}.programming-guide .topic-directory a{font-size:.95rem;line-height:1.6}.programming-guide small{color:var(--muted)}
 .section-shortcuts a { padding:10px 16px; border:1px solid var(--line); border-radius:999px; background:var(--white); font-size:.9rem; }
 .section-shortcuts a:hover { color:var(--blue); border-color:var(--blue); }
 .catalog-grid,.start-options,.outline-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr)); gap:24px; }

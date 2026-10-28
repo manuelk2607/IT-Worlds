@@ -60,3 +60,14 @@ test('search includes descriptions and bilingual glossary aliases with stable an
   assert(glossary.every(term=>term.title.de&&term.title.en&&term.definition.de&&term.definition.en&&sources[term.source]));
  }
 });
+test('chapter search includes tasks and explained solutions without duplicate result entries',()=>{
+ for(const locale of ['de','en'] as const){
+  const index=createSearchIndex(locale);
+  for(const course of courses.filter(course=>['java','c-cpp','go','rust'].includes(course.id))){
+   for(const chapter of course.chapters){const entry=index.find(item=>item.id===`chapter-${course.id}-${chapter.id}`)!;
+    assert(entry.text.includes(chapter.exercise[locale]));assert(entry.text.includes(chapter.solution[locale]));
+   }
+  }
+  assert.equal(new Set(index.map(entry=>entry.id)).size,index.length);
+ }
+});

@@ -1,0 +1,14 @@
+---
+import {courses,coursePath} from '../data/courses.ts';
+import {translate,localePath,type Locale} from '../lib/locale.ts';
+interface Props {locale:Locale}const {locale}=Astro.props;const t=translate(locale);
+const choices=[
+ {id:'typescript',de:'Weboberflächen und typisierte Interaktion',en:'Web interfaces and typed interaction'},
+ {id:'python',de:'Kleine Daten- und Textwerkzeuge',en:'Small data and text tools'},
+ {id:'java',de:'Klassen, Datenmodelle und JVM-Werkzeuge',en:'Classes, data models and JVM tools'},
+ {id:'c-cpp',de:'Speicher, Zeiger und Ressourcenverwaltung',en:'Memory, pointers and resource management'},
+ {id:'go',de:'Fehlerwerte und nebenläufige Datenflüsse',en:'Error values and concurrent data flow'},
+ {id:'rust',de:'Ownership und geliehene Zugriffe verstehen',en:'Understand ownership and borrowed access'},
+];
+---
+<section class="programming-guide" aria-labelledby="language-choice-title"><h2 id="language-choice-title">{t('Welche Sprache passt zu deinem Lernziel?','Which language fits your learning goal?')}</h2><p>{t('Du musst nicht alle Sprachen nacheinander lernen. Wähle einen Schwerpunkt und arbeite dessen Kapitel in Reihenfolge durch. Vorwissen steht im jeweiligen Kurs.','You do not need to learn every language in order. Pick a focus and work through that course sequentially. Each course lists its prerequisites.')}</p><div class="topic-directory">{choices.map(choice=>{const course=courses.find(course=>course.id===choice.id)!;return <a href={localePath(locale,coursePath(course))}><span><strong>{course.id==='c-cpp'?'C / C++':course.id==='typescript'?'TypeScript':course.id==='python'?'Python':course.id==='java'?'Java':course.id==='go'?'Go':'Rust'}</strong><br/>{choice[locale]}<br/><small>{course.chapters.length} {t('Kapitel mit Aufgaben und Quiz','chapters with tasks and quizzes')}</small></span><span aria-hidden="true">→</span></a>})}</div><p><a class="text-link" href={localePath(locale,'/lernpfade/speicher-und-ownership/')}>{t('Geführter Lernweg: vom Rechner zum sicheren Speicherzugriff →','Guided route: from computers to safe memory access →')}</a></p><p>{t('C und C++ sind getrennte Sprachen; der gemeinsame Kurs kennzeichnet die Beispiele ausdrücklich. Die Kurse decken ausgewählte Fähigkeiten ab und ersetzen keine vollständige Sprachreferenz.','C and C++ are distinct languages; the shared course labels examples explicitly. These courses cover selected skills and do not replace a complete language reference.')}</p><p><a href={localePath(locale,'/themen/programmiersprachen/markdown/')}>{t('Dokumentation mit Markdown lernen →','Learn documentation with Markdown →')}</a></p><p><a href={localePath(locale,'/textsatz/')}>{t('Textsatz mit Typst und LaTeX →','Typesetting with Typst and LaTeX →')}</a></p></section>

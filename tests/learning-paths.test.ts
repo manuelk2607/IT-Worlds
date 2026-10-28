@@ -5,7 +5,7 @@ import {courseChapters} from '../src/data/courses.ts';
 import {parseProgressChange} from '../src/lib/progress.ts';
 test('guided routes contain real sequenced chapters, explicit outcomes and shared progress IDs',()=>{
  const de=guidedLearningPaths('de'),en=guidedLearningPaths('en');
- assert.deepEqual(de.map(path=>path.id),['erste-website','apis-und-daten','systeme-entwerfen']);
+ assert.deepEqual(de.map(path=>path.id),['erste-website','apis-und-daten','systeme-entwerfen','speicher-und-ownership']);
  for(const [index,path]of de.entries()){
   assert(path.outcome&&path.prerequisites&&path.steps.length>=10);
   assert.notEqual(path.outcome,en[index]!.outcome);
@@ -23,6 +23,9 @@ test('guided routes contain real sequenced chapters, explicit outcomes and share
  const web=de[0]!.steps.map(step=>step.contentId);
  assert(web.indexOf('typescript-asynchron')<web.indexOf('web-fehlerzustaende'));
  assert(web.indexOf('typescript-funktionen')<web.indexOf('web-dom'));
+ const native=de[3]!.steps.map(step=>step.contentId);
+ assert(native.indexOf('c-cpp-speicher')<native.indexOf('c-cpp-raii'));
+ assert(native.indexOf('rust-borgen')<native.indexOf('rust-abschluss'));
  const api=de[1]!.steps.map(step=>step.contentId);
  assert(api.indexOf('datenbanken-parameter')<api.indexOf('apis-client'));
  assert(api.indexOf('apis-rechte')<api.indexOf('apis-abschluss'));

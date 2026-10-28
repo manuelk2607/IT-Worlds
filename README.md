@@ -8,7 +8,7 @@
 
 IT-Worlds ist eine deutsch-englische IT-Lernplattform mit 14 Themenkacheln. Alle Inhalte, Quellen und Quizfragen sind ohne Anmeldung zugänglich. Ein freiwilliger Account speichert gelesene Einstiege und Kapitel, bearbeitete Fragen und richtig beantwortete Fragen geräteübergreifend. Ein optionales dunkles Design ergänzt das helle Design; die Auswahl bleibt im Browser gespeichert.
 
-**Inhaltsstand (26.10.2026):** 14 Themenkacheln, 18 Kursfolgen mit **145 Kapiteln, 300 erklärten Quizfragen und 239 Primärquellen**. „Textsatz & Dokumentenerstellung“ bündelt Typst und LaTeX in einem eigenen Portal; die bisherigen Kurs-URLs bleiben kompatibel. Hardware, Schreibübungen und Spielegrundlagen ergänzen die ursprünglichen IT-Themen. Der Schreibtrainer bietet optionale private Konto-Ergebnisse und eine freiwillige pseudonyme Rangliste mit serverseitiger Auswertung. Godot-Spielablauf und Linux/systemd-Benutzerlabor werden in der CI tatsächlich ausgeführt. Ein unabhängiges Fachreview steht aus. [P1-Prüfungen und Grenzen](docs/P1-PRUEFUNGEN.md), [Veröffentlichungsnachweis](docs/VALIDIERUNG.md).
+**Inhaltsstand (27.10.2026):** 14 Themenkacheln, 22 Kursfolgen mit **169 Kapiteln, 348 erklärten Quizfragen und 272 Primärquellen**. Java, C/C++, Go und Rust ergänzen TypeScript und Python durch jeweils sechs Kapitel mit vollständig ausführbaren und in der CI geprüften Listings. Vier geführte Lernwege verbinden Themen. Die Übungsübersicht erschließt 195 Aufgaben und Projekte mit kombinierten Filtern. „Textsatz & Dokumentenerstellung“ bündelt Typst und LaTeX in einem eigenen Portal; die bisherigen Kurs-URLs bleiben kompatibel. Hardware, Schreibübungen und Spielegrundlagen ergänzen die ursprünglichen IT-Themen. Der Schreibtrainer bietet optionale private Konto-Ergebnisse und eine freiwillige pseudonyme Rangliste mit serverseitiger Auswertung. Godot-Spielablauf und Linux/systemd-Benutzerlabor werden in der CI tatsächlich ausgeführt. Ein unabhängiges Fachreview steht aus. [P1-Prüfungen und Grenzen](docs/P1-PRUEFUNGEN.md), [Veröffentlichungsnachweis](docs/VALIDIERUNG.md).
 
 **Praxis und Orientierung (27.10.2026):** Drei vollständige, herunterladbare Referenzprojekte verbinden Web-/TypeScript-, SQL- und API-/Betriebskurse mit realen lokalen Tests: [mehrseitiger Kurskatalog](https://it-worlds.maki26.workers.dev/projekte/kurskatalog/), [SQL-Lernbericht](https://it-worlds.maki26.workers.dev/projekte/lernbericht/) und [HTTP-Abnahme](https://it-worlds.maki26.workers.dev/projekte/auslieferung/). Das [Glossar](https://it-worlds.maki26.workers.dev/glossar/) verknüpft 15 Begriffe mit Kursen und Primärquellen. Zwölf Trainerstufen führen bis zu zusammenhängenden DE/EN-Texten; Textsatzaufgaben ergänzen explizite Selbstprüfrubriken ohne automatische fachliche Benotung.
 
@@ -40,6 +40,8 @@ npm run dev:full
 Das baut die statischen Seiten und startet den lokalen Cloudflare Worker auf Port 8787. Nach Inhaltsänderungen erneut bauen. `npm run worker:dev` startet nur den Worker mit dem vorhandenen Build; `npm run preview` zeigt ausschließlich den statischen Build.
 
 ## Prüfen und veröffentlichen
+
+Die native Compilerregression in `tests/native-languages.test.ts` führt die veröffentlichten Java-/C-/C++-/Go-/Rust-Listings aus. Lokal fehlende Compiler werden übersprungen; der eigene CI-Job installiert die festgelegten Versionen und verlangt jeden Compiler mit `IT_WORLDS_NATIVE_TEST=1`. Optionale lokale Pfade: `IT_WORLDS_JAVAC`, `IT_WORLDS_JAVA`, `IT_WORLDS_CC`, `IT_WORLDS_CXX`, `IT_WORLDS_GO` und `IT_WORLDS_RUSTC`. Nutzerprogramme werden auf der Website nicht ausgeführt.
 
 ```bash
 npm test
@@ -74,7 +76,7 @@ Astro erzeugt statische Seiten mit TypeScript und CSS. Ein kleiner TypeScript-Wo
 | [GitHub](docs/GITHUB-SETUP.md) | Beschreibung, Website-Link und Topics |
 | [Mitwirken](CONTRIBUTING.md) | Beiträge, Übersetzungen und Quellenregeln |
 
-Inhaltsdaten liegen in `src/data/content.ts` und `src/data/content.en.ts`; die neuen Blöcke werden aus `expansion.ts` und `expansion.en.ts` ergänzt; Die Kursdaten liegen in `src/data/course-*.ts`, zusammengeführt in `courses.ts`; stabile IDs verbinden beide Sprachen mit demselben Lernstand. Eigener Code, Tests, Skripte und unterstützte Konfigurationen verwenden strikt geprüftes TypeScript. Python-, SQL- und LaTeX-Beispiele behalten ihre Sprache. Verbindliche Regeln: [AGENTS.md](AGENTS.md).
+Inhaltsdaten liegen in `src/data/content.ts` und `src/data/content.en.ts`; die neuen Blöcke werden aus `expansion.ts` und `expansion.en.ts` ergänzt; Die Kursdaten liegen in `src/data/course-*.ts`, zusammengeführt in `courses.ts`; stabile IDs verbinden beide Sprachen mit demselben Lernstand. Eigener Code, Tests, Skripte und unterstützte Konfigurationen verwenden strikt geprüftes TypeScript. Native Lernbeispiele (unter anderem Java, C/C++, Go, Rust, Python, SQL und LaTeX) behalten ihre Sprache. Verbindliche Regeln: [AGENTS.md](AGENTS.md).
 
 ## Mitwirken und Rechte
 

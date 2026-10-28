@@ -1,5 +1,18 @@
 # Validierung
 
+## Sprachkurse und Kurs-/Übungsstruktur · 28. Oktober 2026
+
+**Lokal verifiziert; Veröffentlichung dieses Pakets noch ausstehend.** Vier neue DE/EN-Kurse Java, C/C++, Go und Rust: 24 Kapitel mit vollständigen Listings, Aufgaben/Lösungen und 48 erklärten Fragen, 33 neue gelesene Primärquellen. Gesamt 22 Kurse/169 Kapitel/348 Fragen/272 Quellen. Kein Anspruch auf vollständige Sprachreferenzen. Vier geführte Lernwege, gruppierter Kurskatalog und einheitliche Übersicht über 195 vorhandene Aufgaben/Projekte; alle 30 Textsatz-Kapitelaufgaben als externe Dokumentaufgaben. Bestehende URLs/IDs, Konten und Lernstände erhalten; keine Migration oder neue Website-Abhängigkeit.
+
+114 Tests: 106 bestanden, acht optionale lokale Laufzeit-Skips. Die fünf neuen Sprachcompilergruppen liefen ohne Skip: Ziel Java 21 auf JDK 26, Clang 21 C17/C++20 mit Warnungen als Fehler und ASan/UBSan, Go 1.27.3 sowie Rust 1.99.1/Edition 2024. Exakte veröffentlichte Listings, CLI-Ergebnis-/Format-/Negativ-/Überlaufverträge und absichtlich abgewiesene Rust-Borrows/Moves bzw. C++-Besitzkopie geprüft. Testverträge stammen aus Eingabe-/Ausgaberegeln. Neuer verpflichtender nativer CI-Job ergänzt; dessen öffentlicher Nachweis folgt erst nach Push.
+
+Check: 233 Dateien ohne Fehler/Warnungen/Hinweise. Build: 518 Seiten. Release-Dry-Run: 512 kanonische Sprachseiten und 37.325 interne Links/Assets/Anker erfolgreich. Kein gesondertes Lint-Skript. Readiness für Start/Quiz/Quellen und DE/EN-HTTP-404 erfolgreich.
+
+Browser: Nachladen 18→36 mit Fokus auf dem ersten neuen Treffer; alle Filter kombiniert, widersprüchlicher Kurs zurückgesetzt, Leerzustand/Reset, URL-/Sprachzustand, Kursgruppen und Suche. Aufgabenklassifikation im Browser entdeckt und korrigiert, danach beide Sprachen mit 30 Dokumentaufgaben bestätigt. Neuer 14-Schritte-Lernpfad, alle vier Sprachfamilien, kopierbare Startbefehle, Aufgaben-/Lösungsanzeige und Quellenlinks. Rust-Quiz falsch/richtig, jede Antworterklärung, Abschluss 1/2, gezielte Wiederholung und Neustart; englische Java-Antwort samt Erklärungen. Globale Suche findet ParseIntError aus dem Aufgabentext und navigiert per Enter zum richtigen Kapitel. Tatsächlich 390px/1280px, beide Designs, Mobilmenü/Escape und Codeblöcke ohne Seitenüberlauf geprüft. Keine native mobile Plattform oder unabhängige assistive Prüfung behauptet.
+
+Bestehende lokale Cloudflare-Anmeldung erneuert. Account, maki26-Subdomain, workers.dev-Status und vier Bindings vor Release gesichert; Nachvergleich nach Veröffentlichung ausstehend. Aktueller Release-/CI-/Commitstand verbindlich in PROGRESS.md. Externe Fach-/assistive Prüfung und kontrollierter tatsächlicher Reset-Mailempfang bleiben offen.
+
+
 ## Praxisprojekte, Schreibtrainer, Dokumentprüfung und Glossar · 27. Oktober 2026
 
 **Veröffentlicht:** Quellcommit `059ac2a5d7c087416e22c316cb75b8132f07a7e8` auf `codex/cloudstand-lokal`. GitHub-[Quality 40426819774](https://github.com/manuelk2607/IT-Worlds/actions/runs/40426819774) mit allen sechs Jobs erfolgreich: Node 22.22/24, PostgreSQL, Container, Godot und echtes Linux/systemd. Cloudflare am 27.10.2026 um 09:40:45 Europe/Stockholm: Version `87c9d6fa-9ff0-49df-8a0a-4ed9fa85ac9b`, Deployment `1b1928b0-e1d5-4a12-8dd8-1213622e1c84`, 100 % Traffic unter [IT-Worlds](https://it-worlds.maki26.workers.dev/).

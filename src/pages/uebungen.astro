@@ -1,45 +1,58 @@
 ---
-import {practiceTools} from '../data/practice-topics.ts';
 import Layout from '../layouts/Layout.astro';
-import { exercises, exercisePath } from '../data/exercises.ts';
-import { courses } from '../data/courses.ts';
-import { getContent, translate, localePath, type Locale } from '../lib/i18n.ts';
+import {practiceTools} from '../data/practice-topics.ts';
+import {practiceItems,practiceKindLabels,type PracticeKind} from '../data/practice-catalog.ts';
+import {courses} from '../data/courses.ts';
+import {typesettingTopic} from '../data/topic-categories.ts';
+import {getContent,translate,localePath,type Locale} from '../lib/i18n.ts';
 import '../styles/exercises.css';
-import {exerciseCatalogTopic} from '../lib/exercise-catalog.ts';
-import {TYPESETTING_TOPIC_ID,typesettingTopic} from '../data/topic-categories.ts';
-import PracticeProjects from '../components/PracticeProjects.astro';
-interface Props { locale?: Locale }
-const locale: Locale = Astro.props.locale ?? 'de';
-const t=translate(locale);
-const {topics,topicById,levels,levelName}=getContent(locale);
-const practiceCourses=courses.filter(course=>exercises.some(exercise=>exercise.course===course.id));
-const typesetting=typesettingTopic(locale);
+interface Props {locale?:Locale}
+const locale=Astro.props.locale??'de';const t=translate(locale);
+const {topics,levels,levelName}=getContent(locale);
+const categories=[...topics,typesettingTopic(locale)];
+const kinds=Object.keys(practiceKindLabels) as PracticeKind[];
 ---
-<Layout locale={locale} title={t('Übungen mit lokalem Code-Editor', 'Exercises with a local code editor')} description={t('Finde kleine Übungen nach Thema, Kurs und Lernstufe. Bearbeite Code oder Daten direkt im Browser, mit Hinweisen, lokalen Ergebnissen und Musterlösungen.', 'Find small exercises by topic, course and level. Edit code or data directly in the browser, with hints, local results and sample solutions.')} active="uebungen">
-  <header class="container page-top practice-intro"><p class="eyebrow">{t('LESEN. ÄNDERN. VERSTEHEN.', 'READ. EDIT. UNDERSTAND.')}</p><h1>{t('Übungen für deinen Lernweg', 'Exercises for your learning route')}</h1><p class="page-lead">{t('Finde Aufgaben nach Thema, Kurs und Lernstufe. Bearbeite die Vorlage und prüfe dein Ergebnis mit Hinweis und Musterlösung.', 'Find tasks by topic, course and level. Edit the template and check your result with a hint and sample solution.')}</p><p class="muted">{t('Lokale Modellprüfung ohne Codeausführung. Alle Aufgaben sind frei zugänglich; Entwürfe bleiben auf diesem Gerät.', 'Local model checking without code execution. Every task is freely accessible; drafts stay on this device.')}</p></header>
-  <section class="container section" data-exercise-catalog aria-labelledby="exercise-catalog-title">
-    <h2 id="exercise-catalog-title">{t('Die passende Aufgabe finden', 'Find the right task')}</h2>
-    <div class="catalog-toolbar">
-      <label for="exercise-search">{t('Aufgabe suchen','Search tasks')}<input id="exercise-search" type="search" placeholder={t('Zum Beispiel Filter, NULL, DNS …','For example filter, NULL, DNS …')} /></label>
-      <label for="exercise-topic">{t('Themenwelt','Topic')}<select id="exercise-topic"><option value="alle">{t('Alle Themenwelten','All topics')}</option>{topics.map(topic=><option value={topic.id}>{topic.title}</option>)}<option value={TYPESETTING_TOPIC_ID}>{typesetting.title}</option></select></label>
-      <label for="exercise-course">{t('Kurs','Course')}<select id="exercise-course"><option value="alle">{t('Alle Kurse & Einstiege','All courses & introductions')}</option>{practiceCourses.map(course=><option value={course.id}>{course.title[locale]}</option>)}</select></label>
-      <label for="exercise-level">{t('Lernstufe','Level')}<select id="exercise-level"><option value="alle">{t('Alle Lernstufen','All levels')}</option>{levels.map(level=><option value={level.id}>{level.name}</option>)}</select></label>
-      <button class="button secondary" data-reset-exercise-filter>{t('Filter zurücksetzen','Reset filters')}</button>
-    </div>
-    <p role="status" data-exercise-count>{t(`${exercises.length} Aufgaben verfügbar`,`${exercises.length} tasks available`)}</p>
-    <div class="catalog-grid">{exercises.map(exercise=>{
-      const course=practiceCourses.find(item=>item.id===exercise.course);
-      const category=exerciseCatalogTopic(exercise)===TYPESETTING_TOPIC_ID?typesetting.title:topicById(exercise.topic)!.title;
-      const context=`${category} ${course?.title[locale]??''}`;
-      return <article class="progress-entry exercise-card" data-exercise-card={exercise.id} data-context={context}>
-        <p class="eyebrow">{category}</p><h3><a href={localePath(locale,exercisePath(exercise))}>{exercise.title[locale]}</a></h3>
-        <p class="exercise-card-meta">{levelName(exercise.level)} · {exercise.format}</p><p>{course?.title[locale]??t('Erster Einstieg','First introduction')}</p>
-        <p class="exercise-card-description">{exercise.task[locale]}</p><a class="text-link" href={localePath(locale,exercisePath(exercise))}>{t('Im Editor üben →', 'Open practice editor →')}</a>
-      </article>;
-    })}</div>
-    <p hidden data-exercises-empty>{t('Keine Aufgabe für diese Auswahl. Kürze die Suche oder setze die Filter zurück.','No tasks match this selection. Shorten your search or reset the filters.')}</p>
-  </section>
-  <PracticeProjects locale={locale}/>
-  <section class="container section"><h2>{t('Interaktive Lernbereiche','Interactive learning areas')}</h2><div class="catalog-grid">{practiceTools.map(tool=><a class="progress-entry" href={localePath(locale,tool.url)}>{tool.title[locale]} →</a>)}</div></section>
-  <script src="../scripts/exercise-catalog.ts"></script>
+<Layout locale={locale} title={t('Übungen, Kapitelaufgaben & Praxisprojekte','Exercises, chapter tasks & practice projects')} description={t('Finde passende Browserübungen, Aufgaben mit Lösungen und vollständige lokale Projekte. Filtere nach Thema, Kurs, Stufe und Arbeitsweise. Alle Aufgaben bleiben frei zugänglich.','Find browser exercises, tasks with solutions and complete local projects. Filter by topic, course, level and working mode. All tasks remain freely accessible.')} active="uebungen">
+ <header class="container page-top practice-intro">
+  <p class="eyebrow">{t('WISSEN ANWENDEN','APPLY YOUR KNOWLEDGE')}</p>
+  <h1>{t('Die passende Übung. Ein klarer nächster Schritt.','The right exercise. A clear next step.')}</h1>
+  <p class="page-lead">{t('Wähle zuerst, wie du üben möchtest. Aufgaben aus allen Kurskapiteln stehen neben kleinen Browsermodellen und vollständigen lokalen Projekten.','First choose how you want to practise. Tasks from every course chapter sit alongside small browser models and complete local projects.')}</p>
+  <nav class="section-shortcuts" aria-label={t('Arbeitsweise wählen','Choose how to practise')}>
+   <a href="?format=editor#aufgaben">{t('Im Browser üben','Practise in the browser')}</a>
+   <a href="?format=chapter#aufgaben">{t('Kapitelaufgaben lösen','Solve chapter tasks')}</a>
+   <a href="?format=project#aufgaben">{t('Ein Projekt bauen','Build a project')}</a>
+   <a href={localePath(locale,'/dokumentpruefung/')}>{t('Dokumente prüfen','Check documents')}</a>
+   <a href="#lernwerkzeuge">{t('Interaktive Lernwerkzeuge','Interactive learning tools')}</a>
+  </nav>
+  <p class="muted">{t('Browsermodelle prüfen ausgewählte Muster und führen keinen beliebigen Code aus. Native Programme laufen in deiner eigenen Entwicklungsumgebung; Kapitelaufgaben bieten eine erklärte Musterlösung. Persönlicher Lernfortschritt bleibt freiwillig.','Browser models check selected patterns and do not execute arbitrary code. Native programs run in your own development environment; chapter tasks include explained solutions. Personal learning progress remains optional.')}</p>
+ </header>
+ <section class="container section" id="aufgaben" data-practice-catalog aria-labelledby="exercise-catalog-title">
+  <h2 id="exercise-catalog-title">{t('Aufgaben gezielt finden','Find tasks deliberately')}</h2>
+  <div class="catalog-toolbar">
+   <label for="exercise-search">{t('Aufgabe suchen','Search tasks')}<input id="exercise-search" type="search" maxlength="100" placeholder={t('Zum Beispiel Ownership, NULL, Tastatur …','For example ownership, NULL, keyboard …')}/></label>
+   <label for="exercise-kind">{t('Arbeitsweise','Working mode')}<select id="exercise-kind"><option value="alle">{t('Alle Arbeitsweisen','All working modes')}</option>{kinds.map(kind=><option value={kind}>{practiceKindLabels[kind][locale]}</option>)}</select></label>
+   <label for="exercise-topic">{t('Themenwelt','Topic')}<select id="exercise-topic"><option value="alle">{t('Alle Themenwelten','All topics')}</option>{categories.map(topic=><option value={topic.id}>{topic.title}</option>)}</select></label>
+   <label for="exercise-course">{t('Kurs','Course')}<select id="exercise-course"><option value="alle">{t('Alle Kurse & Einstiege','All courses & introductions')}</option>{courses.map(course=><option value={course.id}>{course.title[locale]}</option>)}</select></label>
+   <label for="exercise-level">{t('Lernstufe','Level')}<select id="exercise-level"><option value="alle">{t('Alle Lernstufen','All levels')}</option>{levels.map(level=><option value={level.id}>{level.name}</option>)}</select></label>
+   <button class="button secondary" data-reset-exercise-filter>{t('Filter zurücksetzen','Reset filters')}</button>
+  </div>
+  <p role="status" data-exercise-count>{t(practiceItems.length+' Aufgaben verfügbar',practiceItems.length+' tasks available')}</p>
+  <div class="catalog-grid" id="practice-results">{practiceItems.map(item=>{
+   const excerpt=Array.from(item.task[locale]);const description=excerpt.slice(0,210).join('')+(excerpt.length>210?'…':'');
+   const category=categories.filter(topic=>item.topics.includes(topic.id)).map(topic=>topic.title).join(' · ');
+   const associated=courses.filter(course=>item.courses.includes(course.id)).map(course=>course.title[locale]).join(' ');
+   return <article class="progress-entry exercise-card" data-practice-card={item.id} data-topics={item.topics.join(' ')} data-courses={item.courses.join(' ')} data-level={item.level} data-kind={item.kind} data-search={[item.title[locale],item.task[locale],item.context[locale],category,associated].join(' ')}>
+    <p class="eyebrow">{practiceKindLabels[item.kind][locale]}</p>
+    <h3><a href={localePath(locale,item.href)}>{item.title[locale]}</a></h3>
+    <p class="exercise-card-meta">{levelName(item.level)} · {category}</p>
+    <p>{item.context[locale]}</p><p class="exercise-card-description">{description}</p>
+    <a class="text-link" href={localePath(locale,item.href)}>{item.kind==='chapter'?t('Aufgabe & Lösung im Kapitel →','Task & solution in the chapter →'):item.kind==='project'?t('Vollständiges Projekt öffnen →','Open the complete project →'):item.kind==='document'?t('Externe Aufgabe öffnen →','Open the external task →'):t('Im Browser üben →','Practise in the browser →')}</a>
+   </article>;
+  })}</div>
+  <p hidden data-exercises-empty>{t('Keine Aufgabe für diese Auswahl. Ändere Arbeitsweise, Kurs oder Lernstufe oder setze die Filter zurück.','No tasks match this selection. Change working mode, course or level, or reset the filters.')}</p>
+  <button hidden class="button secondary practice-more" data-practice-more aria-controls="practice-results">{t('Weitere Aufgaben anzeigen','Show more tasks')}</button>
+  <noscript><p>{t('Ohne Browser-Skripte sind alle Aufgaben lesbar; die Filter benötigen Skripte.','Without browser scripts all tasks remain readable; filtering requires scripting.')}</p></noscript>
+ </section>
+ <section class="container section" id="lernwerkzeuge"><h2>{t('Interaktive Lernwerkzeuge','Interactive learning tools')}</h2><p>{t('Erkunde Hardware und Spielabläufe oder trainiere dein Tippen. Diese Werkzeuge bleiben unabhängig von der Aufgabenfilterung erreichbar.','Explore hardware and gameplay or practise typing. These tools remain accessible independently of task filters.')}</p><div class="catalog-grid">{practiceTools.map(tool=><a class="progress-entry" href={localePath(locale,tool.url)}>{tool.title[locale]} →</a>)}</div></section>
+ <script src="../scripts/exercise-catalog.ts"></script>
 </Layout>

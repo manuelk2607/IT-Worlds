@@ -4,6 +4,7 @@ const locale: Locale = Astro.props.locale ?? "de";
 const t = translate(locale);
 const { levels, questions, sources } = getContent(locale);
 import PracticeLab from '../../components/PracticeLab.astro';
+import ProgrammingGuide from '../../components/ProgrammingGuide.astro';
 import {exercises} from '../../data/exercises.ts';
 import ExerciseLinks from '../../components/ExerciseLinks.astro';
 import ExerciseEditor from "../../components/ExerciseEditor.astro";
@@ -94,7 +95,7 @@ const reviewDates = [...new Set(topic.lesson?.sources.map(id=>sources[id].review
           ))}
         </section>
       )}
-      <div id="kurse">{topicCourses.map(course => <section class="course-teaser"><p class="eyebrow">{t('ZUSAMMENHÄNGENDER KURS', 'STRUCTURED COURSE')}</p><h2>{course.title[locale]}</h2><p>{course.description[locale]}</p><p>{t(`${course.chapters.length} ausgearbeitete Kapitel · ${course.chapters.reduce((sum, chapter) => sum + chapter.questions.length, 0)} Quizfragen · Aufgaben mit Lösungen`, `${course.chapters.length} available chapters · ${course.chapters.reduce((sum, chapter) => sum + chapter.questions.length, 0)} quiz questions · exercises with solutions`)}</p><a class="button primary" href={localePath(locale, coursePath(course))}>{t('Kurs öffnen →', 'Open course →')}</a></section>)}</div>
+      <div id="kurse">{topic.id==='programmiersprachen'?<ProgrammingGuide locale={locale}/>:topicCourses.map(course => <section class="course-teaser"><p class="eyebrow">{t('ZUSAMMENHÄNGENDER KURS', 'STRUCTURED COURSE')}</p><h2>{course.title[locale]}</h2><p>{course.description[locale]}</p><p>{t(`${course.chapters.length} ausgearbeitete Kapitel · ${course.chapters.reduce((sum, chapter) => sum + chapter.questions.length, 0)} Quizfragen · Aufgaben mit Lösungen`, `${course.chapters.length} available chapters · ${course.chapters.reduce((sum, chapter) => sum + chapter.questions.length, 0)} quiz questions · exercises with solutions`)}</p><a class="button primary" href={localePath(locale, coursePath(course))}>{t('Kurs öffnen →', 'Open course →')}</a></section>)}</div>
       <TopicCurriculum topic={topic} courses={topicCourses} locale={locale}/>
       {topic.lesson ? (
         <article id="einstiegsartikel" class="lesson-article">
