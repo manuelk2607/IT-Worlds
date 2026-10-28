@@ -9,7 +9,8 @@ export const languageExamples:Record<string,LanguageExample>={
   public static void main(String[] args) {
     System.out.println(remaining(30, 15));
   }
-}`},
+}
+`},
  'java-modelle':{language:'Java',stdout:'SQL:30\ntrue\n',code:`public class Main {
   record Lesson(String title, int minutes) {
     Lesson {
@@ -22,7 +23,8 @@ export const languageExamples:Record<string,LanguageExample>={
     System.out.println(lesson.title() + ":" + lesson.minutes());
     System.out.println(lesson.equals(new Lesson("SQL", 30)));
   }
-}`},
+}
+`},
  'java-sammlungen':{language:'Java',stdout:'40\n2\n',code:`import java.util.ArrayList;
 import java.util.List;
 public class Main {
@@ -34,7 +36,8 @@ public class Main {
     System.out.println(total);
     System.out.println(minutes.size());
   }
-}`},
+}
+`},
  'java-fehler':{language:'Java',stdout:'invalid\nclosed=true\n',code:`public class Main {
   static final class Input implements AutoCloseable {
     boolean closed;
@@ -51,7 +54,8 @@ public class Main {
     if (!input.closed) throw new AssertionError("Resource leaked");
     System.out.println("closed=" + input.closed);
   }
-}`},
+}
+`},
  'java-vertraege':{language:'Java',stdout:'45\n',code:`import java.util.function.Function;
 public class Main {
   public static void main(String[] args) {
@@ -59,7 +63,8 @@ public class Main {
     var withBreak = minutes.andThen(value -> Math.addExact(value, 30));
     System.out.println(withBreak.apply("15"));
   }
-}`},
+}
+`},
  'java-abschluss':{language:'Java',args:['15','30'],stdout:'45\n',code:`public class Main {
   static int total(String[] values) {
     int sum = 0;
@@ -77,7 +82,8 @@ public class Main {
       System.exit(2);
     }
   }
-}`},
+}
+`},
  'c-cpp-start':{language:'C',stdout:'15\n',code:`#include <stdio.h>
 int remaining(int total, int spent) {
   return spent >= total ? 0 : total - spent;
@@ -85,7 +91,8 @@ int remaining(int total, int spent) {
 int main(void) {
   printf("%d\\n", remaining(30, 15));
   return 0;
-}`},
+}
+`},
  'c-cpp-arrays':{language:'C',stdout:'60\n',code:`#include <assert.h>
 #include <stddef.h>
 #include <stdio.h>
@@ -100,7 +107,8 @@ int main(void) {
   assert(sum(NULL, 0) == 0);
   printf("%d\\n", sum(minutes, count));
   return 0;
-}`},
+}
+`},
  'c-cpp-speicher':{language:'C',stdout:'42\n',code:`#include <stdio.h>
 #include <stdlib.h>
 int main(void) {
@@ -111,7 +119,8 @@ int main(void) {
   free(value);
   value = NULL;
   return 0;
-}`},
+}
+`},
  'c-cpp-raii':{language:'C++',stdout:'42\n',code:`#include <iostream>
 #include <memory>
 #include <utility>
@@ -120,7 +129,8 @@ int main() {
   auto owner = std::move(value);
   if (value || !owner) return 1;
   std::cout << *owner << '\\n';
-}`},
+}
+`},
  'c-cpp-container':{language:'C++',stdout:'45\ninvalid index\n',code:`#include <iostream>
 #include <stdexcept>
 #include <vector>
@@ -131,7 +141,8 @@ int main() {
   std::cout << sum << '\\n';
   try { std::cout << minutes.at(2); }
   catch (const std::out_of_range&) { std::cout << "invalid index\\n"; }
-}`},
+}
+`},
  'c-cpp-abschluss':{language:'C++',args:['15','30'],stdout:'45\n',code:`#include <charconv>
 #include <iostream>
 #include <limits>
@@ -150,7 +161,8 @@ int main(int argc, char* argv[]) {
     total += value;
   }
   std::cout << total << '\\n';
-}`},
+}
+`},
  'go-start':{language:'Go',stdout:'15\n',code:`package main
 import "fmt"
 func remaining(total int, spent int) int {

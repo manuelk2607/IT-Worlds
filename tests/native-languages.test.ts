@@ -11,7 +11,7 @@ test('every new chapter publishes the exact native listing tested here',()=>{
  const keys=Object.keys(languageExamples);assert.equal(keys.length,24);
  for(const course of courses.filter(course=>['java','c-cpp','go','rust'].includes(course.id))){
   assert.equal(course.chapters.length,6);
-  for(const chapter of course.chapters){const key=chapterProgressId(course,chapter);const example=languageExamples[key];assert(example,key);assert(chapter.sections.some(section=>section.code===example.code&&section.language===example.language),key);}
+  for(const chapter of course.chapters){const key=chapterProgressId(course,chapter);const example=languageExamples[key];assert(example,key);assert(example.code.endsWith('\n'),`${key}: source files end with a newline`);assert(chapter.sections.some(section=>section.code===example.code&&section.language===example.language),key);}
  }
 });
 
