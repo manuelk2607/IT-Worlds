@@ -2,7 +2,7 @@
 
 Die Reihenfolge beschreibt vorgeschlagene Ausbaustufen, keine zugesagten Termine. Umfang und Prioritäten werden nach Rückmeldungen angepasst.
 
-## Entwicklungsstand · 27. Oktober 2026
+## Entwicklungsstand · 28. Oktober 2026
 
 22 Kurse mit 169 Kapiteln, insgesamt 348 Quizfragen und 272 Quellen. Typst umfasst 16 Kapitel/32 Fragen, LaTeX 14/28. Der öffentliche Versionsstand steht in VALIDIERUNG.md. Die technischen P1-Prüfungen für Rangliste, Godot und Linux/systemd sind abgeschlossen; unabhängiges Review und tatsächlicher Reset-Mailempfang bleiben gesondert offen.
 
@@ -129,4 +129,4 @@ Aktuell: 22 Kursfolgen/169 Kapitel/348 Fragen/272 Quellen, 14 Themenkacheln und 
 
 ### Sprach- und Strukturpaket · 27.10.2026
 
-Java, C/C++, Go und Rust sind als vier vollständige, abgegrenzte Sechskapitelfolgen umgesetzt (24 Listings/48 Fragen/33 neue Belege). Aufgabenübersicht, Themenwahl, Kursgruppen und vierter geführter Lernpfad sind integriert. Status der abschließenden Browser-/Releaseprüfung und Veröffentlichung verbindlich in PROGRESS.md; technische Umsetzung allein ist kein Veröffentlichungsnachweis. Weitere Sprachkapitel erst anhand konkreter Inhaltslücken, kein pauschaler Anspruch auf vollständige Sprachreferenzen. Unabhängiges Fach-/assistives Review und echter Reset-Mailtest bleiben extern offen.
+Java, C/C++, Go und Rust sind als vier vollständige, abgegrenzte Sechskapitelfolgen umgesetzt (24 Listings/48 Fragen/33 neue Belege). Aufgabenübersicht, Themenwahl, Kursgruppen und vierter geführter Lernpfad sind integriert. Lokale und öffentliche Browser-/Releaseprüfung abgeschlossen; Quellstand ec9db5c, sieben erfolgreiche CI-Jobs und 512 bytegeprüfte öffentliche Sprachseiten. Vollständiger Veröffentlichungsnachweis in PROGRESS.md/VALIDIERUNG.md. Weitere Sprachkapitel erst anhand konkreter Inhaltslücken, kein pauschaler Anspruch auf vollständige Sprachreferenzen. Unabhängiges Fach-/assistives Review und echter Reset-Mailtest bleiben extern offen.
