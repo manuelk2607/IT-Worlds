@@ -1,4 +1,15 @@
-# Datenbankumbenennung im Prüfbranch verifiziert · 29.10.2026
+# Produktionsdatenbank umbenannt und Auth neu aufgebaut · 29.10.2026
+
+## Aktuell: produktiv umgesetzt
+
+- Nach ausdrücklicher Produktionsfreigabe Datenbank auf main über Neon-Verwaltung von neondb in exakt `IT-Worlds` umbenannt (ID 88355 unverändert). Frische Sicherung `before-production-db-rename-20261029`, Branch `br-summer-sun-banaln05`, LSN `0/24C42C0`, ohne Compute; enthält die bisherigen drei Accounts und Fortschritte. Unbedingt erhalten. development bleibt unabhängig bei neondb.
+- Autorisierter Auth-Neuaufbau: kopiertes altes neon_auth-Schema entfernt. Main meldete zunächst bestehende Integration; diese offiziell mit delete_data=false deaktiviert, erneut vorhandenes Schema entfernt und Better Auth für IT-Worlds neu provisioniert. Vertrauenswürdige öffentliche Origin wieder gesetzt. Bestehende drei Accounts und Sitzungen damit ersetzt; Eigentümer muss sich neu registrieren. 13 alte Fortschrittszeilen weiterhin vorhanden, aber nicht an neue Benutzerkennungen gebunden. Kein Fortschrittsmapping und keine Datenbereinigung durchgeführt.
+- Cloudflare: erfolgreicher Secret-Bulk-Deploy von DATABASE_URL und NEON_AUTH_BASE_URL mit neuem DB-/Auth-Pfad; bestehende Rolle/Passwort/Cookie-Secret erhalten. ASSETS und alle drei Secret-Bindings vorhanden. Aktive Version `55c3fefd-77e5-4dfe-b24c-afba1b54ac8b`, Deployment `99e96272-ba1d-4133-83d2-c21f61e79a3d`, 100 Prozent. Nur Runtime-Secrets veröffentlicht; die ausstehende CSS-Veröffentlichung bleibt gesondert offen.
+- Private kanonische work/runtime-main.json aktualisiert; vorherige Konfiguration in work/runtime-main-before-rename.json gesichert. Development-Datei unverändert. CI-Testdatenbank und migrationsinterne SQL-Dateien benötigen keine Namensänderung; keine angewendete Migration geändert.
+- Tatsächlicher öffentlicher Test mit neuem Wegwerfkonto: Registrierung200, Session mit Benutzer/Sitzung200, Fortschritt speichern200, Abmelden200, Anmelden200, gespeicherten Fortschritt wiederhergestellt, eigene Testmarkierung aufgehoben und abgemeldet. Ein Wegwerfaccount bleibt bestehen; Produktionsstand danach 14 Fortschrittszeilen (13 Altzeilen plus Testzeile), drei öffentliche RLS-Policies, Runtime BYPASSRLS=false. Start/EN/Auth200, Gastfortschritt/Trainerkonto401, Rangliste200, DE/EN-404 jeweils404. Keine vollständige Browser-/Zwei-Account-/Trainer-Schreibprüfung in dieser Sitzung; diese bleiben als ergänzende Verifikation offen. Vorheriger vollständiger Unit-/Typ-/Build-Nachweis unten; keine Anwendungs-Codeänderung.
+- Nächster Schritt: Eigentümer neu registrieren; optional ergänzende Zwei-Account-/Trainerprüfung und später freigegebene Bereinigung verwaister Testdaten. Sicherungsbranch nicht löschen. Keine weitere Datenbankumbenennung nötig.
+
+## Historie des isolierten Vorversuchs (vor Produktionsfreigabe)
 
 ## Aktueller Stand: Produktion unverändert, Datenverlustgrenze bestätigt
 

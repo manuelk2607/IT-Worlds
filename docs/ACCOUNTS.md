@@ -16,11 +16,13 @@ Accounts sind freiwillig. Alle Lernseiten, Quellen und Quizfragen bleiben öffen
 Neon-Anmeldung bzw. Konsole verwenden; keine Secrets in Chat oder Git kopieren. Für einen neuen Branch Managed Auth aktivieren und branchspezifische Owner-Verbindungsdaten in einer ignorierten `.env.development` ablegen:
 
 ```dotenv
-DATABASE_URL=postgresql://OWNER:SECRET@POOLED_HOST/neondb?sslmode=require
-DATABASE_URL_UNPOOLED=postgresql://OWNER:SECRET@DIRECT_HOST/neondb?sslmode=require
-NEON_AUTH_BASE_URL=https://BRANCH_AUTH_HOST/neondb/auth
+DATABASE_URL=postgresql://OWNER:SECRET@POOLED_HOST/DATABASE_NAME?sslmode=require
+DATABASE_URL_UNPOOLED=postgresql://OWNER:SECRET@DIRECT_HOST/DATABASE_NAME?sslmode=require
+NEON_AUTH_BASE_URL=https://BRANCH_AUTH_HOST/DATABASE_NAME/auth
 IT_WORLDS_SECRETS_FILE=.dev.vars.runtime.json
 ```
+
+`DATABASE_NAME` branchgenau ersetzen: Produktion/main verwendet seit 29.10.2026 exakt `IT-Worlds`, development weiterhin `neondb`. Auth-URL immer aus der jeweiligen Neon-Integration übernehmen. Beim produktiven Auth-Neuaufbau wurden die alten Accounts ersetzt; eine erneute Registrierung ist erforderlich. Alte Fortschritte werden neuen Benutzerkennungen nicht automatisch zugeordnet.
 
 Dies sind Platzhalter. Die gepoolte URL dient der Laufzeit, die direkte URL Einrichtung und Migrationen. Dateien sollten nur für den eigenen Nutzer lesbar sein.
 
