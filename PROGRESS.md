@@ -1,4 +1,4 @@
-# Laufend · Übungsorganisation und Praxisprojekte · fortgesetzt 29.10.2026
+# Technisch abgeschlossen · Veröffentlichungsblocker · 29.10.2026
 
 Auftrag: Übungen übersichtlich nach Themen/Kursen strukturieren, Praxisprojekte vervollständigen, technisch sinnvolle Restaufgaben abarbeiten. Ausgangspunkt daf6654; vorhandene URLs, Kennungen und Nutzerdaten erhalten. Kein erneutes breites Audit nötig.
 
@@ -9,7 +9,7 @@ Auftrag: Übungen übersichtlich nach Themen/Kursen strukturieren, Praxisprojekt
 - Alle sieben Projekte mit wiederaufnehmbaren Selbstprüfchecklisten. Vier neue vollständige DE/EN-CLI-Projekte: Lernzeit-JSON, IPv4-Netzplan, eigene Registermaschine, SHA-256-Inventar. Getestete Referenzen, echte CLIs/Fehlerfälle und bytegeprüfte ZIPs; keine beliebige Codeausführung im Browser.
 - Vier tastaturbedienbare Ablaufaufgaben mit Fehlpositionsfeedback und erklärten Lösungen; fester interaktiver CPU-Trace mit Neustart. Suche, Quellenregister (273), SEO und interne Verknüpfungen integriert.
 - Lokale JSON-Sicherung mit Vorschau/Bestätigung, 512-KiB-/500-Einträge-Limits, Version-/Datums-/Kennungsprüfung und Erhalt neuerer Stände. Importierte Abschlüsse immer Selbsteinschätzung; Projektabschlüsse nur mit bekannten vollständigen Checklisten. Keine Kontosynchronisierung oder externe Übertragung dieser Dateien.
-- Letzte CSS-Korrektur: Filtertoolbar tatsächlich als Raster (2 Spalten mobil/3 Desktop); einzelne sichtbare Karten füllen ihre Gruppe ohne leere Rasterplätze. Auf 390/1280 px geprüft, kein Seitenüberlauf (375/1265 px Inhaltsbreite); einzelne Desktopkarte 1185 px breit. Diese Korrektur ist noch nicht gepusht/veröffentlicht.
+- Letzte CSS-Korrektur: Filtertoolbar tatsächlich als Raster (2 Spalten mobil/3 Desktop); einzelne sichtbare Karten füllen ihre Gruppe ohne leere Rasterplätze. Auf 390/1280 px geprüft, kein Seitenüberlauf (375/1265 px Inhaltsbreite); einzelne Desktopkarte 1185 px breit. Als **78288de3dcf22a9ef9daa94b625501c83c81810e** gepusht; [Quality 40844160880](https://github.com/manuelk2607/IT-Worlds/actions/runs/40844160880) mit allen sieben Jobs erfolgreich. **Diese letzte CSS-Korrektur ist noch nicht veröffentlicht**, siehe Blocker unten.
 
 ## Prüfungen
 
@@ -21,7 +21,17 @@ Browser lokal: Statusfilter/Reload/Sprachwechsel, Modellfehler/Erfolg/Undo mit e
 
 Funktionspaket **5056acf91c2e0f88d808121579565df32ee42929** auf codex/cloudstand-lokal gepusht; [Quality 40775678818](https://github.com/manuelk2607/IT-Worlds/actions/runs/40775678818) mit sieben erfolgreichen Jobs. Cloudflare **28.10.2026 22:57:10 Europe/Stockholm**, Version **2ed95a39-4a64-47ab-a7a5-35d8a02c5af4**, Deployment **58f53f10-5a02-456c-9ecd-bc6e2d4936a4**, 100 %. Alle 528 öffentlichen Sprachseiten und vier neuen ZIPs bytegleich. Auth200/Fortschritt401/Trainerkonto401/Rangliste200-no-store/beide404. Account/Subdomain/Einstellungen/vier Bindings unverändert. Öffentlicher Themenfilter/DE→EN-Zustand/Projektlink/CPU-Schritt/Reset geprüft.
 
-**Nächster Schritt:** die oben bereits getestete CSS-Korrektur committen/pushen, sieben CI-Jobs abwarten, abschließend deployen und öffentliche Auslieferung/Einstellungen prüfen. Danach diesen Abschnitt und docs/VALIDIERUNG.md mit dem finalen Release ergänzen; eigene localhost:8790-Instanz beenden und temporären Browser-Viewport zurücksetzen. Keine Funktion erneut implementieren. Bei Unterbrechung zuerst Git und /private/tmp/it-worlds-practice-layout-deployment.log abgleichen; nicht blind erneut deployen.
+## Veröffentlichungsblocker und nächster Schritt
+
+Drei kontrollierte Freigabeversuche für 78288de scheiterten bei Cloudflare: zunächst Assets-Upload mit Code -1; anschließend POST assets-upload-session mit **HTTP 500 / Code 10013**. Der letzte Versuch verwendete nachweislich die offizielle, per SHA-256 geprüfte **Node.js 22.22.0**; damit gleicher Serverfehler. Der vorausgehende npm-exec-Versuch blieb tatsächlich auf Node 26, daher keine daraus abgeleitete Laufzeitbehauptung. Keine weitere Wiederholung ohne geänderte Voraussetzungen.
+
+Fehlerprotokolle: /private/tmp/it-worlds-practice-layout-deployment.log, /private/tmp/it-worlds-practice-layout-retry.log, zuletzt /private/tmp/it-worlds-practice-layout-node22-release.log. Private detaillierte Wrangler-Protokolle liegen daneben; keine Zugangsdaten ausgeben. Der Releasehelper entfernte seine eigenen temporären Artefakte nach Uploadfehler; es fand keine Veröffentlichung dieser Korrektur statt.
+
+Nach dem letzten Fehler per Cloudflare-API bestätigt: vorheriger Deploymentstand **58f53f10-5a02-456c-9ecd-bc6e2d4936a4** / Version **2ed95a39-4a64-47ab-a7a5-35d8a02c5af4** weiter 100 %, Account/Subdomain/Einstellungen/vier Bindings unverändert. Auth200/Fortschritt401/Trainerkonto401/Rangliste200-no-store/beide404 erneut erfolgreich. Öffentlicher Filter 7→1 und DE→EN mit erhaltenem Sicherheitsthema funktionieren. Die funktionalen Erweiterungen bleiben online; ausschließlich die letzte Rasterkorrektur wartet auf Freigabe.
+
+**Nächster konkreter Schritt:** bei wieder funktionierender Cloudflare-Upload-API 78288de erneut veröffentlichen, anschließend öffentliche Auslieferung/Einstellungen und Raster prüfen. Keine erneute Inhalts-/Implementierungsanalyse oder neue Zugangsdaten nötig. Verifizierte temporäre Laufzeit: /private/tmp/it-worlds-node22-official/node-v22.22.0-darwin-arm64/bin/node; falls vorhanden mit --experimental-strip-types scripts/release.ts nutzen. Danach öffentlichen Nachweis hier und in docs/VALIDIERUNG.md ergänzen. Keine automatische Fortsetzung zugesagt.
+
+Eigener localhost:8790-Testserver gezielt beendet; Browser-Viewport zurückgesetzt. Lokaler Bildnachweis im privaten Aufgabenworkspace outputs/it-worlds-uebungen-layout-lokal.jpg, ausdrücklich noch nicht öffentliches CSS. Bestehende Nutzerdaten/Entwürfe unverändert.
 
 ## Extern offen
 
