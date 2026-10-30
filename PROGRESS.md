@@ -1,4 +1,13 @@
-# Produktionsdatenbank umbenannt und Auth neu aufgebaut · 29.10.2026
+# Ausstehende Layoutkorrektur veröffentlicht · 30.10.2026
+
+## Tagesprüfung: Cloudflare-Upload wieder erfolgreich
+
+- Autorisierter täglicher Versuch erfolgreich: Quellstand 4cb1a0f einschließlich CSS-Korrektur 78288de veröffentlicht. Build-/Artefakt-/SEO-/Linkprüfungen bestanden; anschließend alle 528 öffentlichen kanonischen Sprachseiten zum exakten Releaseartefakt geprüft. Version `706415e9-38b0-4938-bc4e-d3de256e043c`, Deployment `951b5a20-df96-4f2f-acb0-c6d699a5ea3c`, 100 Prozent. HTTP-500/10013 trat bei diesem Versuch nicht mehr auf; frühere Ursache weiterhin unbekannt.
+- Account/Subdomain/Einstellungen und alle vier Bindings vor/nachher identisch; produktive DB-/Auth-Secrets erhalten. Öffentlicher Smoke: Auth200, Gastfortschritt/Trainerkonto401, Rangliste200 und beide Sprach-404 jeweils404. Keine Account-/Datenbankmutation. Keine neue Browserprüfung; bisherige lokale responsive Verifikation gilt für dieselbe CSS-Korrektur.
+- Frühere Uploadblocker und Hinweise „CSS noch nicht veröffentlicht“ weiter unten sind historisch und durch diesen Eintrag erledigt. Automation cloudflare-deployment-pr-fen besteht weiterhin: automatische Sicherheitsprüfung hat ihre beantragte Löschung mangels ausdrücklicher Nutzerfreigabe abgelehnt. Keine Löschung erfolgt. Bei weiteren Läufen zuerst öffentlichen Stand vergleichen; ohne ausstehende Änderungen kein erneuter Deploy.
+- Private Nachweise: /private/tmp/it-worlds-daily-20261030-release.log sowie work/cloudflare-daily-20261030-before.json und -after.json. Keine geheimen Werte ausgegeben.
+
+## Produktionsdatenbank umbenannt und Auth neu aufgebaut · 29.10.2026
 
 ## Aktuell: produktiv umgesetzt
 
