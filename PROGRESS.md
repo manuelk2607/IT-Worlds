@@ -1,271 +1,159 @@
-# Ausstehende Layoutkorrektur veröffentlicht · 30.10.2026
+# IT-Worlds – Fortschritt
 
-## Tagesprüfung: Cloudflare-Upload wieder erfolgreich
+Stand: 01.11.2026. Arbeitsbranch: `codex/cloudstand-lokal`. Diese Datei beschreibt den aktuellen, verifizierten Stand; ältere Zwischenstände wurden aufgelöst und widersprüchliche Hinweise durch spätere Nachweise ersetzt.
 
-- Autorisierter täglicher Versuch erfolgreich: Quellstand 4cb1a0f einschließlich CSS-Korrektur 78288de veröffentlicht. Build-/Artefakt-/SEO-/Linkprüfungen bestanden; anschließend alle 528 öffentlichen kanonischen Sprachseiten zum exakten Releaseartefakt geprüft. Version `706415e9-38b0-4938-bc4e-d3de256e043c`, Deployment `951b5a20-df96-4f2f-acb0-c6d699a5ea3c`, 100 Prozent. HTTP-500/10013 trat bei diesem Versuch nicht mehr auf; frühere Ursache weiterhin unbekannt.
-- Account/Subdomain/Einstellungen und alle vier Bindings vor/nachher identisch; produktive DB-/Auth-Secrets erhalten. Öffentlicher Smoke: Auth200, Gastfortschritt/Trainerkonto401, Rangliste200 und beide Sprach-404 jeweils404. Keine Account-/Datenbankmutation. Keine neue Browserprüfung; bisherige lokale responsive Verifikation gilt für dieselbe CSS-Korrektur.
-- Frühere Uploadblocker und Hinweise „CSS noch nicht veröffentlicht“ weiter unten sind historisch und durch diesen Eintrag erledigt. Automation cloudflare-deployment-pr-fen besteht weiterhin: automatische Sicherheitsprüfung hat ihre beantragte Löschung mangels ausdrücklicher Nutzerfreigabe abgelehnt. Keine Löschung erfolgt. Bei weiteren Läufen zuerst öffentlichen Stand vergleichen; ohne ausstehende Änderungen kein erneuter Deploy.
-- Private Nachweise: /private/tmp/it-worlds-daily-20261030-release.log sowie work/cloudflare-daily-20261030-before.json und -after.json. Keine geheimen Werte ausgegeben.
+## 1. Offene Aufgaben & geplante Features
 
-## Produktionsdatenbank umbenannt und Auth neu aufgebaut · 29.10.2026
+### P0 – kritisch
 
-## Aktuell: produktiv umgesetzt
+Keine bestätigten offenen P0-Probleme. Öffentliche Kernfunktionen, Auth-Grundpfade, Datenbankzugriff, RLS, 404-Verhalten, SEO-Ausgabe und statische Seitenerzeugung sind releasegeprüft.
 
-- Nach ausdrücklicher Produktionsfreigabe Datenbank auf main über Neon-Verwaltung von neondb in exakt `IT-Worlds` umbenannt (ID 88355 unverändert). Frische Sicherung `before-production-db-rename-20261029`, Branch `br-summer-sun-banaln05`, LSN `0/24C42C0`, ohne Compute; enthält die bisherigen drei Accounts und Fortschritte. Unbedingt erhalten. development bleibt unabhängig bei neondb.
-- Autorisierter Auth-Neuaufbau: kopiertes altes neon_auth-Schema entfernt. Main meldete zunächst bestehende Integration; diese offiziell mit delete_data=false deaktiviert, erneut vorhandenes Schema entfernt und Better Auth für IT-Worlds neu provisioniert. Vertrauenswürdige öffentliche Origin wieder gesetzt. Bestehende drei Accounts und Sitzungen damit ersetzt; Eigentümer muss sich neu registrieren. 13 alte Fortschrittszeilen weiterhin vorhanden, aber nicht an neue Benutzerkennungen gebunden. Kein Fortschrittsmapping und keine Datenbereinigung durchgeführt.
-- Cloudflare: erfolgreicher Secret-Bulk-Deploy von DATABASE_URL und NEON_AUTH_BASE_URL mit neuem DB-/Auth-Pfad; bestehende Rolle/Passwort/Cookie-Secret erhalten. ASSETS und alle drei Secret-Bindings vorhanden. Aktive Version `55c3fefd-77e5-4dfe-b24c-afba1b54ac8b`, Deployment `99e96272-ba1d-4133-83d2-c21f61e79a3d`, 100 Prozent. Nur Runtime-Secrets veröffentlicht; die ausstehende CSS-Veröffentlichung bleibt gesondert offen.
-- Private kanonische work/runtime-main.json aktualisiert; vorherige Konfiguration in work/runtime-main-before-rename.json gesichert. Development-Datei unverändert. CI-Testdatenbank und migrationsinterne SQL-Dateien benötigen keine Namensänderung; keine angewendete Migration geändert.
-- Tatsächlicher öffentlicher Test mit neuem Wegwerfkonto: Registrierung200, Session mit Benutzer/Sitzung200, Fortschritt speichern200, Abmelden200, Anmelden200, gespeicherten Fortschritt wiederhergestellt, eigene Testmarkierung aufgehoben und abgemeldet. Ein Wegwerfaccount bleibt bestehen; Produktionsstand danach 14 Fortschrittszeilen (13 Altzeilen plus Testzeile), drei öffentliche RLS-Policies, Runtime BYPASSRLS=false. Start/EN/Auth200, Gastfortschritt/Trainerkonto401, Rangliste200, DE/EN-404 jeweils404. Keine vollständige Browser-/Zwei-Account-/Trainer-Schreibprüfung in dieser Sitzung; diese bleiben als ergänzende Verifikation offen. Vorheriger vollständiger Unit-/Typ-/Build-Nachweis unten; keine Anwendungs-Codeänderung.
-- Nächster Schritt: Eigentümer neu registrieren; optional ergänzende Zwei-Account-/Trainerprüfung und später freigegebene Bereinigung verwaister Testdaten. Sicherungsbranch nicht löschen. Keine weitere Datenbankumbenennung nötig.
+### P1 – wichtig
 
-## Historie des isolierten Vorversuchs (vor Produktionsfreigabe)
-
-## Aktueller Stand: Produktion unverändert, Datenverlustgrenze bestätigt
-
-- Produktion eindeutig bestätigt: Neon-Projekt **`IT-Worlds`** (`lingering-morning-59761503`), Defaultbranch `main` (`br-long-violet-ba34agj1`), interne Datenbank `neondb`, ID 88355, OID 16396, Owner `neondb_owner`. Die sichtbare Projektbezeichnung ist bereits unabhängig vom Datenbanknamen korrekt gesetzt.
-- Bestandsklärung auf main: drei Accounts, davon zwei `@example.invalid`-Testkonten und ein Account des Eigentümers; eine aktive Sitzung. Alle drei Account-IDs besitzen zusammen 13 Lernfortschrittszeilen. Runtime `it_worlds_app` hat CONNECT, aber kein BYPASSRLS.
-- **Explizit autorisierter Test nur im isolierten Branch** `db-rename-safety-20261029` (`br-curly-shape-bakpwy1u`): Datenbank über reguläre Neon-API in `IT-Worlds` umbenannt, kopiertes `neon_auth`-Schema mit CASCADE entfernt und Managed Better Auth offiziell für `IT-Worlds` neu bereitgestellt. Danach `get_auth` erfolgreich mit `db_name=IT-Worlds`; produktive vertrauenswürdige Domain im Prüfbranch ergänzt.
-- Registrierung und Sitzung mit einem zufälligen `@example.invalid`-Wegwerfkonto tatsächlich geprüft: Sign-up 200, Session 200, Session-Cookie sowie Benutzer-/Sitzungsobjekt vorhanden. Prüfbranch danach: ein neuer Account, eine Sitzung, Runtime ohne BYPASSRLS und mit CONNECT.
-- **Bestätigte Folge:** Die 13 kopierten Fortschrittszeilen bleiben beim Auth-Neuaufbau erhalten, aber keine ist mehr mit dem neu aufgebauten Auth-Bestand verknüpft. Eine produktive Durchführung löscht daher die drei bestehenden Auth-Identitäten, meldet alle Sitzungen ab und macht vorhandene Fortschritte verwaist. Das ist technisch reparierbar nur durch Neuregistrierung plus eine bewusst geplante Zuordnung/Migration; keine solche Migration wurde entwickelt oder autorisiert.
-- Produktion und development bleiben vollständig unverändert. Main-Auth ist weiterhin als Better Auth an `neondb` gebunden; private Runtime-Dateien, Cloudflare-Bindings, lokale Konfigurationen, Migrationen, CI und Dokumentationsbeispiele wurden nicht geändert. Öffentlich zuletzt: Start/Auth 200, Gastfortschritt/Trainerkonto 401, Rangliste 200, APIs `no-store`.
-- Frühere vollständige Prüfung nach Commit 625c1bb: 133 Tests, 123 bestanden, zehn optionale Laufzeit-Skips, null Fehler; Typprüfung 274 Dateien fehlerfrei; Build 534 Seiten. Kein separates Lint-Skript. In dieser Sitzung keine Codeänderung und kein Deployment.
-- **Nächster Schritt nur nach neuer ausdrücklicher Produktionsfreigabe:** entscheiden, ob Eigentümerkonto, aktive Sitzung und 13 Fortschrittszeilen verworfen oder per dokumentierter ID-Zuordnung erhalten werden sollen; anschließend Sicherung, koordinierte Rename-/Auth-/Secret-Umstellung und authentifizierte End-to-End-Prüfung. Bis dahin bleibt `neondb` der sichere Produktionsname.
-- Der Prüfbranch bleibt als Belegkopie bestehen. Seine endgültige Löschung benötigt weiterhin eine ausdrückliche branchgenaue Freigabe. Quellen: https://neon.com/docs/manage/databases und https://neon.com/docs/auth/overview.
-
-## Vorheriger Entwicklungsstand
-
-Auftrag: Übungen übersichtlich nach Themen/Kursen strukturieren, Praxisprojekte vervollständigen, technisch sinnvolle Restaufgaben abarbeiten. Ausgangspunkt daf6654; vorhandene URLs, Kennungen und Nutzerdaten erhalten. Kein erneutes breites Audit nötig.
-
-## Implementiert und verifiziert
-
-- 203 Aufgaben/Projekte mit eindeutiger Themen-/Kursgliederung, Suche, kombinierten Themen-/Kurs-/Stufen-/Typ-/Statusfiltern, Kurs-/Quiz-/Lernpfadlinks und Wiederholhinweisen aus tatsächlich bearbeiteten Konto-Fragen. Lesen erledigt keine Aufgabe.
-- Gerätegebundene Selbst-/Modellstände getrennt von Konto-Lese-/Quizdaten. Entwurfsänderungen, Lösung laden, Reset und Undo invalidieren alte Modellergebnisse. Bestehende Entwürfe erhalten. Speicherfehler sichtbar; ohne Skripte bleiben Inhalte lesbar und Speicherelemente deaktiviert.
-- Alle sieben Projekte mit wiederaufnehmbaren Selbstprüfchecklisten. Vier neue vollständige DE/EN-CLI-Projekte: Lernzeit-JSON, IPv4-Netzplan, eigene Registermaschine, SHA-256-Inventar. Getestete Referenzen, echte CLIs/Fehlerfälle und bytegeprüfte ZIPs; keine beliebige Codeausführung im Browser.
-- Vier tastaturbedienbare Ablaufaufgaben mit Fehlpositionsfeedback und erklärten Lösungen; fester interaktiver CPU-Trace mit Neustart. Suche, Quellenregister (273), SEO und interne Verknüpfungen integriert.
-- Lokale JSON-Sicherung mit Vorschau/Bestätigung, 512-KiB-/500-Einträge-Limits, Version-/Datums-/Kennungsprüfung und Erhalt neuerer Stände. Importierte Abschlüsse immer Selbsteinschätzung; Projektabschlüsse nur mit bekannten vollständigen Checklisten. Keine Kontosynchronisierung oder externe Übertragung dieser Dateien.
-- Letzte CSS-Korrektur: Filtertoolbar tatsächlich als Raster (2 Spalten mobil/3 Desktop); einzelne sichtbare Karten füllen ihre Gruppe ohne leere Rasterplätze. Auf 390/1280 px geprüft, kein Seitenüberlauf (375/1265 px Inhaltsbreite); einzelne Desktopkarte 1185 px breit. Als **78288de3dcf22a9ef9daa94b625501c83c81810e** gepusht; [Quality 40844160880](https://github.com/manuelk2607/IT-Worlds/actions/runs/40844160880) mit allen sieben Jobs erfolgreich. **Diese letzte CSS-Korrektur ist noch nicht veröffentlicht**, siehe Blocker unten.
-
-## Prüfungen
-
-Nach letzter CSS-Korrektur: 133 Tests, 125 bestanden, acht optionale Laufzeit-Skips; alle fünf nativen Compilergruppen tatsächlich ausgeführt. Typprüfung 274 Dateien ohne Fehler/Warnungen/Hinweise, Build 534 Seiten. Kein separates Lint-Skript. Dry-Run des Funktionspakets: 528 kanonische Sprachseiten, 40.224 interne Ziele, 716 Artefaktdateien. Logs: /private/tmp/it-worlds-practice-layout-{tests,types,build}.log.
-
-Browser lokal: Statusfilter/Reload/Sprachwechsel, Modellfehler/Erfolg/Undo mit erhaltenem Originalentwurf, Projektabschluss im Katalog, Checklisten-Reset/Undo/Wiederaufnahme, Ablaufaufgabe falsch/richtig/Reihenfolge erhalten, CPU-Halt/Reset, tatsächlicher CPU-Download mit Tests/CLI. JSON-Export von sechs eigenen Testständen, bestätigter Import, ältere/gleiche Daten übersprungen und ungültige/übergroße Dateien abgewiesen. Globale Suche/Enter-Sprung, beide Designs, Mobilmenü/Escape und beide 404 geprüft. Eigene Testmarkierungen zurückgesetzt, Nutzerstände nicht gelöscht.
-
-## Bereits veröffentlicht / aktueller Freigabeschritt
-
-Funktionspaket **5056acf91c2e0f88d808121579565df32ee42929** auf codex/cloudstand-lokal gepusht; [Quality 40775678818](https://github.com/manuelk2607/IT-Worlds/actions/runs/40775678818) mit sieben erfolgreichen Jobs. Cloudflare **28.10.2026 22:57:10 Europe/Stockholm**, Version **2ed95a39-4a64-47ab-a7a5-35d8a02c5af4**, Deployment **58f53f10-5a02-456c-9ecd-bc6e2d4936a4**, 100 %. Alle 528 öffentlichen Sprachseiten und vier neuen ZIPs bytegleich. Auth200/Fortschritt401/Trainerkonto401/Rangliste200-no-store/beide404. Account/Subdomain/Einstellungen/vier Bindings unverändert. Öffentlicher Themenfilter/DE→EN-Zustand/Projektlink/CPU-Schritt/Reset geprüft.
-
-## Veröffentlichungsblocker und nächster Schritt
-
-Die ersten drei kontrollierten Freigabeversuche für 78288de scheiterten bei Cloudflare: zunächst Assets-Upload mit Code -1; anschließend POST assets-upload-session mit **HTTP 500 / Code 10013**. Der letzte Versuch verwendete nachweislich die offizielle, per SHA-256 geprüfte **Node.js 22.22.0**; damit gleicher Serverfehler. Der vorausgehende npm-exec-Versuch blieb tatsächlich auf Node 26, daher keine daraus abgeleitete Laufzeitbehauptung. Keine weitere Wiederholung ohne geänderte Voraussetzungen.
-
-Fehlerprotokolle: /private/tmp/it-worlds-practice-layout-deployment.log, /private/tmp/it-worlds-practice-layout-retry.log, zuletzt /private/tmp/it-worlds-practice-layout-node22-release.log. Private detaillierte Wrangler-Protokolle liegen daneben; keine Zugangsdaten ausgeben. Der Releasehelper entfernte seine eigenen temporären Artefakte nach Uploadfehler; es fand keine Veröffentlichung dieser Korrektur statt.
-
-Nach dem letzten Fehler per Cloudflare-API bestätigt: vorheriger Deploymentstand **58f53f10-5a02-456c-9ecd-bc6e2d4936a4** / Version **2ed95a39-4a64-47ab-a7a5-35d8a02c5af4** weiter 100 %, Account/Subdomain/Einstellungen/vier Bindings unverändert. Auth200/Fortschritt401/Trainerkonto401/Rangliste200-no-store/beide404 erneut erfolgreich. Öffentlicher Filter 7→1 und DE→EN mit erhaltenem Sicherheitsthema funktionieren. Die funktionalen Erweiterungen bleiben online; ausschließlich die letzte Rasterkorrektur wartet auf Freigabe.
-
-**Erneuter Versuch nach ausdrücklicher Freigabe · 29.10.2026:** Anmeldung erfolgreich geprüft/erneuert; sauberer Quellstand 8613ad3 (CSS aus 78288de), offizielle Node-Version 22.22.0, unveränderte Wrangler-Konfiguration. Build 534 Seiten, SEO 528 kanonische Sprachseiten und 40.224 interne Ziele erneut erfolgreich. Vierter Freigabeversuch scheitert wiederum schon an POST assets-upload-session mit HTTP 500/Code 10013. Log: /private/tmp/it-worlds-deploy-retry2.log; privates Wrangler-Detailprotokoll daneben. Keine weitere Freigabeanforderung; keine zusätzlichen Berechtigungen oder Infrastrukturänderungen angefordert beziehungsweise vorgenommen. Version, Deployment, Einstellungen und vier Bindings nachher unverändert bestätigt; Start/Übungen/Auth/Rangliste und beide 404 erfolgreich.
-
-Gezielte Primärquellenprüfung: Cloudflare führt einen [offenen Bericht zum gleichen Endpunkt/Fehlercode](https://github.com/cloudflare/workers-sdk/issues/16447), einschließlich unabhängiger lokaler Reproduktion vom 27.10. Die gleiche Ursache für IT-Worlds ist damit nicht bewiesen. [Wrangler 4.155.0](https://github.com/cloudflare/workers-sdk/releases/tag/wrangler%404.155.0) dokumentiert keinen Fix für diesen Serverfehler; keine unbegründete Abhängigkeits-/Konfigurationsänderung oder weitere identische Versuche. Es wurde kein Supportticket/öffentlicher Kommentar gesendet.
-
-**Nächster konkreter Schritt:** bei wieder funktionierender Cloudflare-Upload-API 78288de erneut veröffentlichen, anschließend öffentliche Auslieferung/Einstellungen und Raster prüfen. Keine erneute Inhalts-/Implementierungsanalyse oder neue Zugangsdaten nötig. Verifizierte temporäre Laufzeit: /private/tmp/it-worlds-node22-official/node-v22.22.0-darwin-arm64/bin/node; falls vorhanden mit --experimental-strip-types scripts/release.ts nutzen. Danach öffentlichen Nachweis hier und in docs/VALIDIERUNG.md ergänzen. Keine automatische Fortsetzung zugesagt.
-
-Eigener localhost:8790-Testserver gezielt beendet; Browser-Viewport zurückgesetzt. Lokaler Bildnachweis im privaten Aufgabenworkspace outputs/it-worlds-uebungen-layout-lokal.jpg, ausdrücklich noch nicht öffentliches CSS. Bestehende Nutzerdaten/Entwürfe unverändert.
-
-## Extern offen
-
-P1: unabhängige fachkundige/assistive Prüfpersonen sowie kontrolliertes development-Postfach für echten Reset-Empfang (docs/P1-PRUEFUNGEN.md). Quellen-/Compiler-/Browserprüfungen ersetzen diese Nachweise nicht. Lernendenstudie braucht Teilnehmende; Lizenzentscheidung den Rechteinhaber. PDF-Vorschau/zusätzliche Diagnostik nur bei sicherem, kostenfreiem und geringem Aufwand; Kompilierung bleibt extern. Weitere Medien/Projekte/Community/CMS/Duelle bleiben bedarfsabhängige Optionen, keine bestätigten Defekte. Keine bekannten technisch offenen P0-/P1-Implementierungen dieses Pakets; Gesamtprojekt nicht pauschal abgeschlossen.
-
----
-
-# Abgeschlossen · Sprachkurse und Kurs-/Übungsstruktur · 28.10.2026
-
-Auftrag fortgesetzt vom sauberen Ausgangspunkt a4463a1. Technisch umsetzbare bekannte Restaufgaben abgeglichen; externe Prüfaufgaben bleiben offen. Drei abgeschlossene Pakete:
-
-- **Sprachkurse:** Java, C/C++, Go und Rust mit jeweils sechs vollständigen DE/EN-Kapiteln, 24 exakt getesteten Listings, Aufgaben/Lösungen, 48 erklärten Fragen und 33 tatsächlich gelesenen Primärquellen. Sprachwahl nach Lernziel, C und C++ ausdrücklich getrennt erklärt. Ziel Java 21, C17/C++20, Go 1.27.3, Rust 1.99.1/Edition 2024. Eigener Websitecode/Tests bleiben TypeScript; keine Nutzer-Codeausführung oder neue Abhängigkeit.
-- **Kurs-/Übungsstruktur:** gruppierter Kurskatalog, 195 aus vorhandenen Daten abgeleitete Aufgaben/Projekte mit kombinierten Text-/Themen-/Kurs-/Stufen-/Arbeitsweisenfiltern, URL-/Sprachzustand, Leerzustand, Reset und 18er-Nachladen mit Zielfokus. Alle 169 Kapitelaufgaben über stabile #aufgabe-Anker; 30 Textsatzaufgaben als externe Dokumentaufgaben. Mehrfachzuordnungen der Projekte erhalten. Globale Suche findet Aufgaben/Lösungen. Kopierbare Startbefehle in eigenen Codeblöcken.
-- **Lernpfad:** vierter geführter Weg „Vom Rechner zum sicheren Speicherzugriff“, 14 vorhandene Kapitel aus Grundlagen/Hardware/C/C++/Rust, konkrete Voraussetzungen und überprüfbares CLI-/Zugriffsprotokoll als Ziel. Derselbe Kapitelstand zählt weiter; bestehende IDs/URLs/Nutzerdaten unverändert, keine Migration.
-
-## Verifikation
-
-114 Tests: 106 bestanden, acht optionale lokale Laufzeit-Skips. Alle fünf nativen Compilergruppen liefen ohne Skip; tatsächliche Ausgaben, CLI-Format-/Negativ-/Überlaufverträge sowie abgewiesene Rust-Move-/Borrowing- und C++-Kopierfälle geprüft. Linux-CI fand fehlende finale C-Quelldatei-Zeilenumbrüche und ein älteres JDK im allgemeinen Runner; beides korrigiert, vollständiger erfolgreicher Nachlauf. Check 233 Dateien ohne Fehler/Warnungen/Hinweise, Build 518 Seiten. Release-Dry-Run und tatsächlicher Release: 512 kanonische Sprachseiten, 37.325 interne Links/Assets/Anker. Kein separates Lint-Skript.
-
-Browser lokal: Filterkombinationen/Konflikte, Nachladen 18→36/Zielfokus, Leerzustand/Reset, DE/EN-Zustand, Kursgruppen/Suche, neuer Pfad, vier Sprachfamilien/Listings/Startbefehle, Aufgaben/Lösungen, Rust-Quiz falsch/richtig/alle Erklärungen/1-von-2-Abschluss/Neustart sowie englisches Java-Feedback. Globale Suche findet ParseIntError aus der Aufgabe und navigiert per Enter. Tatsächliche 390px-/1280px-Ansichten, beide Designs und Mobilmenü/Escape ohne Seitenüberlauf. Readiness und beide Sprach-404 funktionieren.
-
-## Veröffentlichung
-
-Quellstand **ec9db5c693967bf0a121be69588055ce44f377e4** auf `codex/cloudstand-lokal` gepusht; Hauptimplementierung 124a7e0, Portabilitätskorrekturen f65ceea/ec9db5c. GitHub [Quality 40647404074](https://github.com/manuelk2607/IT-Worlds/actions/runs/40647404074): alle sieben Jobs erfolgreich (Node 22.22/24, PostgreSQL, Container, Godot, systemd, native Sprachen).
-
-Cloudflare am **28.10.2026 08:03:59 Europe/Stockholm**: Version **88f84534-212b-4c1e-96d0-c87aeca1d4b5**, Deployment **4c5e4ab2-d9f9-44b6-8357-b329db1e5146**, 100 % Traffic. Alle 512 öffentlichen Sprachseiten stimmen mit exakt dem veröffentlichten Releaseartefakt überein. Öffentliche Readiness besteht; Auth200, Gastfortschritt/Trainerkonto401, Rangliste200 mit no-store und beide HTTP-404 geprüft. Account/Subdomain/workers.dev-Status, sämtliche Einstellungen und vier Bindings vorher/nachher identisch. Keine Authkonfiguration oder Produktionsdatenbank geändert.
-
-Öffentlicher Browser: Rust-Aufgabenfilter 6→2, Kapitel-/Aufgaben-/Quizsprung und richtige Abschlussantwort mit jeder Erklärung/Quelle; englischer Kursfilter und 14-Schritte-Pfad; globale Aufgaben-Suche/Enter-Sprung und veröffentlichte Sprachwahl geprüft. Belegbild im privaten Aufgabenworkspace outputs/it-worlds-sprachkurse-live.jpg. Temporären Viewport zurückgesetzt. Eigener lokaler Testserver beendet.
-
-## Offen / nächster konkreter Schritt
-
-Externe P1-Voraussetzungen: unabhängige fachkundige/assistive Prüfpersonen und kontrolliertes development-Postfach für echten Reset-Empfang (docs/P1-PRUEFUNGEN.md). Quellenabgleich/Compiler-/Browserprüfungen ersetzen diese Nachweise nicht. Lernenden-UX-Erprobung braucht Teilnehmende. PDF-Vorschau/zusätzliche Dokumentdiagnostik nur sicher, kostenlos und wartungsarm; Kompilierung bleibt extern. Lizenzentscheidung beim Rechteinhaber. Zusätzliche Projekte, Medien, Visualisierungen, Duelle/Community/CMS sind bedarfsabhängige Optionen, keine bestätigten Defekte oder zugesagten Prototypen. Java/C/C++/Go/Rust und diese Strukturpakete nicht erneut implementieren. Nächster Lauf: anhand konkreter Rückmeldungen oder verfügbarer externer Prüfpersonen priorisieren; keine bekannten technisch offenen P0-/P1-Implementierungen in diesem Paket. Gesamtprojekt ausdrücklich nicht pauschal abgeschlossen.
-
----
-
-# Abgeschlossen · Praxisprojekte, Trainer und Glossar · 27.10.2026
-
-Ziel: die dokumentierten Restaufgaben priorisiert abschließen, bestehende Daten/URLs erhalten. Die folgenden unabhängigen P2-Pakete sind technisch abgeschlossen und veröffentlicht; das Gesamtprojekt wird wegen externer Reviews und weiterer bedarfsabhängiger Aufgaben nicht als abgeschlossen erklärt.
-
-## Abgeschlossene Pakete
-
-- **Schreibtrainer:** zwölf gestufte Lektionen, eigene DE/EN-Sätze/Absätze/Alltagstexte, Voraussetzungen, Textfortschritt und konkrete Endfehler. Lokale Historie erhalten, Bestwerte nach Text/Sprache getrennt. Unicode-Korrekturen stimmen mit der Replayauswertung überein. Rankingtexte/-regeln und Datenmodell unverändert.
-- **Dokumentprüfung:** getrennte Marken-/Literatur-Namensräume, begrenzter BibTeX-Scanner, bibitem/Typst-cite und doppelte Kennungen. Alle 31 Profile verwenden bestehende Ziele, Aufgaben und Lösungen für bewusste Selbstprüfrubriken; erst nach Bestätigung optionale vorhandene Kapitelmarkierung. JSON kennzeichnet Selbstauskunft, Kompilierung bleibt extern/not-run.
-- **Drei vollständige Praxisprojekte:** DE/EN-Anleitungen mit Abnahme/Transfer, getestete Quelldateien und bytegeprüfte ZIPs für mehrseitigen TypeScript-Webkatalog, relationalen SQL-Lernbericht sowie echten HTTP-Vertragsprüfer mit Fehlerdiagnose/Wiederanlauf. Gemeinsame Metadaten verbinden Kurse, Lernstart, Übungen, Suche und Sitemap. Keine neuen Website-Abhängigkeiten oder Fortschritts-IDs.
-- **Glossar/Suche:** 15 zweisprachige quellengebundene Begriffe, Kurs-/Projektverknüpfungen, kombinierte Filter und URL-/Sprachzustand. Beschreibungen/Lernziele werden nun tatsächlich durchsucht. Same-Page-Suchtreffer schließen den Dialog und erhalten einen brauchbaren Zielfokus. Belege am 27.10. erneut gelesen; kein unabhängiges Fachreview behauptet.
-
-## Verifikation
-
-103 Tests: 95 bestanden, acht optionale lokale Laufzeit-Skips. Astro-Check 221 Dateien ohne Fehler/Warnungen/Hinweise, Build 452 Seiten, Releaseprüfung 446 kanonische Sprachseiten und 31.891 interne Ziele. Kein gesondertes Lint-Skript. GitHub Quality [40426819774](https://github.com/manuelk2607/IT-Worlds/actions/runs/40426819774): alle sechs Jobs erfolgreich (Node 22/24, tatsächliche PostgreSQL-/Container-/Godot-/systemd-Beispiele).
-
-Zusätzlich tatsächlich geprüft: SQL-Projekt unter PostgreSQL 18 im eigenen netzlosen Container, anschließend 0 öffentliche Tabellen und Container automatisch entfernt; bestehender postgres:15 unverändert. Frisch entpackter Web-ZIP-Download mit eigener Installation, Build und 3/3 Tests erfolgreich. Echte HTTP-CLI-Prüfungen mit Exit 0/1/2. Zwei vorhandene development-Konten prüfen alle drei neuen Textlektionen DE/EN, private Historie und Nichtaufnahme in Rankings; kompletter 60-Sekunden-/RLS-/Replay-/Origin-/Timing-/Sichtbarkeits-/Widerrufstest ebenfalls erfolgreich. Keine Produktionsaccounts, neuen Zugangsdaten oder Migrationen.
-
-Browser lokal: Trainer DE/EN, Restfehler, Abschluss, Reset, Historienerhalt/Sprachtrennung und Unicodekorrektur; Dokumentprüfung/Selbstprüfung/Musterlösung/Reset; Webreferenz mit kombinierten Filtern, Lesezeichen, Detail, Reload, Leerzustand und Fokus. Glossar DE/EN einschließlich Quellen, Sprachzustand und Tastatur-Suchsprung. Alle drei Projektanleitungen und Glossar in echtem schmalem 390px-iframe-Ansichtsbereich ohne Seitenüberlauf, beide Designs. Native Viewport-Override wurde nicht übernommen; keine daraus abgeleitete mobile Behauptung. Frühere Trainer-/Dokument-Mobilmenüprüfungen bleiben gültig.
-
-## Veröffentlichung
-
-Quellcommit `059ac2a5d7c087416e22c316cb75b8132f07a7e8` auf `codex/cloudstand-lokal` gepusht. Cloudflare am **27.10.2026 09:40:45 Europe/Stockholm**: Version `87c9d6fa-9ff0-49df-8a0a-4ed9fa85ac9b`, Deployment `1b1928b0-e1d5-4a12-8dd8-1213622e1c84`, 100 % Traffic. Der erste sofortige HTML-Nachvergleich schlug fehl; erneute vollständige Prüfung gegen exakt dasselbe erhaltene Releaseartefakt besteht für alle 446 öffentlichen Seiten. Alle drei öffentlichen ZIPs bytegleich. Auth200, Gastfortschritt/Trainerkonto401, Rangliste200/no-store und beide Sprach-404 geprüft. Account/Subdomain/workers.dev/Preview-Status sowie Einstellungen und vier Bindings vorher/nachher identisch.
-
-Öffentlicher Browser: Glossarfilter/Sprachzustand, globale Suche und Enter-Sprung mit geschlossenem Dialog/Zielfokus; Typst-Beispiel mit positionsbezogener Warnung/Fehler und 0/4 bewussten Selbstprüfkriterien; neue englische Absatzlektion mit Voraussetzung/408 Zielzeichen; drei Projektkarten im Lernstart. Belegbild im privaten Aufgabenworkspace gesichert. Veröffentlichung und technische Nachprüfung abgeschlossen.
-
-## Offen / nächster konkreter Schritt
-
-Externe P1-Voraussetzungen abarbeiten: unabhängige fachkundige/assistive Prüfpersonen und kontrolliertes development-Postfach für echten Reset-Empfang (Prüfabläufe in docs/P1-PRUEFUNGEN.md). Lernenden-UX-Erprobung benötigt reale Teilnehmende. PDF-Vorschau bleibt P2 ausschließlich bei sicherem, kostenfreiem und geringem Aufwand; tatsächliche Kompilierung/PDF-Kontrolle bleiben im externen Editor. Lizenzentscheidung benötigt den Rechteinhaber. Weitere Projekte, Visualisierungen, Gamification/Duelle, Community, CMS und Sprachen sind bedarfsabhängige P3-Optionen, keine bestätigten Defekte oder zugesagten Prototypen. Technische Pakete nicht erneut analysieren oder implementieren. Kein erneuter Code-Deploy für diesen reinen Dokumentationsnachweis nötig.
----
-
-# Abgeschlossen · Textsatz als Themenkategorie · 26.10.2026
-
-Ziel: den Hauptmenüpunkt „LaTeX & Typst“ entfernen und beide Lernbereiche als eigenständige Themenkachel „Textsatz & Dokumentenerstellung“ in Navigation, Suche, Filter und Breadcrumbs integrieren, ohne Inhalte, URLs oder Lernfortschritt zu verlieren.
-
-Umgesetzt: DE/EN-Themenportal unter den bestehenden `/textsatz/`-Routen, responsive Themenkachel mit eigenem Dokument-Icon und 30 verfügbaren Kapiteln, Typst als empfohlener Einstieg vor LaTeX, direkte Links zu typst.app/Overleaf und zur lokalen Dokumentprüfung. Haupt- und Mobilnavigation enthalten keinen eigenen Textsatz-Reiter mehr; auf Portal- und Kursseiten ist „Themenwelten“ aktiv. Programmiersprachen zeigen nur TypeScript, Python und Markdown; LaTeX/Typst werden dort nicht mehr als zweite Kategorie angeboten. Suche sowie Kurs-, Übungs-, Quiz-, Fortschritts- und Quellenfilter verwenden die neue sichtbare Kategorie aus einer gemeinsamen Metadatenquelle. Breadcrumbs der Kurse und Dokumentprüfung führen über das Portal.
-
-Kompatibilität: Die vorhandenen DE/EN-Kurs- und Kapitel-URLs unter `/themen/programmiersprachen/{typst,latex}/` bleiben unverändert erreichbar. Kurs-, Kapitel-, Aufgaben- und Frage-IDs sowie gespeicherte Fortschrittsdaten wurden nicht geändert. Keine Datenbank-, Worker- oder Deploymentänderung.
-
-Verifiziert: 87 Tests (80 bestanden, 7 optionale Laufzeit-Skips), Astro-Check für 197 Dateien ohne Fehler/Warnungen/Hinweise, Build mit 444 Seiten, Release-Dry-Run mit 438 kanonischen zweisprachigen Seiten und 30.778 internen Links/Assets/Ankern. Browser: Haupt- und Mobilnavigation ohne alten Reiter, DE/EN-Portal, 390×844, Themenkachel, Typst-Hervorhebung, externe Editor-/Prüflinks, Suchtreffer, Quizfilter mit 60 Typst-/LaTeX-Fragen, Quellenfilter mit 46 zugeordneten Belegen, Programmiersprachen ohne doppelte Kurse sowie unveränderte Typst-Kompatibilitätsroute und sichtbare/strukturierte Breadcrumbs über Themenwelten → Textsatz geprüft.
-
-Veröffentlicht: Quellcommit `41ed34b` auf `codex/cloudstand-lokal`; GitHub-Quality `40336730526` mit allen sechs Jobs erfolgreich. Cloudflare-Deployment am 26.10.2026 um 15:09 Uhr Europe/Stockholm: Version `3383c337-abf5-4ffb-82e1-1ea513a92792`, Deployment `23dc4329-08a5-47ee-bca1-12e460595e48`, 100 % Traffic. Öffentlicher Nachvergleich aller 438 Seiten erfolgreich; Readiness für Start, Quiz und Quellen sowie DE/EN-Portal, Quellenfilter, Kompatibilitätsrouten und beide 404-Sprachen geprüft. Compatibility-Datum, Routing, Nutzungsmodell und die vier bestehenden Bindings blieben erhalten.
-
-Offen bleibt ausschließlich der zuvor dokumentierte externe P1-Bedarf: unabhängige fachkundige/assistive Prüfpersonen und ein kontrolliertes development-Testpostfach. Die Textsatz-Navigation selbst hat keine bekannte offene Aufgabe.
-
----
-
-# Vorheriger Auftrag · P1-Abschluss · 25.10.2026
-
-Ziel: die fünf konsolidierten P1-Pakete unten abarbeiten, keine P2/P3-Erweiterung. Vorhandener Dokumentationsdiff bleibt erhalten. Reihenfolge: (1) Ranking-Audit/echte development-Sessions und Fehler beheben, (2) Godot-Engine-/Browserprüfungen, (3) reproduzierbares Linux-/systemd-Labor, (4) Auth-Reset-Fehlerpfade und erreichbare technische Accessibility-Prüfungen, (5) Gesamttests/Check/Build und präziser Abschluss.
-
-Stand: drei technische P1-Pakete abgeschlossen und öffentlich veröffentlicht. Migration 002 nach bestandenem Audit auch auf main angewendet (unveränderte Prüfsumme; neue Tabellen mit erzwungener RLS; eingeschränkte Runtime ohne Kontext sieht keine Daten). Unabhängiges Fach-/assistives Review und tatsächlicher Reset-Mailempfang bleiben mangels Prüfpersonen bzw. kontrolliertem Postfach extern blockiert; keine P2/P3-Arbeit begonnen.
-
-Paket 1 verifiziert: `test:development` startet einen eigenen localhost-Worker mit bestehender eingeschränkter development-Rolle. Zwei echte Accounts/Sessions, alter Fortschrittstest, Ranking-RLS, fremde IDs/Origin, konkurrierende Starts (200/429), echte 61 Sekunden Serverwartezeit mit DE/EN-Protokollreplays, konkurrierende Abgaben (200/409), frühe/Burst-/wiederholte Abgaben, alle Ranglistenfilter, feste öffentliche Projektion, Opt-in/out und widerrufene Session bestehen. Keine menschliche Tippleistung behauptet. Reset-Negativpfade (ungültiger Token, fehlerhafte Mail, neutrale Unbekannt-Antwort, fremde Origin) bestehen; echter Mailempfang bleibt blockiert. Behoben: veränderbare Trainerzustände während Requests, doppelte Starts/Speicher-Race, unklare Namenskollision und ungültige UUID mit Serverfehler. Feature im Arbeitsstand zum Test aktiviert; Produktion noch nicht migriert/veröffentlicht.
-
-Paket 2 verifiziert: Godot 4.5 (offizieller SHA-256 geprüft) importiert das Projekt; Engine-Test prüft Bewegung/diagonale Geschwindigkeit, echte Wände/Area2D-Kontakte, genau fünf Punkte, Abschluss und fünf Neustarts. Neustartfehler durch alte Physik-Kontakte behoben; ZIP entspricht Quellen. Linux/systemd-Benutzerlabor mit eigener temporärer Unit, Exit 17, Result-/Journalnachweis und gezielter Bereinigung DE/EN im vorhandenen Kapitel integriert. Offizielle systemd-run-Quelle gelesen (Register nun 239 Quellen). Kein privilegierter Container erforderlich; lokaler Container ohne delegierte Kontrollgruppen ist dafür ungeeignet, sein Prototyp-Dockerfile wurde entfernt.
-
-Git: cc21b52 auf codex/cloudstand-lokal gepusht. GitHub Quality 40215505510: alle sechs Jobs erfolgreich (Node 22/24, echte SQL-/Containerbeispiele, echtes Linux/systemd-Labor und Godot 4.5). Lokal 85 Tests: 78 pass/7 optionale Skips; Engine separat 2/2 erfolgreich; check 196 Dateien ohne Meldungen; Build 444 Seiten; deploy:check 438 kanonische Sprachseiten/31.730 Links erfolgreich.
-
-Browser abgeschlossen: echte development-Anmeldung, private Kontohistorie, Profil speichern, leere öffentliche Rangliste, gesperrte Einstellungen während Requests, Kontospeicherung, konsistente Endwerte/Reset, Ranglistenbestwertfilter und nicht gewerteter Abbruch bestätigt. DE/EN, beide Designs, 390px ohne Überlauf, Mobilmenü/Escape/Fokus, Hardware-Halbaddierer/12 CPU-Schritte/Reset, Spiele-Buttons/Pfeile/Reset, Linux-Labor und beide 404 geprüft. Eigener Text bleibt lokal. Erneut 85 Tests (78 pass/7 optionale Skips), check 196 Dateien ohne Meldungen, Build 444 Seiten; kein gesondertes Lint-Skript vorhanden.
-
-Veröffentlichung verifiziert: Quellcommit 9ccd793 auf codex/cloudstand-lokal, Quality 40237691162 vollständig erfolgreich. Deployment am 25.10.2026 22:56:18 Europe/Stockholm: Version 7f5d4d27-b4c3-4353-ac77-8161225c44a3, Deployment 0fc157cf-8e24-4ca1-b650-4c989e4a95f8, 100 % Traffic. Alle 438 öffentlichen Sprachseiten stimmen mit dem Build überein; 31.730 Links geprüft. Öffentliche DE/EN-Rangliste lädt (200/no-store), Gäste können keine Konto-Ergebnisse lesen (401), Ranked-Start fordert verständlich Anmeldung; Gastübungen bleiben verfügbar. Auth200, Fortschritt401, beide404. CF-Account/Subdomain/Einstellungen/vier Bindings vor/nach identisch. Produktionsdaten: 13 frühere Fortschrittszeilen erhalten, keine Testprofile oder Testläufe auf main. Eigenes experimentelles Linux-Image entfernt; bestehender PostgreSQL-Container unverändert.
-
-Nächster sinnvoller Schritt benötigt externe Voraussetzungen: unabhängige fachkundige und assistive Prüfpersonen sowie ein kontrolliertes development-Testpostfach für echten Reset-Empfang. Prüfabläufe in docs/P1-PRUEFUNGEN.md. Diese beiden P1-Punkte nicht als erledigt markieren oder durch simulierte Tests ersetzen. Technische Pakete und Freigabe nicht erneut analysieren; bei Fortsetzung Git und diese Nachweise abgleichen.
-
----
-
-# Abgeschlossen · Schlanke Dokumentprüfung · 25.10.2026
-
-Ziel: ausschließlich externe Bearbeitung in Overleaf/typst.app; sichere lokale Quellen-/ZIP-Prüfung ohne eigenen Kompilierungsdienst oder zusätzliche laufende Kosten. P0: Editorlinks/Import/Diagnostik. P1: Mehrteiler/Aufgabenprüfungen/manuell bestätigter bestehender Kapitel-Lernfortschritt. Danach Tests, Browserprüfung, GitHub-Push und Deploy mit erhaltenen Einstellungen. Keine Dokument- oder Datenbankmigration geplant. Der bislang unveröffentlichte Ranking-Backendstand darf ohne seine ausstehenden Prüfungen nicht aktiviert werden.
-
-Implementiert: externer Editor-/Export-/Quellenimport für beide Formate, Compilerdienst/Proxy/CI entfernt, 30 Kapitelprofile plus bestehende Typst-Verweisaufgabe. Gemeinsame sichere Projektaufnahme/ZIPs/Workerlimits erhalten. Bewusster bestehender Kapitel-Lernfortschritt; kein neues Schema oder Dokumentenspeicher. Alte Typst-Editorentwürfe read-only als Download verfügbar. Ungeprüftes Rankingbackend samt Online-UI deaktiviert, lokale Übungen erhalten.
-
-Verifiziert: 83 Tests (78 pass/5 optionale Laufzeit-Skips), 191 Dateien strikt ohne Meldungen, 444 HTML-Seiten, Dry-Run/438 Sprachseiten/31.728 interne Links. Browser: tatsächliche ZIP-Importe beider Formate, fehlerhafte Quellen, unsicherer ZIP-Pfad, Fundstellen, Entfernen, DE/EN, hell/dunkel und mobil. CF-Account/Subdomain/vier Bindings gelesen, Einstellungen für Nachvergleich gesichert; Login erneuert. Keine bestehenden Docker-Container oder Images verändert.
-
-Abgeschlossen: Quellcommit 4b902cd auf codex/cloudstand-lokal gepusht; GitHub-Quality 40179580624 erfolgreich. Öffentlich veröffentlicht am 25.10.2026 10:11:42 Europe/Stockholm: Version 677144d2-3d90-413b-bc98-35b955122f8e, Deployment 1475cda0-30b8-47ed-bd46-49669f2662f0 mit 100 % Traffic. Alle 438 Sprachseiten bytegleich geprüft. Öffentliche LaTeX-Analyse und echter Typst-Mehrdatei-ZIP-Import funktionieren im Browser. CF-Einstellungen und vier Bindings unverändert; Auth200/Gastfortschritt401/Ranking503/entfernter Compiler404/beide404 geprüft. Dokumentation: docs/VALIDIERUNG.md und docs/DOKUMENTPRUEFUNG.md.
-
-Offen außerhalb dieses abgeschlossenen Auftrags: P2-Verbesserungen nur ohne zusätzliche laufende Kosten/hohen Aufwand; unabhängiges Fach-/assistives Review; ungeprüftes Rankingbackend und Godot-Engineprüfung aus früherem Auftrag. Keine Kompilierungsserver einrichten. Nächster Entwicklungslauf soll vom aktuellen Git-Stand ausgehen und diese bereits abgeschlossenen Pakete nicht wiederholen.
-
----
-
-# Vorheriger Auftrag · LaTeX-/Typst-Dokumentprüfung · 25.10.2026
-
-Auftrag: LaTeX-Restaufgaben, gemeinsamer Export-/Upload-/Prüfworkflow, Typst vertiefen und hervorheben. Vorherige Roadmap-Änderungen erhalten. Details und Freigabegrenzen: docs/DOKUMENTPRUEFUNG.md.
-
-Implementiert: lokal arbeitende, begrenzte Einzeldatei-/ZIP-Aufnahme in Web Worker; LaTeX-/Typst-Analyse mit Positionen, Hauptdatei, Referenzen/Ressourcen, Quellenansicht und Bericht. DE/EN-Routen /textsatz/ und /dokumentpruefung/, gemeinsame Navigation/Suche/Kurslinks; Kursbeispiele direkt in Prüfung ladbar. Typst acht zusätzliche Kapitel (nun 16/32 Fragen), LaTeX Diagnosekapitel (nun 14/28). Stabile frühere IDs erhalten. Zwölf Analyse-/ZIP-/Diagnostiktests bestehen. Gesamter lokaler Stand: 13 Themen/18 Kurse/145 Kapitel/300 Fragen/238 Quellen.
-
-Separater eigener Compilercontainer und privater TS-Dienst mit Worker-Proxy implementiert. Nur eigene Container it-worlds-doc-* erstellt/entfernt; bestehende Container nicht bearbeitet. Docker lokal gestartet, eigenes Image gebaut. Alle 30 Kursbeispiele inklusive Biber erfolgreich kompiliert; sieben separate Compiler-/Diensttests inklusive ungültiger Syntax, fehlender Pakete, Projektausbruch, Endlosschleife, echtem Shell-Escape-Ablehnungstest, Auth und Löschung bestehen. Keine neue öffentliche Hosting-Ressource, kein Deploy, keine Datenbankänderung. Bei fehlender Dienstkonfiguration bleibt Kompilierung verfügbar:false; Quellen bleiben dann lokal.
-
-Verifiziert: npm test 85 Tests (75 bestanden, 10 optionale Laufzeit-Skips), check 193 Dateien ohne Meldungen, serieller Build 444 HTML-Seiten, deploy:check mit 438 SEO-/Sprachseiten und 31.602 Links/Ankern erfolgreich. Die sieben echten Compiler-/Diensttests liefen zusätzlich ohne Skips. Browser: DE/EN, 390px/950px/1280px ohne Seitenüberlauf, Designs/Mobilmenü/Escape, Einzeldateien und ZIP, Hauptdatei, Quellpositionen, echte Typst-/Biber-PDF-Rastervorschau, neue Quizfrage mit Erklärungen/Ergebnis/Neustart und klare Nichtverfügbarkeit ohne Dienst am echten lokalen Worker. Entfernen leert Quelle und Ergebnisse. 22 neue DE/EN-Routen und beide Worker-404-Sprachen per HTTP geprüft; allgemeiner Ready-Check bestanden.
-
-Offen: dauerhafter separater Compilerhost mit unabhängiger Sicherheitsprüfung und öffentlicher Konfiguration; Fachreview/assistive Nutzerprüfung; optionale fachliche Bewertungsrubriken. Der frühere Schreibtrainer-/Hardware-/Spiele-Freigabestand bleibt gesondert offen. Keine automatische Restart-/Fortsetzungszusage; nächster Entwicklungslauf muss diesen Stand mit Git abgleichen. Veröffentlichung/Pushergebnis weiterhin keines.
-
----
-
-# IT-Worlds · Zwischenstand drei Lernbereiche
-
-## Stand / Budget · 24.10.2026
-Nutzerauftrag aus eingefügtem Text: drei integrierte Lernbereiche, maximal ca. 50 % Kontingent. Gemessener Start 1 %, Abschlussmessung 55 %: Budget leider überschritten; keine weiteren Pakete beginnen. Arbeitsbranch codex/cloudstand-lokal, vorheriger Stand 64f71e5. Nutzer stellt klar: .clinerules-Toolbeschränkung betrifft diese Arbeit nicht; verbundener Neon-Connector ist verwendbar, Datei unverändert.
-
-## Lokal implementiert
-13 Themen, 18 Kurse, 136 Kapitel, 282 Quizfragen, 226 Quellen. Neue Hardware-Folge (6 Kapitel), Spieleentwicklung (5 einschließlich eigenständiger Unity-/Unreal-Grundlagen), Tastschreiben (3). DE/EN, Suche, Themenkarten, Kurs-/Kapitel-/Fortschrittsverknüpfungen; Lehrlabore für Halbaddierer, CPU-Schritte/Bootfolge und ein tastatur-/buttonbedienbares 2D-Kollisionsmodell. Eigenes Godot-4.5-Projekt mit vier Quelldateien und ZIP; noch nicht in Godot ausgeführt.
-
-QWERTZ-Trainer unter /schreibtrainer/ und /en/schreibtrainer/: zehn Lektionstypen, Hinweise/Fingerzuordnung, lokale Historie/Bestwerte/Schwächen, adaptive Zeichenfolge, eigene Texte, 60-Sekunden-Fenster, Replay-Auswertung für WPM/KPM/Genauigkeit/Fehlerquote. Eigene Texte bleiben lokal. Browser: freie Übung mit asdf gestartet/beendet, 100 % Genauigkeit und lokale Speicherung sichtbar. Bild im Aufgabenworkspace work/three-areas-local-trainer.png.
-
-## Datenbank / Backend vorbereitet, NICHT produktionsfreigegeben
-Bestehendes Neon-Projekt lingering-morning-59761503. development br-silent-glade-bamm5co5 inspiziert (learning_progress, schema_migrations, neon_auth.user); Owner BYPASSRLS=true, Runtime-Rolle false. Additive 002_typing.sql nur auf development per MCP-Transaktion inklusive Prüfsumme angewendet: 480f256914ca3f553f2a0570d5cea40035d9988f06849effc002bcc87f7ab92f. Neue typing_profiles/typing_runs, RLS, eingeschränkte Rechte, public.typing_board mit expliziter Sichtbarkeit und festen Projektionen. Keine bestehende Migration geändert, keine Produktionsmigration.
-
-Worker-Routen für Start/Finish/Profil/Me/Leaderboard implementiert: Live-Session, gleiche Origin, Serverstartzeit, Replay, Ergebnisberechnung, atomare Einmalabgabe, Startlimit, pseudonyme Opt-in-Anzeige, UTC-Zeiträume. Noch NICHT mit zwei echten Sessions, fremden IDs, manipulierten/doppelten Abgaben oder realem 60-Sekunden-Test geprüft. Keine Behauptung eines produktionsreifen Rankings. Die öffentliche Website bleibt Version b54243e9-3627-496e-a8f4-66c0c378638f.
-
-## Verifikation / Nächster Schritt
-66 Tests: 61 bestanden, 5 lokale Laufzeit-Skips. 171 Dateien strikt ohne Fehler/Warnungen/Hinweise. Buildfehler durch leere neue Einstiegsfragen-Gruppen behoben; isolierter Build 422 Seiten erfolgreich. Abschließender npm-build und Deploy-Dry-Run in /private/tmp/it-worlds-three-final-build.log bzw. it-worlds-three-deploycheck.log. Eigener Testserver/Tab schließen. Kein Deployment und kein GitHub-Push dieses Zwischenstands.
-
-Zuerst Backend-/RLS-/Zwei-Account-/Replaytests auf development, Browsertests für beide Sprachen/Designs/Mobilansicht sowie Godot-Import/Spielablauf abschließen. Ranglisten-Sichtbarkeit, Herkunft, Timing- und Eingabegrenzen prüfen und UI-Regeln mit Servergrenzen abgleichen. Erst danach additive Migration auf main und Veröffentlichung mit erhaltenen Cloudflare-Einstellungen. Medien/Videos, größere Projekte, zusätzliche Statistiken, Gamification und Duelle offen; keine Platzhalter dafür veröffentlicht. Fachreview bleibt offen.
-
-Abschlusskorrektur: Der zuvor erfolgreiche isolierte Build (422 Seiten) wurde durch die letzten parallel gestarteten Build-/Releaseprüfungen nicht erneut bestätigt. Abschließender npm-Build und Deploy-Dry-Run schlugen fehl (Modul-/Linkprüfung; Logs im privaten temporären Verzeichnis). Vor Freigabe seriell wiederholen und Ursachen prüfen. Kein Deployment durchgeführt.
-
-## Konsolidierter Aufgabenabgleich · 25.10.2026
-
-Dieser Abschnitt ersetzt verstreute historische „offen“-Hinweise in älteren Protokollen. Die dort beschriebenen früheren Compiler-, Inhaltsausbau- und Releasepakete sind abgeschlossen oder bewusst nicht Teil des aktuellen Releases.
-
-### P0 · kritisch
-
-Keine bestätigten P0-Probleme im veröffentlichten Stand. Dokumentprüfung, Auth-Grundpfade, 404-Verhalten, SEO-Generierung und statische Website-Funktionen sind releasegeprüft.
-
-### P1 · wichtig
-
-| Aufgabe | Status und Abgrenzung | Aufwand | Bereich |
+| Status | Aufgabe | Abhängigkeit | Nächster Schritt |
 | --- | --- | --- | --- |
-| Ranking-/Schreibtrainer-Backend sicher freigeben | **Erledigt/verifiziert.** Echte development-Konten/RLS/Timing-/Replaytests, Produktionsmigration und öffentliche Aktivierung mit erhaltenen Daten; Versionsnachweis oben. | hoch | Neon, Worker, Datenschutz, Schreibtrainer |
-| Godot-Projekt und Browserprüfungen abschließen | **Erledigt/verifiziert.** Engine-/Browserprüfungen, korrigierter Reset, bytegleiches ZIP und CI-Regressionsprüfung. | mittel | Spieleentwicklung, QA |
-| Unabhängiges Fach- und assistives Review | **Extern blockiert.** Prüfpersonen fehlen. Eigene Browser-/Quellenprüfungen sind kein Ersatz für den unabhängigen Nachweis. | hoch | Inhalte, Barrierefreiheit, UX |
-| Kontrollierten Mail-/Passwort-Reset-Test durchführen | **Extern blockiert.** Negative API-Pfade geprüft; kontrolliertes Postfach für echten Empfang und erfolgreiche Wiederherstellung fehlt. | mittel | Auth, Betrieb |
-| Linux/systemd-Benutzerlabor | **Erledigt/verifiziert.** Reproduzierbarer Benutzerlaborblock im vorhandenen DE/EN-Kapitel und echter Linux-CI-Lauf samt Bereinigung. | mittel | Betriebssysteme/Linux, QA |
+| Extern blockiert | Unabhängiges fachliches und assistives Review. Eigene Quellen-, Compiler- und Browserprüfungen ersetzen diesen Nachweis nicht. | Fachkundige und assistive Prüfpersonen | Abläufe aus `docs/P1-PRUEFUNGEN.md` mit unabhängigen Personen durchführen, Befunde dokumentieren und beheben. |
+| Extern blockiert | Erfolgreichen Passwort-Reset einschließlich tatsächlichem Mailempfang prüfen. Negative Token-, Mail-, Origin- und Unbekannt-Nutzer-Pfade sind bereits getestet. | Kontrolliertes Development-Postfach | Reset-Mail empfangen, Link verwenden und Wiederherstellung vollständig nachweisen. |
+| Ergänzende Produktionsverifikation | Nach dem autorisierten Neuaufbau von Managed Auth sind Registrierung, Sitzung, Fortschritt, Ab-/Anmeldung und Wiederherstellung mit einem Wegwerfkonto geprüft. Eine isolierte Zwei-Konten-/RLS- sowie Schreibtrainer-Schreibprüfung im neuen Produktions-Authbestand fehlt noch. | Zwei wegwerfbare Testkonten; keine Besitzer- oder Fremddaten verändern | Kontoisolation, fremde IDs, Profil/Run/Opt-in und eigene Fortschritte gezielt prüfen; Testdaten anschließend nur nach sicherer Zuordnung bereinigen. |
+| Nutzeraktion | Der frühere Eigentümeraccount wurde beim ausdrücklich autorisierten Auth-Neuaufbau ersetzt. | Eigentümer | Neu registrieren. Alte 13 Fortschrittszeilen nicht automatisch zuordnen oder löschen. |
 
-### P2 · Erweiterungen
+### P2 – Erweiterungen
 
-| Aufgabe | Status und Abgrenzung | Aufwand | Bereich |
+| Status | Aufgabe | Abhängigkeit | Nächster Schritt |
 | --- | --- | --- | --- |
-| Konservative Dokumentdiagnostik und PDF-Vorschau bewerten | **Geplant, nicht zugesagt.** Nur bei browser-/kostenfreiem, sicherem und wartungsarmem Betrieb; kein eigener Compilerhost ist Voraussetzung. | hoch | LaTeX/Typst, Sicherheit |
-| Aufgabenbezogene Bewertungsrubriken | **Erledigt/veröffentlicht.** Alle 31 vorhandenen Profile mit Lernzielen, Musterlösungen, manueller Compiler-/PDF-Kontrolle und bewusster Fortschrittsmarkierung. Fachliche Qualität wird durch Selbsteinschätzung, nicht automatische Benotung, bewertet. | mittel | LaTeX/Typst, Kurse |
-| Schreibtrainer: zusammenhängende Texte | **Erledigt/veröffentlicht.** Zwölf Stufen, eigene DE/EN-Sätze/Absätze/Alltagstexte, Fortschritt/Fehlerdiagnose und erhaltene Historie. Neue Übungen mit zwei development-Konten tatsächlich geprüft. | mittel | Schreibtrainer |
-| Größere Praxisprojekte | **Drei vollständige Referenzprojekte erledigt/veröffentlicht.** Mehrseitiger Webkatalog, echter PostgreSQL-Bericht und HTTP-Abnahme mit Fehlerdiagnose/Wiederanlauf. Weitere Projekte nur bei nachgewiesenem Bedarf. | hoch | Kurse, Praxislabore |
-| Benutzerfreundlichkeit mit Lernenden erproben | **Bestätigt offen.** Lernwege, Suche, Filter, Fortschritt und Dokumentprüfung mit realen Lernenden beobachten und Befunde in UX-Änderungen überführen. | mittel | UX, Navigation |
+| Bestätigt offen | Lernwege, Suche, Filter, Fortschritt und Dokumentprüfung mit realen Lernenden beobachten. | Freiwillige Testpersonen | Kurze kontrollierte Lernendenstudie durchführen und konkrete UX-Befunde priorisieren. |
+| Geplant, nicht zugesagt | Erweiterte statische Dokumentdiagnostik und gegebenenfalls PDF-Vorschau. | Nur browserlokal oder anderweitig sicher, kostenfrei und wartungsarm | Nutzen und Sicherheitsgrenzen prüfen; keinen eigenen öffentlichen Compilerdienst aufbauen. |
+| Optional | Verwaiste Auth-/Fortschritts- und Wegwerftestdaten bereinigen. | Sichere Identifikation; ausdrückliche Freigabe | Erst Bestände aggregiert prüfen und Sicherungsbranch erhalten; keine automatische Kontenzuordnung. |
+| Optional | Weitere Praxisprojekte, Medien und Visualisierungen. | Nachgewiesener Lernbedarf und geprüfte Quellen | Nur vollständige, getestete Pakete ergänzen; bestehende ausgereifte Bereiche nicht wiederholen. |
 
-### P3 · optional
+### P3 – optional
 
-| Aufgabe | Status und Abgrenzung | Aufwand | Bereich |
-| --- | --- | --- | --- |
-| Weitere Visualisierungen, Gamification und Duelle | **Vermutete Verbesserung, kein bestätigter Fehler.** Erst nach Nutzungsfeedback priorisieren. | hoch | UX, Lernspiele |
-| CMS/Redaktionsworkflow | **Vermutete Verbesserung.** Repository-Pflege funktioniert; CMS erst bei nachgewiesenem Redaktionsbedarf prüfen. | hoch | Wartbarkeit |
-| Weitere Sprachen und Community-Beiträge | **Vermutete Verbesserung.** Erst Rechte, Review und Pflegekapazität klären. | hoch | Inhalte, Übersetzung |
+| Status | Aufgabe | Abhängigkeit |
+| --- | --- | --- |
+| Vermutete Verbesserung | Weitere Gamification, Duelle und Community-Funktionen | Erst nach Nutzungsfeedback sowie Datenschutz-/Moderationskonzept priorisieren. |
+| Vermutete Verbesserung | CMS/Redaktionsworkflow | Repository-Pflege funktioniert; nur bei nachgewiesenem Redaktionsbedarf prüfen. |
+| Vermutete Verbesserung | Weitere Sprachen und Community-Beiträge | Rechte, Reviewverfahren und dauerhafte Pflegekapazität klären. |
+| Rechteinhaberentscheidung | Projektlizenz abschließend festlegen | Entscheidung des Rechteinhabers. |
 
-### Veraltete oder bereits umgesetzte „offene“ Hinweise
+## 2. Bereits implementiert
 
-- Editorlinks, sicherer Einzel-/ZIP-Import, 30 Aufgabenprofile, bestehender Fortschritt, SEO, Dark Mode, Deutsch/Englisch und der veröffentlichte Cloudflare-Deploy sind **erledigt**; ältere Dokumente nennen diese teils noch als Planung.
-- Compilercontainer, Worker-Proxy, PDF-Vorschau und Compiler-CI sind **bewusst entfernt**, nicht unvollständig. Historische Kompilierungstests belegen Beispiele, keine öffentliche Nutzerkompilierung.
-- Alte Zählungen in `docs/AUSBAU.md`, `docs/INHALTE.md`, `docs/VALIDIERUNG.md` und `docs/DREI-LERNBEREICHE.md` sind historische Protokolle; der aktuelle Stand steht am Anfang dieser Datei und in der aktuellen Roadmap.
-- Keine unmarkierten TODO/FIXME-Implementierungsmarker wurden im produktiven TypeScript/Astro-Code gefunden. UI-Treffer für „offen“ sind Nutzerstatus, keine fehlenden Implementierungen.
+### Informationsarchitektur, Navigation und Barrierefreiheit
 
-### Empfohlene Reihenfolge
+- Statische Astro-Website mit TypeScript, Deutsch/Englisch, Hell-/Dunkelmodus, responsiver Haupt- und Mobilnavigation, Suche, Themen-/Kurs-/Quiz-/Quellenfiltern, Breadcrumbs, 404-Seiten und SEO-Metadaten.
+- „Textsatz & Dokumentenerstellung“ ist eine eigene Themenkategorie statt eines Hauptmenü-Reiters. Typst wird als Einstieg hervorgehoben; LaTeX und Typst bleiben übersichtlich getrennt. Alte DE/EN-Kurs- und Kapitel-URLs unter `/themen/programmiersprachen/{typst,latex}/` bleiben kompatibel; IDs und Lernfortschritte wurden nicht verändert.
+- Globale Suche schließt bei Treffern den Dialog, setzt brauchbaren Zielfokus und durchsucht auch Aufgaben, Lösungen, Beschreibungen und Lernziele.
+- Mobilmenü, Escape-/Fokusverhalten, reduzierte Ansichten, 390-px-Layout und beide Designs wurden wiederholt in DE/EN geprüft.
 
-1. Externe Prüfpersonen und kontrolliertes development-Postfach bereitstellen; verbleibende P1-Nachweise durchführen und daraus Befunde beheben.
-2. Abgeschlossene Ranking-/Godot-/systemd-Pakete nicht wiederholen; Regressionen laufen in vorhandenen Tests/CI.
-3. Der Gesamtauftrag gewichtet unabhängige P2-Pakete ausdrücklich neu: die oben beschriebenen lokalen Pakete fertig prüfen und veröffentlichen; extern blockierte P1-Punkte bleiben offen.
+### Inhalte, Kurse und Lernpfade
+
+- Aktueller veröffentlichter Ausbau umfasst 14 Themen, 22 Kurse, 169 Kapitel, 348 Quizfragen und 273 Quellen. Inhalte und Quellenverknüpfungen sind zweisprachig; bestehende IDs/URLs bleiben stabil.
+- Java, C/C++, Go und Rust besitzen jeweils sechs vollständige DE/EN-Kapitel, zusammen 24 getestete Listings, 48 erklärte Fragen und 33 gelesene Primärquellen. Ziele: Java 21, C17/C++20, Go 1.27.3, Rust 1.99.1/Edition 2024. C und C++ werden getrennt erklärt.
+- Hardware-Folge, Spieleentwicklung mit Godot/Unity/Unreal-Grundlagen, Linux/systemd-Benutzerlabor, KI, LaTeX/Typst und weitere Themen sind in die vorhandene Kursstruktur integriert.
+- Vier geführte Lernpfade; der Hardware-/Systempfad „Vom Rechner zum sicheren Speicherzugriff“ verbindet 14 Kapitel aus Grundlagen, Hardware, C/C++ und Rust mit überprüfbarem CLI-/Zugriffsprotokoll.
+- Glossar mit 15 zweisprachigen, quellengebundenen Begriffen, Kurs-/Projektverknüpfungen und kombinierbaren Filtern.
+
+### Übungen und Praxisprojekte
+
+- 203 Aufgaben/Projekte: 169 Kapitelaufgaben, 23 eigenständige Übungen, sieben Projekte und vier Ablaufaufgaben. Eindeutige Themen-/Kursgliederung, Textsuche sowie kombinierte Themen-, Kurs-, Stufen-, Typ- und Statusfilter mit URL-/Sprachzustand, Leerzustand, Reset, 18/36-Nachladen und Zielfokus.
+- Direkte Verknüpfungen zu Kursen, Kapiteln, Quizzen und Lernpfaden. Lesen allein erledigt keine Aufgabe.
+- Gerätegebundene Selbst-/Modellstände bleiben getrennt von Konto-Lese- und Quizdaten. Entwurfsänderung, Lösung laden, Reset und Undo invalidieren veraltete Modellergebnisse; bestehende Entwürfe bleiben erhalten. Speicherfehler werden sichtbar behandelt.
+- Sieben Projekte mit wiederaufnehmbaren Checklisten. Vollständige Referenzprojekte: TypeScript-Webkatalog, PostgreSQL-Lernbericht, HTTP-Vertragsprüfer, Lernzeit-JSON, IPv4-Netzplan, eigene Registermaschine und SHA-256-Inventar. Getestete Referenzen, echte CLIs/Fehlerfälle und bytegeprüfte ZIPs; keine beliebige Browser-Codeausführung.
+- Vier tastaturbedienbare Ablaufaufgaben mit Fehlpositionsfeedback und Lösungen sowie interaktiver CPU-Trace mit Neustart.
+- Lokale JSON-Sicherung mit Vorschau/Bestätigung, 512-KiB-/500-Einträge-Limits, Versions-, Datums- und Kennungsprüfung sowie Erhalt neuerer Zustände. Importierte Abschlüsse bleiben Selbsteinschätzungen; keine externe Übertragung.
+
+### Schreibtrainer, Rangliste und Lernfortschritt
+
+- QWERTZ-Trainer unter `/schreibtrainer/` und `/en/schreibtrainer/` mit zwölf gestuften DE/EN-Lektionen, zusammenhängenden Sätzen, Absätzen und Alltagstexten, eigener lokaler Texteingabe, Fingerhinweisen, Textfortschritt, konkreten Fehlern, lokaler Historie, getrennten Bestwerten und adaptiven Übungen.
+- Konto-Rangliste mit Live-Session, Same-Origin-Prüfung, serverseitiger Startzeit, Replay, Ergebnisberechnung, atomarer Einmalabgabe, Rate-Limits, pseudonymem Opt-in und UTC-Zeiträumen. RLS und feste öffentliche Projektion verhindern Fremdzugriff.
+- Additive Migration `002_typing.sql`, Prüfsumme `480f256914ca3f553f2a0570d5cea40035d9988f06849effc002bcc87f7ab92f`, auf Development und nach bestandenem Audit auf Main angewendet. Eingeschränkte Runtime besitzt kein `BYPASSRLS`.
+- Zwei echte Development-Konten prüften RLS, fremde IDs/Origin, konkurrierende Starts/Abgaben, 61-Sekunden-Replays, frühe/Burst-/wiederholte Abgaben, Ranglistenfilter, Opt-in/out und widerrufene Sitzungen. Behoben wurden State-Races, doppelte Starts, Namenskollisionen und fehlerhafte UUID-Behandlung.
+
+### Dokumentprüfung und Textsatz
+
+- Sichtbare Links zu Overleaf und typst.app; Bearbeitung erfolgt extern. IT-Worlds importiert begrenzte `.tex`-/`.typ`-Einzeldateien und sichere ZIP-Projekte lokal im Web Worker.
+- Gemeinsame statische Analyse für LaTeX/Typst: Hauptdatei, Struktur, Positionen, Referenzen/Ressourcen, Marken/Literatur, doppelte Kennungen, Quellenansicht und verständlicher Bericht. Path Traversal, ZIP-Bombs und übermäßige Ressourcen werden begrenzt bzw. abgewiesen.
+- 31 Aufgabenprofile mit Lernzielen, Musterlösungen, bewussten Selbstprüfrubriken und optionaler bestehender Kapitelmarkierung. JSON weist Selbstauskunft aus; Kompilierung wird nicht vorgetäuscht.
+- Typst: 16 Kapitel/32 Fragen; LaTeX: 14 Kapitel/28 Fragen. Frühere IDs bleiben erhalten. Alte Typst-Editorentwürfe sind nur lesbar als Download verfügbar.
+- Der experimentelle Compilercontainer/Worker-Proxy wurde nach erfolgreichen lokalen Sicherheits- und Beispieltests bewusst aus dem öffentlichen Produkt entfernt. Keine öffentliche Kompilierungsinfrastruktur, kein kostenpflichtiger Dienst; tatsächliche PDF-/Compilerkontrolle bleibt im externen Editor.
+
+### Hardware, Spiele und technische Labore
+
+- Interaktive Halbaddierer-, CPU-Schritt-/Bootfolge- und 2D-Kollisionsmodelle sind tastatur- und buttonbedienbar.
+- Godot-4.5-Projekt wurde mit offiziell geprüftem Engine-Download importiert. Engine-Test deckt Bewegung, diagonale Geschwindigkeit, Wände/Area2D, fünf Punkte, Abschluss und fünf Neustarts ab; Resetfehler durch alte Physikkontakte wurde behoben. ZIP entspricht den Quellen.
+- Reproduzierbares DE/EN-Linux/systemd-Benutzerlabor mit temporärer Unit, Exit 17, Result-/Journalnachweis und gezielter Bereinigung. Kein privilegierter Container erforderlich.
+
+### Datenbank, Auth und Betrieb
+
+- Neon-Projekt **IT-Worlds** (`lingering-morning-59761503`), Main `br-long-violet-ba34agj1`. Produktionsdatenbank wurde nach isoliertem Test und ausdrücklicher Freigabe regulär von `neondb` in exakt `IT-Worlds` umbenannt; Datenbank-ID 88355 blieb erhalten. Development `br-silent-glade-bamm5co5` bleibt bei `neondb`.
+- Sicherungsbranch `before-production-db-rename-20261029` (`br-summer-sun-banaln05`, LSN `0/24C42C0`, ohne Compute) enthält den vorherigen Auth-/Fortschrittsbestand und muss erhalten bleiben.
+- Managed Better Auth wurde für den neuen Datenbankpfad offiziell neu provisioniert; öffentliche vertrauenswürdige Origin wieder gesetzt. Drei alte Auth-Identitäten/Sitzungen wurden mit Freigabe ersetzt. 13 alte Fortschrittszeilen blieben unverändert, sind aber verwaist; kein automatisches Mapping und keine Bereinigung.
+- Cloudflare-Secrets `DATABASE_URL` und `NEON_AUTH_BASE_URL` verwenden den neuen DB-/Auth-Pfad. Rolle, Passwort und Cookie-Secret blieben erhalten; `ASSETS`, `DATABASE_URL`, `NEON_AUTH_BASE_URL` und `NEON_AUTH_COOKIE_SECRET` sind vorhanden.
+- Öffentlicher Wegwerfkonto-Test nach Neuaufbau: Registrierung, Sitzung, Fortschritt speichern, Abmelden, Anmelden, Wiederherstellen und eigene Testmarkierung zurücknehmen jeweils erfolgreich. Gastzugriffe auf private Fortschritt-/Trainerdaten liefern 401.
+- Isolierter Prüfbranch `db-rename-safety-20261029` (`br-curly-shape-bakpwy1u`) belegt Rename, Auth-Neuaufbau und Registrierung. Seine Löschung bleibt ohne ausdrückliche branchgenaue Freigabe unzulässig.
+
+## 3. Tests & Veröffentlichungen
+
+### Aktueller öffentlicher Stand
+
+- Live: https://it-worlds.maki26.workers.dev
+- Letzter vollständiger Release am 30.10.2026 aus Quellstand `4cb1a0f` einschließlich CSS-Korrektur `78288de3dcf22a9ef9daa94b625501c83c81810e`.
+- Aktive Cloudflare-Version `706415e9-38b0-4938-bc4e-d3de256e043c`, Deployment `951b5a20-df96-4f2f-acb0-c6d699a5ea3c`, 100 % Traffic.
+- Build-, Artefakt-, SEO- und Linkprüfungen bestanden; alle 528 öffentlichen kanonischen DE/EN-Seiten stimmten exakt mit dem Releaseartefakt überein. Der frühere HTTP-500/10013-Uploadfehler trat nicht mehr auf; Ursache blieb unbekannt.
+- Account, Subdomain, Einstellungen und vier Bindings blieben beim Release identisch. Smoke: Auth 200, Gastfortschritt 401, Gast-Trainerkonto 401, Rangliste 200, DE/EN-404 jeweils 404.
+- Die CSS-Filtertoolbar ist als Raster mit zwei Spalten mobil und drei Desktop veröffentlicht; einzelne sichtbare Karten füllen ihre Gruppe. Lokal auf 390/1280 px ohne Überlauf geprüft. Keine zusätzliche öffentliche Browserprüfung dieses identischen CSS-Artefakts beim letzten Release.
+
+### Aktuellste vollständige Prüfungen
+
+- Funktionsstand: 133 Tests, 125 bestanden, acht optionale Laufzeit-Skips; alle fünf nativen Compilergruppen tatsächlich ausgeführt.
+- Nach DB/Auth-Umstellung: 133 Tests, 123 bestanden, zehn optionale Laufzeit-Skips; keine Fehler. Abweichung entsteht durch optionale Laufzeitumgebung, nicht durch einen bekannten Produktfehler.
+- Astro-Typprüfung: 274 Dateien ohne Fehler, Warnungen oder Hinweise. Produktions-Build: 534 Seiten. Kein separates Lint-Skript vorhanden.
+- Release-Dry-Run: 528 kanonische Sprachseiten, 40.224 interne Ziele, 716 Artefaktdateien.
+- Lokale Browserprüfung deckte Suche/Filter/Reload/Sprachwechsel, Aufgabenstatus, Modelle/Undo, Projektchecklisten, Ablaufaufgaben, CPU, ZIP-Downloads, JSON-Backupimport, Quiz, Mobilmenü, Escape, beide Designs und beide 404 ab. Testmarkierungen wurden zurückgesetzt; Nutzerstände blieben erhalten.
+
+### Relevante Releases und Commits
+
+- Übungen/Praxisprojekte: `5056acf91c2e0f88d808121579565df32ee42929`, Quality `40775678818`, Release vom 28.10. Version `2ed95a39-4a64-47ab-a7a5-35d8a02c5af4`, Deployment `58f53f10-5a02-456c-9ecd-bc6e2d4936a4`.
+- Java/C/C++/Go/Rust und Struktur: `ec9db5c693967bf0a121be69588055ce44f377e4`, Quality `40647404074`, Release-Version `88f84534-212b-4c1e-96d0-c87aeca1d4b5`.
+- Praxisprojekte/Trainer/Glossar: `059ac2a5d7c087416e22c316cb75b8132f07a7e8`, Version `87c9d6fa-9ff0-49df-8a0a-4ed9fa85ac9b`.
+- Textsatz-Themenkategorie: `41ed34b`, Quality `40336730526`, Version `3383c337-abf5-4ffb-82e1-1ea513a92792`.
+- Ranking/Godot/systemd: `9ccd793`, Quality `40237691162`, Version `7f5d4d27-b4c3-4353-ac77-8161225c44a3`.
+- Schlanke Dokumentprüfung: `4b902cd`, Quality `40179580624`, Version `677144d2-3d90-413b-bc98-35b955122f8e`.
+- Datenbank-/Auth-Dokumentation: `625c1bb`, `e84b1f7`, `0a47e01`, `4cb1a0f`; Abschluss-/Release-Dokumentation `cb268ca`.
+
+### Bekannte Grenzen der Nachweise
+
+- Kein unabhängiges Fach-/Accessibility-Review und keine reale Lernendenstudie.
+- Kein erfolgreicher echter Reset-Mail-Empfang mangels kontrolliertem Postfach.
+- Keine öffentliche Serverkompilierung für LaTeX/Typst; statische Analyse behauptet keine vollständige Syntax- oder Kompilierungsvalidierung.
+- Die letzte CSS-Veröffentlichung wurde bytegenau geprüft, aber nicht nochmals als vollständiger öffentlicher Browserdurchgang wiederholt.
+- Die Automatisierung `cloudflare-deployment-pr-fen` bestand zuletzt weiter, weil ihre Löschung ohne ausdrückliche Nutzerfreigabe abgelehnt wurde. Ohne ausstehende Änderungen darf sie keinen erneuten Deploy auslösen.
+
+## 4. Historie & Hinweise
+
+### Verbindliche technische Entscheidungen
+
+- Eigenen Projektcode, Astro-Konfiguration, Tests und Skripte ausschließlich in streng typisiertem TypeScript pflegen. Generiertes Browser-JavaScript und Abhängigkeiten nicht manuell umschreiben. Python-, SQL- und LaTeX-Beispiele behalten ihre Sprache.
+- Inhalte und Aussagen benötigen tatsächlich gelesene Quellen mit Herausgeber, Version, Abschnitt, URL und Lesedatum. Quellenabgleich ist kein unabhängiges Fachreview. Jede Quizantwort besitzt eine Erklärung.
+- Bestehende URLs, Kurs-/Kapitel-/Aufgaben-/Frage-IDs, Nutzerdaten und Lernfortschritte erhalten. Schemaänderungen zuerst auf Development testen und als prüfsummengebundene Migration ausrollen.
+- Frontend niemals mit Owner-/`BYPASSRLS`-Rolle verbinden. Auth über Neon Managed Better Auth und Same-Origin-Worker; RLS bleibt erzwungen.
+- Dokumentbearbeitung erfolgt extern in Overleaf bzw. typst.app. Keine eigene Editor-, OAuth- oder öffentliche Compilerinfrastruktur aufbauen, solange die schlanke lokale Analyse den Lernzweck erfüllt.
+- Cloudflare-Worker `it-worlds` verwendet `dist/` als statische Assets, HTML-Verzeichnisrouten und eigene 404-Seiten. Vor Deploy Build/Checks ausführen und bestehende Bindings/Einstellungen vor und nachher vergleichen.
+
+### Abgelöste Zwischenstände
+
+- Hinweise „CSS noch nicht veröffentlicht“ und „Cloudflare HTTP 500/10013 blockiert den Release“ sind seit dem erfolgreichen Release vom 30.10. erledigt.
+- Der isolierte DB-Vorversuch mit Produktion bei `neondb` ist historisch. Produktion heißt jetzt `IT-Worlds`; der spätere autorisierte Auth-Neuaufbau ersetzt die frühere Entscheidung, auf eine Umbenennung zu verzichten.
+- Frühere Hinweise auf ungeprüftes Ranking, Godot-Projekt, systemd-Labor, zusammenhängende Schreibtrainertexte, Bewertungsrubriken oder fehlende größere Praxisprojekte sind durch spätere Tests und Releases erledigt.
+- Der private Compilercontainer/Proxy war ein Sicherheitsprototyp und wurde bewusst entfernt. Das ist keine unvollständige Produktfunktion.
+- Historische niedrigere Inhalts-/Seiten-/Testzählungen dokumentieren frühere Releases und sind keine aktuellen Sollwerte.
+
+### Private Nachweise und Rückfallinformationen
+
+- Kanonische private Produktionskonfiguration: `work/runtime-main.json`; Vor-Rename-Sicherung: `work/runtime-main-before-rename.json`. Keine geheimen Werte ausgeben oder in Git übernehmen.
+- Cloudflare-Releaseprotokoll: `/private/tmp/it-worlds-daily-20261030-release.log`; Einstellungsnachweise: `work/cloudflare-daily-20261030-before.json` und `work/cloudflare-daily-20261030-after.json`.
+- Verifizierte Node-22-Laufzeit für Releases: `/private/tmp/it-worlds-node22-official/node-v22.22.0-darwin-arm64/bin/node`; `NODE_OPTIONS=--dns-result-order=ipv4first`. Releasehelper `scripts/release.ts` baut isoliert, deployt Assets und prüft alle öffentlichen Seiten.
+- Sicherungsbranch `br-summer-sun-banaln05` nicht löschen. Prüfbranch `br-curly-shape-bakpwy1u` nur nach ausdrücklicher branchgenauer Freigabe entfernen.
+
+### Nächste Fortsetzung
+
+Zuerst die ergänzende Zwei-Konten-/RLS-/Trainerprüfung im neuen Produktions-Authbestand sicher abschließen und den Befund hier dokumentieren. Danach sind die beiden extern blockierten P1-Nachweise – unabhängiges Fach-/assistives Review und echter Reset-Mail-Empfang – die wichtigsten offenen Punkte. Ohne verfügbare externe Voraussetzungen mit der Lernendenstudie oder einem klar begrenzten, vollständigen P2-Inhaltspaket fortfahren; abgeschlossene technische Pakete nicht erneut implementieren.
