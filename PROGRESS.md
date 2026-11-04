@@ -4,6 +4,12 @@ Stand: 01.11.2026. Arbeitsbranch: `codex/cloudstand-lokal`. Diese Datei beschrei
 
 ## 1. Offene Aufgaben & geplante Features
 
+### Worlds-Hub-SSO-Pilot (04.11.2026, separater Featurebranch)
+
+Isolierte Wiederherstellung aus der vorhandenen Sicherung durchgeführt. Additive Migration 003 ausschließlich auf `development-worlds-hub-sso-20261104` angewendet, echte eingeschränkte Runtime-Verbindung mit atomarer Zuordnung, RLS-/Issuer-/Session-Isolation und Transaktionsrollback erfolgreich geprüft. Produktion weiter ohne Mapping-Tabelle und mit identischer Prüfsumme ihrer 14 Fortschrittszeilen. Details, Branch-Ablaufzeit, Migrationsprüfsumme und Wiederanlauf in `docs/WORLDS-SSO-PILOT.md`.
+
+Prüfungen: 123 Tests bestanden, 10 umgebungsbedingt übersprungen, Astro-Check ohne Fehler/Warnungen, 534 Seiten gebaut. Bestehender Audit-Befund: eine kritische/elf niedrige transitive Meldungen bei Better Auth und Abhängigkeiten; tatsächliche Plugin-Anwendbarkeit und kompatibles Update vor Aktivierung prüfen. Noch kein OIDC-Browserpilot und kein produktiver SSO-Cutover.
+
 ### P0 – kritisch
 
 Keine bestätigten offenen P0-Probleme. Öffentliche Kernfunktionen, Auth-Grundpfade, Datenbankzugriff, RLS, 404-Verhalten, SEO-Ausgabe und statische Seitenerzeugung sind releasegeprüft.
