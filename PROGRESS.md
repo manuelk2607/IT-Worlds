@@ -6,6 +6,8 @@ Stand: 01.11.2026. Arbeitsbranch: `codex/cloudstand-lokal`. Diese Datei beschrei
 
 ### Worlds-Hub-SSO-Pilot (04.11.2026, separater Featurebranch)
 
+Fortsetzung 05.11.: OIDC-Routen, eigener Postgres-Sessionstore, gemeinsame lokale Identitätsauflösung für Fortschritt/Trainer und DE/EN-Kontokarte implementiert. Featureflag standardmäßig aus. Migration 004 und tatsächlicher isolierter Session-/Mapping-/Kontosperren-Test bestanden; keine Produktionsmigration oder Aktivierung. Gemeinsame Quelle Worlds-Hub `80db3d7`. 135 Tests: 125 bestanden/10 umgebungsbedingt übersprungen; Typprüfung und Build erfolgreich. Lokale visuelle DE/EN-/Mobil-/Theme-/404-Abnahme mit simulierten Zuständen, kein echter Browser-SSO-Nachweis. Aktuelle Grenzen und nächster Schritt in `docs/WORLDS-SSO-PILOT.md`.
+
 Isolierte Wiederherstellung aus der vorhandenen Sicherung durchgeführt. Additive Migration 003 ausschließlich auf `development-worlds-hub-sso-20261104` angewendet, echte eingeschränkte Runtime-Verbindung mit atomarer Zuordnung, RLS-/Issuer-/Session-Isolation und Transaktionsrollback erfolgreich geprüft. Produktion weiter ohne Mapping-Tabelle und mit identischer Prüfsumme ihrer 14 Fortschrittszeilen. Details, Branch-Ablaufzeit, Migrationsprüfsumme und Wiederanlauf in `docs/WORLDS-SSO-PILOT.md`.
 
 Prüfungen: 123 Tests bestanden, 10 umgebungsbedingt übersprungen, Astro-Check ohne Fehler/Warnungen, 534 Seiten gebaut. Bestehender Audit-Befund: eine kritische/elf niedrige transitive Meldungen bei Better Auth und Abhängigkeiten; tatsächliche Plugin-Anwendbarkeit und kompatibles Update vor Aktivierung prüfen. Noch kein OIDC-Browserpilot und kein produktiver SSO-Cutover.

@@ -2,6 +2,20 @@
 
 Stand 2026-11-04. Kein produktiver Auth-Cutover; bestehende Anmeldung bleibt aktiv.
 
+## Adapterstand 05.11.2026
+
+Der Pilotbranch enthält jetzt das gemeinsame Auth-Modul aus Worlds-Hub `80db3d7` als versionierte lokale Abhängigkeit. `/auth/login`, `/auth/callback`, `/auth/logout`, `/auth/backchannel-logout` und `/api/worlds/status` bleiben ohne `WORLDS_AUTH_ENABLED=true` ausgeschaltet. Zusätzlich müssen `WORLDS_ORIGIN` (exakte HTTPS-Origin), `WORLDS_ISSUER`, `WORLDS_CLIENT_ID` und optional `WORLDS_RESOURCE` gesetzt werden. Keine produktiven Variablen wurden aktiviert.
+
+Fortschritt und Schreibtrainer verwenden dieselbe Auflösung: gültige opaque Worlds-Sitzung -> verifiziertes `(issuer,sub)` -> lokale UUID -> aktuelle lokale Kontosperre -> bisherige RLS-Transaktion. Kein Mapping ergibt 403, eine gesperrte/gelöschte lokale Identität erhält keinen Zugriff. Eine vorhandene ungültige/mehrdeutige Worlds-Sitzung fällt nicht auf ein anderes Legacy-Konto zurück. Ohne Worlds-Sitzung bleibt Managed-Login erhalten. `/api/session` liefert ausschließlich minimale UI-Daten; ID-/Access-/Refresh-Tokens verlassen den Server nicht. Logout bleibt lokal und beendet nicht stillschweigend andere Anwendungen.
+
+Migration 004 nur auf `br-little-base-baqt6cy6` angewendet: SHA-256 `4691075d8f6aee0e8ec9188f640d9966628b7a9ea748c388095695e52fce77d9`. Eigene Session-/Transaktions-/Replaytabellen mit Entzug aller PUBLIC-Rechte. Die eng begrenzte Funktion `worlds_account_active(uuid)` prüft Existenz/Sperre, ohne der Runtime direkten Auth-Verzeichniszugriff zu geben; SECURITY DEFINER mit leerem search_path und nur explizitem Runtime-EXECUTE.
+
+`tests/live-worlds-session.ts` lief tatsächlich als eingeschränkte Runtime auf dem isolierten Neon-Endpoint: konkurrierender Einmalverbrauch von Transaktionen/Replays, getrennte Issuer, Ablauf/Widerruf, fehlendes Mapping, historische UUID, lokale Sperre/Sperrablauf und mehrdeutige Cookies bestanden. Ausschließlich erzeugte Fixtures wieder entfernt. Owner-/Runtime-Verbindungen nur im Prozessspeicher. Kein Browser-Login oder Eigentumsnachweis wurde durch diese Fixtures ersetzt.
+
+DE/EN-Kontokarte, zentrale Sitzung/Logout und opt-in Login ergänzt. Lokal mittels `scripts/preview-worlds-ui.ts` mit ausdrücklich simulierten API-Zuständen geprüft: Desktop, 390px-Mobil, DE/EN, beide Themes, mobile Navigation, deaktivierter Pilot und beide 404-Seiten. Diese Vorschau erzeugt keine echte Sitzung und kontaktiert keinen IdP. Regulär 135 Tests (125 bestanden, 10 umgebungsbedingt übersprungen), Typprüfung ohne Fehler/Warnungen und Build mit 534 Seiten bestanden.
+
+Vor öffentlicher Aktivierung noch erforderlich: begrenzte Bereinigung abgelaufener Postgres-Authdaten und Missbrauchslimits, exakte isolierte Pilot-Origin im IdP/Hub-UI registrieren, echten Code-/PKCE-Callback und zwei Relying Parties im Browser prüfen, frische Reauth/dualen Eigentumsnachweis freigeben und Linking-Pfad anbinden, Featureflag-/Deployment-Rollback prüfen. Kritischen bestehenden Paketbefund weiter abklären. Die neue UI behauptet keine bereits funktionierende Kontoverknüpfung.
+
 ## Wiederherstellung und Migration
 
 - Git-Basis `codex/cloudstand-lokal` / `2d6d204`, Featurebranch `feature/worlds-hub-sso-pilot`.

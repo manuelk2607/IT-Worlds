@@ -8,6 +8,8 @@ import {acceptProgressResponse} from '../lib/progress-response';
 export const authClient = createAuthClient(new URL('/api/auth', location.origin).href);
 interface User { id: string; name: string; email: string }
 export const learningState: { user: User | null; items: ProgressItem[]; unavailable: boolean } = { user: null, items: [], unavailable: false };
+let sessionSource:'legacy'|'worlds'='legacy';
+let worldsCsrf='';
 const controls = [...document.querySelectorAll<HTMLElement>('[data-progress-control]')];
 const itemFor = (kind: string | undefined, id: string | undefined) => learningState.items.find(item => item.kind === kind && item.contentId === id);
 function render() {
@@ -59,9 +61,10 @@ function render() {
 }
 export async function loadLearningState() {
   try {
-    const session = await authClient.getSession({ query: { disableCookieCache: true } });
-    if (session.error) throw new Error('AUTH_UNAVAILABLE');
-    learningState.user = session.data?.user ? { id: session.data.user.id, name: session.data.user.name, email: session.data.user.email } : null;
+    const response=await fetch('/api/session',{credentials:'same-origin',cache:'no-store'});
+    if(!response.ok&&response.status!==401&&response.status!==403)throw new Error('AUTH_UNAVAILABLE');
+    const session=response.ok?await response.json() as {user:User;source:'legacy'|'worlds';csrf?:string}:null;
+    learningState.user=session?.user??null;sessionSource=session?.source??'legacy';worldsCsrf=session?.csrf??'';
     learningState.items = [];
     if (learningState.user) {
       const response = await fetch('/api/progress', { credentials: 'same-origin', cache: 'no-store' });
@@ -116,7 +119,13 @@ for (const control of controls) {
 }
 document.querySelectorAll<HTMLButtonElement>('[data-sign-out]').forEach(button => button.addEventListener('click', async () => {
   button.disabled = true;
-  try { const result = await authClient.signOut(); if (result.error) throw new Error('SIGN_OUT_FAILED'); learningState.user = null; learningState.items = []; render(); }
+  try {
+    if(sessionSource==='worlds'){
+      const response=await fetch(`/auth/logout?locale=${locale}`,{method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams({csrf:worldsCsrf})});
+      if(!response.ok)throw new Error('SIGN_OUT_FAILED');
+    }
+    const result = await authClient.signOut(); if (result.error) throw new Error('SIGN_OUT_FAILED'); learningState.user = null; learningState.items = []; render();
+  }
   catch { document.querySelectorAll<HTMLElement>('[data-session-status]').forEach(element => element.textContent = t('Abmelden fehlgeschlagen. Bitte erneut versuchen.', 'Sign out failed. Please try again.')); }
   finally { button.disabled = false; }
 }));

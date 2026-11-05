@@ -1,7 +1,8 @@
 import { redirectToHttps } from '../src/lib/transport.ts';
 import {typingRequest} from './typing.ts';
 import {typingAccountsEnabled} from '../src/lib/release-features.ts';
-import { handleAuthProxyRequest, parseSessionData } from '@neondatabase/auth/server';
+import { handleAuthProxyRequest } from '@neondatabase/auth/server';
+import {resolveIdentity,identityResponse,worldsRoute} from './worlds-auth.ts';
 import { neon } from '@neondatabase/serverless';
 import { isCorrectAnswer, parseProgressChange, type ProgressItem } from '../src/lib/progress.ts';
 
@@ -10,6 +11,11 @@ export interface Env {
   DATABASE_URL: string;
   NEON_AUTH_BASE_URL: string;
   NEON_AUTH_COOKIE_SECRET: string;
+  WORLDS_AUTH_ENABLED?:string;
+  WORLDS_ORIGIN?:string;
+  WORLDS_ISSUER?:string;
+  WORLDS_CLIENT_ID?:string;
+  WORLDS_RESOURCE?:string;
 }
 const authMethods: Record<string, string> = {
   'get-session': 'GET',
@@ -38,13 +44,11 @@ async function authRequest(request: Request, env: Env, path: string) {
 async function getProgress(request: Request, env: Env) {
   // Revalidate with Neon for every data request; never trust a browser-supplied user ID or cached session alone.
   const sessionUrl = new URL('/api/auth/get-session?disableCookieCache=true', request.url);
-  const response = await authRequest(new Request(sessionUrl, { headers: request.headers }), env, 'get-session');
-  if (!response.ok) return json({ error: 'AUTH_UNAVAILABLE' }, 503);
-  const session = parseSessionData(await response.json());
-  if (!session.user || !session.session) return json({ error: 'UNAUTHENTICATED' }, 401);
+  const identity = await resolveIdentity(request,env,()=>authRequest(new Request(sessionUrl, { headers: request.headers }), env, 'get-session'));
+  if(identity instanceof Response)return identity;
   const sql = neon(env.DATABASE_URL);
-  const userId = session.user.id;
-  const sessionCookies = response.headers.getSetCookie();
+  const userId = identity.user.id;
+  const sessionCookies = identity.cookies;
   const mapRows = (rows: Record<string, unknown>[]): ProgressItem[] => rows.map(row => ({
     kind: row.kind as ProgressItem['kind'], contentId: String(row.content_id),
     completed: row.completed === true, solved: row.solved === true, updatedAt: String(row.updated_at),
@@ -79,6 +83,7 @@ export default {
     const redirect = redirectToHttps(request);
     if (redirect) return redirect;
     const url = new URL(request.url);
+    const worlds=await worldsRoute(request,env);if(worlds)return worlds;
     if(url.pathname.startsWith('/api/typing/')&&!typingAccountsEnabled)return json({error:'FEATURE_UNAVAILABLE'},503);
     if (!url.pathname.startsWith('/api/')) {
       const response = await env.ASSETS.fetch(request);
@@ -101,7 +106,9 @@ export default {
     }
     if (!env.NEON_AUTH_BASE_URL || !env.NEON_AUTH_COOKIE_SECRET || !env.DATABASE_URL) return json({ error: 'SERVICE_UNAVAILABLE' }, 503);
     try {
-      if(url.pathname.startsWith('/api/typing/'))return await typingRequest(request,env,()=>authRequest(new Request(new URL('/api/auth/get-session?disableCookieCache=true',request.url),{headers:request.headers}),env,'get-session'));
+      const identity=()=>resolveIdentity(request,env,()=>authRequest(new Request(new URL('/api/auth/get-session?disableCookieCache=true',request.url),{headers:request.headers}),env,'get-session'));
+      if(url.pathname==='/api/session'&&request.method==='GET')return identityResponse(await identity());
+      if(url.pathname.startsWith('/api/typing/'))return await typingRequest(request,env,identity);
       if (url.pathname === '/api/progress') return await getProgress(request, env);
       if (url.pathname.startsWith('/api/auth/')) {
         const path = url.pathname.slice('/api/auth/'.length);

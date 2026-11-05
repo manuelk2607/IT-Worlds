@@ -1,18 +1,18 @@
 import {neon} from '@neondatabase/serverless';
-import {parseSessionData} from '@neondatabase/auth/server';
+import type {AppIdentity} from './worlds-auth.ts';
 import {parseTypingTrace,rankedText,rankedTraceValid,scoreTyping,typingLessons,typingLessonText} from '../src/lib/typing.ts';
 import type {Env} from './index.ts';
 const object=(v:unknown):Record<string,unknown>=>v!==null&&typeof v==='object'&&!Array.isArray(v)?v as Record<string,unknown>:{};
 const reply=(body:unknown,status=200)=>Response.json(body,{status,headers:{'Cache-Control':'no-store','X-Content-Type-Options':'nosniff'}});
-export async function typingRequest(request:Request,env:Env,getSession:()=>Promise<Response>):Promise<Response>{
+export async function typingRequest(request:Request,env:Env,getSession:()=>Promise<AppIdentity|Response>):Promise<Response>{
  const url=new URL(request.url),path=url.pathname.slice('/api/typing/'.length);const sql=neon(env.DATABASE_URL);
  if(path==='leaderboard'&&request.method==='GET'){
   const locale=url.searchParams.get('locale')??'de',period=url.searchParams.get('period')??'day',metric=url.searchParams.get('metric')??'wpm';
   if(!['de','en'].includes(locale)||!['day','week','month','all'].includes(period)||!['wpm','kpm','accuracy'].includes(metric))return reply({error:'INVALID_FILTER'},400);
   const items=await sql`SELECT display_name,wpm,kpm,accuracy FROM public.typing_board(${locale},${period},${metric})`;return reply({items});
  }
- const auth=await getSession();if(!auth.ok)return reply({error:'AUTH_UNAVAILABLE'},503);const session=parseSessionData(await auth.json());if(!session.user||!session.session)return reply({error:'UNAUTHENTICATED'},401);
- const user=session.user.id,cookies=auth.headers.getSetCookie();const send=(value:unknown,status=200)=>{const response=reply(value,status);for(const cookie of cookies)response.headers.append('Set-Cookie',cookie);return response;};
+ const identity=await getSession();if(identity instanceof Response)return identity;
+ const user=identity.user.id,cookies=identity.cookies;const send=(value:unknown,status=200)=>{const response=reply(value,status);for(const cookie of cookies)response.headers.append('Set-Cookie',cookie);return response;};
  if(path==='me'&&request.method==='GET'){
   const [,profiles,runs]=await sql.transaction([sql`SELECT set_config('app.user_id',${user},true)`,sql`SELECT display_name,visible FROM public.typing_profiles WHERE user_id=${user}`,sql`SELECT lesson,mode,locale,wpm,kpm,accuracy,ended_at FROM public.typing_runs WHERE user_id=${user} AND ended_at IS NOT NULL ORDER BY ended_at DESC LIMIT 30`]);return send({profile:profiles[0]??null,runs});
  }

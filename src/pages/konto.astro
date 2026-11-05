@@ -12,6 +12,18 @@ const t = translate(locale);
     <p class="page-lead">{t('Mit einem freiwilligen Account behältst du gelesene Einstiege und bearbeitete Fragen im Blick – auch auf anderen Geräten. Alle Inhalte bleiben ohne Anmeldung zugänglich.', 'An optional account keeps track of introductions you have read and questions you have practised, across devices. All content remains accessible without signing in.')}</p>
   </section>
   <section class="container narrow account-section">
+    <div class="account-panel" data-worlds-panel hidden>
+      <h2>Worlds Hub</h2>
+      <p>{t('Verwende deine zentrale Worlds-Identität. Dein bisheriger IT-Worlds-Account und Lernstand bleiben erhalten.', 'Use your central Worlds identity. Your existing IT-Worlds account and learning record are preserved.')}</p>
+      <form method="post" action={`/auth/login?next=${encodeURIComponent(localePath(locale,'/konto/'))}&ui_locales=${locale}`} data-worlds-login>
+        <button class="button primary" type="submit">{t('Mit Worlds anmelden', 'Sign in with Worlds')}</button>
+      </form>
+      <p data-worlds-message role="status"></p>
+      <form method="post" action={`/auth/logout?locale=${locale}`} data-worlds-logout hidden>
+        <input type="hidden" name="csrf" />
+        <button class="button secondary" type="submit">{t('Worlds-Sitzung in IT-Worlds beenden', 'End the Worlds session in IT-Worlds')}</button>
+      </form>
+    </div>
     <p class="account-status" data-session-status role="status"></p>
     <div class="account-panel" data-signed-in hidden>
       <h2>{t('Schön, dass du da bist,', 'Welcome,')} <span data-user-name></span>.</h2>
@@ -56,4 +68,5 @@ const t = translate(locale);
     <noscript><p>{t('Für Anmeldung und Fortschrittsspeicherung benötigst du JavaScript. Alle Lerninhalte bleiben lesbar.', 'JavaScript is required for signing in and saving progress. All learning content remains readable.')}</p></noscript>
   </section>
   <script src="../scripts/account.ts"></script>
+  <script src="../scripts/worlds-account.ts"></script>
 </Layout>
