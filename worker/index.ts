@@ -3,6 +3,7 @@ import {typingRequest} from './typing.ts';
 import {typingAccountsEnabled} from '../src/lib/release-features.ts';
 import { handleAuthProxyRequest } from '@neondatabase/auth/server';
 import {resolveIdentity,identityResponse,worldsRoute} from './worlds-auth.ts';
+import {cleanupWorldsAuth} from './worlds-maintenance.ts';
 import { neon } from '@neondatabase/serverless';
 import { isCorrectAnswer, parseProgressChange, type ProgressItem } from '../src/lib/progress.ts';
 
@@ -16,6 +17,7 @@ export interface Env {
   WORLDS_ISSUER?:string;
   WORLDS_CLIENT_ID?:string;
   WORLDS_RESOURCE?:string;
+  WORLDS_PILOT_ONLY?:boolean;
 }
 const authMethods: Record<string, string> = {
   'get-session': 'GET',
@@ -79,6 +81,9 @@ async function getProgress(request: Request, env: Env) {
   return result;
 }
 export default {
+  async scheduled(_event:unknown,env:Env):Promise<void>{
+    await cleanupWorldsAuth(env);
+  },
   async fetch(request: Request, env: Env): Promise<Response> {
     const redirect = redirectToHttps(request);
     if (redirect) return redirect;
@@ -104,13 +109,14 @@ export default {
       const body=new Uint8Array(bytes);let offset=0;for(const chunk of chunks){body.set(chunk,offset);offset+=chunk.byteLength;}
       request=new Request(request,{body});
     }
-    if (!env.NEON_AUTH_BASE_URL || !env.NEON_AUTH_COOKIE_SECRET || !env.DATABASE_URL) return json({ error: 'SERVICE_UNAVAILABLE' }, 503);
+    if ((!env.WORLDS_PILOT_ONLY&&!env.NEON_AUTH_BASE_URL) || !env.NEON_AUTH_COOKIE_SECRET || !env.DATABASE_URL) return json({ error: 'SERVICE_UNAVAILABLE' }, 503);
     try {
       const identity=()=>resolveIdentity(request,env,()=>authRequest(new Request(new URL('/api/auth/get-session?disableCookieCache=true',request.url),{headers:request.headers}),env,'get-session'));
       if(url.pathname==='/api/session'&&request.method==='GET')return identityResponse(await identity());
       if(url.pathname.startsWith('/api/typing/'))return await typingRequest(request,env,identity);
       if (url.pathname === '/api/progress') return await getProgress(request, env);
       if (url.pathname.startsWith('/api/auth/')) {
+        if(env.WORLDS_PILOT_ONLY)return json({error:'NOT_FOUND'},404);
         const path = url.pathname.slice('/api/auth/'.length);
         if (authMethods[path] !== request.method) return json({ error: 'NOT_FOUND' }, 404);
         return await authRequest(request, env, path);

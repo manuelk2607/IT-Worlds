@@ -1,6 +1,7 @@
 import {neon} from '@neondatabase/serverless';
 import {PostgresAuthStore} from '@worlds-hub/auth/postgres-store';
-import {backchannelLogout,callback,logout,session,startLogin,SESSION_COOKIE,type AuthConfig} from '@worlds-hub/auth';
+import {backchannelLogout,callback,logout,session,startLogin,sameOrigin,readCookie,SESSION_COOKIE,type AuthConfig} from '@worlds-hub/auth';
+import {takeAuthAttempt,type AuthAttempt} from './worlds-maintenance.ts';
 import {parseSessionData} from '@neondatabase/auth/server';
 import type {Env} from './index.ts';
 
@@ -29,6 +30,21 @@ export async function worldsRoute(request:Request,env:Env):Promise<Response|null
    const state=account instanceof Response?(await account.json() as {error:string}).error:account?'LINKED':null;
    return reply({enabled:true,authenticated:!!central,accountState:state,csrf:central?.csrf});
   }
+  const purpose:AuthAttempt|null=url.pathname==='/auth/login'?'login':url.pathname==='/auth/callback'?'callback':url.pathname==='/auth/backchannel-logout'?'backchannel':null;
+  if(purpose){
+   if(request.method!==(purpose==='callback'?'GET':'POST'))return reply({error:'METHOD_NOT_ALLOWED'},405);
+   if(purpose==='login'&&!sameOrigin(request,config.origin))return reply({error:'INVALID_ORIGIN'},403);
+   if(purpose==='callback'&&!/^[A-Za-z0-9_-]{32,128}$/.test(readCookie(request,'__Host-worlds-transaction')??''))return reply({error:'INVALID_TRANSACTION'},400);
+   const {allowed,retryAfter}=await takeAuthAttempt(request,env,purpose);
+   if(!allowed){
+    const en=url.searchParams.get('ui_locales')==='en'||(url.searchParams.get('ui_locales')!=='de'&&/^en\b/i.test(request.headers.get('accept-language')??''));
+    const message=en?'Too many sign-in attempts. Please try again shortly.':'Zu viele Anmeldeversuche. Bitte versuche es gleich erneut.';
+    const response=purpose!=='backchannel'&&request.headers.get('accept')?.includes('text/html')
+     ?new Response(message,{status:429,headers:{'Content-Type':'text/plain; charset=utf-8','Content-Language':en?'en':'de','Cache-Control':'no-store','X-Robots-Tag':'noindex','X-Content-Type-Options':'nosniff'}})
+     :reply({error:'RATE_LIMITED'},429);
+    response.headers.set('Retry-After',String(retryAfter));return response;
+   }
+  }
   let response:Response;
   if(url.pathname==='/auth/login')response=await startLogin(request,config);
   else if(url.pathname==='/auth/callback')response=await callback(request,config);
@@ -56,6 +72,7 @@ export async function resolveIdentity(request:Request,env:Env,legacy:()=>Promise
   if(rows[0]?.active!==true)return reply({error:'ACCOUNT_UNAVAILABLE'},403);
   return {user:{id,name:central.name??'',email:central.email??''},source:'worlds',csrf:central.csrf,cookies:[]};
  }
+ if(env.WORLDS_PILOT_ONLY)return reply({error:'UNAUTHENTICATED'},401);
  const response=await legacy();if(!response.ok)return reply({error:'AUTH_UNAVAILABLE'},503);
  const parsed=parseSessionData(await response.json());
  if(!parsed.user||!parsed.session)return reply({error:'UNAUTHENTICATED'},401);

@@ -16,6 +16,9 @@ test('enabled pilot rejects incomplete config, noncanonical origin and anonymous
  assert.throws(()=>worldsConfig({...env,WORLDS_AUTH_ENABLED:'true',WORLDS_ORIGIN:'http://app.test',WORLDS_ISSUER:'https://identity.test',WORLDS_CLIENT_ID:'test'}));
  const config={...env,WORLDS_AUTH_ENABLED:'true',WORLDS_ORIGIN:'https://app.test',WORLDS_ISSUER:'https://identity.test',WORLDS_CLIENT_ID:'test'};
  assert.equal((await worldsRoute(new Request('https://evil.test/auth/login',{method:'POST'}),config))!.status,403);
+ assert.equal((await worldsRoute(new Request('https://app.test/auth/login',{method:'POST',headers:{origin:'https://evil.test'}}),config))!.status,403);
+ assert.equal((await worldsRoute(new Request('https://app.test/auth/callback?code=unbound'),config))!.status,400);
+ assert.equal((await worldsRoute(new Request('https://app.test/auth/backchannel-logout'),config))!.status,405);
  const anonymous=await resolveIdentity(new Request('https://app.test/api/session'),env,async()=>Response.json({user:null,session:null}));
  assert.ok(anonymous instanceof Response);assert.equal(anonymous.status,401);
 });

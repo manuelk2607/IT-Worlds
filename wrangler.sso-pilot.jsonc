@@ -1,0 +1,27 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "it-worlds-sso-pilot",
+  "account_id": "ec3c070d8e4f88d2fc533d7d797f2daa",
+  "compatibility_date": "2026-10-19",
+  "main": "worker/sso-pilot.ts",
+  "workers_dev": true,
+  "preview_urls": false,
+  "keep_vars": false,
+  "logpush": false,
+  "assets": {
+    "directory": "./dist",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page",
+    "binding": "ASSETS",
+    "run_worker_first": true
+  },
+  "triggers": {"crons":["17 * * * *"]},
+  "vars": {
+    "WORLDS_AUTH_ENABLED": "false",
+    "WORLDS_ORIGIN": "https://it-worlds-sso-pilot.maki26.workers.dev",
+    "WORLDS_PILOT_DATABASE_HOST": "ep-falling-fog-bad7v2ou.c-8.eu-central-1.aws.neon.tech",
+    "WORLDS_ISSUER": "https://ep-bold-boat-batl101c.neonauth.c-8.eu-central-1.aws.neon.tech/worlds_identity/auth",
+    "WORLDS_CLIENT_ID": "JFHXaKKNmqXgxVeccXcsLlMRJxAxFnfH",
+    "WORLDS_RESOURCE": "https://it-worlds.maki26.workers.dev/api"
+  }
+}
