@@ -2,6 +2,8 @@
 
 Stand 2026-11-04. Kein produktiver Auth-Cutover; bestehende Anmeldung bleibt aktiv.
 
+Am 05.11.2026 lief zusätzlich `tests/live-pilot-oidc.ts` über den separaten Worker-Einstieg und den echten isolierten Neon-Zweig. Der Testanbieter prüfte PKCE-S256, Client, Resource und den exakten Callback und signierte das ID-Token mit EdDSA. Geprüft sind der browsergebundene und bei parallelen Anfragen einmalige Callback, die englische Rückleitung, hostgebundene Cookies, Ablehnung von Fortschrittszugriff ohne Zuordnung und serverseitige Revokation nach CSRF-geschütztem Logout. Die Abfrage nach dem Lauf ergab null Transaktionen, Sitzungen und Rate-Einträge. Die reale Managed-Neon-Anmeldung im Browser bleibt zur Abnahme offen.
+
 ## Bereitstellungsstand 05.11.2026
 
 Migration 005 läuft ausschließlich im bestehenden Development-Zweig: SHA-256 `b31b2f2332531788389528e0fbd04ae3fe109d6f4dd746e185ef3fc58a363686`. Produktion hat keine Rate-Tabelle; ihre 14 Fortschrittszeilen sind weiter vorhanden.
