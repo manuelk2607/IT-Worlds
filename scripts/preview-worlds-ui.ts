@@ -7,9 +7,16 @@ const types:Record<string,string>={'.html':'text/html','.js':'text/javascript','
 createServer(async(req,res)=>{
  const url=new URL(req.url??'/','http://localhost:4188');
  const json=(data:unknown,status=200)=>{res.writeHead(status,{'Content-Type':'application/json','Cache-Control':'no-store'});res.end(JSON.stringify(data));};
+ const mode=new URL(req.headers.referer??'http://localhost').searchParams.get('preview');
  if(url.pathname==='/api/worlds/status'){
-  const mode=new URL(req.headers.referer??'http://localhost').searchParams.get('preview');
-  json({enabled:mode!=='disabled',authenticated:mode==='active',csrf:'visual-fixture-only'});return;
+  json({enabled:mode!=='disabled',authenticated:mode==='active'||mode==='link',csrf:'visual-fixture-only',
+   accountState:'ACCOUNT_LINK_REQUIRED',linkEnabled:mode==='link'});return;
+ }
+ if(mode==='link'&&req.method==='POST'){
+  if(url.pathname==='/api/worlds/link/prepare'){
+   json({proof:'visual-fixture-only',worldsEmail:'worlds@example.invalid',localEmail:'it@example.invalid'});return;
+  }
+  if(url.pathname==='/api/worlds/link/confirm'){json({error:'LINK_REFUSED'},409);return;}
  }
  if(url.pathname==='/api/session'){json({error:'UNAUTHENTICATED'},401);return;}
  if(url.pathname.startsWith('/api/')||url.pathname.startsWith('/auth/')){json({error:'VISUAL_FIXTURE_ONLY'},503);return;}

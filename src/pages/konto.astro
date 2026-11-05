@@ -19,6 +19,19 @@ const t = translate(locale);
         <button class="button primary" type="submit">{t('Mit Worlds anmelden', 'Sign in with Worlds')}</button>
       </form>
       <p data-worlds-message role="status"></p>
+      <div data-worlds-link hidden>
+        <p>{t('Bestätige deine Worlds-Anmeldung und melde dich unten mit deinem bisherigen IT-Worlds-Account an. Anschließend kannst du beide Konten prüfen und verknüpfen.', 'Confirm your Worlds sign-in and sign in below with your existing IT-Worlds account. You can then review and link the two accounts.')}</p>
+        <form method="post" action={`/auth/login?reauth=1&next=${encodeURIComponent(localePath(locale,'/konto/'))}&ui_locales=${locale}`}>
+          <button class="button secondary" type="submit">{t('Worlds-Anmeldung bestätigen', 'Confirm Worlds sign-in')}</button>
+        </form>
+        <button class="button secondary" type="button" data-worlds-link-review>{t('Konten prüfen', 'Review accounts')}</button>
+        <div data-worlds-link-summary hidden>
+          <p>Worlds Hub <strong data-worlds-link-central></strong></p>
+          <p>IT-Worlds <strong data-worlds-link-local></strong></p>
+          <button class="button primary" type="button" data-worlds-link-confirm>{t('Diese Konten verknüpfen', 'Link these accounts')}</button>
+        </div>
+        <p data-worlds-link-status role="status"></p>
+      </div>
       <form method="post" action={`/auth/logout?locale=${locale}`} data-worlds-logout hidden>
         <input type="hidden" name="csrf" />
         <button class="button secondary" type="submit">{t('Worlds-Sitzung in IT-Worlds beenden', 'End the Worlds session in IT-Worlds')}</button>

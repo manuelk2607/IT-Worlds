@@ -6,7 +6,11 @@ import {parseSessionData} from '@neondatabase/auth/server';
 import type {Env} from './index.ts';
 
 export interface AppIdentity {user:{id:string;name:string;email:string};source:'legacy'|'worlds';csrf?:string;cookies:string[]}
-const reply=(body:unknown,status=200)=>Response.json(body,{status,headers:{'Cache-Control':'no-store','X-Robots-Tag':'noindex','X-Content-Type-Options':'nosniff'}});
+export const worldsReply=(body:unknown,status=200)=>Response.json(body,{status,headers:{'Cache-Control':'no-store','X-Robots-Tag':'noindex','X-Content-Type-Options':'nosniff'}});
+const reply=worldsReply;
+export function worldsLinkEnabled(env:Env){
+ return env.WORLDS_AUTH_ENABLED==='true'&&env.WORLDS_LINK_ENABLED==='true'&&env.WORLDS_REAUTH_VERIFIED==='true'&&!env.WORLDS_PILOT_ONLY;
+}
 export function worldsConfig(env:Env):AuthConfig|null {
  if(env.WORLDS_AUTH_ENABLED!=='true')return null;
  if(!env.WORLDS_ORIGIN||!env.WORLDS_ISSUER||!env.WORLDS_CLIENT_ID)throw new Error('Incomplete Worlds configuration');
@@ -14,7 +18,7 @@ export function worldsConfig(env:Env):AuthConfig|null {
  if(origin.protocol!=='https:'||origin.origin!==env.WORLDS_ORIGIN)throw new Error('Invalid Worlds origin');
  const sql=neon(env.DATABASE_URL);
  return {origin:origin.origin,issuer:env.WORLDS_ISSUER,clientId:env.WORLDS_CLIENT_ID,resource:env.WORLDS_RESOURCE,
-  algorithm:'EdDSA',reauthEnabled:false,store:new PostgresAuthStore((text,values)=>sql.query(text,values)),
+  algorithm:'EdDSA',reauthEnabled:worldsLinkEnabled(env),store:new PostgresAuthStore((text,values)=>sql.query(text,values)),
   returnPaths:['/konto/','/en/konto/','/fortschritt/','/en/fortschritt/'],signedOutPaths:{de:'/konto/',en:'/en/konto/'}};
 }
 export async function worldsRoute(request:Request,env:Env):Promise<Response|null>{
@@ -28,7 +32,7 @@ export async function worldsRoute(request:Request,env:Env):Promise<Response|null
    const central=await session(request,config);
    const account=central?await resolveIdentity(request,env,async()=>reply({},401)):null;
    const state=account instanceof Response?(await account.json() as {error:string}).error:account?'LINKED':null;
-   return reply({enabled:true,authenticated:!!central,accountState:state,csrf:central?.csrf});
+   return reply({enabled:true,authenticated:!!central,accountState:state,csrf:central?.csrf,linkEnabled:worldsLinkEnabled(env)});
   }
   const purpose:AuthAttempt|null=url.pathname==='/auth/login'?'login':url.pathname==='/auth/callback'?'callback':url.pathname==='/auth/backchannel-logout'?'backchannel':null;
   if(purpose){

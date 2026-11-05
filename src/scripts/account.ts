@@ -41,6 +41,10 @@ for (const form of forms) form.addEventListener('submit', async event => {
       message.textContent = t('Passwort gespeichert. Du kannst dich jetzt anmelden.', 'Password saved. You can now sign in.'); return;
     }
     await loadLearningState();
+    if(!learningState.user&&document.querySelector('[data-worlds-link]:not([hidden])')){
+      message.textContent=t('Deine lokale Anmeldung ist aktiv. Prüfe jetzt beide Konten in der Worlds-Karte.','Your local sign-in is active. Review both accounts in the Worlds panel.');
+      return;
+    }
     if (!learningState.user) { message.textContent = t('Bitte melde dich mit deinem neuen Account an.', 'Please sign in with your new account.'); return; }
     const next = params.get('next');
     location.assign(next && next.startsWith('/') && !next.startsWith('//') && !next.includes('\\') ? next : pagePath('/fortschritt/'));

@@ -4,6 +4,7 @@ import {typingAccountsEnabled} from '../src/lib/release-features.ts';
 import { handleAuthProxyRequest } from '@neondatabase/auth/server';
 import {resolveIdentity,identityResponse,worldsRoute} from './worlds-auth.ts';
 import {cleanupWorldsAuth} from './worlds-maintenance.ts';
+import {worldsLinkRoute} from './worlds-link.ts';
 import { neon } from '@neondatabase/serverless';
 import { isCorrectAnswer, parseProgressChange, type ProgressItem } from '../src/lib/progress.ts';
 
@@ -18,6 +19,8 @@ export interface Env {
   WORLDS_CLIENT_ID?:string;
   WORLDS_RESOURCE?:string;
   WORLDS_PILOT_ONLY?:boolean;
+  WORLDS_LINK_ENABLED?:string;
+  WORLDS_REAUTH_VERIFIED?:string;
 }
 const authMethods: Record<string, string> = {
   'get-session': 'GET',
@@ -111,7 +114,9 @@ export default {
     }
     if ((!env.WORLDS_PILOT_ONLY&&!env.NEON_AUTH_BASE_URL) || !env.NEON_AUTH_COOKIE_SECRET || !env.DATABASE_URL) return json({ error: 'SERVICE_UNAVAILABLE' }, 503);
     try {
-      const identity=()=>resolveIdentity(request,env,()=>authRequest(new Request(new URL('/api/auth/get-session?disableCookieCache=true',request.url),{headers:request.headers}),env,'get-session'));
+      const legacy=()=>authRequest(new Request(new URL('/api/auth/get-session?disableCookieCache=true',request.url),{headers:request.headers}),env,'get-session');
+      const link=await worldsLinkRoute(request,env,legacy);if(link)return link;
+      const identity=()=>resolveIdentity(request,env,legacy);
       if(url.pathname==='/api/session'&&request.method==='GET')return identityResponse(await identity());
       if(url.pathname.startsWith('/api/typing/'))return await typingRequest(request,env,identity);
       if (url.pathname === '/api/progress') return await getProgress(request, env);
