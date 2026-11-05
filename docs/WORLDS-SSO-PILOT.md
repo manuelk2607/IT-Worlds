@@ -2,6 +2,8 @@
 
 Stand 2026-11-04. Kein produktiver Auth-Cutover; bestehende Anmeldung bleibt aktiv.
 
+Der Postgres-Verknüpfungsadapter setzt den RLS-Kontext für jede Operation aus serverseitig geprüften Nachweisen. Er verlangt die passende aktive zentrale Sitzung mit übereinstimmendem `auth_time` und ein verfügbares lokales Konto. Der Proof läuft fünf Minuten nach dem älteren Nachweis ab. `tests/live-worlds-link.ts` hat auf dem isolierten Neon-Zweig Ablauf, fremde und widerrufene Sitzungen, lokale Sperren, zwei parallele Bestätigungen und das Zurückrollen eines Zuordnungskonflikts geprüft. Alle synthetischen Links, Proofs, Auditzeilen und Sitzungen wurden anschließend entfernt. Der Adapter ist für die spätere Verknüpfungsroute vorbereitet. Deren Aktivierung setzt einen echten beiderseitigen Reauth-Nachweis voraus.
+
 Am 05.11.2026 lief zusätzlich `tests/live-pilot-oidc.ts` über den separaten Worker-Einstieg und den echten isolierten Neon-Zweig. Der Testanbieter prüfte PKCE-S256, Client, Resource und den exakten Callback und signierte das ID-Token mit EdDSA. Geprüft sind der browsergebundene und bei parallelen Anfragen einmalige Callback, die englische Rückleitung, hostgebundene Cookies, Ablehnung von Fortschrittszugriff ohne Zuordnung und serverseitige Revokation nach CSRF-geschütztem Logout. Die Abfrage nach dem Lauf ergab null Transaktionen, Sitzungen und Rate-Einträge. Die reale Managed-Neon-Anmeldung im Browser bleibt zur Abnahme offen.
 
 ## Bereitstellungsstand 05.11.2026
