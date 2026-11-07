@@ -6,6 +6,14 @@ Stand: 01.11.2026. Arbeitsbranch: `codex/cloudstand-lokal`. Diese Datei beschrei
 
 ### Worlds-Hub-SSO-Pilot (04.11.2026, separater Featurebranch)
 
+Nachprüfung 07.11.2026. Der gemeinsame OIDC-Client ist auf Version 0.1.1
+aktualisiert. Ein frischer zentraler Nachweis wird mit `max_age=300`
+angefordert und im signierten ID-Token geprüft. Der reale Hub-QA-Anbieter
+hat aktuelle und ältere Sitzungen mit positivem Zeitfenster bestätigt.
+127 Tests bestanden, zehn umgebungsbedingt übersprungen. Astro-Check für
+293 Dateien sowie Build mit 534 Seiten erfolgreich. Der vollständige
+IT-Browserpilot bleibt Voraussetzung der Aktivierung.
+
 Bereitstellungsstand 05.11.: atomare Rate-Budgets und begrenzter Ablauf-Cleanup auf isoliertem Neon-Zweig real geprüft. Separates Cloudflare-Pilotprofil mit deaktiviertem Flag, gesperrtem Legacy-Proxy und noindex im Trockenlauf erfolgreich. 127 Tests bestanden/10 übersprungen; Typprüfung und Build grün. Kein produktives Schema und kein Worker verändert. Cloudflare-Anmeldung muss erneuert werden; anschließend exakten Callback und echte Browser-SSO-Abnahme ausführen. Details in `docs/WORLDS-SSO-PILOT.md`.
 
 Fortsetzung 05.11.: OIDC-Routen, eigener Postgres-Sessionstore, gemeinsame lokale Identitätsauflösung für Fortschritt/Trainer und DE/EN-Kontokarte implementiert. Featureflag standardmäßig aus. Migration 004 und tatsächlicher isolierter Session-/Mapping-/Kontosperren-Test bestanden; keine Produktionsmigration oder Aktivierung. Gemeinsame Quelle Worlds-Hub `80db3d7`. 135 Tests: 125 bestanden/10 umgebungsbedingt übersprungen; Typprüfung und Build erfolgreich. Lokale visuelle DE/EN-/Mobil-/Theme-/404-Abnahme mit simulierten Zuständen, kein echter Browser-SSO-Nachweis. Aktuelle Grenzen und nächster Schritt in `docs/WORLDS-SSO-PILOT.md`.
