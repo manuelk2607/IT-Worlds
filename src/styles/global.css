@@ -2977,3 +2977,7 @@ summary {
     animation: none !important;
   }
 }
+
+/* Resolve the active authentication mode before offering credentials. */
+[data-auth-configuration-pending] [data-signed-out],
+html[data-worlds-auth=true] [data-signed-out] { display: none !important; }

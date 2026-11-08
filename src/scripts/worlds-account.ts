@@ -1,10 +1,13 @@
 import {t} from './browser-i18n';
+import {worldsStatusReady} from './progress-client';
 const panel=document.querySelector<HTMLElement>('[data-worlds-panel]');
 if(panel){
  try{
-  const response=await fetch('/api/worlds/status',{credentials:'same-origin',cache:'no-store'});
-  if(response.ok){
-   const status=await response.json() as {enabled?:boolean;authenticated?:boolean;accountState?:string;csrf?:string;linkEnabled?:boolean};
+  const status=await worldsStatusReady;
+  if(status){
+   if(status.enabled)document.documentElement.dataset.worldsAuth='true';
+   else delete document.documentElement.dataset.worldsAuth;
+   panel.closest('[data-auth-configuration-pending]')?.removeAttribute('data-auth-configuration-pending');
    panel.hidden=status.enabled!==true;
    if(status.enabled&&status.authenticated){
     panel.querySelector<HTMLElement>('[data-worlds-login]')!.hidden=true;
@@ -16,8 +19,11 @@ if(panel){
     form.hidden=false;form.querySelector<HTMLInputElement>('[name=csrf]')!.value=status.csrf??'';
     if(status.linkEnabled&&status.accountState==='ACCOUNT_LINK_REQUIRED'&&status.csrf)enableLink(panel,status.csrf);
    }
-  }
- }catch{/* Legacy login remains available during pilot outages. */}
+  }else throw new Error('Unavailable sign-in configuration');
+ }catch{
+  panel.hidden=false;
+  panel.querySelector<HTMLElement>('[data-worlds-message]')!.textContent=t('Die Anmeldung ist gerade nicht erreichbar. Bitte versuche es erneut.','Sign-in is temporarily unavailable. Please try again.');
+ }
 }
 
 function enableLink(panel:HTMLElement,csrf:string){
@@ -40,7 +46,7 @@ function enableLink(panel:HTMLElement,csrf:string){
     message.textContent=result.error==='CENTRAL_REAUTH_REQUIRED'
      ?t('Bitte bestätige zuerst deine Worlds-Anmeldung.','Please confirm your Worlds sign-in first.')
      :result.error==='LEGACY_REAUTH_REQUIRED'
-      ?t('Bitte melde dich erneut mit deinem bisherigen IT-Worlds-Account an.','Please sign in again with your existing IT-Worlds account.')
+      ?t('Der Nachweis für dein bisheriges IT-Worlds-Konto fehlt. Die Übernahme ist noch nicht abgeschlossen.','Proof for your existing IT-Worlds account is missing. Migration is not complete yet.')
       :result.error==='RATE_LIMITED'
        ?t('Zu viele Versuche. Bitte versuche es in einigen Minuten erneut.','Too many attempts. Please try again in a few minutes.')
        :t('Die Verknüpfung konnte nicht bestätigt werden. Prüfe beide Konten erneut.','The link could not be confirmed. Please review both accounts again.');

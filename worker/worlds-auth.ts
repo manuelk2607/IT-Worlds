@@ -1,6 +1,6 @@
 import {neon} from '@neondatabase/serverless';
 import {PostgresAuthStore} from '@worlds-hub/auth/postgres-store';
-import {backchannelLogout,callback,logout,session,startLogin,sameOrigin,readCookie,SESSION_COOKIE,type AuthConfig} from '@worlds-hub/auth';
+import {backchannelLogout,callback,logout,session,startLogin,startLoginLink,sameOrigin,readCookie,SESSION_COOKIE,type AuthConfig} from '@worlds-hub/auth';
 import {takeAuthAttempt,type AuthAttempt} from './worlds-maintenance.ts';
 import {parseSessionData} from '@neondatabase/auth/server';
 import type {Env} from './index.ts';
@@ -34,10 +34,13 @@ export async function worldsRoute(request:Request,env:Env):Promise<Response|null
    const state=account instanceof Response?(await account.json() as {error:string}).error:account?'LINKED':null;
    return reply({enabled:true,authenticated:!!central,accountState:state,csrf:central?.csrf,linkEnabled:worldsLinkEnabled(env)});
   }
-  const purpose:AuthAttempt|null=url.pathname==='/auth/login'?'login':url.pathname==='/auth/callback'?'callback':url.pathname==='/auth/backchannel-logout'?'backchannel':null;
+  const linkStart=url.pathname==='/auth/start';
+  if(linkStart&&request.method!=='GET')return reply({error:'METHOD_NOT_ALLOWED'},405);
+  if(linkStart&&(request.headers.get('sec-fetch-mode')!=='navigate'||request.headers.get('sec-fetch-dest')!=='document'))return reply({error:'INVALID_NAVIGATION'},403);
+  const purpose:AuthAttempt|null=(url.pathname==='/auth/login'||linkStart)?'login':url.pathname==='/auth/callback'?'callback':url.pathname==='/auth/backchannel-logout'?'backchannel':null;
   if(purpose){
-   if(request.method!==(purpose==='callback'?'GET':'POST'))return reply({error:'METHOD_NOT_ALLOWED'},405);
-   if(purpose==='login'&&!sameOrigin(request,config.origin))return reply({error:'INVALID_ORIGIN'},403);
+   if(request.method!==(purpose==='callback'||linkStart?'GET':'POST'))return reply({error:'METHOD_NOT_ALLOWED'},405);
+   if(purpose==='login'&&!linkStart&&!sameOrigin(request,config.origin))return reply({error:'INVALID_ORIGIN'},403);
    if(purpose==='callback'&&!/^[A-Za-z0-9_-]{32,128}$/.test(readCookie(request,'__Host-worlds-transaction')??''))return reply({error:'INVALID_TRANSACTION'},400);
    const {allowed,retryAfter}=await takeAuthAttempt(request,env,purpose);
    if(!allowed){
@@ -50,7 +53,8 @@ export async function worldsRoute(request:Request,env:Env):Promise<Response|null
    }
   }
   let response:Response;
-  if(url.pathname==='/auth/login')response=await startLogin(request,config);
+  if(linkStart)response=await startLoginLink(request,config);
+  else if(url.pathname==='/auth/login')response=await startLogin(request,config);
   else if(url.pathname==='/auth/callback')response=await callback(request,config);
   else if(url.pathname==='/auth/logout')response=await logout(request,config);
   else if(url.pathname==='/auth/backchannel-logout')response=await backchannelLogout(request,config);

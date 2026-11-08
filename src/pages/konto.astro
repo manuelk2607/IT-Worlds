@@ -11,16 +11,14 @@ const t = translate(locale);
     <h1>{t('Deine Neugier.', 'Your curiosity.')}<br /><span>{t('Dein Fortschritt.', 'Your progress.')}</span></h1>
     <p class="page-lead">{t('Mit einem freiwilligen Account behältst du gelesene Einstiege und bearbeitete Fragen im Blick – auch auf anderen Geräten. Alle Inhalte bleiben ohne Anmeldung zugänglich.', 'An optional account keeps track of introductions you have read and questions you have practised, across devices. All content remains accessible without signing in.')}</p>
   </section>
-  <section class="container narrow account-section">
+  <section class="container narrow account-section" data-auth-configuration-pending>
     <div class="account-panel" data-worlds-panel hidden>
       <h2>Worlds Hub</h2>
       <p>{t('Verwende deine zentrale Worlds-Identität. Dein bisheriger IT-Worlds-Account und Lernstand bleiben erhalten.', 'Use your central Worlds identity. Your existing IT-Worlds account and learning record are preserved.')}</p>
-      <form method="post" action={`/auth/login?next=${encodeURIComponent(localePath(locale,'/konto/'))}&ui_locales=${locale}`} data-worlds-login>
-        <button class="button primary" type="submit">{t('Mit Worlds anmelden', 'Sign in with Worlds')}</button>
-      </form>
+      <a class="button primary" href={`/auth/start?next=${encodeURIComponent(localePath(locale,'/konto/'))}&ui_locales=${locale}`} data-worlds-login>{t('Mit Worlds anmelden', 'Sign in with Worlds')}</a>
       <p data-worlds-message role="status"></p>
       <div data-worlds-link hidden>
-        <p>{t('Bestätige deine Worlds-Anmeldung und melde dich unten mit deinem bisherigen IT-Worlds-Account an. Anschließend kannst du beide Konten prüfen und verknüpfen.', 'Confirm your Worlds sign-in and sign in below with your existing IT-Worlds account. You can then review and link the two accounts.')}</p>
+        <p>{t('Für die Verknüpfung sind bestätigte Nachweise für beide Konten erforderlich. Eine vorhandene IT-Worlds-Sitzung bleibt während der Übernahme erhalten.', 'Linking requires verified proof for both accounts. An existing IT-Worlds session is preserved during migration.')}</p>
         <form method="post" action={`/auth/login?reauth=1&next=${encodeURIComponent(localePath(locale,'/konto/'))}&ui_locales=${locale}`}>
           <button class="button secondary" type="submit">{t('Worlds-Anmeldung bestätigen', 'Confirm Worlds sign-in')}</button>
         </form>

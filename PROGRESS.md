@@ -1,5 +1,31 @@
 # IT-Worlds – Fortschritt
 
+
+## Zentrale Anmeldelinks – 08.11.2026
+
+Worlds-Modus: Anmeldeaktionen in Navigation und Kontoseite sind normale Links zu
+`/auth/start`; lokale Zugangsdatenformulare bleiben ausgeblendet. Die öffentliche
+Konfigurationsantwort wird einmal pro Seite geladen und gemeinsam verwendet.
+Bestehende Sitzungs-/Fortschrittsauflösung bleibt erhalten; ohne aktivierten
+Worlds-Modus bleibt die bisherige Anmeldung verwendbar. Bei unbekannter
+Konfiguration zeigt die Kontoseite einen Fehler statt paralleler Zugangsdaten.
+Hinweise auf ein nicht mehr sichtbares lokales Anmeldeformular wurden korrigiert.
+
+Gemeinsamer Auth-Client 0.1.3 mit geprüftem Subtree und Dateiprüfsummen vendort.
+Neue GET-Route bewahrt Rate-Limits, PKCE, erlaubte Rücksprünge und hostgebundene
+Cookies; POST ohne Origin-/CSRF-Nachweis bleibt gesperrt. 128 Tests bestanden,
+10 umgebungsbedingt übersprungen; Astro-Check 293 Dateien ohne Befund und Build
+mit 534 Seiten erfolgreich. Chromium/WebKit in DE/EN bei 320/1280 px bestätigten
+Links, ausgeblendete lokale Formulare, Legacy-Modus, Sprach-/Designwechsel,
+Mobilmenü und beide 404-Varianten mit lokalen Testantworten.
+
+Produktion read-only: 2 native Konten, beide ohne bestätigte E-Mail, eines mit
+aktiver Sitzung, 17 Fortschrittszeilen. Keine produktive Mapping-Tabelle vorhanden;
+keine Konten verschoben oder produktive Anmeldung umgestellt. Offene Abnahme:
+echter Provider-/Eigentums-/Rollen-/Daten-/Rücknahmeablauf; eigene Cloudflare-
+Pilotberechtigung fehlt weiterhin. Vorhandene Tokens anderer Projekte werden
+nicht verwendet. Providerfehler als vollständige Dokumentansicht separat offen.
+
 Stand: 01.11.2026. Arbeitsbranch: `codex/cloudstand-lokal`. Diese Datei beschreibt den aktuellen, verifizierten Stand; ältere Zwischenstände wurden aufgelöst und widersprüchliche Hinweise durch spätere Nachweise ersetzt.
 
 ## 1. Offene Aufgaben & geplante Features

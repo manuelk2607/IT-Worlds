@@ -10,12 +10,24 @@ interface User { id: string; name: string; email: string }
 export const learningState: { user: User | null; items: ProgressItem[]; unavailable: boolean } = { user: null, items: [], unavailable: false };
 let sessionSource:'legacy'|'worlds'='legacy';
 let worldsCsrf='';
+interface WorldsStatus {enabled:boolean;authenticated?:boolean;accountState?:string;csrf?:string;linkEnabled?:boolean}
+let worldsStatus:WorldsStatus|null=null;
+export const worldsStatusReady=fetch('/api/worlds/status',{credentials:'same-origin',cache:'no-store'})
+  .then(async response=>{
+    if(!response.ok)return null;
+    const status=await response.json() as WorldsStatus;
+    return typeof status.enabled==='boolean'?status:null;
+  }).catch(()=>null);
+void worldsStatusReady.then(status=>{worldsStatus=status;render();});
 const controls = [...document.querySelectorAll<HTMLElement>('[data-progress-control]')];
 const itemFor = (kind: string | undefined, id: string | undefined) => learningState.items.find(item => item.kind === kind && item.contentId === id);
 function render() {
   document.querySelectorAll<HTMLAnchorElement>('[data-account-link]').forEach(link => {
     link.textContent = learningState.user ? t('Mein Lernstand', 'My progress') : t('Anmelden', 'Sign in');
-    link.href = pagePath(learningState.user ? '/fortschritt/' : '/konto/');
+    const account=pagePath('/konto/');
+    const next=[account,pagePath('/fortschritt/')].includes(location.pathname)?location.pathname:account;
+    link.href = learningState.user ? pagePath('/fortschritt/')
+      :worldsStatus?.enabled&&!worldsStatus.authenticated?'/auth/start?'+new URLSearchParams({next,ui_locales:locale}):account;
   });
   document.querySelectorAll<HTMLElement>('[data-signed-in]').forEach(element => element.hidden = !learningState.user);
   document.querySelectorAll<HTMLElement>('[data-signed-out]').forEach(element => element.hidden = !!learningState.user);
