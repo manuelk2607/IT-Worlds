@@ -15,6 +15,8 @@ for(const[path,body]of html){
   const url=new URL(value,'https://it-worlds.maki26.workers.dev'+route);
   if(url.origin!=='https://it-worlds.maki26.workers.dev')continue;
   if(url.pathname.startsWith('/api/'))continue;
+  // Exact document route handled by the Worker and covered by worlds-auth.test.ts.
+  if(url.pathname==='/auth/start'){count++;continue;}
   const target=join(root,decodeURIComponent(url.pathname));
   const file=known.has(target)?target:known.has(join(target,'index.html'))?join(target,'index.html'):undefined;
   count++;
