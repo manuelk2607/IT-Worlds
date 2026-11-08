@@ -21,7 +21,12 @@ Mobilmenü und beide 404-Varianten mit lokalen Testantworten.
 
 Produktion read-only: 2 native Konten, beide ohne bestätigte E-Mail, eines mit
 aktiver Sitzung, 17 Fortschrittszeilen. Keine produktive Mapping-Tabelle vorhanden;
-keine Konten verschoben oder produktive Anmeldung umgestellt. Offene Abnahme:
+keine Konten verschoben oder produktive Anmeldung umgestellt. GitHub-CI
+`42515340829` für `321fe36` erfolgreich (Anwendung `e0202c5`). Der erste Lauf
+beanstandete die neue dynamische Route im statischen Linkprüfer; ausschließlich
+`/auth/start` als getestete Worker-Route ergänzt. Lokal 40.228 interne Links und
+528 öffentliche SEO-Seiten geprüft, vollständige erneute CI erfolgreich.
+Offene Abnahme:
 echter Provider-/Eigentums-/Rollen-/Daten-/Rücknahmeablauf; eigene Cloudflare-
 Pilotberechtigung fehlt weiterhin. Vorhandene Tokens anderer Projekte werden
 nicht verwendet. Providerfehler als vollständige Dokumentansicht separat offen.
