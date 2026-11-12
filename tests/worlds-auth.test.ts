@@ -43,9 +43,10 @@ test('central sign-out checks the signature and fences linked native sessions by
  assert.equal((await deliver(previous)).status,202);
  assert.equal((await deliver(previous)).status,202);assert.equal(writes,2);
  assert.equal((await native(id,cutoff-1000) as Response).status,401);
- assert.equal((await native(id,cutoff+1) as {source:string}).source,'legacy');
+ assert.equal((await native(id,cutoff+999) as Response).status,401);
+ assert.equal((await native(id,cutoff+1000) as {source:string}).source,'legacy');
  assert.equal((await native(other,cutoff-1000) as {source:string}).source,'legacy');
- assert.equal((await native(id,cutoff+1,other) as Response).status,401);
+ assert.equal((await native(id,cutoff+1000,other) as Response).status,401);
 });
 test('Worlds pilot is disabled without explicit configuration and never changes legacy identity',async()=>{
  assert.equal(worldsConfig(env),null);

@@ -97,8 +97,11 @@ export async function resolveIdentity(request:Request,env:Env,legacy:()=>Promise
   const issuedAt=parsed.session.createdAt.getTime(),expiresAt=parsed.session.expiresAt.getTime(),now=Date.now();
   if(new URL(request.url).origin!==config.origin||parsed.session.userId!==parsed.user.id||
     !Number.isFinite(issuedAt)||issuedAt>now||!Number.isFinite(expiresAt)||expiresAt<=now)return reply({error:'UNAUTHENTICATED'},401);
+  // CAEP timestamps have second precision. Include all native sessions
+  // issued in the revocation second, even when their timestamps have milliseconds.
+  const issuedSecond=Math.floor(issuedAt/1000)*1000;
   const sql=neon(env.DATABASE_URL);
-  const [result]=await sql`SELECT public.worlds_native_session_allowed(${parsed.user.id}::uuid,${config.issuer},${issuedAt}::bigint) AS allowed`;
+  const [result]=await sql`SELECT public.worlds_native_session_allowed(${parsed.user.id}::uuid,${config.issuer},${issuedSecond}::bigint) AS allowed`;
   if(result?.allowed!==true)return reply({error:'UNAUTHENTICATED'},401);
  }
  return {user:{id:parsed.user.id,name:parsed.user.name,email:parsed.user.email},source:'legacy',cookies:response.headers.getSetCookie()};
