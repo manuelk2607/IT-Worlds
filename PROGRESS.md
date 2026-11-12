@@ -1,5 +1,19 @@
 # IT-Worlds – Fortschritt
 
+## Zentrale Abmeldung – 12.11.2026
+
+Der Worlds-Client 0.1.5 akzeptiert signierte Sitzungswiderrufe vom Hub.
+Migration 007 speichert die Widerrufsgrenze. Bei verknüpften Konten prüft
+IT-Worlds auch das ursprüngliche Ausstellungsdatum bisheriger Native-Sitzungen
+und sperrt deren Projektzugriff bei einem Widerruf. Die Anwendung benötigt
+dafür keinen direkten Zugriff auf die Anbietertabelle. Eine neue Worlds-Sitzung
+und der Zugriff anderer Konten bleiben möglich.
+
+129 lokale Tests bestanden, 10 optionale Laufzeittests übersprungen.
+Astro-Check und Build bestanden. Migration 007 wurde lokal mit erzwungener
+Zeilensicherheit und der eingeschränkten Worker-Rolle geprüft. Für die
+Pilotabnahme sind Migration 007 und der öffentliche
+`WORLDS_HUB_SESSION_EVENT_JWK` erforderlich. Produktionsaktivierung steht aus.
 
 ## Zentrale Anmeldelinks – 08.11.2026
 

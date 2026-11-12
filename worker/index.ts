@@ -2,7 +2,7 @@ import { redirectToHttps } from '../src/lib/transport.ts';
 import {typingRequest} from './typing.ts';
 import {typingAccountsEnabled} from '../src/lib/release-features.ts';
 import { handleAuthProxyRequest } from '@neondatabase/auth/server';
-import {resolveIdentity,identityResponse,worldsRoute} from './worlds-auth.ts';
+import {resolveIdentity,identityResponse,worldsRoute,worldsSessionEventKey} from './worlds-auth.ts';
 import {cleanupWorldsAuth} from './worlds-maintenance.ts';
 import {worldsLinkRoute} from './worlds-link.ts';
 import { neon } from '@neondatabase/serverless';
@@ -21,6 +21,7 @@ export interface Env {
   WORLDS_PILOT_ONLY?:boolean;
   WORLDS_LINK_ENABLED?:string;
   WORLDS_REAUTH_VERIFIED?:string;
+  WORLDS_HUB_SESSION_EVENT_JWK?:string;
 }
 const authMethods: Record<string, string> = {
   'get-session': 'GET',
@@ -46,10 +47,14 @@ async function authRequest(request: Request, env: Env, path: string) {
   headers.set('X-Content-Type-Options', 'nosniff');
   return new Response(response.body, { status: response.status, headers });
 }
+function legacySession(request:Request,env:Env) {
+  const url=new URL('/api/auth/get-session?disableCookieCache=true',request.url);
+  if(env.WORLDS_AUTH_ENABLED==='true'&&worldsSessionEventKey(env))url.searchParams.set('disableRefresh','true');
+  return authRequest(new Request(url,{headers:request.headers}),env,'get-session');
+}
 async function getProgress(request: Request, env: Env) {
   // Revalidate with Neon for every data request; never trust a browser-supplied user ID or cached session alone.
-  const sessionUrl = new URL('/api/auth/get-session?disableCookieCache=true', request.url);
-  const identity = await resolveIdentity(request,env,()=>authRequest(new Request(sessionUrl, { headers: request.headers }), env, 'get-session'));
+  const identity = await resolveIdentity(request,env,()=>legacySession(request,env));
   if(identity instanceof Response)return identity;
   const sql = neon(env.DATABASE_URL);
   const userId = identity.user.id;
@@ -114,7 +119,7 @@ export default {
     }
     if ((!env.WORLDS_PILOT_ONLY&&!env.NEON_AUTH_BASE_URL) || !env.NEON_AUTH_COOKIE_SECRET || !env.DATABASE_URL) return json({ error: 'SERVICE_UNAVAILABLE' }, 503);
     try {
-      const legacy=()=>authRequest(new Request(new URL('/api/auth/get-session?disableCookieCache=true',request.url),{headers:request.headers}),env,'get-session');
+      const legacy=()=>legacySession(request,env);
       const link=await worldsLinkRoute(request,env,legacy);if(link)return link;
       const identity=()=>resolveIdentity(request,env,legacy);
       if(url.pathname==='/api/session'&&request.method==='GET')return identityResponse(await identity());

@@ -1,6 +1,7 @@
 import {neon} from '@neondatabase/serverless';
 import {PostgresAuthStore} from '@worlds-hub/auth/postgres-store';
 import {backchannelLogout,callback,logout,session,startLogin,startLoginLink,sameOrigin,readCookie,SESSION_COOKIE,type AuthConfig} from '@worlds-hub/auth';
+import {receiveSessionRevocation,sessionEventPublicKey,sessionRevocationPath} from '@worlds-hub/auth/session-revocation';
 import {takeAuthAttempt,type AuthAttempt} from './worlds-maintenance.ts';
 import {parseSessionData} from '@neondatabase/auth/server';
 import type {Env} from './index.ts';
@@ -8,6 +9,7 @@ import type {Env} from './index.ts';
 export interface AppIdentity {user:{id:string;name:string;email:string};source:'legacy'|'worlds';csrf?:string;cookies:string[]}
 export const worldsReply=(body:unknown,status=200)=>Response.json(body,{status,headers:{'Cache-Control':'no-store','X-Robots-Tag':'noindex','X-Content-Type-Options':'nosniff'}});
 const reply=worldsReply;
+export const worldsSessionEventKey=(env:Env)=>sessionEventPublicKey(env.WORLDS_HUB_SESSION_EVENT_JWK);
 export function worldsLinkEnabled(env:Env){
  return env.WORLDS_AUTH_ENABLED==='true'&&env.WORLDS_LINK_ENABLED==='true'&&env.WORLDS_REAUTH_VERIFIED==='true'&&!env.WORLDS_PILOT_ONLY;
 }
@@ -18,7 +20,7 @@ export function worldsConfig(env:Env):AuthConfig|null {
  if(origin.protocol!=='https:'||origin.origin!==env.WORLDS_ORIGIN)throw new Error('Invalid Worlds origin');
  const sql=neon(env.DATABASE_URL);
  return {origin:origin.origin,issuer:env.WORLDS_ISSUER,clientId:env.WORLDS_CLIENT_ID,resource:env.WORLDS_RESOURCE,
-  algorithm:'EdDSA',reauthEnabled:worldsLinkEnabled(env),store:new PostgresAuthStore((text,values)=>sql.query(text,values)),
+  algorithm:'EdDSA',reauthEnabled:worldsLinkEnabled(env),store:new PostgresAuthStore((text,values)=>sql.query(text,values),!!worldsSessionEventKey(env)),
   returnPaths:['/konto/','/en/konto/','/fortschritt/','/en/fortschritt/'],signedOutPaths:{de:'/konto/',en:'/en/konto/'}};
 }
 export async function worldsRoute(request:Request,env:Env):Promise<Response|null>{
@@ -26,6 +28,13 @@ export async function worldsRoute(request:Request,env:Env):Promise<Response|null
  if(!url.pathname.startsWith('/auth/')&&url.pathname!=='/api/worlds/status')return null;
  try{
   const config=worldsConfig(env);if(!config)return url.pathname==='/api/worlds/status'?reply({enabled:false}):reply({error:'NOT_FOUND'},404);
+  if(url.pathname===sessionRevocationPath){
+   const key=worldsSessionEventKey(env),store=config.store;
+   if(!key||!(store instanceof PostgresAuthStore))return reply({error:'NOT_FOUND'},404);
+   return receiveSessionRevocation(request,{
+    signer:'https://worlds-hub.maki26.workers.dev',audience:config.origin+sessionRevocationPath,identityIssuer:config.issuer,key,
+   },event=>store.applySessionRevocation(event));
+  }
   if(url.origin!==config.origin)return reply({error:'INVALID_ORIGIN'},403);
   if(url.pathname==='/api/worlds/status'){
    if(request.method!=='GET')return reply({error:'METHOD_NOT_ALLOWED'},405);
@@ -84,6 +93,14 @@ export async function resolveIdentity(request:Request,env:Env,legacy:()=>Promise
  const response=await legacy();if(!response.ok)return reply({error:'AUTH_UNAVAILABLE'},503);
  const parsed=parseSessionData(await response.json());
  if(!parsed.user||!parsed.session)return reply({error:'UNAUTHENTICATED'},401);
+ if(config&&worldsSessionEventKey(env)){
+  const issuedAt=parsed.session.createdAt.getTime(),expiresAt=parsed.session.expiresAt.getTime(),now=Date.now();
+  if(new URL(request.url).origin!==config.origin||parsed.session.userId!==parsed.user.id||
+    !Number.isFinite(issuedAt)||issuedAt>now||!Number.isFinite(expiresAt)||expiresAt<=now)return reply({error:'UNAUTHENTICATED'},401);
+  const sql=neon(env.DATABASE_URL);
+  const [result]=await sql`SELECT public.worlds_native_session_allowed(${parsed.user.id}::uuid,${config.issuer},${issuedAt}::bigint) AS allowed`;
+  if(result?.allowed!==true)return reply({error:'UNAUTHENTICATED'},401);
+ }
  return {user:{id:parsed.user.id,name:parsed.user.name,email:parsed.user.email},source:'legacy',cookies:response.headers.getSetCookie()};
 }
 export function identityResponse(identity:AppIdentity|Response){
