@@ -9,8 +9,8 @@ createServer(async(req,res)=>{
  const json=(data:unknown,status=200)=>{res.writeHead(status,{'Content-Type':'application/json','Cache-Control':'no-store'});res.end(JSON.stringify(data));};
  const mode=new URL(req.headers.referer??'http://localhost').searchParams.get('preview');
  if(url.pathname==='/api/worlds/status'){
-  json({enabled:mode!=='disabled',authenticated:mode==='active'||mode==='link',csrf:'visual-fixture-only',
-   accountState:'ACCOUNT_LINK_REQUIRED',linkEnabled:mode==='link',legacySignInAvailable:mode==='link'||mode==='transition'});return;
+  json({enabled:mode!=='disabled',authenticated:mode==='active'||mode==='link'||mode==='linked',csrf:'visual-fixture-only',
+   accountState:mode==='linked'?'LINKED':'ACCOUNT_LINK_REQUIRED',linkEnabled:mode==='link',legacySignInAvailable:mode==='link'||mode==='transition'});return;
  }
  if(mode==='link'&&req.method==='POST'){
   if(url.pathname==='/api/worlds/link/prepare'){

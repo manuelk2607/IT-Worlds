@@ -1,5 +1,20 @@
 # IT-Worlds – Fortschritt
 
+## Rücksprung zur Lernseite nach Worlds-Anmeldung
+
+Der Worlds-Login bewahrt erlaubte Lernseiten einschließlich Quiz-Auswahl und
+Abschnittsanker. Der Rücksprung geht über die lokalisierte Kontoseite. Nach
+bestätigter Verknüpfung öffnet sie die ursprüngliche Seite. Die erneute
+Anmeldung für die Übernahme behält das Ziel ebenfalls. Der Worker speichert
+das geprüfte Ziel in der bestehenden PKCE-Transaktion. Externe Ziele,
+verschachtelte Weiterleitungen sowie Auth- und API-Routen werden verworfen.
+
+137 Tests bestanden, zehn optionale übersprungen. Astro-Check und Build
+bestanden. Chromium und WebKit prüften mit simulierten Antworten den
+Rücksprung auf eine DE-Lektion am Desktop und ein EN-Quiz mobil sowie den
+Verbleib auf der Kontoseite bei offener Verknüpfung oder ungültigem Ziel.
+Der Produktivstart aus `a81a43a` bestand GitHub **43763608425**.
+
 ## Produktivstart mit geschlossener Kontoverknüpfung
 
 `npm run deploy:worlds` stellt den registrierten Worlds-Login und Rücksprung

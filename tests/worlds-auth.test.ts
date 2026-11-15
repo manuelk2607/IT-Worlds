@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import worker,{type Env} from '../worker/index.ts';
 import {worldsConfig,resolveIdentity,worldsRoute} from '../worker/worlds-auth.ts';
 import {WORLDS_PRODUCTION_VARS} from '../worker/worlds-production.ts';
+import {accountPath,worldsLoginHref} from '../src/lib/account-return.ts';
 import {sessionEventContentType,sessionRevocationPath,signSessionRevocation} from '@worlds-hub/auth/session-revocation';
 const env:Env={ASSETS:{fetch:async()=>new Response('asset')},DATABASE_URL:'postgres://app:example@db.test/app',NEON_AUTH_BASE_URL:'https://legacy.test/auth',NEON_AUTH_COOKIE_SECRET:'test-only'};
 test('central sign-out checks the signature and fences linked native sessions by their original creation time',async t=>{
@@ -106,11 +107,14 @@ test('transition offers the previous sign-in for existing accounts and rejects n
 });
 test('a direct sign-in link retains rate limits, PKCE and host-only state without a local credential form',async t=>{
  const config={...env,WORLDS_AUTH_ENABLED:'true',WORLDS_ORIGIN:'https://app.test',WORLDS_ISSUER:'https://identity.test',WORLDS_CLIENT_ID:'test'};
- const queries:string[]=[];let requests=0;
+ const queries:string[]=[],destinations:string[]=[];let requests=0;
  t.mock.method(globalThis,'fetch',async(input:string|URL|Request,init?:RequestInit)=>{
   requests++;const url=new URL(input instanceof Request?input.url:String(input));
   if(url.origin==='https://identity.test')return Response.json({issuer:'https://identity.test',authorization_endpoint:'https://identity.test/authorize',token_endpoint:'https://identity.test/token',jwks_uri:'https://identity.test/jwks',code_challenge_methods_supported:['S256'],response_types_supported:['code'],subject_types_supported:['public'],id_token_signing_alg_values_supported:['EdDSA']});
-  assert.ok(url.hostname.endsWith('.test'));const body=JSON.parse(String(init?.body)) as {query:string};queries.push(body.query);
+  assert.ok(url.hostname.endsWith('.test'));const body=JSON.parse(String(init?.body)) as {query:string;params:string[]};queries.push(body.query);
+  if(body.query.includes('INSERT INTO public.worlds_auth_transactions')){
+   destinations.push((JSON.parse(body.params[1]!) as {next:string}).next);
+  }
   return Response.json(body.query.includes('worlds_take_auth_attempt')?{fields:[{name:'allowed',dataTypeID:16}],rows:[['t']],rowCount:1}:{fields:[],rows:[],rowCount:1});
  });
  assert.equal((await worldsRoute(new Request('https://app.test/auth/start'),config))!.status,403);
@@ -118,4 +122,11 @@ test('a direct sign-in link retains rate limits, PKCE and host-only state withou
  const response=(await worldsRoute(new Request('https://app.test/auth/start?ui_locales=en',{headers:{'sec-fetch-mode':'navigate','sec-fetch-dest':'document'}}),config))!;
  assert.equal(response.status,303);const target=new URL(response.headers.get('location')!);assert.equal(target.searchParams.get('redirect_uri'),'https://app.test/auth/callback');assert.equal(target.searchParams.get('ui_locales'),'en');assert.equal(target.searchParams.get('code_challenge_method'),'S256');
  assert.match(response.headers.get('set-cookie')!,/HttpOnly; Secure; SameSite=Lax/);assert.doesNotMatch(response.headers.get('set-cookie')!,/Domain=/);assert.ok(queries.some(sql=>sql.includes('worlds_take_auth_attempt')));assert.ok(queries.some(sql=>sql.includes('INSERT INTO public.worlds_auth_transactions')));
+ const navigation={headers:{'sec-fetch-mode':'navigate','sec-fetch-dest':'document'}};
+ const quiz='/en/quiz/?frage=example#quiz';
+ assert.equal((await worldsRoute(new Request('https://app.test'+worldsLoginHref('en',quiz),navigation),config))!.status,303);
+ const malicious='/en/konto/?'+new URLSearchParams({next:'//evil.test/'});
+ const attack='/auth/start?'+new URLSearchParams({next:malicious,ui_locales:'en'});
+ assert.equal((await worldsRoute(new Request('https://app.test'+attack,navigation),config))!.status,303);
+ assert.deepEqual(destinations,['/en/konto/',accountPath('en',quiz),'/en/konto/']);
 });

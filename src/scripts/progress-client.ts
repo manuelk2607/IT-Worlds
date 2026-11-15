@@ -4,6 +4,7 @@ import { createAuthClient } from '@neondatabase/auth';
 import { t, locale, pagePath } from './browser-i18n';
 import type { ProgressItem, ProgressChange } from '../lib/progress';
 import {acceptProgressResponse} from '../lib/progress-response';
+import {accountPath,worldsLoginHref} from '../lib/account-return.ts';
 
 export const authClient = createAuthClient(new URL('/api/auth', location.origin).href);
 interface User { id: string; name: string; email: string }
@@ -24,10 +25,10 @@ const itemFor = (kind: string | undefined, id: string | undefined) => learningSt
 function render() {
   document.querySelectorAll<HTMLAnchorElement>('[data-account-link]').forEach(link => {
     link.textContent = learningState.user ? t('Mein Lernstand', 'My progress') : t('Anmelden', 'Sign in');
-    const account=pagePath('/konto/');
-    const next=[account,pagePath('/fortschritt/')].includes(location.pathname)?location.pathname:account;
+    const next=location.pathname===pagePath('/konto/')?new URLSearchParams(location.search).get('next')
+      :location.pathname+location.search+location.hash;
     link.href = learningState.user ? pagePath('/fortschritt/')
-      :worldsStatus?.enabled&&!worldsStatus.authenticated?'/auth/start?'+new URLSearchParams({next,ui_locales:locale}):account;
+      :worldsStatus?.enabled&&!worldsStatus.authenticated?worldsLoginHref(locale,next):accountPath(locale,next);
   });
   document.querySelectorAll<HTMLElement>('[data-signed-in]').forEach(element => element.hidden = !learningState.user);
   document.querySelectorAll<HTMLElement>('[data-signed-out]').forEach(element => element.hidden = !!learningState.user);

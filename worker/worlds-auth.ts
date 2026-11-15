@@ -6,6 +6,7 @@ import {takeAuthAttempt,type AuthAttempt} from './worlds-maintenance.ts';
 import {parseSessionData} from '@neondatabase/auth/server';
 import type {Env} from './index.ts';
 import {isITWorldsProductionTarget,WORLDS_PRODUCTION_ORIGIN} from './worlds-production.ts';
+import {accountPath,allowAccountReturn} from '../src/lib/account-return.ts';
 
 export interface AppIdentity {user:{id:string;name:string;email:string};source:'legacy'|'worlds';csrf?:string;cookies:string[]}
 export const worldsReply=(body:unknown,status=200)=>Response.json(body,{status,headers:{'Cache-Control':'no-store','X-Robots-Tag':'noindex','X-Content-Type-Options':'nosniff'}});
@@ -71,8 +72,12 @@ export async function worldsRoute(request:Request,env:Env):Promise<Response|null
    }
   }
   let response:Response;
-  if(linkStart)response=await startLoginLink(request,config);
-  else if(url.pathname==='/auth/login')response=await startLogin(request,config);
+  if(purpose==='login'){
+   const locale=url.searchParams.get('ui_locales')==='en'?'en':'de';
+   const returnPath=allowAccountReturn(url.searchParams.get('next'),locale);
+   const loginConfig={...config,returnPaths:[accountPath(locale,null),...(config.returnPaths??[]),...(returnPath?[returnPath]:[])]};
+   response=await (linkStart?startLoginLink:startLogin)(request,loginConfig);
+  }
   else if(url.pathname==='/auth/callback')response=await callback(request,config);
   else if(url.pathname==='/auth/logout')response=await logout(request,config);
   else if(url.pathname==='/auth/backchannel-logout')response=await backchannelLogout(request,config);

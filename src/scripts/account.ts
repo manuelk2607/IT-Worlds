@@ -1,6 +1,7 @@
 import { authClient, learningReady, learningState, loadLearningState, worldsStatusReady } from './progress-client';
 import { t, locale, pagePath } from './browser-i18n';
 import { authErrorMessage } from '../lib/auth-error';
+import { learningReturnPath } from '../lib/account-return.ts';
 const forms = [...document.querySelectorAll<HTMLFormElement>('[data-auth-form]')];
 const tabs = [...document.querySelectorAll<HTMLButtonElement>('[data-auth-tab]')];
 const message = document.querySelector<HTMLElement>('#auth-message')!;
@@ -14,14 +15,6 @@ function show(action: string) {
 }
 tabs.forEach(tab => tab.addEventListener('click', () => show(tab.dataset.authTab!)));
 const params = new URLSearchParams(location.search);
-function returnDestination() {
-  const next = params.get('next');
-  if (next?.startsWith('/')) {
-    const destination = new URL(next, location.origin);
-    if (destination.origin === location.origin) return destination.href;
-  }
-  return pagePath('/fortschritt/');
-}
 if (params.has('token')) show('reset');
 if (params.has('error')) message.textContent = t('Dieser Link ist ungültig oder abgelaufen. Bitte fordere einen neuen an.', 'This link is invalid or expired. Please request a new one.');
 const [status] = await Promise.all([worldsStatusReady, learningReady]);
@@ -72,7 +65,7 @@ for (const form of forms) form.addEventListener('submit', async event => {
     }
     await loadLearningState();
     if (!learningState.user) { message.textContent = t('Bitte melde dich mit deinem neuen Account an.', 'Please sign in with your new account.'); return; }
-    location.assign(returnDestination());
+    location.assign(learningReturnPath(params.get('next')) ?? pagePath('/fortschritt/'));
   } catch(error) { message.textContent = authErrorMessage(error,locale); }
   finally { button.disabled = false; }
 });

@@ -1,5 +1,7 @@
-import {t} from './browser-i18n';
+import {locale,t} from './browser-i18n';
 import {worldsStatusReady} from './progress-client';
+import {learningReturnPath,worldsLoginHref} from '../lib/account-return.ts';
+const destination=learningReturnPath(new URLSearchParams(location.search).get('next'));
 const panel=document.querySelector<HTMLElement>('[data-worlds-panel]');
 if(panel){
  try{
@@ -9,8 +11,11 @@ if(panel){
    else delete document.documentElement.dataset.worldsAuth;
    panel.closest('[data-auth-configuration-pending]')?.removeAttribute('data-auth-configuration-pending');
    panel.hidden=status.enabled!==true;
+   const login=panel.querySelector<HTMLAnchorElement>('[data-worlds-login]')!;
+   login.href=worldsLoginHref(locale,destination);
    if(status.enabled&&status.authenticated){
-    panel.querySelector<HTMLElement>('[data-worlds-login]')!.hidden=true;
+    login.hidden=true;
+    if(status.accountState==='LINKED'&&destination)location.replace(destination);
     panel.querySelector<HTMLElement>('[data-worlds-message]')!.textContent=status.accountState==='LINKED'
      ?t('Du bist mit deinem verknüpften IT-Worlds-Account angemeldet.','You are signed in to your linked IT-Worlds account.')
      :status.accountState==='ACCOUNT_UNAVAILABLE'?t('Dein IT-Worlds-Account ist derzeit nicht verfügbar.','Your IT-Worlds account is currently unavailable.')
@@ -28,6 +33,7 @@ if(panel){
 
 function enableLink(panel:HTMLElement,csrf:string){
  const section=panel.querySelector<HTMLElement>('[data-worlds-link]')!;
+ section.querySelector<HTMLFormElement>('form')!.action=worldsLoginHref(locale,destination,true);
  const review=section.querySelector<HTMLButtonElement>('[data-worlds-link-review]')!;
  const confirm=section.querySelector<HTMLButtonElement>('[data-worlds-link-confirm]')!;
  const summary=section.querySelector<HTMLElement>('[data-worlds-link-summary]')!;
