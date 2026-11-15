@@ -1,5 +1,31 @@
 # IT-Worlds – Fortschritt
 
+## Produktivstart mit geschlossener Kontoverknüpfung
+
+`npm run deploy:worlds` stellt den registrierten Worlds-Login und Rücksprung
+bereit. Beide Verknüpfungsschalter sind ausdrücklich aus. Vorhandene
+IT-Worlds-Konten können sich im Übergang weiter anmelden. Die
+Verknüpfungsrouten antworten mit 404. Beide Phasen verlangen die exakte
+Produktions-Origin, den registrierten Client, die eingeschränkte Rolle und
+die geprüften Migrationen 003–007. Für die spätere Verknüpfung ist
+`--enable-worlds-linking` mit öffentlichem Hub-Widerrufsschlüssel erforderlich.
+Dieses zweite Deployment folgt erst nach dem echten beiderseitigen
+Anmeldenachweis.
+
+135 Tests bestanden, zehn optionale übersprungen. Astro-Check, Build und
+Cloudflare-Trockenlauf mit 1.263 Assets sowie 40.228 geprüften internen
+Links bestanden. `5ddc122` bestand GitHub **43763380425**. IT-Worlds
+liefert produktiv für `/api/worlds/status` noch HTTP 404.
+
+Ausstehender erster Produktivschritt: Zustimmung für IT-Worlds, aktuelle
+Worker-Version als Rücknahmeziel sichern, eine frische Neon-Sicherung ohne
+Compute erstellen und nur 003–007 anwenden. Historische Konten und
+Fortschrittszeilen vor und nach den Migrationen lesend vergleichen. Danach
+den Anmeldemodus veröffentlichen und zentralen Rücksprung, lokale
+Abmeldung und bisherigen Zugang prüfen. Bei fehlgeschlagener Live-Prüfung
+zuerst die gesicherte Worker-Version wiederherstellen. Die additiven
+Tabellen können bei diesem Worker-Rollback bestehen bleiben.
+
 ## Bestehendes Konto im Worlds-Übergang
 
 Die normale Anmeldung führt zu Worlds Hub. Für bisherige IT-Worlds-Konten

@@ -8,8 +8,6 @@ export const WORLDS_PRODUCTION_VARS=Object.freeze({
  WORLDS_ISSUER:'https://ep-bold-boat-batl101c.neonauth.c-8.eu-central-1.aws.neon.tech/worlds_identity/auth',
  WORLDS_CLIENT_ID:'JFHXaKKNmqXgxVeccXcsLlMRJxAxFnfH',
  WORLDS_RESOURCE:WORLDS_PRODUCTION_ORIGIN+'/api',
- WORLDS_LINK_ENABLED:'true',
- WORLDS_REAUTH_VERIFIED:'true',
 } as const);
 
 function matchesProductionDatabase(value:string|undefined,role:string,direct=false){
@@ -37,7 +35,9 @@ type ProductionTargetEnv={
 };
 export function isITWorldsProductionTarget(env:ProductionTargetEnv){
  const values=env as Record<string,string|boolean|undefined>;
+ const linkMode=env.WORLDS_LINK_ENABLED;
  return isITWorldsProductionDatabase(env.DATABASE_URL)&&
   Object.entries(WORLDS_PRODUCTION_VARS).every(([name,value])=>values[name]===value)&&
+  (linkMode==='false'||linkMode==='true')&&env.WORLDS_REAUTH_VERIFIED===linkMode&&
   env.WORLDS_PILOT_ONLY!==true;
 }

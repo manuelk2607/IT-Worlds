@@ -68,12 +68,28 @@ test('enabled pilot rejects incomplete config, noncanonical origin and anonymous
  const anonymous=await resolveIdentity(new Request('https://app.test/api/session'),env,async()=>Response.json({user:null,session:null}));
  assert.ok(anonymous instanceof Response);assert.equal(anonymous.status,401);
 });
-test('production origin refuses a wrong database, client or missing reviewed link gates',()=>{
- const production={...env,...WORLDS_PRODUCTION_VARS};
+test('production sign-in is independent of the explicit linking and revocation gates',async()=>{
+ const production={...env,...WORLDS_PRODUCTION_VARS,WORLDS_LINK_ENABLED:'false',WORLDS_REAUTH_VERIFIED:'false'};
+ const origin=production.WORLDS_ORIGIN;
  assert.throws(()=>worldsConfig(production),/production target/);
  const database='postgresql://it_worlds_app@ep-broad-unit-baisjndz-pooler.c-8.eu-central-1.aws.neon.tech/IT-Worlds';
- assert.ok(worldsConfig({...production,DATABASE_URL:database}));
- assert.throws(()=>worldsConfig({...production,DATABASE_URL:database,WORLDS_LINK_ENABLED:'false'}),/production target/);
+ const signIn={...production,DATABASE_URL:database};
+ assert.equal(worldsConfig(signIn)?.reauthEnabled,false);
+ const status=await (await worker.fetch(new Request(origin+'/api/worlds/status'),signIn)).json();
+ assert.equal(status.enabled,true);
+ assert.equal(status.linkEnabled,false);
+ assert.equal(status.legacySignInAvailable,true);
+ for(const path of ['prepare','confirm']){
+  const response=await worker.fetch(new Request(origin+'/api/worlds/link/'+path,{
+   method:'POST',headers:{origin,'content-type':'application/json'},body:'{}',
+  }),signIn);
+  assert.equal(response.status,404);
+ }
+ assert.throws(()=>worldsConfig({...signIn,WORLDS_LINK_ENABLED:'true'}),/production target/);
+ const linking={...signIn,WORLDS_LINK_ENABLED:'true',WORLDS_REAUTH_VERIFIED:'true'};
+ assert.throws(()=>worldsConfig(linking),/production target/);
+ const publicKey='{"kid":"fixture","kty":"OKP","crv":"Ed25519","x":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"}';
+ assert.equal(worldsConfig({...linking,WORLDS_HUB_SESSION_EVENT_JWK:publicKey})?.reauthEnabled,true);
 });
 test('transition offers the previous sign-in for existing accounts and rejects new local registrations',async t=>{
  const origin='https://app.test';

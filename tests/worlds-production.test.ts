@@ -11,18 +11,29 @@ const jwk='{"kid":"fixture","kty":"OKP","crv":"Ed25519","x":"AAAAAAAAAAAAAAAAAAA
 test('production Worlds target is exact and never accepts owner, another database, host or pilot',()=>{
  assert.equal(isITWorldsProductionDatabase(database),true);
  for(const invalid of [database.replace('it_worlds_app','neondb_owner'),database.replace('/IT-Worlds','/neondb'),database.replace('ep-broad-unit-baisjndz','ep-other')])assert.equal(isITWorldsProductionDatabase(invalid),false);
- assert.equal(isITWorldsProductionTarget({...WORLDS_PRODUCTION_VARS,DATABASE_URL:database}),true);
- assert.equal(isITWorldsProductionTarget({...WORLDS_PRODUCTION_VARS,DATABASE_URL:database,WORLDS_PILOT_ONLY:true}),false);
- assert.equal(isITWorldsProductionTarget({...WORLDS_PRODUCTION_VARS,DATABASE_URL:database,WORLDS_CLIENT_ID:'other'}),false);
+ const target={...WORLDS_PRODUCTION_VARS,DATABASE_URL:database,WORLDS_LINK_ENABLED:'false',WORLDS_REAUTH_VERIFIED:'false'};
+ assert.equal(isITWorldsProductionTarget(target),true);
+ assert.equal(isITWorldsProductionTarget({...target,WORLDS_PILOT_ONLY:true}),false);
+ assert.equal(isITWorldsProductionTarget({...target,WORLDS_CLIENT_ID:'other'}),false);
+ assert.equal(isITWorldsProductionTarget({...target,WORLDS_LINK_ENABLED:'true'}),false);
+ assert.equal(isITWorldsProductionTarget({...target,WORLDS_REAUTH_VERIFIED:undefined}),false);
 });
 
-test('production release supplies every exact binding and a valid pinned session-event key',()=>{
- const args=productionReleaseArgs(database,jwk);
+test('production release defaults to sign-in only and enables linking explicitly with a public key',()=>{
+ const args=productionReleaseArgs(database,undefined);
  for(const [name,value] of Object.entries(WORLDS_PRODUCTION_VARS))assert.ok(args.includes(`${name}:${value}`));
- assert.ok(args.includes(`WORLDS_HUB_SESSION_EVENT_JWK:${jwk}`));
+ assert.ok(args.includes('WORLDS_LINK_ENABLED:false'));
+ assert.ok(args.includes('WORLDS_REAUTH_VERIFIED:false'));
+ const linking=productionReleaseArgs(database,jwk,{enableLinking:true});
+ assert.ok(linking.includes('WORLDS_LINK_ENABLED:true'));
+ assert.ok(linking.includes('WORLDS_REAUTH_VERIFIED:true'));
+ assert.ok(linking.includes(`WORLDS_HUB_SESSION_EVENT_JWK:${jwk}`));
+ assert.ok(productionReleaseArgs(database,jwk).includes(`WORLDS_HUB_SESSION_EVENT_JWK:${jwk}`));
+ assert.throws(()=>productionReleaseArgs(database,undefined,{enableLinking:true}),/public JWK/);
  assert.throws(()=>productionReleaseArgs(database,'{}'),/public JWK/);
+ assert.throws(()=>productionReleaseArgs(database,jwk.replace('}',',"d":"private"}')),/public JWK/);
  assert.throws(()=>productionReleaseArgs(undefined,jwk),/production runtime database/);
- assert.doesNotThrow(()=>productionReleaseArgs(undefined,undefined,true));
+ assert.doesNotThrow(()=>productionReleaseArgs(undefined,undefined,{dryRun:true}));
 });
 
 test('checking migration receipts requires a separate direct owner connection to the exact database',async()=>{

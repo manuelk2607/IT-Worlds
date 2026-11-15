@@ -6,9 +6,11 @@ import {spawnSync} from 'node:child_process';
 import {verifyReleaseArtifact} from './release-artifact.ts';
 import {productionReleaseArgs,verifyWorldsProductionSchema} from './worlds-production.ts';
 const args=process.argv.slice(2);
-if(args.some(value=>!['--dry-run','--worlds-production'].includes(value)))throw new Error('Supported release arguments: --dry-run, --worlds-production');
+if(args.some(value=>!['--dry-run','--worlds-production','--enable-worlds-linking'].includes(value)))throw new Error('Supported release arguments: --dry-run, --worlds-production, --enable-worlds-linking');
 const dryRun=args.includes('--dry-run');
 const worldsProduction=args.includes('--worlds-production');
+const enableLinking=args.includes('--enable-worlds-linking');
+if(enableLinking&&!worldsProduction)throw new Error('--enable-worlds-linking requires --worlds-production');
 const root=fileURLToPath(new URL('../',import.meta.url));
 const temporary=await mkdtemp(join(tmpdir(),'it-worlds-release-'));
 const assets=join(temporary,'assets');
@@ -29,7 +31,7 @@ try{
  let worldsArgs:string[]=[];
  if(worldsProduction){
   const databaseUrl=process.env.IT_WORLDS_PRODUCTION_DATABASE_URL;
-  worldsArgs=productionReleaseArgs(databaseUrl,process.env.WORLDS_HUB_SESSION_EVENT_JWK,dryRun);
+  worldsArgs=productionReleaseArgs(databaseUrl,process.env.WORLDS_HUB_SESSION_EVENT_JWK,{dryRun,enableLinking});
   if(!dryRun)await verifyWorldsProductionSchema(databaseUrl!,process.env.IT_WORLDS_MIGRATION_DATABASE_URL);
  }
  // The directory flag overrides only the asset location; routing and existing bindings remain configured in wrangler.jsonc.

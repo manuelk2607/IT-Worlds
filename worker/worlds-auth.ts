@@ -19,10 +19,14 @@ export function worldsConfig(env:Env):AuthConfig|null {
  if(!env.WORLDS_ORIGIN||!env.WORLDS_ISSUER||!env.WORLDS_CLIENT_ID)throw new Error('Incomplete Worlds configuration');
  const origin=new URL(env.WORLDS_ORIGIN);
  if(origin.protocol!=='https:'||origin.origin!==env.WORLDS_ORIGIN)throw new Error('Invalid Worlds origin');
- if(origin.origin===WORLDS_PRODUCTION_ORIGIN&&!isITWorldsProductionTarget(env))throw new Error('Invalid Worlds production target');
+ const sessionEventKey=worldsSessionEventKey(env);
+ if(origin.origin===WORLDS_PRODUCTION_ORIGIN&&
+   (!isITWorldsProductionTarget(env)||(worldsLinkEnabled(env)&&!sessionEventKey))){
+  throw new Error('Invalid Worlds production target');
+ }
  const sql=neon(env.DATABASE_URL);
  return {origin:origin.origin,issuer:env.WORLDS_ISSUER,clientId:env.WORLDS_CLIENT_ID,resource:env.WORLDS_RESOURCE,
-  algorithm:'EdDSA',reauthEnabled:worldsLinkEnabled(env),store:new PostgresAuthStore((text,values)=>sql.query(text,values),!!worldsSessionEventKey(env)),
+  algorithm:'EdDSA',reauthEnabled:worldsLinkEnabled(env),store:new PostgresAuthStore((text,values)=>sql.query(text,values),!!sessionEventKey),
   returnPaths:['/konto/','/en/konto/','/fortschritt/','/en/fortschritt/'],signedOutPaths:{de:'/konto/',en:'/en/konto/'}};
 }
 export async function worldsRoute(request:Request,env:Env):Promise<Response|null>{
