@@ -5,6 +5,7 @@ import {receiveSessionRevocation,sessionEventPublicKey,sessionRevocationPath} fr
 import {takeAuthAttempt,type AuthAttempt} from './worlds-maintenance.ts';
 import {parseSessionData} from '@neondatabase/auth/server';
 import type {Env} from './index.ts';
+import {isITWorldsProductionTarget,WORLDS_PRODUCTION_ORIGIN} from './worlds-production.ts';
 
 export interface AppIdentity {user:{id:string;name:string;email:string};source:'legacy'|'worlds';csrf?:string;cookies:string[]}
 export const worldsReply=(body:unknown,status=200)=>Response.json(body,{status,headers:{'Cache-Control':'no-store','X-Robots-Tag':'noindex','X-Content-Type-Options':'nosniff'}});
@@ -18,6 +19,7 @@ export function worldsConfig(env:Env):AuthConfig|null {
  if(!env.WORLDS_ORIGIN||!env.WORLDS_ISSUER||!env.WORLDS_CLIENT_ID)throw new Error('Incomplete Worlds configuration');
  const origin=new URL(env.WORLDS_ORIGIN);
  if(origin.protocol!=='https:'||origin.origin!==env.WORLDS_ORIGIN)throw new Error('Invalid Worlds origin');
+ if(origin.origin===WORLDS_PRODUCTION_ORIGIN&&!isITWorldsProductionTarget(env))throw new Error('Invalid Worlds production target');
  const sql=neon(env.DATABASE_URL);
  return {origin:origin.origin,issuer:env.WORLDS_ISSUER,clientId:env.WORLDS_CLIENT_ID,resource:env.WORLDS_RESOURCE,
   algorithm:'EdDSA',reauthEnabled:worldsLinkEnabled(env),store:new PostgresAuthStore((text,values)=>sql.query(text,values),!!worldsSessionEventKey(env)),

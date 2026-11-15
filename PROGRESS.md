@@ -1,5 +1,23 @@
 # IT-Worlds – Fortschritt
 
+## Abgesicherter Worlds-Produktivpfad – 15.11.2026
+
+Ein eigener Release-Modus aktiviert Worlds nur für die exakte öffentliche
+IT-Worlds-Origin, den registrierten Client, die Ressource und die eingeschränkte
+Runtime-Rolle auf der Produktionsdatenbank. Er verlangt Migrationen 003–007
+mit unveränderten Prüfsummen sowie den fest angehefteten öffentlichen Hub-
+Abmeldeschlüssel. Gewöhnliche Releases behalten ihre bisherigen Bindings;
+falscher Host, Datenbank, Rolle, Client, Pilotflag oder fehlende Linking-Gates
+werden vor Aktivierung abgewiesen.
+
+Lokal bestanden 132 Tests bei 10 dokumentierten optionalen Laufzeit-Skips,
+Astro-Check für 297 Dateien ohne Befund und Build mit 534 Seiten. Der isolierte
+Produktions-Trockenlauf prüfte 717 Artefaktdateien, 528 kanonische Seiten,
+40.228 interne Ziele, 1.263 Worker-Assets und alle acht Worlds-Bindings ohne
+Upload. Produktion und Datenbank wurden nicht verändert. Nächster Schritt:
+frische Sicherung, Migrationen 003–007, eingeschränkte RLS-Prüfung und erst
+danach autorisierter `deploy:worlds`-Release samt realem Konto-Link.
+
 ## Zentrale Abmeldung – 12.11.2026
 
 Der Worlds-Client 0.1.5 akzeptiert signierte Sitzungswiderrufe vom Hub.

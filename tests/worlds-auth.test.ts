@@ -2,6 +2,7 @@ import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import worker,{type Env} from '../worker/index.ts';
 import {worldsConfig,resolveIdentity,worldsRoute} from '../worker/worlds-auth.ts';
+import {WORLDS_PRODUCTION_VARS} from '../worker/worlds-production.ts';
 import {sessionEventContentType,sessionRevocationPath,signSessionRevocation} from '@worlds-hub/auth/session-revocation';
 const env:Env={ASSETS:{fetch:async()=>new Response('asset')},DATABASE_URL:'postgres://app:example@db.test/app',NEON_AUTH_BASE_URL:'https://legacy.test/auth',NEON_AUTH_COOKIE_SECRET:'test-only'};
 test('central sign-out checks the signature and fences linked native sessions by their original creation time',async t=>{
@@ -66,6 +67,13 @@ test('enabled pilot rejects incomplete config, noncanonical origin and anonymous
  assert.equal((await worldsRoute(new Request('https://app.test/auth/backchannel-logout'),config))!.status,405);
  const anonymous=await resolveIdentity(new Request('https://app.test/api/session'),env,async()=>Response.json({user:null,session:null}));
  assert.ok(anonymous instanceof Response);assert.equal(anonymous.status,401);
+});
+test('production origin refuses a wrong database, client or missing reviewed link gates',()=>{
+ const production={...env,...WORLDS_PRODUCTION_VARS};
+ assert.throws(()=>worldsConfig(production),/production target/);
+ const database='postgresql://it_worlds_app@ep-broad-unit-baisjndz-pooler.c-8.eu-central-1.aws.neon.tech/IT-Worlds';
+ assert.ok(worldsConfig({...production,DATABASE_URL:database}));
+ assert.throws(()=>worldsConfig({...production,DATABASE_URL:database,WORLDS_LINK_ENABLED:'false'}),/production target/);
 });
 test('a direct sign-in link retains rate limits, PKCE and host-only state without a local credential form',async t=>{
  const config={...env,WORLDS_AUTH_ENABLED:'true',WORLDS_ORIGIN:'https://app.test',WORLDS_ISSUER:'https://identity.test',WORLDS_CLIENT_ID:'test'};

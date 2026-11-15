@@ -17,6 +17,8 @@
     "worker:dev": "wrangler dev --local --port 8787",
     "deploy:check": "node --experimental-strip-types scripts/release.ts --dry-run",
     "deploy": "node --experimental-strip-types scripts/release.ts",
+    "deploy:worlds:check": "node --experimental-strip-types scripts/release.ts --worlds-production --dry-run",
+    "deploy:worlds": "node --experimental-strip-types scripts/release.ts --worlds-production",
     "dev:full": "npm run build && wrangler dev --local --port 8787",
     "migrate": "node --experimental-strip-types scripts/migrate.ts",
     "provision:runtime": "node --experimental-strip-types scripts/provision-runtime.ts",
