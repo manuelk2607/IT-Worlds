@@ -17,9 +17,22 @@ Produktions-Trockenlauf prüfte 717 Artefaktdateien, 528 kanonische Seiten,
 Upload. Die manuell für exakt `feature/worlds-hub-sso-pilot` gestartete
 GitHub-Quality-Prüfung **43730755667** bestand Commit `1546f67` vollständig in
 Node 22 und 24 einschließlich aller veröffentlichten Beispielprojekte.
-Produktion und Datenbank wurden nicht verändert. Nächster Schritt:
-frische Sicherung, Migrationen 003–007, eingeschränkte RLS-Prüfung und erst
-danach autorisierter `deploy:worlds`-Release samt realem Konto-Link.
+
+Die lesende Produktionsprüfung fand zwei bisherige Konten ohne verifizierte
+E-Mail, 17 Lernfortschrittszeilen und ausschließlich Migrationen 001–002.
+Der Worker-Rolle fehlt absichtlich Leserecht für die Migrationshistorie.
+Der Release prüft deshalb die Prüfsummen über die direkte Owner-Verbindung
+(`IT_WORLDS_MIGRATION_DATABASE_URL`) und prüft Rollenrechte und Zeilensicherheit
+separat über `IT_WORLDS_PRODUCTION_DATABASE_URL`. Beide Verbindungen bleiben
+im Prüfprozess. Der Live-Vorlauf las die produktive Historie und stoppte wie
+erwartet vor der fehlenden Migration 003. 133 Unit-Tests bestanden, zehn
+optionale Prüfungen übersprungen. Der zusätzliche gezielte Vorlauftest prüft
+auch manipulierte Prüfsummen und zu weit reichende Runtime-Rechte.
+Astro-Check und Build bestanden.
+
+Offen sind der frische Wiederherstellungspunkt, die autorisierte Anwendung
+von 003–007, die echte Anmeldeprüfung und der Eigentumsnachweis beider Konten
+vor Freigabe der Verknüpfung. Produktion und Datenbank wurden nicht verändert.
 
 ## Zentrale Abmeldung – 12.11.2026
 

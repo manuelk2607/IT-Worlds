@@ -12,15 +12,23 @@ export const WORLDS_PRODUCTION_VARS=Object.freeze({
  WORLDS_REAUTH_VERIFIED:'true',
 } as const);
 
-export function isITWorldsProductionDatabase(value:string|undefined){
+function matchesProductionDatabase(value:string|undefined,role:string,direct=false){
  if(!value)return false;
  try{
   const url=new URL(value);
   return ['postgres:','postgresql:'].includes(url.protocol)&&
-   url.hostname.replace(/-pooler\./,'.')===WORLDS_PRODUCTION_DATABASE_HOST&&
+   (direct?url.hostname:url.hostname.replace(/-pooler\./,'.'))===WORLDS_PRODUCTION_DATABASE_HOST&&
    decodeURIComponent(url.pathname)==='/'+WORLDS_PRODUCTION_DATABASE&&
-   decodeURIComponent(url.username)===WORLDS_PRODUCTION_ROLE;
+   decodeURIComponent(url.username)===role;
  }catch{return false;}
+}
+
+export function isITWorldsProductionDatabase(value:string|undefined){
+ return matchesProductionDatabase(value,WORLDS_PRODUCTION_ROLE);
+}
+
+export function isITWorldsProductionMigrationDatabase(value:string|undefined){
+ return matchesProductionDatabase(value,'neondb_owner',true);
 }
 
 type ProductionTargetEnv={

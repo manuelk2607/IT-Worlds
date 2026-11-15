@@ -1,7 +1,9 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
-import {productionReleaseArgs} from '../scripts/worlds-production.ts';
-import {isITWorldsProductionDatabase,isITWorldsProductionTarget,WORLDS_PRODUCTION_VARS} from '../worker/worlds-production.ts';
+import {createHash} from 'node:crypto';
+import {readFile,readdir} from 'node:fs/promises';
+import {productionReleaseArgs,verifyWorldsProductionSchema} from '../scripts/worlds-production.ts';
+import {isITWorldsProductionDatabase,isITWorldsProductionMigrationDatabase,isITWorldsProductionTarget,WORLDS_PRODUCTION_VARS} from '../worker/worlds-production.ts';
 
 const database='postgresql://it_worlds_app@ep-broad-unit-baisjndz-pooler.c-8.eu-central-1.aws.neon.tech/IT-Worlds';
 const jwk='{"kid":"fixture","kty":"OKP","crv":"Ed25519","x":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"}';
@@ -21,4 +23,47 @@ test('production release supplies every exact binding and a valid pinned session
  assert.throws(()=>productionReleaseArgs(database,'{}'),/public JWK/);
  assert.throws(()=>productionReleaseArgs(undefined,jwk),/production runtime database/);
  assert.doesNotThrow(()=>productionReleaseArgs(undefined,undefined,true));
+});
+
+test('checking migration receipts requires a separate direct owner connection to the exact database',async()=>{
+ const owner=database.replace('it_worlds_app','neondb_owner');
+ assert.equal(isITWorldsProductionMigrationDatabase(owner.replace('-pooler','')),true);
+ for(const invalid of [undefined,database,owner,owner.replace('-pooler','').replace('/IT-Worlds','/neondb')]){
+  assert.equal(isITWorldsProductionMigrationDatabase(invalid),false);
+  await assert.rejects(verifyWorldsProductionSchema(database,invalid),/direct IT-Worlds production migration connection/);
+ }
+});
+
+test('release preflight verifies the ledger as owner and checks RLS as the application role',async t=>{
+ const migrationDir=new URL('../migrations/',import.meta.url);
+ const names=(await readdir(migrationDir)).filter(name=>/^00[3-7]_/.test(name));
+ const receipts=await Promise.all(names.map(async name=>[
+  name,createHash('sha256').update(await readFile(new URL(name,migrationDir))).digest('hex')
+ ]));
+ const owner=database.replace('it_worlds_app','neondb_owner').replace('-pooler','');
+ let runtimeReadsLedger=false;
+ let corruptReceipt=false;
+ t.mock.method(globalThis,'fetch',async (_input:RequestInfo|URL,init?:RequestInit)=>{
+  const connection=new URL(new Headers(init?.headers).get('neon-connection-string')!);
+  const {query}=JSON.parse(String(init?.body)) as {query:string};
+  if(query.includes('SELECT name,sha256')){
+   assert.equal(connection.username,'neondb_owner');
+   assert.equal(connection.hostname,new URL(owner).hostname);
+   return Response.json({
+    fields:['name','sha256'].map(name=>({name,dataTypeID:25})),
+    rows:corruptReceipt?[[receipts[0][0],'wrong'],...receipts.slice(1)]:receipts
+   });
+  }
+  assert.match(query,/row_security_active/);
+  assert.equal(connection.username,'it_worlds_app');
+  return Response.json({
+   fields:[{name:'role',dataTypeID:25},...['restricted','reads_ledger','progress_rls','links_rls'].map(name=>({name,dataTypeID:16}))],
+   rows:[['it_worlds_app','t',runtimeReadsLedger?'t':'f','t','t']]
+  });
+ });
+ await verifyWorldsProductionSchema(database,owner);
+ runtimeReadsLedger=true;
+ await assert.rejects(verifyWorldsProductionSchema(database,owner),/production role and RLS checks/);
+ corruptReceipt=true;
+ await assert.rejects(verifyWorldsProductionSchema(database,owner),/production migration missing or changed/);
 });

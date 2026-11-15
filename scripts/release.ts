@@ -12,7 +12,9 @@ const worldsProduction=args.includes('--worlds-production');
 const root=fileURLToPath(new URL('../',import.meta.url));
 const temporary=await mkdtemp(join(tmpdir(),'it-worlds-release-'));
 const assets=join(temporary,'assets');
-const env={...process.env,ASTRO_TELEMETRY_DISABLED:'1',IT_WORLDS_DIST:assets,WRANGLER_LOG_PATH:process.env.WRANGLER_LOG_PATH??join(temporary,'wrangler.log')};
+const env:NodeJS.ProcessEnv={...process.env,ASTRO_TELEMETRY_DISABLED:'1',IT_WORLDS_DIST:assets,WRANGLER_LOG_PATH:process.env.WRANGLER_LOG_PATH??join(temporary,'wrangler.log')};
+delete env.IT_WORLDS_PRODUCTION_DATABASE_URL;
+delete env.IT_WORLDS_MIGRATION_DATABASE_URL;
 function node(script:string,args:string[]=[]){
  const result=spawnSync(process.execPath,['--experimental-strip-types',join(root,script),...args],{cwd:root,env,stdio:'inherit'});
  if(result.error)throw result.error;
@@ -28,7 +30,7 @@ try{
  if(worldsProduction){
   const databaseUrl=process.env.IT_WORLDS_PRODUCTION_DATABASE_URL;
   worldsArgs=productionReleaseArgs(databaseUrl,process.env.WORLDS_HUB_SESSION_EVENT_JWK,dryRun);
-  if(!dryRun)await verifyWorldsProductionSchema(databaseUrl!);
+  if(!dryRun)await verifyWorldsProductionSchema(databaseUrl!,process.env.IT_WORLDS_MIGRATION_DATABASE_URL);
  }
  // The directory flag overrides only the asset location; routing and existing bindings remain configured in wrangler.jsonc.
  const deployment=spawnSync(process.execPath,[join(root,'node_modules/wrangler/bin/wrangler.js'),'deploy','--assets',assets,'--keep-vars',...worldsArgs,...(dryRun?['--dry-run']:[])],{cwd:root,env,stdio:'inherit'});
