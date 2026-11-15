@@ -14,7 +14,10 @@ Lokal bestanden 132 Tests bei 10 dokumentierten optionalen Laufzeit-Skips,
 Astro-Check für 297 Dateien ohne Befund und Build mit 534 Seiten. Der isolierte
 Produktions-Trockenlauf prüfte 717 Artefaktdateien, 528 kanonische Seiten,
 40.228 interne Ziele, 1.263 Worker-Assets und alle acht Worlds-Bindings ohne
-Upload. Produktion und Datenbank wurden nicht verändert. Nächster Schritt:
+Upload. Die manuell für exakt `feature/worlds-hub-sso-pilot` gestartete
+GitHub-Quality-Prüfung **43730755667** bestand Commit `1546f67` vollständig in
+Node 22 und 24 einschließlich aller veröffentlichten Beispielprojekte.
+Produktion und Datenbank wurden nicht verändert. Nächster Schritt:
 frische Sicherung, Migrationen 003–007, eingeschränkte RLS-Prüfung und erst
 danach autorisierter `deploy:worlds`-Release samt realem Konto-Link.
 
