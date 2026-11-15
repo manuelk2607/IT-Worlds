@@ -1,9 +1,12 @@
-import { authClient, learningReady, learningState, loadLearningState } from './progress-client';
+import { authClient, learningReady, learningState, loadLearningState, worldsStatusReady } from './progress-client';
 import { t, locale, pagePath } from './browser-i18n';
 import { authErrorMessage } from '../lib/auth-error';
 const forms = [...document.querySelectorAll<HTMLFormElement>('[data-auth-form]')];
 const tabs = [...document.querySelectorAll<HTMLButtonElement>('[data-auth-tab]')];
 const message = document.querySelector<HTMLElement>('#auth-message')!;
+const legacyAccount = document.querySelector<HTMLDetailsElement>('[data-legacy-account]')!;
+const legacySummary = legacyAccount.querySelector<HTMLElement>('[data-legacy-summary]')!;
+const legacyGuide = legacyAccount.querySelector<HTMLElement>('[data-legacy-guide]')!;
 function show(action: string) {
   forms.forEach(form => form.hidden = form.dataset.authForm !== action);
   tabs.forEach(tab => { const selected = tab.dataset.authTab === action; tab.classList.toggle('active', selected); tab.setAttribute('aria-pressed', String(selected)); });
@@ -11,10 +14,32 @@ function show(action: string) {
 }
 tabs.forEach(tab => tab.addEventListener('click', () => show(tab.dataset.authTab!)));
 const params = new URLSearchParams(location.search);
+function returnDestination() {
+  const next = params.get('next');
+  if (next?.startsWith('/')) {
+    const destination = new URL(next, location.origin);
+    if (destination.origin === location.origin) return destination.href;
+  }
+  return pagePath('/fortschritt/');
+}
 if (params.has('token')) show('reset');
 if (params.has('error')) message.textContent = t('Dieser Link ist ungültig oder abgelaufen. Bitte fordere einen neuen an.', 'This link is invalid or expired. Please request a new one.');
-await learningReady;
-forms.forEach(form => form.querySelector<HTMLButtonElement>('[type=submit]')!.disabled = false);
+const [status] = await Promise.all([worldsStatusReady, learningReady]);
+const isWorldsMode = status?.enabled === true;
+const linking = isWorldsMode && status.authenticated === true &&
+  status.linkEnabled === true && status.accountState === 'ACCOUNT_LINK_REQUIRED';
+if (isWorldsMode && status.legacySignInAvailable === true) {
+  tabs.find(tab => tab.dataset.authTab === 'sign-up')!.hidden = true;
+  legacySummary.hidden = false;
+  legacyGuide.hidden = false;
+  legacyAccount.open = params.has('token') || params.has('error');
+  legacyAccount.dataset.legacyAvailable = '';
+}
+if (status?.enabled === false || (isWorldsMode && status.legacySignInAvailable === true)) {
+  forms.forEach(form => {
+    form.querySelector<HTMLButtonElement>('[type=submit]')!.disabled = isWorldsMode && form.dataset.authForm === 'sign-up';
+  });
+}
 for (const form of forms) form.addEventListener('submit', async event => {
   event.preventDefault();
   const button = form.querySelector<HTMLButtonElement>('[type=submit]')!;
@@ -40,14 +65,14 @@ for (const form of forms) form.addEventListener('submit', async event => {
       show('sign-in'); history.replaceState(null, '', pagePath('/konto/'));
       message.textContent = t('Passwort gespeichert. Du kannst dich jetzt anmelden.', 'Password saved. You can now sign in.'); return;
     }
-    await loadLearningState();
-    if(!learningState.user&&document.querySelector('[data-worlds-link]:not([hidden])')){
-      message.textContent=t('Deine lokale Anmeldung ist aktiv. Prüfe jetzt beide Konten in der Worlds-Karte.','Your local sign-in is active. Review both accounts in the Worlds panel.');
+    if (linking) {
+      message.textContent = t('Dein bisheriges Konto wurde bestätigt. Prüfe jetzt beide Konten weiter oben.', 'Your existing account has been verified. Review both accounts above.');
+      document.querySelector<HTMLButtonElement>('[data-worlds-link-review]')?.focus();
       return;
     }
+    await loadLearningState();
     if (!learningState.user) { message.textContent = t('Bitte melde dich mit deinem neuen Account an.', 'Please sign in with your new account.'); return; }
-    const next = params.get('next');
-    location.assign(next && next.startsWith('/') && !next.startsWith('//') && !next.includes('\\') ? next : pagePath('/fortschritt/'));
+    location.assign(returnDestination());
   } catch(error) { message.textContent = authErrorMessage(error,locale); }
   finally { button.disabled = false; }
 });

@@ -41,7 +41,9 @@ const t = translate(locale);
       <p data-user-email></p>
       <div class="result-actions"><a class="button primary" href={localePath(locale, '/fortschritt/')}>{t('Meinen Lernstand ansehen', 'View my progress')}</a><button class="button secondary" data-sign-out>{t('Abmelden', 'Sign out')}</button></div>
     </div>
-    <div class="account-panel" data-signed-out>
+    <details class="account-panel" data-signed-out data-legacy-account open>
+      <summary data-legacy-summary hidden>{t('Bisheriges IT-Worlds-Konto verwenden', 'Use an existing IT-Worlds account')}</summary>
+      <p data-legacy-guide hidden>{t('Melde dich mit deinem bisherigen IT-Worlds-Konto an. So kannst du bei der Übernahme bestätigen, dass der vorhandene Lernstand zu dir gehört.', 'Sign in to your existing IT-Worlds account. This lets you prove that the existing learning record belongs to you when you link your accounts.')}</p>
       <div class="account-tabs" role="group" aria-label={t('Account-Aktion wählen', 'Choose account action')}>
         <button class="filter-chip active" type="button" data-auth-tab="sign-in" aria-pressed="true">{t('Anmelden', 'Sign in')}</button>
         <button class="filter-chip" type="button" data-auth-tab="sign-up" aria-pressed="false">{t('Account erstellen', 'Create account')}</button>
@@ -74,7 +76,7 @@ const t = translate(locale);
         <button class="button primary" type="submit" disabled>{t('Passwort speichern', 'Save password')}</button>
       </form>
       <p id="auth-message" role="status" aria-live="polite"></p>
-    </div>
+    </details>
     <p><a class="text-link" href={localePath(locale, '/#themenwelten')}>{t('Ohne Account weiterlernen →', 'Keep learning without an account →')}</a></p>
     <noscript><p>{t('Für Anmeldung und Fortschrittsspeicherung benötigst du JavaScript. Alle Lerninhalte bleiben lesbar.', 'JavaScript is required for signing in and saving progress. All learning content remains readable.')}</p></noscript>
   </section>

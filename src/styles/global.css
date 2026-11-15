@@ -2981,3 +2981,6 @@ summary {
 /* Resolve the active authentication mode before offering credentials. */
 [data-auth-configuration-pending] [data-signed-out],
 html[data-worlds-auth=true] [data-signed-out] { display: none !important; }
+html[data-worlds-auth=true] [data-legacy-account][data-legacy-available]:not([hidden]) { display: block !important; }
+
+[data-legacy-summary]:not([hidden]) { cursor: pointer; font-weight: 650; }

@@ -1,5 +1,21 @@
 # IT-Worlds – Fortschritt
 
+## Bestehendes Konto im Worlds-Übergang
+
+Die normale Anmeldung führt zu Worlds Hub. Für bisherige IT-Worlds-Konten
+zeigt die Kontoseite einen separaten, standardmäßig geschlossenen Zugang.
+Bei ausstehender Verknüpfung bleibt die Worlds-Sitzung während der erneuten
+Anmeldung des bisherigen Kontos erhalten. Danach führt der Fokus zur Prüfung
+beider Konten. Der Worker verweigert neue lokale Registrierungen im Worlds-Modus
+und blendet den bisherigen Zugang im isolierten OIDC-Pilot aus.
+
+135 Tests bestanden, zehn optionale übersprungen. Astro-Check und Build mit
+534 Seiten bestanden. Chromium und WebKit prüften mit simulierten Antworten
+Deutsch am Desktop und Englisch auf Mobilgeräten: Worlds-Link, Tastaturzugang
+zum bisherigen Formular, Bestätigung und Anzeige beider Konten. Die echte
+Provider-Abnahme und IT-Worlds-Produktivaktivierung stehen aus.
+Die vorherige Release-Prüfung für `d7647db` war in GitHub **43763012428** grün.
+
 ## Abgesicherter Worlds-Produktivpfad – 15.11.2026
 
 Ein eigener Release-Modus aktiviert Worlds nur für die exakte öffentliche

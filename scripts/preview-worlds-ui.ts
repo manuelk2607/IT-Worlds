@@ -10,7 +10,7 @@ createServer(async(req,res)=>{
  const mode=new URL(req.headers.referer??'http://localhost').searchParams.get('preview');
  if(url.pathname==='/api/worlds/status'){
   json({enabled:mode!=='disabled',authenticated:mode==='active'||mode==='link',csrf:'visual-fixture-only',
-   accountState:'ACCOUNT_LINK_REQUIRED',linkEnabled:mode==='link'});return;
+   accountState:'ACCOUNT_LINK_REQUIRED',linkEnabled:mode==='link',legacySignInAvailable:mode==='link'||mode==='transition'});return;
  }
  if(mode==='link'&&req.method==='POST'){
   if(url.pathname==='/api/worlds/link/prepare'){

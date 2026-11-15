@@ -43,7 +43,10 @@ export async function worldsRoute(request:Request,env:Env):Promise<Response|null
    const central=await session(request,config);
    const account=central?await resolveIdentity(request,env,async()=>reply({},401)):null;
    const state=account instanceof Response?(await account.json() as {error:string}).error:account?'LINKED':null;
-   return reply({enabled:true,authenticated:!!central,accountState:state,csrf:central?.csrf,linkEnabled:worldsLinkEnabled(env)});
+   const linkEnabled=worldsLinkEnabled(env);
+   const legacySignInAvailable=!!env.NEON_AUTH_BASE_URL&&!env.WORLDS_PILOT_ONLY&&
+    (!central||(linkEnabled&&state==='ACCOUNT_LINK_REQUIRED'));
+   return reply({enabled:true,authenticated:!!central,accountState:state,csrf:central?.csrf,linkEnabled,legacySignInAvailable});
   }
   const linkStart=url.pathname==='/auth/start';
   if(linkStart&&request.method!=='GET')return reply({error:'METHOD_NOT_ALLOWED'},405);

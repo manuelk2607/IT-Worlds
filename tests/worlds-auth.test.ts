@@ -75,6 +75,19 @@ test('production origin refuses a wrong database, client or missing reviewed lin
  assert.ok(worldsConfig({...production,DATABASE_URL:database}));
  assert.throws(()=>worldsConfig({...production,DATABASE_URL:database,WORLDS_LINK_ENABLED:'false'}),/production target/);
 });
+test('transition offers the previous sign-in for existing accounts and rejects new local registrations',async t=>{
+ const origin='https://app.test';
+ const config={...env,WORLDS_AUTH_ENABLED:'true',WORLDS_ORIGIN:origin,WORLDS_ISSUER:'https://identity.test',WORLDS_CLIENT_ID:'test'};
+ t.mock.method(globalThis,'fetch',async()=>{throw new Error('Unauthorized legacy registration must not contact the provider');});
+ const status=async(settings:Env)=>await (await worker.fetch(new Request(origin+'/api/worlds/status'),settings)).json();
+ assert.equal((await status(config)).legacySignInAvailable,true);
+ assert.equal((await status({...config,WORLDS_PILOT_ONLY:true})).legacySignInAvailable,false);
+ assert.equal((await status({...config,NEON_AUTH_BASE_URL:''})).legacySignInAvailable,false);
+ const register=await worker.fetch(new Request(origin+'/api/auth/sign-up/email',{
+  method:'POST',headers:{origin,'content-type':'application/json'},body:'{}',
+ }),config);
+ assert.equal(register.status,404);
+});
 test('a direct sign-in link retains rate limits, PKCE and host-only state without a local credential form',async t=>{
  const config={...env,WORLDS_AUTH_ENABLED:'true',WORLDS_ORIGIN:'https://app.test',WORLDS_ISSUER:'https://identity.test',WORLDS_CLIENT_ID:'test'};
  const queries:string[]=[];let requests=0;

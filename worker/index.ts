@@ -128,6 +128,7 @@ export default {
       if (url.pathname.startsWith('/api/auth/')) {
         if(env.WORLDS_PILOT_ONLY)return json({error:'NOT_FOUND'},404);
         const path = url.pathname.slice('/api/auth/'.length);
+        if (path === 'sign-up/email' && env.WORLDS_AUTH_ENABLED === 'true') return json({error:'NOT_FOUND'},404);
         if (authMethods[path] !== request.method) return json({ error: 'NOT_FOUND' }, 404);
         return await authRequest(request, env, path);
       }
