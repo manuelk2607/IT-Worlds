@@ -1,5 +1,37 @@
 # IT-Worlds – Fortschritt
 
+## Worlds-Anmeldung produktiv – 15.11.2026
+
+`88f2b00` läuft auf [IT-Worlds](https://it-worlds.maki26.workers.dev/) mit 100 %
+Traffic. Worker `db925d3d-0b15-4412-b0f0-fd4be9e902b7`, Deployment
+`3a07c3b6-5f42-449b-b226-cc8ea5367fee`. Der Anmeldelink führt zum Hub. Die
+bisherige Anmeldung bleibt für vorhandene Konten erreichbar. Die alte
+Registrierung und die Kontoverknüpfung sind geschlossen.
+
+Migrationen 003–007 und ihre Prüfsummen wurden in einer Transaktion auf Neon
+Main (`br-long-violet-ba34agj1`) eingespielt. Vor und nach dem Eingriff
+stimmten Zahl und Prüfsummen für zwei Konten, zwei Provider-Zuordnungen, 17
+Lernfortschrittszeilen und die leeren Schreibtrainer-Tabellen überein.
+Die Tabelle der Worlds-Zuordnungen ist leer. Bereite Sicherung
+`br-blue-violet-banwatv7` am LSN `0/295F008`. Cloudflare-Rücknahme auf
+`706415e9-38b0-4938-bc4e-d3de256e043c` (Deployment
+`951b5a20-df96-4f2f-acb0-c6d699a5ea3c`). Die additiven Tabellen können dort
+bestehen bleiben.
+
+[GitHub Quality](https://github.com/manuelk2607/IT-Worlds/actions/runs/43763897479)
+bestand für den veröffentlichten Commit. Der Release prüfte 534 gebaute
+Seiten, 40.228 interne Links, produktive Migrationsprüfsummen, die
+eingeschränkte Worker-Rolle und öffentliche SEO. Live geprüft sind
+DE/EN-Kontoseiten, anonymer Fortschrittszugriff (401), ungültiger Callback
+(400) und geschlossene Verknüpfung (404). Chromium erreichte Worlds Hub mit
+dem registrierten PKCE-Rücksprung und einem sicheren Host-Cookie. Der
+Kontoinhaber bestätigte die aktive zentrale Sitzung und den Hinweis zur
+erforderlichen Kontoverknüpfung. Nach lokaler IT-Worlds-Abmeldung gelang
+die erneute Anmeldung über die zentrale Sitzung ohne erneute Passworteingabe.
+
+Offen sind der Eigentumsnachweis für beide Altkonten sowie die
+Produktivfreigabe von Verknüpfung und zentralem Widerruf.
+
 ## Rücksprung zur Lernseite nach Worlds-Anmeldung
 
 Der Worlds-Login bewahrt erlaubte Lernseiten einschließlich Quiz-Auswahl und
@@ -29,17 +61,8 @@ Anmeldenachweis.
 
 135 Tests bestanden, zehn optionale übersprungen. Astro-Check, Build und
 Cloudflare-Trockenlauf mit 1.263 Assets sowie 40.228 geprüften internen
-Links bestanden. `5ddc122` bestand GitHub **43763380425**. IT-Worlds
-liefert produktiv für `/api/worlds/status` noch HTTP 404.
-
-Ausstehender erster Produktivschritt: Zustimmung für IT-Worlds, aktuelle
-Worker-Version als Rücknahmeziel sichern, eine frische Neon-Sicherung ohne
-Compute erstellen und nur 003–007 anwenden. Historische Konten und
-Fortschrittszeilen vor und nach den Migrationen lesend vergleichen. Danach
-den Anmeldemodus veröffentlichen und zentralen Rücksprung, lokale
-Abmeldung und bisherigen Zugang prüfen. Bei fehlgeschlagener Live-Prüfung
-zuerst die gesicherte Worker-Version wiederherstellen. Die additiven
-Tabellen können bei diesem Worker-Rollback bestehen bleiben.
+Links bestanden. `5ddc122` bestand GitHub **43763380425**. Der aktuelle
+Produktivstand und die Datenbanksicherung stehen oben.
 
 ## Bestehendes Konto im Worlds-Übergang
 
