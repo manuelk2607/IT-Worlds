@@ -8,22 +8,6 @@ CREATE TABLE public.it_project_accounts (
 INSERT INTO public.it_project_accounts(id,legacy_user_id)
 SELECT id,id FROM neon_auth."user";
 -- statement
-ALTER TABLE public.learning_progress DROP CONSTRAINT learning_progress_user_id_fkey,
- ADD CONSTRAINT learning_progress_user_id_fkey FOREIGN KEY(user_id)
- REFERENCES public.it_project_accounts(id) ON DELETE CASCADE;
--- statement
-ALTER TABLE public.typing_profiles DROP CONSTRAINT typing_profiles_user_id_fkey,
- ADD CONSTRAINT typing_profiles_user_id_fkey FOREIGN KEY(user_id)
- REFERENCES public.it_project_accounts(id) ON DELETE CASCADE;
--- statement
-ALTER TABLE public.typing_runs DROP CONSTRAINT typing_runs_user_id_fkey,
- ADD CONSTRAINT typing_runs_user_id_fkey FOREIGN KEY(user_id)
- REFERENCES public.it_project_accounts(id) ON DELETE CASCADE;
--- statement
-ALTER TABLE public.worlds_identity_links DROP CONSTRAINT worlds_identity_links_local_user_id_fkey,
- ADD CONSTRAINT worlds_identity_links_local_user_id_fkey FOREIGN KEY(local_user_id)
- REFERENCES public.it_project_accounts(id) ON DELETE CASCADE;
--- statement
 ALTER TABLE public.it_project_accounts ENABLE ROW LEVEL SECURITY;
 -- statement
 REVOKE ALL ON public.it_project_accounts FROM PUBLIC;
@@ -52,17 +36,44 @@ CREATE FUNCTION public.worlds_register_native_owner() RETURNS trigger
 -- statement
 REVOKE ALL ON FUNCTION public.worlds_register_native_owner() FROM PUBLIC;
 -- statement
-CREATE TRIGGER ensure_learning_progress_owner BEFORE INSERT OR UPDATE OF user_id ON public.learning_progress
- FOR EACH ROW EXECUTE FUNCTION public.worlds_register_native_owner('user_id');
--- statement
-CREATE TRIGGER ensure_typing_profile_owner BEFORE INSERT OR UPDATE OF user_id ON public.typing_profiles
- FOR EACH ROW EXECUTE FUNCTION public.worlds_register_native_owner('user_id');
--- statement
-CREATE TRIGGER ensure_typing_run_owner BEFORE INSERT OR UPDATE OF user_id ON public.typing_runs
- FOR EACH ROW EXECUTE FUNCTION public.worlds_register_native_owner('user_id');
--- statement
-CREATE TRIGGER ensure_worlds_link_owner BEFORE INSERT OR UPDATE OF local_user_id ON public.worlds_identity_links
- FOR EACH ROW EXECUTE FUNCTION public.worlds_register_native_owner('local_user_id');
+-- Production previously removed the three content foreign keys during
+-- native Auth recovery. Leave those tables and their historical rows alone.
+DO $$
+ DECLARE
+  target record;
+  source_table regclass;
+  native_table regclass := 'neon_auth."user"'::regclass;
+  native_id smallint := (SELECT attnum FROM pg_attribute WHERE attrelid=native_table AND attname='id');
+  existing pg_constraint%ROWTYPE;
+ BEGIN
+  FOR target IN SELECT * FROM (VALUES
+    ('learning_progress','user_id'),('typing_profiles','user_id'),
+    ('typing_runs','user_id'),('worlds_identity_links','local_user_id')
+   ) AS tables(table_name,owner_column)
+  LOOP
+   source_table := format('public.%I',target.table_name)::regclass;
+   BEGIN
+    SELECT c.* INTO STRICT existing FROM pg_constraint c
+     WHERE c.conrelid=source_table AND c.contype='f'
+       AND c.conkey=ARRAY[(SELECT attnum FROM pg_attribute WHERE attrelid=source_table AND attname=target.owner_column)];
+   EXCEPTION WHEN no_data_found THEN
+    IF target.table_name='worlds_identity_links' THEN
+     RAISE EXCEPTION 'Missing owner constraint on %',source_table;
+    END IF;
+    CONTINUE;
+   END;
+   IF existing.confrelid<>native_table OR existing.confkey<>ARRAY[native_id]
+     OR existing.confdeltype<>'c' OR existing.confupdtype<>'a' OR existing.confmatchtype<>'s'
+     OR existing.condeferrable OR NOT existing.convalidated THEN
+    RAISE EXCEPTION 'Unexpected owner constraint on %',source_table;
+   END IF;
+   EXECUTE format('ALTER TABLE public.%1$I DROP CONSTRAINT %2$I, ADD CONSTRAINT %2$I FOREIGN KEY (%3$I) REFERENCES public.it_project_accounts(id) ON DELETE CASCADE',
+    target.table_name,existing.conname,target.owner_column);
+   EXECUTE format('CREATE TRIGGER ensure_project_owner BEFORE INSERT OR UPDATE OF %1$I ON public.%2$I FOR EACH ROW EXECUTE FUNCTION public.worlds_register_native_owner(%3$L)',
+    target.owner_column,target.table_name,target.owner_column);
+  END LOOP;
+ END;
+ $$;
 -- statement
 -- Also used by the previous Worker version, which can read newly created profiles.
 CREATE OR REPLACE FUNCTION public.worlds_account_active(account_id uuid) RETURNS boolean

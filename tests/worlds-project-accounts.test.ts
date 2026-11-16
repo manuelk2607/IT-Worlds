@@ -43,9 +43,24 @@ test('PostgreSQL preserves native progress and allocates one scoped profile unde
     ||(SELECT to_jsonb(l)::text FROM public.worlds_identity_links l WHERE l.local_user_id='${old}'));`);
   const original=fingerprint();assert.match(original,/^[a-f0-9]{32}$/);
   const migration=await readFile(new URL(names[7],directory),'utf8');
-  run(db,'BEGIN; '+migration+'\nROLLBACK;');
+  run(db,`BEGIN;
+   ALTER TABLE public.learning_progress DROP CONSTRAINT learning_progress_user_id_fkey;
+   ALTER TABLE public.typing_profiles DROP CONSTRAINT typing_profiles_user_id_fkey;
+   ALTER TABLE public.typing_runs DROP CONSTRAINT typing_runs_user_id_fkey;
+   INSERT INTO public.learning_progress(user_id,kind,content_id,completed) VALUES ('${absent}','lesson','recovery-history',true);
+   ${migration}
+   DO $$ BEGIN
+    IF NOT EXISTS (SELECT 1 FROM public.learning_progress WHERE user_id='${absent}' AND completed)
+      OR EXISTS (SELECT 1 FROM public.it_project_accounts WHERE id='${absent}')
+      OR (SELECT count(*) FROM pg_constraint WHERE contype='f' AND conrelid IN (
+       'public.learning_progress'::regclass,'public.typing_profiles'::regclass,'public.typing_runs'::regclass
+      ))<>0
+    THEN RAISE EXCEPTION 'Changed production recovery history'; END IF;
+   END $$;
+   ROLLBACK;`);
   assert.equal(run(db,"SELECT to_regclass('public.it_project_accounts') IS NULL"),'t');
   assert.equal(fingerprint(),original);
+  run(db,'ALTER TABLE public.learning_progress RENAME CONSTRAINT learning_progress_user_id_fkey TO fixture_native_owner_fk;');
   run(db,'BEGIN; '+migration+'\nCOMMIT;');
   assert.equal(fingerprint(),original);
   assert.equal(run(db,`SELECT public.worlds_account_active('${old}')`),'t');

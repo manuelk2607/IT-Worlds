@@ -15,6 +15,14 @@ bisherige Worker kann vorhandene und neue Lernprofile lesen. Native
 Bestandsprofile und spätere native Schreibzugriffe bleiben beim Rücksetzen
 des Workers möglich.
 
+Der erste produktive Lauf rollte vollständig zurück. Die drei Fremdschlüssel
+der Inhaltsdaten waren nach einer früheren Auth-Wiederherstellung bereits
+entfernt. Die Migration erkennt jetzt vorhandene Fremdschlüssel anhand
+ihrer Definition. In Produktion wird nur der Fremdschlüssel der Zuordnung
+umgestellt. Die 13 historischen Fortschrittszeilen ohne aktuelles Konto
+behalten ihre bisherigen IDs und erhalten keine Zuordnung. Der lokale
+PostgreSQL-Test deckt beide Schemas und den vollständigen Rollback ab.
+
 138 Tests bestanden, elf optionale übersprungen. PostgreSQL 17 prüfte
 Migration und Rollback, verlässliche Zuordnung bei zwei parallelen
 Anfragen, Rollenrechte, Lernstand, Schreibtrainer und native Löschkaskade.
