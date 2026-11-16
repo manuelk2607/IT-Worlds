@@ -15,6 +15,9 @@ export const worldsSessionEventKey=(env:Env)=>sessionEventPublicKey(env.WORLDS_H
 export function worldsLinkEnabled(env:Env){
  return env.WORLDS_AUTH_ENABLED==='true'&&env.WORLDS_LINK_ENABLED==='true'&&env.WORLDS_REAUTH_VERIFIED==='true'&&!env.WORLDS_PILOT_ONLY;
 }
+export function worldsProfilesEnabled(env:Env){
+ return env.WORLDS_AUTH_ENABLED==='true'&&env.WORLDS_PROFILES_ENABLED==='true';
+}
 export function worldsConfig(env:Env):AuthConfig|null {
  if(env.WORLDS_AUTH_ENABLED!=='true')return null;
  if(!env.WORLDS_ORIGIN||!env.WORLDS_ISSUER||!env.WORLDS_CLIENT_ID)throw new Error('Incomplete Worlds configuration');
@@ -51,7 +54,9 @@ export async function worldsRoute(request:Request,env:Env):Promise<Response|null
    const linkEnabled=worldsLinkEnabled(env);
    const legacySignInAvailable=!!env.NEON_AUTH_BASE_URL&&!env.WORLDS_PILOT_ONLY&&
     (!central||(linkEnabled&&state==='ACCOUNT_LINK_REQUIRED'));
-   return reply({enabled:true,authenticated:!!central,accountState:state,csrf:central?.csrf,linkEnabled,legacySignInAvailable});
+   const profileCreationAvailable=worldsProfilesEnabled(env)&&state==='ACCOUNT_LINK_REQUIRED';
+   return reply({enabled:true,authenticated:!!central,accountState:state,csrf:central?.csrf,linkEnabled,legacySignInAvailable,
+    ...(profileCreationAvailable?{profileCreationAvailable}:{})});
   }
   const linkStart=url.pathname==='/auth/start';
   if(linkStart&&request.method!=='GET')return reply({error:'METHOD_NOT_ALLOWED'},405);

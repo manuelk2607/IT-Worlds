@@ -2,10 +2,23 @@ import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import worker,{type Env} from '../worker/index.ts';
 import {worldsConfig,resolveIdentity,worldsRoute} from '../worker/worlds-auth.ts';
+import {worldsProfileRoute} from '../worker/worlds-profile.ts';
 import {WORLDS_PRODUCTION_VARS} from '../worker/worlds-production.ts';
 import {accountPath,worldsLoginHref} from '../src/lib/account-return.ts';
 import {sessionEventContentType,sessionRevocationPath,signSessionRevocation} from '@worlds-hub/auth/session-revocation';
 const env:Env={ASSETS:{fetch:async()=>new Response('asset')},DATABASE_URL:'postgres://app:example@db.test/app',NEON_AUTH_BASE_URL:'https://legacy.test/auth',NEON_AUTH_COOKIE_SECRET:'test-only'};
+test('a new IT-Worlds profile requires an enabled, same-origin authenticated POST',async()=>{
+ const origin='https://it-worlds.test';
+ const settings={...env,WORLDS_AUTH_ENABLED:'true',WORLDS_PROFILES_ENABLED:'true',WORLDS_ORIGIN:origin,
+  WORLDS_ISSUER:'https://hub.test/auth',WORLDS_CLIENT_ID:'test'};
+ const legacy=async()=>{throw new Error('Should deny before accessing the legacy provider');};
+ const req=(method='POST',requestOrigin=origin)=>new Request(origin+'/api/worlds/profile',{method,headers:{origin:requestOrigin}});
+ assert.equal((await worldsProfileRoute(req(),{...settings,WORLDS_PROFILES_ENABLED:'false'},legacy))?.status,404);
+ assert.equal((await worldsProfileRoute(req('GET'),settings,legacy))?.status,405);
+ assert.equal((await worldsProfileRoute(req('POST','https://untrusted.test'),settings,legacy))?.status,403);
+ assert.equal((await worldsProfileRoute(req(),settings,legacy))?.status,401);
+});
+
 test('central sign-out checks the signature and fences linked native sessions by their original creation time',async t=>{
  const origin='https://app.test',issuer='https://identity.test',audience=origin+sessionRevocationPath;
  const pair=await crypto.subtle.generateKey('Ed25519',true,['sign','verify']);

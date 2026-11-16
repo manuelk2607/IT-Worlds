@@ -17,6 +17,11 @@ const t = translate(locale);
       <p>{t('Verwende deine zentrale Worlds-Identität. Dein bisheriger IT-Worlds-Account und Lernstand bleiben erhalten.', 'Use your central Worlds identity. Your existing IT-Worlds account and learning record are preserved.')}</p>
       <a class="button primary" href={`/auth/start?next=${encodeURIComponent(localePath(locale,'/konto/'))}&ui_locales=${locale}`} data-worlds-login>{t('Mit Worlds anmelden', 'Sign in with Worlds')}</a>
       <p data-worlds-message role="status"></p>
+      <form data-worlds-create-profile hidden>
+        <p>{t('Neu bei IT-Worlds? Erstelle ein Lernprofil, um deinen Fortschritt zu speichern. Wenn du schon einen Lernstand hast, nutze die Übernahme deines bisherigen Kontos.', 'New to IT-Worlds? Create a learning profile to save your progress. If you already have a learning record, use the existing account migration.')}</p>
+        <button class="button primary" type="submit">{t('Neues Lernprofil erstellen', 'Create a learning profile')}</button>
+        <p data-worlds-profile-message role="status"></p>
+      </form>
       <div data-worlds-link hidden>
         <p>{t('Für die Verknüpfung sind bestätigte Nachweise für beide Konten erforderlich. Eine vorhandene IT-Worlds-Sitzung bleibt während der Übernahme erhalten.', 'Linking requires verified proof for both accounts. An existing IT-Worlds session is preserved during migration.')}</p>
         <form method="post" action={`/auth/login?reauth=1&next=${encodeURIComponent(localePath(locale,'/konto/'))}&ui_locales=${locale}`}>

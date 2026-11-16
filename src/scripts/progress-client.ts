@@ -11,7 +11,7 @@ interface User { id: string; name: string; email: string }
 export const learningState: { user: User | null; items: ProgressItem[]; unavailable: boolean } = { user: null, items: [], unavailable: false };
 let sessionSource:'legacy'|'worlds'='legacy';
 let worldsCsrf='';
-interface WorldsStatus {enabled:boolean;authenticated?:boolean;accountState?:string;csrf?:string;linkEnabled?:boolean;legacySignInAvailable?:boolean}
+interface WorldsStatus {enabled:boolean;authenticated?:boolean;accountState?:string;csrf?:string;linkEnabled?:boolean;legacySignInAvailable?:boolean;profileCreationAvailable?:boolean}
 let worldsStatus:WorldsStatus|null=null;
 export const worldsStatusReady=fetch('/api/worlds/status',{credentials:'same-origin',cache:'no-store'})
   .then(async response=>{

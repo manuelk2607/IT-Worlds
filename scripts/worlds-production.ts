@@ -6,7 +6,7 @@ import {isITWorldsProductionDatabase,isITWorldsProductionMigrationDatabase,WORLD
 const migrationNames=['003_worlds_identity_links.sql','004_worlds_auth_sessions.sql','005_worlds_auth_maintenance.sql','006_worlds_link_cleanup.sql','007_worlds_session_revocations.sql'] as const;
 
 export function productionReleaseArgs(
- databaseUrl:string|undefined,sessionEventJwk:string|undefined,{dryRun=false,enableLinking=false}={},
+ databaseUrl:string|undefined,sessionEventJwk:string|undefined,{dryRun=false,enableLinking=false,enableProfiles=false}={},
 ){
  const fallback='postgresql://it_worlds_app@ep-broad-unit-baisjndz-pooler.c-8.eu-central-1.aws.neon.tech/IT-Worlds';
  if(!isITWorldsProductionDatabase(databaseUrl??(dryRun?fallback:undefined)))throw new Error('Worlds release requires the reviewed IT-Worlds production runtime database.');
@@ -14,6 +14,7 @@ export function productionReleaseArgs(
   ...WORLDS_PRODUCTION_VARS,
   WORLDS_LINK_ENABLED:String(enableLinking),
   WORLDS_REAUTH_VERIFIED:String(enableLinking),
+  WORLDS_PROFILES_ENABLED:String(enableProfiles),
  };
  if(sessionEventJwk!==undefined||enableLinking){
   let key:unknown;
@@ -29,19 +30,20 @@ export function productionReleaseArgs(
  return Object.entries(vars).flatMap(([name,value])=>['--var',`${name}:${value}`]);
 }
 
-export async function verifyWorldsProductionSchema(databaseUrl:string,migrationUrl:string|undefined){
+export async function verifyWorldsProductionSchema(databaseUrl:string,migrationUrl:string|undefined,{enableProfiles=false}={}){
  if(!isITWorldsProductionDatabase(databaseUrl))throw new Error('Refusing schema check outside IT-Worlds production.');
  if(!migrationUrl||!isITWorldsProductionMigrationDatabase(migrationUrl)){
   throw new Error('The schema check requires the direct IT-Worlds production migration connection.');
  }
  const directory=new URL('../migrations/',import.meta.url),expected=new Map<string,string>();
  const available=new Set(await readdir(directory));
- for(const name of migrationNames){
+ const required=enableProfiles?[...migrationNames,'008_worlds_project_accounts.sql']:[...migrationNames];
+ for(const name of required){
   if(!available.has(name))throw new Error(`Missing migration source: ${name}`);
   expected.set(name,createHash('sha256').update(await readFile(new URL(name,directory),'utf8')).digest('hex'));
  }
  const migrationSql=neon(migrationUrl);
- const rows=await migrationSql`SELECT name,sha256 FROM public.schema_migrations WHERE name = ANY(${[...migrationNames]})`;
+ const rows=await migrationSql`SELECT name,sha256 FROM public.schema_migrations WHERE name = ANY(${required})`;
  for(const [name,sha256] of expected)if(!rows.some(row=>row.name===name&&row.sha256===sha256))throw new Error(`Worlds production migration missing or changed: ${name}`);
 
  const runtimeSql=neon(databaseUrl);
@@ -55,5 +57,15 @@ export async function verifyWorldsProductionSchema(databaseUrl:string,migrationU
  if(runtime?.role!==WORLDS_PRODUCTION_ROLE||runtime.restricted!==true||runtime.reads_ledger!==false||
    runtime.progress_rls!==true||runtime.links_rls!==true){
   throw new Error('The IT-Worlds runtime connection does not satisfy the production role and RLS checks.');
+ }
+ if(enableProfiles){
+  const [profiles]=await runtimeSql`
+   SELECT row_security_active('public.it_project_accounts') AS projects_rls,
+    NOT has_column_privilege(current_user,'public.it_project_accounts','legacy_user_id','SELECT') AS private_legacy_id,
+    has_function_privilege(current_user,'public.worlds_create_project_account(text,text,text,text)','EXECUTE') AS can_create
+  `;
+  if(profiles?.projects_rls!==true||profiles.private_legacy_id!==true||profiles.can_create!==true){
+   throw new Error('The IT-Worlds runtime connection does not satisfy the project profile checks.');
+  }
  }
 }

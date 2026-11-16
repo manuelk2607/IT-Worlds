@@ -6,11 +6,12 @@ import {spawnSync} from 'node:child_process';
 import {verifyReleaseArtifact} from './release-artifact.ts';
 import {productionReleaseArgs,verifyWorldsProductionSchema} from './worlds-production.ts';
 const args=process.argv.slice(2);
-if(args.some(value=>!['--dry-run','--worlds-production','--enable-worlds-linking'].includes(value)))throw new Error('Supported release arguments: --dry-run, --worlds-production, --enable-worlds-linking');
+if(args.some(value=>!['--dry-run','--worlds-production','--enable-worlds-linking','--enable-worlds-profiles'].includes(value)))throw new Error('Unsupported release argument');
 const dryRun=args.includes('--dry-run');
 const worldsProduction=args.includes('--worlds-production');
 const enableLinking=args.includes('--enable-worlds-linking');
-if(enableLinking&&!worldsProduction)throw new Error('--enable-worlds-linking requires --worlds-production');
+const enableProfiles=args.includes('--enable-worlds-profiles');
+if((enableLinking||enableProfiles)&&!worldsProduction)throw new Error('Worlds feature flags require --worlds-production');
 const root=fileURLToPath(new URL('../',import.meta.url));
 const temporary=await mkdtemp(join(tmpdir(),'it-worlds-release-'));
 const assets=join(temporary,'assets');
@@ -31,8 +32,8 @@ try{
  let worldsArgs:string[]=[];
  if(worldsProduction){
   const databaseUrl=process.env.IT_WORLDS_PRODUCTION_DATABASE_URL;
-  worldsArgs=productionReleaseArgs(databaseUrl,process.env.WORLDS_HUB_SESSION_EVENT_JWK,{dryRun,enableLinking});
-  if(!dryRun)await verifyWorldsProductionSchema(databaseUrl!,process.env.IT_WORLDS_MIGRATION_DATABASE_URL);
+  worldsArgs=productionReleaseArgs(databaseUrl,process.env.WORLDS_HUB_SESSION_EVENT_JWK,{dryRun,enableLinking,enableProfiles});
+  if(!dryRun)await verifyWorldsProductionSchema(databaseUrl!,process.env.IT_WORLDS_MIGRATION_DATABASE_URL,{enableProfiles});
  }
  // The directory flag overrides only the asset location; routing and existing bindings remain configured in wrangler.jsonc.
  const deployment=spawnSync(process.execPath,[join(root,'node_modules/wrangler/bin/wrangler.js'),'deploy','--assets',assets,'--keep-vars',...worldsArgs,...(dryRun?['--dry-run']:[])],{cwd:root,env,stdio:'inherit'});

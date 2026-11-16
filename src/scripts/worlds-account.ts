@@ -23,12 +23,41 @@ if(panel){
     const form=panel.querySelector<HTMLFormElement>('[data-worlds-logout]')!;
     form.hidden=false;form.querySelector<HTMLInputElement>('[name=csrf]')!.value=status.csrf??'';
     if(status.linkEnabled&&status.accountState==='ACCOUNT_LINK_REQUIRED'&&status.csrf)enableLink(panel,status.csrf);
+    if(status.profileCreationAvailable&&status.csrf)enableProfileCreation(panel,status.csrf);
    }
   }else throw new Error('Unavailable sign-in configuration');
  }catch{
   panel.hidden=false;
   panel.querySelector<HTMLElement>('[data-worlds-message]')!.textContent=t('Die Anmeldung ist gerade nicht erreichbar. Bitte versuche es erneut.','Sign-in is temporarily unavailable. Please try again.');
  }
+}
+
+function enableProfileCreation(panel:HTMLElement,csrf:string){
+ const form=panel.querySelector<HTMLFormElement>('[data-worlds-create-profile]')!;
+ const button=form.querySelector<HTMLButtonElement>('button')!;
+ const message=form.querySelector<HTMLElement>('[data-worlds-profile-message]')!;
+ form.hidden=false;
+ form.addEventListener('submit',async event=>{
+  event.preventDefault();
+  if(button.disabled)return;
+  button.disabled=true;
+  message.textContent=t('Einen Moment …','One moment …');
+  try{
+   const response=await fetch('/api/worlds/profile',{method:'POST',credentials:'same-origin',
+    headers:{'Content-Type':'application/json'},body:JSON.stringify({csrf})});
+   const result=await response.json() as {created?:boolean;error?:string};
+   if(response.status===201&&result.created===true){location.reload();return;}
+   message.textContent=result.error==='EXISTING_PROFILE'
+    ?t('In diesem Browser ist bereits ein IT-Worlds-Konto aktiv. Nutze die Übernahme für deinen bisherigen Lernstand.','An existing IT-Worlds account is active in this browser. Use account migration to keep your learning record.')
+    :result.error==='PROFILE_NOT_CREATED'
+     ?t('Lade die Seite neu, um den Status deines Lernprofils zu prüfen.','Reload this page to check the status of your learning profile.')
+     :result.error==='RATE_LIMITED'
+      ?t('Zu viele Versuche. Bitte versuche es in einigen Minuten erneut.','Too many attempts. Please try again in a few minutes.')
+      :t('Das Lernprofil konnte gerade nicht erstellt werden.','Your learning profile could not be created right now.');
+  }catch{
+   message.textContent=t('Das Lernprofil konnte gerade nicht erstellt werden.','Your learning profile could not be created right now.');
+  }finally{button.disabled=false;}
+ });
 }
 
 function enableLink(panel:HTMLElement,csrf:string){

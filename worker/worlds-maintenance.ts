@@ -2,10 +2,10 @@ import {neon} from '@neondatabase/serverless';
 import type {Env} from './index.ts';
 
 const WINDOW=600_000;
-const limits={login:{peer:12,global:60},callback:{peer:24,global:120},backchannel:{peer:30,global:120},link:{peer:6,global:24}} as const;
+const limits={login:{peer:12,global:60},callback:{peer:24,global:120},backchannel:{peer:30,global:120},link:{peer:6,global:24},profile:{peer:6,global:24}} as const;
 export type AuthAttempt=keyof typeof limits;
 const tables=['worlds_auth_transactions','worlds_auth_sessions','worlds_auth_replays','worlds_auth_rate_buckets'] as const;
-// Six complete windows generate at most 1,944 peer rows + 24 global rows.
+// One bounded batch per scheduled invocation.
 export const CLEANUP_BATCH=2000;
 
 export async function takeAuthAttempt(request:Request,env:Env,purpose:AuthAttempt,now=Date.now()){

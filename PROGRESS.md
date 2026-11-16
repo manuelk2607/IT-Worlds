@@ -1,5 +1,34 @@
 # IT-Worlds – Fortschritt
 
+## Lernprofil für neue Worlds-Nutzer – 16.11.2026
+
+Die DE/EN-Kontoseite erlaubt bei bestätigter Worlds-Anmeldung die bewusste
+Anlage eines IT-Lernprofils mit derselben zentralen Identität. Eine aktive
+bisherige IT-Sitzung verhindert ein zweites Profil. Profile, Zuordnungen
+und Audit entstehen gemeinsam. Der Rücksprung öffnet anschließend dieselbe
+Lernseite. Die Profilerstellung ist standardmäßig geschlossen.
+
+Migration 008 legt eine projektinterne UUID-Tabelle an. Lernstände,
+Schreibtrainer und Profile bleiben in IT-Worlds. Bestehende UUIDs, Fortschrittswerte
+und Löschbeziehungen wurden lokal vor und nach dem Umbau verglichen. Der
+bisherige Worker kann vorhandene und neue Lernprofile lesen. Native
+Bestandsprofile und spätere native Schreibzugriffe bleiben beim Rücksetzen
+des Workers möglich.
+
+138 Tests bestanden, elf optionale übersprungen. PostgreSQL 17 prüfte
+Migration und Rollback, verlässliche Zuordnung bei zwei parallelen
+Anfragen, Rollenrechte, Lernstand, Schreibtrainer und native Löschkaskade.
+Chromium DE (1440 px) und WebKit EN (320 px) bestanden die gebaute
+Kontoseite mit simulierten Antworten. Typprüfung und Build mit 534 Seiten
+bestanden. Der Produktions-Trockenlauf prüfte 40.228 interne Links.
+
+Vor Produktion ist eine frische Sicherung nötig. Migration 008 und
+`npm run deploy:worlds -- --enable-worlds-profiles` bilden ein eigenes
+freizugebendes Paket. Der Rollback auf Worker
+`db925d3d-0b15-4412-b0f0-fd4be9e902b7` schließt die Neuanlage. Die
+kompatible Zuordnungstabelle verbleibt in der Datenbank. Vorhandene
+Altkonten benötigen weiterhin einen eigenen Eigentumsnachweis.
+
 ## Worlds-Anmeldung produktiv – 15.11.2026
 
 `88f2b00` läuft auf [IT-Worlds](https://it-worlds.maki26.workers.dev/) mit 100 %
