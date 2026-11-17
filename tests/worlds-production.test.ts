@@ -34,6 +34,9 @@ test('production release defaults to sign-in only and enables linking explicitly
  assert.ok(linking.includes(`WORLDS_HUB_SESSION_EVENT_JWK:${jwk}`));
  assert.ok(productionReleaseArgs(database,jwk).includes(`WORLDS_HUB_SESSION_EVENT_JWK:${jwk}`));
  assert.throws(()=>productionReleaseArgs(database,undefined,{enableLinking:true}),/public JWK/);
+ const keepKey=productionReleaseArgs(database,undefined,{enableLinking:true,enableProfiles:true,keepActiveSessionEventKey:true});
+ assert.ok(keepKey.includes('WORLDS_PROFILES_ENABLED:true')&&keepKey.includes('WORLDS_LINK_ENABLED:true'));
+ assert.ok(!keepKey.some(arg=>arg.startsWith('WORLDS_HUB_SESSION_EVENT_JWK:')));
  assert.throws(()=>productionReleaseArgs(database,'{}'),/public JWK/);
  assert.throws(()=>productionReleaseArgs(database,jwk.replace('}',',"d":"private"}')),/public JWK/);
  assert.throws(()=>productionReleaseArgs(undefined,jwk),/production runtime database/);

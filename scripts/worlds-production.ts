@@ -1,12 +1,13 @@
 import {createHash} from 'node:crypto';
 import {readFile,readdir} from 'node:fs/promises';
 import {neon} from '@neondatabase/serverless';
-import {isITWorldsProductionDatabase,isITWorldsProductionMigrationDatabase,WORLDS_PRODUCTION_ROLE,WORLDS_PRODUCTION_VARS} from '../worker/worlds-production.ts';
+import {sessionEventContentType,sessionRevocationPath} from '@worlds-hub/auth/session-revocation';
+import {isITWorldsProductionDatabase,isITWorldsProductionMigrationDatabase,WORLDS_PRODUCTION_ORIGIN,WORLDS_PRODUCTION_ROLE,WORLDS_PRODUCTION_VARS} from '../worker/worlds-production.ts';
 
 const migrationNames=['003_worlds_identity_links.sql','004_worlds_auth_sessions.sql','005_worlds_auth_maintenance.sql','006_worlds_link_cleanup.sql','007_worlds_session_revocations.sql'] as const;
 
 export function productionReleaseArgs(
- databaseUrl:string|undefined,sessionEventJwk:string|undefined,{dryRun=false,enableLinking=false,enableProfiles=false}={},
+ databaseUrl:string|undefined,sessionEventJwk:string|undefined,{dryRun=false,enableLinking=false,enableProfiles=false,keepActiveSessionEventKey=false}={},
 ){
  const fallback='postgresql://it_worlds_app@ep-broad-unit-baisjndz-pooler.c-8.eu-central-1.aws.neon.tech/IT-Worlds';
  if(!isITWorldsProductionDatabase(databaseUrl??(dryRun?fallback:undefined)))throw new Error('Worlds release requires the reviewed IT-Worlds production runtime database.');
@@ -16,7 +17,7 @@ export function productionReleaseArgs(
   WORLDS_REAUTH_VERIFIED:String(enableLinking),
   WORLDS_PROFILES_ENABLED:String(enableProfiles),
  };
- if(sessionEventJwk!==undefined||enableLinking){
+ if(sessionEventJwk!==undefined||(enableLinking&&!keepActiveSessionEventKey)){
   let key:unknown;
   try{key=JSON.parse(sessionEventJwk??'');}catch{}
   const jwk=key as {kid?:unknown;kty?:unknown;crv?:unknown;x?:unknown;d?:unknown}|undefined;
@@ -28,6 +29,16 @@ export function productionReleaseArgs(
   vars.WORLDS_HUB_SESSION_EVENT_JWK=JSON.stringify({kid,kty,crv,x});
  }
  return Object.entries(vars).flatMap(([name,value])=>['--var',`${name}:${value}`]);
+}
+
+export async function verifyActiveSessionReceiver(){
+ const response=await fetch(WORLDS_PRODUCTION_ORIGIN+sessionRevocationPath,{
+  method:'POST',redirect:'manual',signal:AbortSignal.timeout(10_000),
+  headers:{'Content-Type':sessionEventContentType},body:'unsigned-release-readiness-check',
+ });
+ if(response.status!==400||(await response.json() as {err?:unknown}).err!=='invalid_request'){
+  throw new Error('The production Worlds session-event receiver is inactive.');
+ }
 }
 
 export async function verifyWorldsProductionSchema(databaseUrl:string,migrationUrl:string|undefined,{enableProfiles=false}={}){

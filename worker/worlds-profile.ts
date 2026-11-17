@@ -3,7 +3,7 @@ import {parseSessionData} from '@neondatabase/auth/server';
 import {readCookie,sameOrigin,session,SESSION_COOKIE} from '@worlds-hub/auth';
 import {hash} from '@worlds-hub/auth/store';
 import type {Env} from './index.ts';
-import {worldsConfig,worldsProfilesEnabled,worldsReply} from './worlds-auth.ts';
+import {worldsConfig,worldsLinkTarget,worldsProfilesEnabled,worldsReply} from './worlds-auth.ts';
 import {takeAuthAttempt} from './worlds-maintenance.ts';
 
 export async function worldsProfileRoute(request:Request,env:Env,legacySession:()=>Promise<Response>){
@@ -17,6 +17,7 @@ export async function worldsProfileRoute(request:Request,env:Env,legacySession:(
  const current=await session(request,config);
  const binding=readCookie(request,SESSION_COOKIE);
  if(!current||!binding)return worldsReply({error:'UNAUTHENTICATED'},401);
+ if(worldsLinkTarget(env)?.subject===current.sub)return worldsReply({error:'EXISTING_PROFILE'},409);
  const input:unknown=await request.json().catch(()=>null);
  if(!input||typeof input!=='object'||Array.isArray(input)||
   Object.keys(input).length!==1||!('csrf' in input)||input.csrf!==current.csrf){

@@ -1,7 +1,7 @@
 import {parseSessionData} from '@neondatabase/auth/server';
 import {sameOrigin,session} from '@worlds-hub/auth';
 import {centralProof,confirmLink,prepareLink,type LegacyProof} from '@worlds-hub/auth/linking';
-import {worldsConfig,worldsLinkEnabled,worldsReply} from './worlds-auth.ts';
+import {worldsConfig,worldsLinkEnabled,worldsLinkTarget,worldsReply} from './worlds-auth.ts';
 import {worldsLinkStore} from './worlds-link-store.ts';
 import {takeAuthAttempt} from './worlds-maintenance.ts';
 import type {Env} from './index.ts';
@@ -31,6 +31,8 @@ export async function worldsLinkRoute(request:Request,env:Env,legacySession:()=>
  }
  const current=await session(request,config);
  if(!current||input.csrf!==current.csrf)return worldsReply({error:'INVALID_CSRF'},403);
+ const target=worldsLinkTarget(env);
+ if(target&&current.sub!==target.subject)return worldsReply({error:'NOT_FOUND'},404);
  const central=await centralProof(request,config).catch(()=>null);
  if(!central)return worldsReply({error:'CENTRAL_REAUTH_REQUIRED'},403);
  const upstream=await legacySession();
@@ -43,6 +45,7 @@ export async function worldsLinkRoute(request:Request,env:Env,legacySession:()=>
     typeof local.user.email!=='string'||typeof current.email!=='string'){
   return worldsReply({error:'LEGACY_REAUTH_REQUIRED'},403);
  }
+ if(target&&(central.subject!==target.subject||local.user.id!==target.localUserId))return worldsReply({error:'LINK_REFUSED'},409);
  const proof:LegacyProof={accountId:local.user.id,authenticatedAt:local.session.createdAt.getTime(),method:'managed-reauth'};
  const store=worldsLinkStore(env.DATABASE_URL,central,proof);
  const existing=await store.lookup(central.issuer,central.subject);

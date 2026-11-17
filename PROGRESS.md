@@ -1,5 +1,30 @@
 # IT-Worlds – Fortschritt
 
+## Übernahme eines vorhandenen Lernstands vorbereitet
+
+Der Kontoinhaber hat den alten Lernstand im Browser geöffnet und sich
+danach neu beim bisherigen IT-Anbieter angemeldet. Die frische Sitzung
+gehört zum selben vorhandenen Profil mit drei Lernfortschritten. Die
+bereits bestätigte zentrale Identität stimmt in Music-Worlds und Slop
+Urself überein. Für die erste Übernahme ist nur dieses Paar vorgesehen.
+
+Die Produktionsroute bleibt ohne gültige private Paar-Konfiguration
+geschlossen. Vorschau und Bestätigung prüfen weiterhin beide frischen
+Sitzungen. Andere Konten sind ausgeschlossen; für das ausgewählte Konto
+ist eine doppelte Profilerstellung während der Übernahme gesperrt. Der
+Release erhält den laufenden Hub-Prüfschlüssel und den Schalter für neue
+Lernprofile. Es ist keine weitere Migration nötig. Die Übernahme entsteht
+erst durch die persönliche Bestätigung nach der Vorschau im Browser.
+Die produktive Rücknahmeversion ist `aa30a5b2-9eaf-41a1-a895-0db596a19e40`.
+
+139 von 150 Tests bestanden (11 optionale übersprungen), dazu
+Typprüfung, Build und Release-Trockenlauf. Der gezielte Routentest
+prüfte falsche zentrale und lokale Konten sowie die Sperre für ein
+doppeltes Lernprofil. Chromium DE am Desktop und EN bei 320 px prüfte
+mit simulierten Sitzungen die Sichtbarkeit, doppelte Kontovorschau,
+Tastaturfokus und Fehleranzeige. Die Funktion wartet auf die gesonderte
+Freigabe und die echte Bestätigung beider Konten im Browser.
+
 ## Lernprofil für bestätigte Worlds-Konten produktiv – 17.11.2026
 
 Die DE/EN-Kontoseite erlaubt bei bestätigter Worlds-Anmeldung die bewusste

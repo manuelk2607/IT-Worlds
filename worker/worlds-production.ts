@@ -29,6 +29,17 @@ export function isITWorldsProductionMigrationDatabase(value:string|undefined){
  return matchesProductionDatabase(value,'neondb_owner',true);
 }
 
+export function parseWorldsLinkTarget(value:string|undefined):{subject:string;localUserId:string}|null {
+ if(!value)return null;
+ try{
+  const target=JSON.parse(value) as Record<string,unknown>|null;
+  if(!target||Object.keys(target).length!==2||typeof target.subject!=='string'||
+    !target.subject.trim()||target.subject.length>512||typeof target.localUserId!=='string'||
+    !/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/.test(target.localUserId))return null;
+  return {subject:target.subject,localUserId:target.localUserId};
+ }catch{return null;}
+}
+
 type ProductionTargetEnv={
  DATABASE_URL?:string;WORLDS_PILOT_ONLY?:boolean;WORLDS_AUTH_ENABLED?:string;WORLDS_ORIGIN?:string;
  WORLDS_ISSUER?:string;WORLDS_CLIENT_ID?:string;WORLDS_RESOURCE?:string;WORLDS_LINK_ENABLED?:string;WORLDS_REAUTH_VERIFIED?:string;

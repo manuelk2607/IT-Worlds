@@ -1,12 +1,54 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import worker,{type Env} from '../worker/index.ts';
-import {worldsConfig,resolveIdentity,worldsRoute} from '../worker/worlds-auth.ts';
+import {worldsConfig,resolveIdentity,worldsRoute,worldsLinkEnabled} from '../worker/worlds-auth.ts';
+import {worldsLinkRoute} from '../worker/worlds-link.ts';
 import {worldsProfileRoute} from '../worker/worlds-profile.ts';
 import {WORLDS_PRODUCTION_VARS} from '../worker/worlds-production.ts';
 import {accountPath,worldsLoginHref} from '../src/lib/account-return.ts';
 import {sessionEventContentType,sessionRevocationPath,signSessionRevocation} from '@worlds-hub/auth/session-revocation';
 const env:Env={ASSETS:{fetch:async()=>new Response('asset')},DATABASE_URL:'postgres://app:example@db.test/app',NEON_AUTH_BASE_URL:'https://legacy.test/auth',NEON_AUTH_COOKIE_SECRET:'test-only'};
+test('production linking fails closed without a scoped pair and excludes other accounts',async t=>{
+ const origin='https://app.test',issuer='https://identity.test';
+ const localUserId='883ad974-e817-4c5c-b158-92b253f87cae';
+ const options={...env,WORLDS_AUTH_ENABLED:'true',WORLDS_LINK_ENABLED:'true',WORLDS_REAUTH_VERIFIED:'true',
+  WORLDS_PROFILES_ENABLED:'true',WORLDS_CLIENT_ID:'test',WORLDS_ORIGIN:origin,WORLDS_ISSUER:issuer};
+ const target=JSON.stringify({subject:'approved',localUserId});
+ assert.equal(worldsLinkEnabled({...options,WORLDS_ORIGIN:WORLDS_PRODUCTION_VARS.WORLDS_ORIGIN}),false);
+ assert.equal(worldsLinkEnabled({...options,WORLDS_LINK_TARGET:'{}'}),false);
+ const scoped={...options,WORLDS_LINK_TARGET:target};
+ let sub='different';
+ let legacyReads=0;
+ t.mock.method(globalThis,'fetch',async (_input:unknown,init?:RequestInit)=>{
+  const {query}=JSON.parse(String(init?.body)) as {query:string};
+  if(query.includes('worlds_take_auth_attempt'))return Response.json({fields:[{name:'allowed',dataTypeID:16}],rows:[['t']]});
+  assert.match(query,/SELECT payload FROM public.worlds_auth_sessions/);
+  const now=Date.now();
+  const payload={issuer,sub,email:'fixture@example.invalid',csrf:'csrf-proof',authenticatedAt:now-1000,expires:now+60_000};
+  return Response.json({fields:[{name:'payload',dataTypeID:3802}],rows:[[JSON.stringify(payload)]]});
+ });
+ const legacy=async()=>{
+  legacyReads++;
+  const other='e65d7acb-2373-428c-96d2-3e80715774ba';
+  const now=Date.now();
+  const dates={createdAt:new Date(now-1000).toISOString(),updatedAt:new Date(now).toISOString()};
+  return Response.json({user:{...dates,id:other,email:'other@example.invalid'},session:{...dates,id:'fixture',userId:other,expiresAt:new Date(now+60_000).toISOString()}});
+ };
+ const request=(path:string,body:object)=>new Request(origin+path,{method:'POST',
+  headers:{origin,'content-type':'application/json',cookie:'__Host-worlds-session='+'a'.repeat(43)},body:JSON.stringify(body)});
+ for(const [step,body] of [['prepare',{csrf:'csrf-proof'}],['confirm',{csrf:'csrf-proof',proof:'a'.repeat(43)}]] as const){
+  assert.equal((await worldsLinkRoute(request('/api/worlds/link/'+step,body),scoped,legacy))?.status,404);
+ }
+ assert.equal(legacyReads,0);
+ sub='approved';
+ for(const [step,body] of [['prepare',{csrf:'csrf-proof'}],['confirm',{csrf:'csrf-proof',proof:'a'.repeat(43)}]] as const){
+  const rejected=await worldsLinkRoute(request('/api/worlds/link/'+step,body),scoped,legacy);
+  assert.equal(rejected?.status,409);
+  assert.deepEqual(await rejected?.json(),{error:'LINK_REFUSED'});
+ }
+ assert.equal((await worldsProfileRoute(request('/api/worlds/profile',{csrf:'csrf-proof'}),scoped,legacy))?.status,409);
+ assert.equal(legacyReads,2);
+});
 test('a new IT-Worlds profile requires an enabled, same-origin authenticated POST',async()=>{
  const origin='https://it-worlds.test';
  const settings={...env,WORLDS_AUTH_ENABLED:'true',WORLDS_PROFILES_ENABLED:'true',WORLDS_ORIGIN:origin,
@@ -100,7 +142,9 @@ test('production sign-in is independent of the explicit linking and revocation g
   assert.equal(response.status,404);
  }
  assert.throws(()=>worldsConfig({...signIn,WORLDS_LINK_ENABLED:'true'}),/production target/);
- const linking={...signIn,WORLDS_LINK_ENABLED:'true',WORLDS_REAUTH_VERIFIED:'true'};
+ const withoutTarget={...signIn,WORLDS_LINK_ENABLED:'true',WORLDS_REAUTH_VERIFIED:'true'};
+ assert.equal(worldsConfig(withoutTarget)?.reauthEnabled,false);
+ const linking={...withoutTarget,WORLDS_LINK_TARGET:JSON.stringify({subject:'fixture',localUserId:'e621e1e0-2164-4cfb-ae8c-87863fb169db'})};
  assert.throws(()=>worldsConfig(linking),/production target/);
  const publicKey='{"kid":"fixture","kty":"OKP","crv":"Ed25519","x":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"}';
  assert.equal(worldsConfig({...linking,WORLDS_HUB_SESSION_EVENT_JWK:publicKey})?.reauthEnabled,true);

@@ -81,7 +81,7 @@ function enableLink(panel:HTMLElement,csrf:string){
     message.textContent=result.error==='CENTRAL_REAUTH_REQUIRED'
      ?t('Bitte bestätige zuerst deine Worlds-Anmeldung.','Please confirm your Worlds sign-in first.')
      :result.error==='LEGACY_REAUTH_REQUIRED'
-      ?t('Der Nachweis für dein bisheriges IT-Worlds-Konto fehlt. Die Übernahme ist noch nicht abgeschlossen.','Proof for your existing IT-Worlds account is missing. Migration is not complete yet.')
+      ?t('Melde dich mit deinem bisherigen IT-Worlds-Konto erneut an und prüfe danach beide Konten.','Sign in to your existing IT-Worlds account again, then review both accounts.')
       :result.error==='RATE_LIMITED'
        ?t('Zu viele Versuche. Bitte versuche es in einigen Minuten erneut.','Too many attempts. Please try again in a few minutes.')
        :t('Die Verknüpfung konnte nicht bestätigt werden. Prüfe beide Konten erneut.','The link could not be confirmed. Please review both accounts again.');
@@ -95,6 +95,7 @@ function enableLink(panel:HTMLElement,csrf:string){
    summary.querySelector<HTMLElement>('[data-worlds-link-central]')!.textContent=result.worldsEmail;
    summary.querySelector<HTMLElement>('[data-worlds-link-local]')!.textContent=result.localEmail;
    summary.hidden=false;
+   confirm.disabled=false;
    confirm.focus();
   }catch{
    proof=undefined;

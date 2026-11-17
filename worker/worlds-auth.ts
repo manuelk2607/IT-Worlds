@@ -5,7 +5,7 @@ import {receiveSessionRevocation,sessionEventPublicKey,sessionRevocationPath} fr
 import {takeAuthAttempt,type AuthAttempt} from './worlds-maintenance.ts';
 import {parseSessionData} from '@neondatabase/auth/server';
 import type {Env} from './index.ts';
-import {isITWorldsProductionTarget,WORLDS_PRODUCTION_ORIGIN} from './worlds-production.ts';
+import {isITWorldsProductionTarget,parseWorldsLinkTarget,WORLDS_PRODUCTION_ORIGIN} from './worlds-production.ts';
 import {accountPath,allowAccountReturn} from '../src/lib/account-return.ts';
 
 export interface AppIdentity {user:{id:string;name:string;email:string};source:'legacy'|'worlds';csrf?:string;cookies:string[]}
@@ -13,7 +13,11 @@ export const worldsReply=(body:unknown,status=200)=>Response.json(body,{status,h
 const reply=worldsReply;
 export const worldsSessionEventKey=(env:Env)=>sessionEventPublicKey(env.WORLDS_HUB_SESSION_EVENT_JWK);
 export function worldsLinkEnabled(env:Env){
- return env.WORLDS_AUTH_ENABLED==='true'&&env.WORLDS_LINK_ENABLED==='true'&&env.WORLDS_REAUTH_VERIFIED==='true'&&!env.WORLDS_PILOT_ONLY;
+ return env.WORLDS_AUTH_ENABLED==='true'&&env.WORLDS_LINK_ENABLED==='true'&&env.WORLDS_REAUTH_VERIFIED==='true'&&!env.WORLDS_PILOT_ONLY&&
+  ((env.WORLDS_ORIGIN!==WORLDS_PRODUCTION_ORIGIN&&env.WORLDS_LINK_TARGET===undefined)||!!parseWorldsLinkTarget(env.WORLDS_LINK_TARGET));
+}
+export function worldsLinkTarget(env:Env){
+ return worldsLinkEnabled(env)?parseWorldsLinkTarget(env.WORLDS_LINK_TARGET):null;
 }
 export function worldsProfilesEnabled(env:Env){
  return env.WORLDS_AUTH_ENABLED==='true'&&env.WORLDS_PROFILES_ENABLED==='true';
@@ -51,10 +55,11 @@ export async function worldsRoute(request:Request,env:Env):Promise<Response|null
    const central=await session(request,config);
    const account=central?await resolveIdentity(request,env,async()=>reply({},401)):null;
    const state=account instanceof Response?(await account.json() as {error:string}).error:account?'LINKED':null;
-   const linkEnabled=worldsLinkEnabled(env);
+   const target=worldsLinkTarget(env);
+   const linkEnabled=worldsLinkEnabled(env)&&(!target||central?.sub===target.subject);
    const legacySignInAvailable=!!env.NEON_AUTH_BASE_URL&&!env.WORLDS_PILOT_ONLY&&
     (!central||(linkEnabled&&state==='ACCOUNT_LINK_REQUIRED'));
-   const profileCreationAvailable=worldsProfilesEnabled(env)&&state==='ACCOUNT_LINK_REQUIRED';
+   const profileCreationAvailable=worldsProfilesEnabled(env)&&state==='ACCOUNT_LINK_REQUIRED'&&(!target||central?.sub!==target.subject);
    return reply({enabled:true,authenticated:!!central,accountState:state,csrf:central?.csrf,linkEnabled,legacySignInAvailable,
     ...(profileCreationAvailable?{profileCreationAvailable}:{})});
   }
@@ -78,6 +83,8 @@ export async function worldsRoute(request:Request,env:Env):Promise<Response|null
   }
   let response:Response;
   if(purpose==='login'){
+   const target=worldsLinkTarget(env);
+   if(target&&url.searchParams.get('reauth')==='1'&&(await session(request,config))?.sub!==target.subject)return reply({error:'NOT_FOUND'},404);
    const locale=url.searchParams.get('ui_locales')==='en'?'en':'de';
    const returnPath=allowAccountReturn(url.searchParams.get('next'),locale);
    const loginConfig={...config,returnPaths:[accountPath(locale,null),...(config.returnPaths??[]),...(returnPath?[returnPath]:[])]};
