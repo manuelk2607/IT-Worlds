@@ -1,6 +1,6 @@
 # IT-Worlds – Fortschritt
 
-## Lernprofil für neue Worlds-Nutzer – 16.11.2026
+## Lernprofil für bestätigte Worlds-Konten produktiv – 17.11.2026
 
 Die DE/EN-Kontoseite erlaubt bei bestätigter Worlds-Anmeldung die bewusste
 Anlage eines IT-Lernprofils mit derselben zentralen Identität. Eine aktive
@@ -30,12 +30,31 @@ Chromium DE (1440 px) und WebKit EN (320 px) bestanden die gebaute
 Kontoseite mit simulierten Antworten. Typprüfung und Build mit 534 Seiten
 bestanden. Der Produktions-Trockenlauf prüfte 40.228 interne Links.
 
-Vor Produktion ist eine frische Sicherung nötig. Migration 008 und
-`npm run deploy:worlds -- --enable-worlds-profiles` bilden ein eigenes
-freizugebendes Paket. Der Rollback auf Worker
-`db925d3d-0b15-4412-b0f0-fd4be9e902b7` schließt die Neuanlage. Die
-kompatible Zuordnungstabelle verbleibt in der Datenbank. Vorhandene
-Altkonten benötigen weiterhin einen eigenen Eigentumsnachweis.
+Der Produktionsabgleich vom 17.11. bestätigt das geprüfte Schema: 001–007
+sind angewendet, 008 fehlt, der einzige native Fremdschlüssel der vier
+betroffenen Tabellen gehört `worlds_identity_links`. Von 17
+Fortschrittszeilen gehören 13 zu keiner aktuellen nativen Identität. Es
+gibt zwei native Konten und noch keine Worlds-Zuordnung.
+
+Nach ausdrücklicher Zustimmung: Sicherung `br-lively-forest-ba8hp4o5`
+ohne Compute war bereit, LSN `0/2A90CA0`. Ausschließlich `008` aus
+`31c8bbb` (SHA-256 `cbb692d87755bb610ee2aa3058f72775bd4bcb24eceb4602b824c69e83286fd8`)
+angewendet. Die Transaktion bestätigte unveränderte Prüfsummen für zwei
+native Konten und deren Provider-Zuordnungen, 17 Lernfortschritte, leere
+Schreibtrainer-Tabellen und null Worlds-Zuordnungen. Beide nativen
+Projekt-IDs entsprechen den bisherigen Konto-IDs. Die 13 historischen
+Fortschrittszeilen erhielten keine neue Zuordnung.
+
+Der Worker `aa30a5b2-9eaf-41a1-a895-0db596a19e40` läuft mit 100 % Traffic
+(Deployment `edab1eb9-34a2-43d8-b462-466d4e6e4b21`). Der Release bestand
+den Datenbankrollencheck, 534 Seiten, 40.228 Linkziele und die Live-SEO-Prüfung.
+Live bestätigt: DE/EN-Konto, PKCE, anonyme Profilerstellung 401,
+Kontoverknüpfung 404 und aktiver Abmelde-Empfänger (unsigniert 400).
+Eine echte Profilanlage mit einem angemeldeten Produktionskonto wurde
+nicht ausgelöst. Rücknahmeversion mit aktiver Abmeldung:
+`acb62c46-94bb-41e1-8abd-7391e10f51b2`. Die kompatible Zuordnungstabelle
+bleibt bei einer Worker-Rücknahme erhalten. Vorhandene Altkonten benötigen
+weiterhin einen eigenen Eigentumsnachweis.
 
 ## Worlds-Anmeldung produktiv – 15.11.2026
 
