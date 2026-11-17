@@ -1,6 +1,6 @@
 # IT-Worlds – Fortschritt
 
-## Übernahme eines vorhandenen Lernstands vorbereitet
+## Übernahme eines vorhandenen Lernstands gezielt freigeschaltet
 
 Der Kontoinhaber hat den alten Lernstand im Browser geöffnet und sich
 danach neu beim bisherigen IT-Anbieter angemeldet. Die frische Sitzung
@@ -22,8 +22,14 @@ Typprüfung, Build und Release-Trockenlauf. Der gezielte Routentest
 prüfte falsche zentrale und lokale Konten sowie die Sperre für ein
 doppeltes Lernprofil. Chromium DE am Desktop und EN bei 320 px prüfte
 mit simulierten Sitzungen die Sichtbarkeit, doppelte Kontovorschau,
-Tastaturfokus und Fehleranzeige. Die Funktion wartet auf die gesonderte
-Freigabe und die echte Bestätigung beider Konten im Browser.
+Tastaturfokus und Fehleranzeige. [GitHub Quality](https://github.com/manuelk2607/IT-Worlds/actions/runs/44174022817)
+bestand für `54fa77d`. Nach Zustimmung wurde der Worker
+`b2ef4a0c-faca-46ee-bdd4-bd16f60c82c2` zu 100 % aktiviert. Bereite
+Neon-Sicherung ohne Compute: `br-rough-pine-ba27cunb`, LSN `0/2ACF218`.
+Live bestätigt: keine sichtbare oder nutzbare Kontoverknüpfung für
+anonyme Besucher, bisherige Anmeldung und aktiver Hub-Abmelde-Empfänger.
+Der Release legte noch keine Kontozuordnung an. Die persönliche
+Bestätigung beider Konten im Browser wurde angefragt.
 
 ## Lernprofil für bestätigte Worlds-Konten produktiv – 17.11.2026
 
