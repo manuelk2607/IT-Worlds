@@ -1,6 +1,6 @@
 # IT-Worlds – Fortschritt
 
-## Übernahme eines vorhandenen Lernstands gezielt freigeschaltet
+## Übernahme eines vorhandenen Lernstands produktiv bestätigt
 
 Der Kontoinhaber hat den alten Lernstand im Browser geöffnet und sich
 danach neu beim bisherigen IT-Anbieter angemeldet. Die frische Sitzung
@@ -28,8 +28,12 @@ bestand für `54fa77d`. Nach Zustimmung wurde der Worker
 Neon-Sicherung ohne Compute: `br-rough-pine-ba27cunb`, LSN `0/2ACF218`.
 Live bestätigt: keine sichtbare oder nutzbare Kontoverknüpfung für
 anonyme Besucher, bisherige Anmeldung und aktiver Hub-Abmelde-Empfänger.
-Der Release legte noch keine Kontozuordnung an. Die persönliche
-Bestätigung beider Konten im Browser wurde angefragt.
+Die persönliche Bestätigung beider Konten im Browser war erfolgreich.
+Die Datenbank bestätigt genau eine Zuordnung und einen Audit-Eintrag,
+eine aktive Worlds-Sitzung, dieselbe Profil-UUID und unveränderte
+Prüfsummen für alle drei Fortschritte des Kontos. IT-Worlds enthält
+weiterhin insgesamt 17 Fortschrittszeilen. Das zweite Altprofil bleibt
+unverknüpft und benötigt einen eigenen Eigentumsnachweis.
 
 ## Lernprofil für bestätigte Worlds-Konten produktiv – 17.11.2026
 
