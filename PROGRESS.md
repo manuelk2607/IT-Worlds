@@ -35,11 +35,16 @@ bestand auf Node 22 und 24 einschließlich PostgreSQL 18. Der
 Cloudflare-Probelauf und die Kontoseite mit simulierten Antworten
 bestanden in Chromium DE bei 1440 px und WebKit EN bei 320 px.
 
-Migration 009, SHA-256:
+Migration 009, SHA-256
 `9363932778f76631589d3c67edd30b200e8ee227c92d0807f99a3e28599cdaa5`.
-Der Hub-Endpunkt liefert vor Freigabe 404. Es ist kein
-IT-Worlds-Upload-Zugang verfügbar. Der vollständige GitHub-Stand für die
-Veröffentlichung ist `7d0c93c`.
+Der vollständige GitHub-Stand für die Veröffentlichung ist `7d0c93c`.
+Die produktive Freigabe liegt vor. Die frische Neon-Sicherung ohne Compute
+`br-purple-hill-bauxj1e4` ist bereit, Wiederherstellungspunkt `0/2B81188`.
+Der Vorabgleich bestätigt eine zustellbare Übernahme, zwei Projektprofile,
+17 Lernfortschritte und eine eingeschränkte Anwendungsrolle. Der Build
+mit 534 Seiten, 40.228 interne Links und der Upload-Trockenlauf bestanden.
+Vor Migration 009 ist die aktive Worker-Rücknahmeversion mit dem
+kurzzeitigen Cloudflare-Zugang zu prüfen.
 
 ## Übernahme eines vorhandenen Lernstands produktiv bestätigt
 
