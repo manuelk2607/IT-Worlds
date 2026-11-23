@@ -28,7 +28,18 @@ Lokal bestätigt: 140 bestandene Tests, 11 optionale Skips, Typprüfung,
 mit einem nicht privilegierten PostgreSQL-Schemaeigentümer getestet:
 Altprofil erfassen, quittieren und nach Löschung korrekt widerrufen.
 Astro 7.4.7 und Better Auth 1.7.14 beheben die beim Audit gefundenen
-Sicherheitsmeldungen. Das Laufzeit-Audit meldet null Befunde.
+Sicherheitsmeldungen. Das Laufzeit-Audit meldet null Befunde. Der Patch
+benötigt Node 22.23.4 oder neuer. Die angepasste
+[GitHub-Prüfung](https://github.com/manuelk2607/IT-Worlds/actions/runs/45266022475)
+bestand auf Node 22 und 24 einschließlich PostgreSQL 18. Der
+Cloudflare-Probelauf und die Kontoseite mit simulierten Antworten
+bestanden in Chromium DE bei 1440 px und WebKit EN bei 320 px.
+
+Migration 009, SHA-256:
+`9363932778f76631589d3c67edd30b200e8ee227c92d0807f99a3e28599cdaa5`.
+Der Hub-Endpunkt liefert vor Freigabe 404. Es ist kein
+IT-Worlds-Upload-Zugang verfügbar. Der vollständige GitHub-Stand für die
+Veröffentlichung ist `7d0c93c`.
 
 ## Übernahme eines vorhandenen Lernstands produktiv bestätigt
 
