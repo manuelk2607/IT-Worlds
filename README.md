@@ -24,7 +24,7 @@ Typst und LaTeX stehen unter **Textsatz & Dokumentenerstellung**; Typst ist der 
 
 ## Lokal entwickeln
 
-Voraussetzung: Node.js ab 22.22.0, npm und Python ab 3.12 für die ausführbaren Lernbeispieltests. Mit Node.js 26.8.1 geprüft.
+Voraussetzung: Node.js ab 22.23.4, npm und Python ab 3.12 für die ausführbaren Lernbeispieltests. Mit Node.js 26.8.1 geprüft.
 
 ```bash
 npm ci

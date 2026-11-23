@@ -23,7 +23,7 @@ jobs:
           persist-credentials: false
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
-          node-version: '22.22.0'
+          node-version: '22.23.4'
       - uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5
         with:
           distribution: temurin
@@ -41,7 +41,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node: ['22.22.0', '24']
+        node: ['22.23.4', '24']
     env:
       ASTRO_TELEMETRY_DISABLED: '1'
     steps:
@@ -80,7 +80,7 @@ jobs:
           persist-credentials: false
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
-          node-version: '22.22.0'
+          node-version: '22.23.4'
       - run: node --experimental-strip-types --test tests/container-examples.test.ts
   sql-examples:
     name: Published PostgreSQL examples
@@ -113,7 +113,7 @@ jobs:
           persist-credentials: false
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
-          node-version: '22.22.0'
+          node-version: '22.23.4'
       - run: node --experimental-strip-types --test tests/sql-examples.test.ts tests/sql-project.test.ts tests/worlds-project-accounts.test.ts
   systemd-example:
     name: Published user systemd lab
@@ -125,7 +125,7 @@ jobs:
           persist-credentials: false
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
-          node-version: '22.22.0'
+          node-version: '22.23.4'
       - name: Prepare ephemeral runner user session
         run: |
           sudo loginctl enable-linger "$(id -un)"
@@ -151,7 +151,7 @@ jobs:
           persist-credentials: false
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
-          node-version: '22.22.0'
+          node-version: '22.23.4'
       - name: Install verified Godot 4.5
         run: |
           curl -fsSL https://github.com/godotengine/godot/releases/download/4.5-stable/Godot_v4.5-stable_linux.x86_64.zip -o "$RUNNER_TEMP/godot.zip"
