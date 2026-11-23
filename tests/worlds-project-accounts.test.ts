@@ -36,7 +36,8 @@ test('PostgreSQL preserves native progress and allocates one scoped profile unde
    INSERT INTO public.learning_progress(user_id,kind,content_id,completed) VALUES ('${old}','lesson','legacy',true);
    INSERT INTO public.typing_profiles(user_id,display_name) VALUES ('${old}','Legacy');
    INSERT INTO public.typing_runs(user_id,mode,locale,lesson,target) VALUES ('${old}','practice','en','first','abc');
-   INSERT INTO public.worlds_identity_links(issuer,subject,local_user_id) VALUES ('${issuer}','prior','${old}');`);
+   INSERT INTO public.worlds_identity_links(issuer,subject,local_user_id) VALUES ('${issuer}','prior','${old}');
+   INSERT INTO public.worlds_link_audit(issuer,subject,local_user_id,event) VALUES ('${issuer}','prior','${old}','linked');`);
   const fingerprint=()=>run(db,`SELECT md5((SELECT to_jsonb(p)::text FROM public.learning_progress p WHERE p.user_id='${old}')
     ||(SELECT to_jsonb(p)::text FROM public.typing_profiles p WHERE p.user_id='${old}')
     ||(SELECT to_jsonb(r)::text FROM public.typing_runs r WHERE r.user_id='${old}')
@@ -83,6 +84,22 @@ test('PostgreSQL preserves native progress and allocates one scoped profile unde
   assert.equal(run(db,`SELECT public.worlds_account_active('${created}') AND NOT EXISTS
     (SELECT 1 FROM neon_auth."user" WHERE id='${created}')`),'t');
 
+  const receiptMigration=await readFile(new URL('009_worlds_migration_receipts.sql',directory),'utf8');
+  run(db,'BEGIN; '+receiptMigration+'\nCOMMIT;');
+  assert.equal(fingerprint(),original);
+  const readReceipts=(filter:string)=>run(db,`SET ROLE it_worlds_app;
+   SELECT subject||':'||event FROM public.worlds_pending_migration_receipts('${filter}') ORDER BY revision::bigint;`);
+  assert.equal(readReceipts(issuer),'prior:linked');
+  assert.equal(readReceipts('https://other-issuer.invalid'),'');
+  await assert.rejects(query('SET ROLE it_worlds_app; SELECT subject FROM public.worlds_link_audit;'),/permission denied/);
+  await assert.rejects(query('SET ROLE it_worlds_app; UPDATE public.worlds_link_audit SET receipt_eligible=true;'),/permission denied/);
+  const firstReceipt=run(db,`SELECT id FROM public.worlds_link_audit WHERE subject='prior'`);
+  assert.equal(run(db,`SET ROLE it_worlds_app; SELECT public.worlds_finish_migration_receipt('https://other-issuer.invalid',${firstReceipt},true)`),'f');
+  assert.equal(run(db,`SET ROLE it_worlds_app; SELECT public.worlds_finish_migration_receipt('${issuer}',${firstReceipt},NULL)`),'f');
+  assert.equal(run(db,`SET ROLE it_worlds_app; SELECT public.worlds_finish_migration_receipt('${issuer}',${firstReceipt},true)`),'t');
+  assert.equal(run(db,`SET ROLE it_worlds_app; SELECT public.worlds_finish_migration_receipt('${issuer}',${firstReceipt},false)`),'f');
+  assert.equal(readReceipts(issuer),'');
+
   const asOwner=(id:string,statement:string)=>`SET ROLE it_worlds_app; SET app.user_id='${id}'; ${statement}`;
   assert.equal(run(db,asOwner(created,`SELECT public.worlds_account_active('${created}')`)),'t');
   run(db,asOwner(created,`INSERT INTO public.learning_progress(user_id,kind,content_id) VALUES ('${created}','lesson','worlds');`));
@@ -101,7 +118,18 @@ test('PostgreSQL preserves native progress and allocates one scoped profile unde
   run(db,`INSERT INTO neon_auth."user"(id) VALUES ('${later}');`);
   run(db,asOwner(later,`INSERT INTO public.learning_progress(user_id,kind,content_id) VALUES ('${later}','lesson','after');`));
   assert.equal(run(db,`SELECT legacy_user_id FROM public.it_project_accounts WHERE id='${later}'`),later);
+  run(db,asOwner(later,`SET app.worlds_issuer='${issuer}'; SET app.worlds_subject='later';
+   WITH inserted AS (
+    INSERT INTO public.worlds_identity_links(issuer,subject,local_user_id)
+    VALUES ('${issuer}','later','${later}') RETURNING *
+   ) INSERT INTO public.worlds_link_audit(issuer,subject,local_user_id,event)
+    SELECT issuer,subject,local_user_id,'linked' FROM inserted;`));
+  assert.equal(readReceipts(issuer),'later:linked');
+  run(db,`BEGIN; DELETE FROM public.worlds_identity_links WHERE subject='prior'; ROLLBACK;`);
+  assert.equal(readReceipts(issuer),'later:linked');
   run(db,`DELETE FROM neon_auth."user" WHERE id='${old}';`);
+  assert.equal(readReceipts(issuer),'later:linked\nprior:unlinked');
+  assert.equal(run(db,`SELECT count(*) FROM public.worlds_link_audit WHERE subject='new' AND receipt_eligible`),'0');
   assert.equal(run(db,`SELECT (SELECT count(*)::text FROM public.typing_runs WHERE user_id='${old}')
     ||(SELECT count(*) FROM public.typing_profiles WHERE user_id='${old}')
     ||(SELECT count(*) FROM public.learning_progress WHERE user_id='${old}')

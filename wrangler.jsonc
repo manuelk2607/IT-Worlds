@@ -30,5 +30,6 @@
   "account_id": "ec3c070d8e4f88d2fc533d7d797f2daa",
   "compatibility_flags": [],
   "logpush": false,
+  "triggers": {"crons":["52 3 * * *"]},
   "main": "worker/index.ts"
 }

@@ -1,5 +1,35 @@
 # IT-Worlds – Fortschritt
 
+## Zentraler Migrationsnachweis vorbereitet – 23.11.2026
+
+Produktiver Nur-Lese-Abgleich: ein bestehender, bestätigter Altprofil-Link
+mit Audit-Eintrag. Migration 009 verwendet das bestehende Audit als
+Warteschlange. Sie nimmt nur bestätigte Altprofile und deren Widerruf
+auf. Neue Lernprofile, Lernstände und bisherige Zuordnungen bleiben in
+IT-Worlds. Die eingeschränkte Anwendungsrolle kann nur einen begrenzten
+Stapel abrufen und den Versand quittieren. Direkter Zugriff auf die
+Audit-Daten und die native Konto-ID bleibt gesperrt.
+
+Der gemeinsame signierte Sender verwendet ausschließlich den
+IT-Worlds-Endpunkt des Hubs. Er benötigt das eigene Worker-Secret
+`WORLDS_MIGRATION_RECEIPT_PRIVATE_JWK` mit `kid`. Der tägliche Versand
+ist für 03:52 UTC vorgesehen. Einzelversand: `npm run worlds:report-migrations`
+mit der eingeschränkten Runtime-Verbindung und den aktiven Link-Flags.
+
+Vor Produktion: Neon-Wiederherstellungspunkt und Worker-Rücknahmeversion
+prüfen, Migration 009 mit Prüfsumme anwenden und genau einen offenen
+Nachweis bestätigen. Danach den öffentlichen Prüfschlüssel im Hub
+hinterlegen, den bestehenden IT-Worker mit den bisherigen Bindungen
+veröffentlichen und die autorisierte Zustellung prüfen. Derzeit sind
+weder Migration 009 noch der neue Schlüssel produktiv eingerichtet.
+
+Lokal bestätigt: 140 bestandene Tests, 11 optionale Skips, Typprüfung,
+534 gebaute Seiten, SEO- und Linkprüfung. Die Migration wurde zusätzlich
+mit einem nicht privilegierten PostgreSQL-Schemaeigentümer getestet:
+Altprofil erfassen, quittieren und nach Löschung korrekt widerrufen.
+Astro 7.4.7 und Better Auth 1.7.14 beheben die beim Audit gefundenen
+Sicherheitsmeldungen. Das Laufzeit-Audit meldet null Befunde.
+
 ## Übernahme eines vorhandenen Lernstands produktiv bestätigt
 
 Der Kontoinhaber hat den alten Lernstand im Browser geöffnet und sich
