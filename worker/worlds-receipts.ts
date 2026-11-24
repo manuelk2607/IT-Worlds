@@ -3,7 +3,6 @@ import {migrationReceiptSender} from '@worlds-hub/auth/migration-receipts';
 import type {PgQuery} from '@worlds-hub/auth/postgres-links';
 import {isITWorldsProductionTarget,WORLDS_PRODUCTION_ORIGIN,WORLDS_PRODUCTION_VARS} from './worlds-production.ts';
 
-export const worldsReceiptCron='52 3 * * *';
 type ReceiptEnv=Parameters<typeof isITWorldsProductionTarget>[0]&{WORLDS_MIGRATION_RECEIPT_PRIVATE_JWK?:string};
 
 export async function reportITWorldsMigrationReceipts(env:ReceiptEnv,query?:PgQuery){

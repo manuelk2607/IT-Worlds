@@ -4,7 +4,6 @@ import {typingAccountsEnabled} from '../src/lib/release-features.ts';
 import { handleAuthProxyRequest } from '@neondatabase/auth/server';
 import {resolveIdentity,identityResponse,worldsRoute,worldsSessionEventKey} from './worlds-auth.ts';
 import {cleanupWorldsAuth} from './worlds-maintenance.ts';
-import {reportITWorldsMigrationReceipts,worldsReceiptCron} from './worlds-receipts.ts';
 import {worldsLinkRoute} from './worlds-link.ts';
 import {worldsProfileRoute} from './worlds-profile.ts';
 import { neon } from '@neondatabase/serverless';
@@ -94,16 +93,7 @@ async function getProgress(request: Request, env: Env) {
   return result;
 }
 export default {
-  async scheduled(event:unknown,env:Env):Promise<void>{
-    if(event&&typeof event==='object'&&'cron' in event&&event.cron===worldsReceiptCron){
-      try{
-        const result=await reportITWorldsMigrationReceipts(env);
-        if(result&&(result.acknowledged||result.conflict))console.info('Worlds migration receipts',result);
-      }catch{
-        throw new Error('Worlds migration receipt delivery needs a retry');
-      }
-      return;
-    }
+  async scheduled(_event:unknown,env:Env):Promise<void>{
     await cleanupWorldsAuth(env);
   },
   async fetch(request: Request, env: Env): Promise<Response> {

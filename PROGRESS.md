@@ -1,6 +1,6 @@
 # IT-Worlds – Fortschritt
 
-## Zentraler Migrationsnachweis vorbereitet – 23.11.2026
+## Zentraler IT-Worlds-Migrationsnachweis – 24.11.2026
 
 Produktiver Nur-Lese-Abgleich: ein bestehender, bestätigter Altprofil-Link
 mit Audit-Eintrag. Migration 009 verwendet das bestehende Audit als
@@ -12,16 +12,15 @@ Audit-Daten und die native Konto-ID bleibt gesperrt.
 
 Der gemeinsame signierte Sender verwendet ausschließlich den
 IT-Worlds-Endpunkt des Hubs. Er benötigt das eigene Worker-Secret
-`WORLDS_MIGRATION_RECEIPT_PRIVATE_JWK` mit `kid`. Der tägliche Versand
-ist für 03:52 UTC vorgesehen. Einzelversand: `npm run worlds:report-migrations`
-mit der eingeschränkten Runtime-Verbindung und den aktiven Link-Flags.
+`WORLDS_MIGRATION_RECEIPT_PRIVATE_JWK` mit `kid`. Der freigegebene
+Einzelversand mit der eingeschränkten Anwendungsrolle wurde vom Hub
+bestätigt. Der IT-Datenbankabgleich zeigt Revision 1 und keinen Konflikt.
 
-Vor Produktion: Neon-Wiederherstellungspunkt und Worker-Rücknahmeversion
-prüfen, Migration 009 mit Prüfsumme anwenden und genau einen offenen
-Nachweis bestätigen. Danach den öffentlichen Prüfschlüssel im Hub
-hinterlegen, den bestehenden IT-Worker mit den bisherigen Bindungen
-veröffentlichen und die autorisierte Zustellung prüfen. Derzeit sind
-weder Migration 009 noch der neue Schlüssel produktiv eingerichtet.
+Cloudflare hat den separaten Zeitplan abgewiesen, da das kostenlose
+Kontingent für fünf Zeitpläne ausgeschöpft ist. Der Hub verwendet seinen
+vorhandenen Zeitplan für den täglichen internen Aufruf um 03:17 UTC.
+Der signierte Sender lässt keine Weiterleitung zu und verwendet dafür
+Cloudflares unterstützte Einstellung `manual` mit expliziter 3xx-Ablehnung.
 
 Lokal bestätigt: 140 bestandene Tests, 11 optionale Skips, Typprüfung,
 534 gebaute Seiten, SEO- und Linkprüfung. Die Migration wurde zusätzlich
@@ -38,13 +37,17 @@ bestanden in Chromium DE bei 1440 px und WebKit EN bei 320 px.
 Migration 009, SHA-256
 `9363932778f76631589d3c67edd30b200e8ee227c92d0807f99a3e28599cdaa5`.
 Der vollständige GitHub-Stand für die Veröffentlichung ist `7d0c93c`.
-Die produktive Freigabe liegt vor. Die frische Neon-Sicherung ohne Compute
+Die produktive Freigabe liegt vor. Die Neon-Sicherung ohne Compute
 `br-purple-hill-bauxj1e4` ist bereit, Wiederherstellungspunkt `0/2B81188`.
-Der Vorabgleich bestätigt eine zustellbare Übernahme, zwei Projektprofile,
-17 Lernfortschritte und eine eingeschränkte Anwendungsrolle. Der Build
-mit 534 Seiten, 40.228 interne Links und der Upload-Trockenlauf bestanden.
-Vor Migration 009 ist die aktive Worker-Rücknahmeversion mit dem
-kurzzeitigen Cloudflare-Zugang zu prüfen.
+Der unmittelbare Ausgangspunkt war `0/2BC7C90`. Die Transaktion 009 wurde
+mit der geprüften Prüfsumme und genau einem offenen Nachweis angewendet.
+Zwei Profile, 17 Lernfortschritte und deren Zuordnungen stimmen vor und
+nach der Migration per Prüfsumme überein. Die Anwendungsrolle kann das
+Audit weiterhin nicht direkt lesen. Die Quelle und das Release des
+Einzelversands `50474787-6c8f-4b8f-a572-f53e57b8b11c` behielten alle 14
+vorhandenen Worker-Bindungen sowie den neuen privaten Schlüssel. DE/EN,
+Anmeldeoberfläche, Abmelde-Empfänger und 528 öffentliche SEO-Seiten sind
+live geprüft. Rücknahmeversion vor dem Einzelversand `b2ef4a0c`.
 
 ## Übernahme eines vorhandenen Lernstands produktiv bestätigt
 

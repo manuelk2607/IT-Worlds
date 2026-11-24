@@ -32,7 +32,7 @@ test('IT-Worlds signs only reviewed queue events for its fixed Hub endpoint and 
  const refs=new Set<unknown>();
  const send=t.mock.method(globalThis,'fetch',async(target:unknown,options:RequestInit)=>{
   assert.equal(target,url);
-  assert.equal(options.redirect,'error');
+  assert.equal(options.redirect,'manual');
   const {payload}=await jwtVerify(String(options.body),publicKey,{
    issuer:WORLDS_PRODUCTION_VARS.WORLDS_ORIGIN,audience:url,typ:'worlds-migration-receipt+jwt',
   });
