@@ -21,6 +21,14 @@ Kontingent für fünf Zeitpläne ausgeschöpft ist. Der Hub verwendet seinen
 vorhandenen Zeitplan für den täglichen internen Aufruf um 03:17 UTC.
 Der signierte Sender lässt keine Weiterleitung zu und verwendet dafür
 Cloudflares unterstützte Einstellung `manual` mit expliziter 3xx-Ablehnung.
+Worker `163de77f-5c7a-4353-8589-483df8c8de50` läuft zu 100 % mit derselben
+Konfiguration und privatem Dienstaufruf. Die echte lokale Worker-Laufzeit
+hat Signatur und Quittung mit Testdaten durchgespielt. Die
+[GitHub-Prüfung](https://github.com/manuelk2607/IT-Worlds/actions/runs/45387815080)
+bestand auf Node 22 und 24 mit PostgreSQL 18. Der Hub hat den internen
+Dienst produktiv verbunden. Der erste tägliche Lauf steht aus.
+Für eine Rücknahme zuerst den Hub auf `59d1b615` und danach IT-Worlds auf
+`50474787` zurücksetzen. Migration 009 bleibt dabei wirksam.
 
 Lokal bestätigt: 140 bestandene Tests, 11 optionale Skips, Typprüfung,
 534 gebaute Seiten, SEO- und Linkprüfung. Die Migration wurde zusätzlich
