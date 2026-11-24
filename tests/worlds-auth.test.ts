@@ -1,12 +1,13 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import worker,{type Env} from '../worker/index.ts';
-import {worldsConfig,resolveIdentity,worldsRoute,worldsLinkEnabled} from '../worker/worlds-auth.ts';
+import {worldsConfig,resolveIdentity,worldsRoute,worldsLinkEnabled,worldsLinkTarget} from '../worker/worlds-auth.ts';
 import {worldsLinkRoute} from '../worker/worlds-link.ts';
 import {worldsProfileRoute} from '../worker/worlds-profile.ts';
 import {WORLDS_PRODUCTION_VARS} from '../worker/worlds-production.ts';
 import {accountPath,worldsLoginHref} from '../src/lib/account-return.ts';
 import {sessionEventContentType,sessionRevocationPath,signSessionRevocation} from '@worlds-hub/auth/session-revocation';
+import {hash} from '@worlds-hub/auth/store';
 const env:Env={ASSETS:{fetch:async()=>new Response('asset')},DATABASE_URL:'postgres://app:example@db.test/app',NEON_AUTH_BASE_URL:'https://legacy.test/auth',NEON_AUTH_COOKIE_SECRET:'test-only'};
 test('production linking fails closed without a scoped pair and excludes other accounts',async t=>{
  const origin='https://app.test',issuer='https://identity.test';
@@ -59,6 +60,85 @@ test('a new IT-Worlds profile requires an enabled, same-origin authenticated POS
  assert.equal((await worldsProfileRoute(req('GET'),settings,legacy))?.status,405);
  assert.equal((await worldsProfileRoute(req('POST','https://untrusted.test'),settings,legacy))?.status,403);
  assert.equal((await worldsProfileRoute(req(),settings,legacy))?.status,401);
+});
+
+test('production self-service requires two fresh sessions and confirmation of the reviewed legacy account',async t=>{
+ const {WORLDS_ORIGIN:origin,WORLDS_ISSUER:issuer}=WORLDS_PRODUCTION_VARS;
+ const olderPair=JSON.stringify({subject:'scoped-owner',localUserId:'10000000-0000-4000-8000-000000000001'});
+ const database='postgresql://it_worlds_app@ep-broad-unit-baisjndz-pooler.c-8.eu-central-1.aws.neon.tech/IT-Worlds';
+ const sessionKey=JSON.stringify({kid:'fixture',kty:'OKP',crv:'Ed25519',x:'A'.repeat(43)});
+ const scoped={...env,...WORLDS_PRODUCTION_VARS,DATABASE_URL:database,WORLDS_LINK_ENABLED:'true',WORLDS_REAUTH_VERIFIED:'true',
+  WORLDS_PROFILES_ENABLED:'true',WORLDS_HUB_SESSION_EVENT_JWK:sessionKey,WORLDS_LINK_TARGET:olderPair};
+ const settings={...scoped,WORLDS_LINK_SELF_SERVICE:'true'};
+ assert.equal(worldsLinkTarget(scoped)?.subject,'scoped-owner');
+ assert.equal(worldsLinkTarget(settings),null);
+ assert.equal(worldsLinkEnabled({...settings,WORLDS_LINK_TARGET:'{}'}),false);
+ assert.equal(worldsLinkEnabled({...settings,WORLDS_LINK_TARGET:undefined}),true);
+ assert.equal(worldsLinkEnabled({...settings,WORLDS_PILOT_ONLY:true}),false);
+ assert.equal(worldsLinkEnabled({...settings,WORLDS_REAUTH_VERIFIED:'false'}),false);
+ assert.throws(()=>worldsConfig({...settings,WORLDS_HUB_SESSION_EVENT_JWK:undefined}),/production target/);
+
+ const subject='another-owner',localId='10000000-0000-4000-8000-000000000002',differentId='10000000-0000-4000-8000-000000000003';
+ const browserSession='a'.repeat(43),centralBinding=await hash(browserSession),csrf='fixture-csrf',now=Date.now();
+ let linked=false,stagedHash='',legacyReads=0;
+ const proofAge={central:1000,legacy:1000};
+ const result=(name:string,dataTypeID:number,rows:string[][])=>({fields:[{name,dataTypeID}],rows});
+ t.mock.method(globalThis,'fetch',async (_input:unknown,init?:RequestInit)=>{
+  type Query={query:string;params:string[]};
+  const body=JSON.parse(String(init?.body)) as Query&{queries?:Query[]};
+  if(body.query?.includes('worlds_take_auth_attempt'))return Response.json(result('allowed',16,[['t']]));
+  if(body.query?.includes('SELECT payload FROM public.worlds_auth_sessions')){
+   assert.equal(body.params[0],centralBinding);
+   const payload={issuer,sub:subject,email:'worlds@example.invalid',csrf,authenticatedAt:now-proofAge.central,expires:now+60_000};
+   return Response.json(result('payload',3802,[[JSON.stringify(payload)]]));
+  }
+  assert.ok(body.queries);
+  const [scope,operation]=body.queries;
+  assert.match(scope.query,/worlds_account_active/);
+  const scopedId=scope.params[0];
+  assert.ok([localId,differentId].includes(scopedId));
+  const batch=(response:unknown)=>Response.json({results:[{fields:[],rows:[]},response]});
+  if(operation.query.startsWith('SELECT local_user_id')){
+   assert.deepEqual(operation.params,[issuer,subject]);
+   return batch(result('local_user_id',2950,linked?[[localId]]:[]));
+  }
+  if(operation.query.startsWith('INSERT INTO worlds_link_proofs')){
+   assert.deepEqual(operation.params.slice(1,5),[issuer,subject,localId,centralBinding]);
+   stagedHash=operation.params[0];
+   return batch({fields:[],rows:[]});
+  }
+  assert.match(operation.query,/WITH claimed AS \(/);
+  assert.equal(operation.params[1],centralBinding);
+  linked=scopedId===localId&&operation.params[0]===stagedHash;
+  return batch(result('linked',16,[[linked?'t':'f']]));
+ });
+ const local=(id=localId)=>async()=>{
+  legacyReads++;
+  const dates={createdAt:new Date(now-proofAge.legacy),updatedAt:new Date(now)};
+  return Response.json({user:{...dates,id,email:'old-it@example.invalid'},
+   session:{...dates,id:'legacy-session',userId:id,expiresAt:new Date(now+60_000)}});
+ };
+ const request=(step:string,body:object)=>new Request(origin+'/api/worlds/link/'+step,{method:'POST',
+  headers:{origin,'content-type':'application/json',cookie:'__Host-worlds-session='+browserSession},body:JSON.stringify(body)});
+ assert.equal((await worldsLinkRoute(request('prepare',{csrf}),scoped,local()))?.status,404);
+ assert.equal((await worldsLinkRoute(request('prepare',{csrf,localUserId:localId}),settings,local()))?.status,400);
+ proofAge.central=310_000;
+ assert.deepEqual(await (await worldsLinkRoute(request('prepare',{csrf}),settings,local()))?.json(),{error:'CENTRAL_REAUTH_REQUIRED'});
+ assert.equal(legacyReads,0);
+ proofAge.central=1000;
+ proofAge.legacy=310_000;
+ assert.deepEqual(await (await worldsLinkRoute(request('prepare',{csrf}),settings,local()))?.json(),{error:'LEGACY_REAUTH_REQUIRED'});
+ proofAge.legacy=1000;
+ const preview=await worldsLinkRoute(request('prepare',{csrf}),settings,local());
+ assert.equal(preview?.status,200);
+ const review=await preview!.json() as {proof:string;worldsEmail:string;localEmail:string};
+ assert.deepEqual(review,{proof:review.proof,worldsEmail:'worlds@example.invalid',localEmail:'old-it@example.invalid'});
+ assert.equal(await hash(review.proof),stagedHash);
+ assert.equal(linked,false);
+ assert.equal((await worldsLinkRoute(request('confirm',{csrf,proof:review.proof}),settings,local(differentId)))?.status,409);
+ assert.equal(linked,false);
+ assert.deepEqual(await (await worldsLinkRoute(request('confirm',{csrf,proof:review.proof}),settings,local()))?.json(),{linked:true});
+ assert.equal((await worldsLinkRoute(request('confirm',{csrf,proof:review.proof}),settings,local()))?.status,409);
 });
 
 test('central sign-out checks the signature and fences linked native sessions by their original creation time',async t=>{

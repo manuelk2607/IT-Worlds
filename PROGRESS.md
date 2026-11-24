@@ -1,5 +1,26 @@
 # IT-Worlds – Fortschritt
 
+## Selbstständige Übernahme bestehender IT-Worlds-Konten vorbereitet
+
+Der Nur-Lese-Abgleich zählt zwei Altprofile mit den bisherigen IDs,
+davon eines bereits mit Worlds verknüpft. Das zweite Profil kann der
+Kontoinhaber nach Freischaltung selbst übernehmen. Die Kontoseite verlangt
+die frische Worlds-Anmeldung und die frische IT-Worlds-Anmeldung.
+Vorschau und Bestätigung verwenden die nachgewiesenen Konten. Die lokale
+ID bleibt erhalten. Ein anderes Altprofil kann mit derselben Vorschau
+nicht bestätigt werden.
+
+Der bisherige Modus für ein einzelnes Kontopaar bleibt Standard. Die
+Selbstübernahme wird ausdrücklich per `--enable-worlds-self-service-linking`
+aktiviert und setzt die eingespielte Migration 009 voraus. Der vorhandene
+signierte Nachweisversand bleibt nutzbar. Die Freischaltung benötigt keine
+Schemaänderung. Rücknahmeversion `163de77f` erhält die vorhandene Zuordnung,
+die Worlds-Anmeldung und den privaten Versandweg zum Hub.
+
+141 lokale Tests bestanden, 11 optionale übersprungen. Typprüfung, Build,
+SEO, Linkprüfung und Cloudflare-Trockenlauf mit eigener Freischaltung
+bestanden. Der neue Modus bleibt bis zur produktiven Freigabe geschlossen.
+
 ## Zentraler IT-Worlds-Migrationsnachweis – 24.11.2026
 
 Produktiver Nur-Lese-Abgleich: ein bestehender, bestätigter Altprofil-Link

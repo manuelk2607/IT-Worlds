@@ -7,13 +7,15 @@ import {isITWorldsProductionDatabase,isITWorldsProductionMigrationDatabase,WORLD
 const migrationNames=['003_worlds_identity_links.sql','004_worlds_auth_sessions.sql','005_worlds_auth_maintenance.sql','006_worlds_link_cleanup.sql','007_worlds_session_revocations.sql'] as const;
 
 export function productionReleaseArgs(
- databaseUrl:string|undefined,sessionEventJwk:string|undefined,{dryRun=false,enableLinking=false,enableProfiles=false,keepActiveSessionEventKey=false}={},
+ databaseUrl:string|undefined,sessionEventJwk:string|undefined,{dryRun=false,enableLinking=false,enableProfiles=false,enableSelfService=false,keepActiveSessionEventKey=false}={},
 ){
  const fallback='postgresql://it_worlds_app@ep-broad-unit-baisjndz-pooler.c-8.eu-central-1.aws.neon.tech/IT-Worlds';
  if(!isITWorldsProductionDatabase(databaseUrl??(dryRun?fallback:undefined)))throw new Error('Worlds release requires the reviewed IT-Worlds production runtime database.');
+ if(enableSelfService&&(!enableLinking||!enableProfiles))throw new Error('Self-service linking requires Worlds linking and profiles.');
  const vars:Record<string,string>={
   ...WORLDS_PRODUCTION_VARS,
   WORLDS_LINK_ENABLED:String(enableLinking),
+  WORLDS_LINK_SELF_SERVICE:String(enableSelfService),
   WORLDS_REAUTH_VERIFIED:String(enableLinking),
   WORLDS_PROFILES_ENABLED:String(enableProfiles),
  };
@@ -41,14 +43,16 @@ export async function verifyActiveSessionReceiver(){
  }
 }
 
-export async function verifyWorldsProductionSchema(databaseUrl:string,migrationUrl:string|undefined,{enableProfiles=false}={}){
+export async function verifyWorldsProductionSchema(databaseUrl:string,migrationUrl:string|undefined,{enableProfiles=false,enableSelfService=false}={}){
  if(!isITWorldsProductionDatabase(databaseUrl))throw new Error('Refusing schema check outside IT-Worlds production.');
  if(!migrationUrl||!isITWorldsProductionMigrationDatabase(migrationUrl)){
   throw new Error('The schema check requires the direct IT-Worlds production migration connection.');
  }
  const directory=new URL('../migrations/',import.meta.url),expected=new Map<string,string>();
  const available=new Set(await readdir(directory));
- const required=enableProfiles?[...migrationNames,'008_worlds_project_accounts.sql']:[...migrationNames];
+ const required=[...migrationNames,
+  ...(enableProfiles?['008_worlds_project_accounts.sql']:[]),
+  ...(enableSelfService?['009_worlds_migration_receipts.sql']:[])];
  for(const name of required){
   if(!available.has(name))throw new Error(`Missing migration source: ${name}`);
   expected.set(name,createHash('sha256').update(await readFile(new URL(name,directory),'utf8')).digest('hex'));

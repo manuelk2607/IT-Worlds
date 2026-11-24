@@ -22,6 +22,7 @@ export interface Env {
   WORLDS_PILOT_ONLY?:boolean;
   WORLDS_LINK_ENABLED?:string;
   WORLDS_LINK_TARGET?:string;
+  WORLDS_LINK_SELF_SERVICE?:string;
   WORLDS_PROFILES_ENABLED?:string;
   WORLDS_REAUTH_VERIFIED?:string;
   WORLDS_HUB_SESSION_EVENT_JWK?:string;

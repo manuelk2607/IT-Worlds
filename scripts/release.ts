@@ -7,16 +7,17 @@ import {verifyReleaseArtifact} from './release-artifact.ts';
 import {productionReleaseArgs,verifyActiveSessionReceiver,verifyWorldsProductionSchema} from './worlds-production.ts';
 import {parseWorldsLinkTarget} from '../worker/worlds-production.ts';
 const args=process.argv.slice(2);
-if(args.some(value=>!['--dry-run','--worlds-production','--enable-worlds-linking','--enable-worlds-profiles'].includes(value)))throw new Error('Unsupported release argument');
+if(args.some(value=>!['--dry-run','--worlds-production','--enable-worlds-linking','--enable-worlds-profiles','--enable-worlds-self-service-linking'].includes(value)))throw new Error('Unsupported release argument');
 const dryRun=args.includes('--dry-run');
 const worldsProduction=args.includes('--worlds-production');
 const enableLinking=args.includes('--enable-worlds-linking');
 const enableProfiles=args.includes('--enable-worlds-profiles');
-if((enableLinking||enableProfiles)&&!worldsProduction)throw new Error('Worlds feature flags require --worlds-production');
-const linkTarget=enableLinking?parseWorldsLinkTarget(process.env.WORLDS_LINK_TARGET):null;
-if(enableLinking&&(!linkTarget||!enableProfiles||process.env.WORLDS_HUB_SESSION_EVENT_JWK!==undefined)){
- throw new Error('The scoped link release requires one approved account pair and --enable-worlds-profiles, and retains the existing session-event key.');
-}
+const enableSelfService=args.includes('--enable-worlds-self-service-linking');
+if((enableLinking||enableProfiles||enableSelfService)&&!worldsProduction)throw new Error('Worlds feature flags require --worlds-production');
+if(enableSelfService&&(!enableLinking||!enableProfiles))throw new Error('Self-service linking requires Worlds linking and profiles.');
+const linkTarget=enableLinking&&!enableSelfService?parseWorldsLinkTarget(process.env.WORLDS_LINK_TARGET):null;
+if(enableLinking&&(!enableProfiles||process.env.WORLDS_HUB_SESSION_EVENT_JWK!==undefined))throw new Error('Link releases require --enable-worlds-profiles and retain the existing session-event key.');
+if(enableLinking&&!enableSelfService&&!linkTarget)throw new Error('The scoped link release requires one approved account pair.');
 const root=fileURLToPath(new URL('../',import.meta.url));
 const temporary=await mkdtemp(join(tmpdir(),'it-worlds-release-'));
 const assets=join(temporary,'assets');
@@ -40,8 +41,8 @@ try{
  if(worldsProduction){
   const databaseUrl=process.env.IT_WORLDS_PRODUCTION_DATABASE_URL;
   if(enableLinking&&!dryRun)await verifyActiveSessionReceiver();
-  worldsArgs=productionReleaseArgs(databaseUrl,process.env.WORLDS_HUB_SESSION_EVENT_JWK,{dryRun,enableLinking,enableProfiles,keepActiveSessionEventKey:enableLinking});
-  if(!dryRun)await verifyWorldsProductionSchema(databaseUrl!,process.env.IT_WORLDS_MIGRATION_DATABASE_URL,{enableProfiles});
+  worldsArgs=productionReleaseArgs(databaseUrl,process.env.WORLDS_HUB_SESSION_EVENT_JWK,{dryRun,enableLinking,enableProfiles,enableSelfService,keepActiveSessionEventKey:enableLinking});
+  if(!dryRun)await verifyWorldsProductionSchema(databaseUrl!,process.env.IT_WORLDS_MIGRATION_DATABASE_URL,{enableProfiles,enableSelfService});
   if(linkTarget&&!dryRun){
    await writeFile(targetSecretFile,JSON.stringify({WORLDS_LINK_TARGET:JSON.stringify(linkTarget)}),{mode:0o600,flag:'wx'});
    worldsArgs.push('--secrets-file',targetSecretFile);

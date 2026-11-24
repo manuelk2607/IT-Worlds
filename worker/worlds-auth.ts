@@ -12,12 +12,14 @@ export interface AppIdentity {user:{id:string;name:string;email:string};source:'
 export const worldsReply=(body:unknown,status=200)=>Response.json(body,{status,headers:{'Cache-Control':'no-store','X-Robots-Tag':'noindex','X-Content-Type-Options':'nosniff'}});
 const reply=worldsReply;
 export const worldsSessionEventKey=(env:Env)=>sessionEventPublicKey(env.WORLDS_HUB_SESSION_EVENT_JWK);
+const productionSelfService=(env:Env)=>env.WORLDS_ORIGIN===WORLDS_PRODUCTION_ORIGIN&&env.WORLDS_LINK_SELF_SERVICE==='true';
 export function worldsLinkEnabled(env:Env){
- return env.WORLDS_AUTH_ENABLED==='true'&&env.WORLDS_LINK_ENABLED==='true'&&env.WORLDS_REAUTH_VERIFIED==='true'&&!env.WORLDS_PILOT_ONLY&&
-  ((env.WORLDS_ORIGIN!==WORLDS_PRODUCTION_ORIGIN&&env.WORLDS_LINK_TARGET===undefined)||!!parseWorldsLinkTarget(env.WORLDS_LINK_TARGET));
+ if(env.WORLDS_AUTH_ENABLED!=='true'||env.WORLDS_LINK_ENABLED!=='true'||env.WORLDS_REAUTH_VERIFIED!=='true'||env.WORLDS_PILOT_ONLY)return false;
+ if(env.WORLDS_LINK_TARGET!==undefined)return !!parseWorldsLinkTarget(env.WORLDS_LINK_TARGET);
+ return env.WORLDS_ORIGIN!==WORLDS_PRODUCTION_ORIGIN||productionSelfService(env);
 }
 export function worldsLinkTarget(env:Env){
- return worldsLinkEnabled(env)?parseWorldsLinkTarget(env.WORLDS_LINK_TARGET):null;
+ return worldsLinkEnabled(env)&&!productionSelfService(env)?parseWorldsLinkTarget(env.WORLDS_LINK_TARGET):null;
 }
 export function worldsProfilesEnabled(env:Env){
  return env.WORLDS_AUTH_ENABLED==='true'&&env.WORLDS_PROFILES_ENABLED==='true';
@@ -56,7 +58,7 @@ export async function worldsRoute(request:Request,env:Env):Promise<Response|null
    const account=central?await resolveIdentity(request,env,async()=>reply({},401)):null;
    const state=account instanceof Response?(await account.json() as {error:string}).error:account?'LINKED':null;
    const target=worldsLinkTarget(env);
-   const linkEnabled=worldsLinkEnabled(env)&&(!target||central?.sub===target.subject);
+   const linkEnabled=!!central&&state==='ACCOUNT_LINK_REQUIRED'&&worldsLinkEnabled(env)&&(!target||central.sub===target.subject);
    const legacySignInAvailable=!!env.NEON_AUTH_BASE_URL&&!env.WORLDS_PILOT_ONLY&&
     (!central||(linkEnabled&&state==='ACCOUNT_LINK_REQUIRED'));
    const profileCreationAvailable=worldsProfilesEnabled(env)&&state==='ACCOUNT_LINK_REQUIRED'&&(!target||central?.sub!==target.subject);
@@ -84,7 +86,10 @@ export async function worldsRoute(request:Request,env:Env):Promise<Response|null
   let response:Response;
   if(purpose==='login'){
    const target=worldsLinkTarget(env);
-   if(target&&url.searchParams.get('reauth')==='1'&&(await session(request,config))?.sub!==target.subject)return reply({error:'NOT_FOUND'},404);
+   if(url.searchParams.get('reauth')==='1'&&config.reauthEnabled&&(target||productionSelfService(env))){
+    const current=await session(request,config);
+    if(!current||(target&&current.sub!==target.subject))return reply({error:'NOT_FOUND'},404);
+   }
    const locale=url.searchParams.get('ui_locales')==='en'?'en':'de';
    const returnPath=allowAccountReturn(url.searchParams.get('next'),locale);
    const loginConfig={...config,returnPaths:[accountPath(locale,null),...(config.returnPaths??[]),...(returnPath?[returnPath]:[])]};
