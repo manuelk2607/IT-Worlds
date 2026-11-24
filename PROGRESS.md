@@ -20,6 +20,8 @@ die Worlds-Anmeldung und den privaten Versandweg zum Hub.
 141 lokale Tests bestanden, 11 optionale übersprungen. Typprüfung, Build,
 SEO, Linkprüfung und Cloudflare-Trockenlauf mit eigener Freischaltung
 bestanden. Der neue Modus bleibt bis zur produktiven Freigabe geschlossen.
+[GitHub](https://github.com/manuelk2607/IT-Worlds/actions/runs/45397308296)
+bestand für `73847b4` einschließlich Node 22, Node 24 und PostgreSQL 18.
 
 ## Zentraler IT-Worlds-Migrationsnachweis – 24.11.2026
 
