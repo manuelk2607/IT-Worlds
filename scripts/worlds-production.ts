@@ -6,8 +6,13 @@ import {isITWorldsProductionDatabase,isITWorldsProductionMigrationDatabase,WORLD
 
 const migrationNames=['003_worlds_identity_links.sql','004_worlds_auth_sessions.sql','005_worlds_auth_maintenance.sql','006_worlds_link_cleanup.sql','007_worlds_session_revocations.sql'] as const;
 
+type ReleaseOptions={
+ dryRun?:boolean;enableLinking?:boolean;enableProfiles?:boolean;enableSelfService?:boolean;keepActiveSessionEventKey?:boolean;
+};
+
 export function productionReleaseArgs(
- databaseUrl:string|undefined,sessionEventJwk:string|undefined,{dryRun=false,enableLinking=false,enableProfiles=false,enableSelfService=false,keepActiveSessionEventKey=false}={},
+ databaseUrl:string|undefined,sessionEventJwk:string|undefined,
+ {dryRun=false,enableLinking=false,enableProfiles=false,enableSelfService,keepActiveSessionEventKey=false}:ReleaseOptions={},
 ){
  const fallback='postgresql://it_worlds_app@ep-broad-unit-baisjndz-pooler.c-8.eu-central-1.aws.neon.tech/IT-Worlds';
  if(!isITWorldsProductionDatabase(databaseUrl??(dryRun?fallback:undefined)))throw new Error('Worlds release requires the reviewed IT-Worlds production runtime database.');
@@ -15,10 +20,11 @@ export function productionReleaseArgs(
  const vars:Record<string,string>={
   ...WORLDS_PRODUCTION_VARS,
   WORLDS_LINK_ENABLED:String(enableLinking),
-  WORLDS_LINK_SELF_SERVICE:String(enableSelfService),
   WORLDS_REAUTH_VERIFIED:String(enableLinking),
   WORLDS_PROFILES_ENABLED:String(enableProfiles),
  };
+ // Omit the flag on routine releases so Wrangler keeps the active production mode.
+ if(enableSelfService!==undefined)vars.WORLDS_LINK_SELF_SERVICE=String(enableSelfService);
  if(sessionEventJwk!==undefined||(enableLinking&&!keepActiveSessionEventKey)){
   let key:unknown;
   try{key=JSON.parse(sessionEventJwk??'');}catch{}
@@ -43,16 +49,14 @@ export async function verifyActiveSessionReceiver(){
  }
 }
 
-export async function verifyWorldsProductionSchema(databaseUrl:string,migrationUrl:string|undefined,{enableProfiles=false,enableSelfService=false}={}){
+export async function verifyWorldsProductionSchema(databaseUrl:string,migrationUrl:string|undefined,{enableProfiles=false}={}){
  if(!isITWorldsProductionDatabase(databaseUrl))throw new Error('Refusing schema check outside IT-Worlds production.');
  if(!migrationUrl||!isITWorldsProductionMigrationDatabase(migrationUrl)){
   throw new Error('The schema check requires the direct IT-Worlds production migration connection.');
  }
  const directory=new URL('../migrations/',import.meta.url),expected=new Map<string,string>();
  const available=new Set(await readdir(directory));
- const required=[...migrationNames,
-  ...(enableProfiles?['008_worlds_project_accounts.sql']:[]),
-  ...(enableSelfService?['009_worlds_migration_receipts.sql']:[])];
+ const required=enableProfiles?[...migrationNames,'008_worlds_project_accounts.sql','009_worlds_migration_receipts.sql']:migrationNames;
  for(const name of required){
   if(!available.has(name))throw new Error(`Missing migration source: ${name}`);
   expected.set(name,createHash('sha256').update(await readFile(new URL(name,directory),'utf8')).digest('hex'));

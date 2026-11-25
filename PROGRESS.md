@@ -1,5 +1,26 @@
 # IT-Worlds – Fortschritt
 
+## Zentrale Anmeldung als Produktionsstandard – 25.11.2026
+
+`npm run deploy` erhält Anmeldung, Lernprofile, die bestehende
+Altprofil-Freigabe und den projektübergreifenden Abmeldeempfänger.
+Vor einem Upload prüft der Runner das Cloudflare-Ziel, die beiden
+Datenbankrollen, die Migrationen bis 009 und den Abmeldeempfänger.
+Der Anwendungscode entspricht dem bereits produktiven `0e92e30`.
+Die allgemeine Selbstübernahme für das verbleibende Altprofil ist
+separat geprüft und wartet auf ihre Produktionsfreigabe.
+140 Tests bestanden, 11 optionale übersprungen. Typprüfung, Build, SEO-,
+Linkprüfung und Wrangler-Trockenlauf bestanden. Der Runner stoppt bei
+fremdem Cloudflare-Konto, fehlender Produktionsverbindung oder fehlendem
+Kontopaar für eine ausdrückliche Altprofil-Freigabe vor Wrangler.
+Der Live-Abruf des Sitzungsstatus bestätigte die zentrale Anmeldung und
+private Header für anonyme Anfragen.
+[GitHub](https://github.com/manuelk2607/IT-Worlds/actions/runs/45636039497)
+bestand mit Node 22 und 24 sowie den veröffentlichten PostgreSQL-18-
+Beispielen. `main` enthält den bereits laufenden Anwendungscode und
+den verifizierten Releaseweg. Die laufende Worker-Version
+`163de77f-5c7a-4353-8589-483df8c8de50` war der Ausgangspunkt.
+
 ## Selbstständige Übernahme bestehender IT-Worlds-Konten vorbereitet
 
 Der Nur-Lese-Abgleich zählt zwei Altprofile mit den bisherigen IDs,
@@ -10,9 +31,13 @@ Vorschau und Bestätigung verwenden die nachgewiesenen Konten. Die lokale
 ID bleibt erhalten. Ein anderes Altprofil kann mit derselben Vorschau
 nicht bestätigt werden.
 
-Der bisherige Modus für ein einzelnes Kontopaar bleibt Standard. Die
-Selbstübernahme wird ausdrücklich per `--enable-worlds-self-service-linking`
-aktiviert und setzt die eingespielte Migration 009 voraus. Der vorhandene
+Produktiv gilt weiterhin die Freigabe für ein einzelnes Kontopaar. Die
+Selbstübernahme wird ausdrücklich mit
+`npm run deploy -- --enable-worlds-self-service-linking` aktiviert und
+setzt die eingespielte Migration 009 voraus. Reguläre Veröffentlichungen
+behalten den aktiven Übernahmemodus. Eine ausdrücklich freigegebene
+Zuordnung zu einem einzelnen Paar setzt den Modus wieder auf Paarfreigabe.
+Der vorhandene
 signierte Nachweisversand bleibt nutzbar. Die Freischaltung benötigt keine
 Schemaänderung. Rücknahmeversion `163de77f` erhält die vorhandene Zuordnung,
 die Worlds-Anmeldung und den privaten Versandweg zum Hub.
@@ -22,6 +47,9 @@ SEO, Linkprüfung und Cloudflare-Trockenlauf mit eigener Freischaltung
 bestanden. Der neue Modus bleibt bis zur produktiven Freigabe geschlossen.
 [GitHub](https://github.com/manuelk2607/IT-Worlds/actions/runs/45397308296)
 bestand für `73847b4` einschließlich Node 22, Node 24 und PostgreSQL 18.
+Der Abgleich mit `main` erhielt den geprüften Worker-Code. Die 141 lokalen
+Tests und die Trockenläufe für den Standard-Deploy und die ausdrückliche
+Selbstübernahme bestanden für den zusammengeführten Stand.
 
 ## Zentraler IT-Worlds-Migrationsnachweis – 24.11.2026
 

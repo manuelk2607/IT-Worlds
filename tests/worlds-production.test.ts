@@ -23,7 +23,6 @@ test('production release defaults to sign-in only and enables linking explicitly
  const args=productionReleaseArgs(database,undefined);
  for(const [name,value] of Object.entries(WORLDS_PRODUCTION_VARS))assert.ok(args.includes(`${name}:${value}`));
  assert.ok(args.includes('WORLDS_LINK_ENABLED:false'));
- assert.ok(args.includes('WORLDS_LINK_SELF_SERVICE:false'));
  assert.ok(args.includes('WORLDS_REAUTH_VERIFIED:false'));
  assert.ok(args.includes('WORLDS_PROFILES_ENABLED:false'));
  const profiles=productionReleaseArgs(database,undefined,{enableProfiles:true});
@@ -38,10 +37,13 @@ test('production release defaults to sign-in only and enables linking explicitly
  const keepKey=productionReleaseArgs(database,undefined,{enableLinking:true,enableProfiles:true,keepActiveSessionEventKey:true});
  assert.ok(keepKey.includes('WORLDS_PROFILES_ENABLED:true')&&keepKey.includes('WORLDS_LINK_ENABLED:true'));
  assert.ok(!keepKey.some(arg=>arg.startsWith('WORLDS_HUB_SESSION_EVENT_JWK:')));
+ assert.ok(!keepKey.some(arg=>arg.startsWith('WORLDS_LINK_SELF_SERVICE:')));
  assert.throws(()=>productionReleaseArgs(database,undefined,{enableSelfService:true}),/requires Worlds linking and profiles/);
  const selfService=productionReleaseArgs(database,undefined,{enableLinking:true,enableProfiles:true,enableSelfService:true,keepActiveSessionEventKey:true});
  assert.ok(selfService.includes('WORLDS_LINK_SELF_SERVICE:true'));
  assert.ok(!selfService.some(arg=>arg.startsWith('WORLDS_HUB_SESSION_EVENT_JWK:')));
+ const scoped=productionReleaseArgs(database,undefined,{enableLinking:true,enableProfiles:true,enableSelfService:false,keepActiveSessionEventKey:true});
+ assert.ok(scoped.includes('WORLDS_LINK_SELF_SERVICE:false'));
  assert.throws(()=>productionReleaseArgs(database,'{}'),/public JWK/);
  assert.throws(()=>productionReleaseArgs(database,jwk.replace('}',',"d":"private"}')),/public JWK/);
  assert.throws(()=>productionReleaseArgs(undefined,jwk),/production runtime database/);
@@ -66,8 +68,7 @@ test('release preflight verifies the ledger as owner and checks RLS as the appli
  const owner=database.replace('it_worlds_app','neondb_owner').replace('-pooler','');
  let runtimeReadsLedger=false;
  let corruptReceipt=false;
- let includeProfileReceipt=false;
- let includeMigrationReceipt=false;
+ let migrationLevel=7;
  let profileRls=true;
  t.mock.method(globalThis,'fetch',async (_input:RequestInfo|URL,init?:RequestInit)=>{
   const connection=new URL(new Headers(init?.headers).get('neon-connection-string')!);
@@ -75,10 +76,10 @@ test('release preflight verifies the ledger as owner and checks RLS as the appli
   if(query.includes('SELECT name,sha256')){
    assert.equal(connection.username,'neondb_owner');
    assert.equal(connection.hostname,new URL(owner).hostname);
+   const throughLevel=receipts.filter(([name])=>Number(name.slice(0,3))<=migrationLevel);
    return Response.json({
     fields:['name','sha256'].map(name=>({name,dataTypeID:25})),
-    rows:corruptReceipt?[[receipts[0][0],'wrong'],...receipts.slice(1)]:
-     includeMigrationReceipt?receipts:includeProfileReceipt?receipts.slice(0,-1):receipts.slice(0,-2)
+    rows:corruptReceipt?[[throughLevel[0][0],'wrong'],...throughLevel.slice(1)]:throughLevel
    });
   }
   assert.match(query,/row_security_active/);
@@ -94,11 +95,10 @@ test('release preflight verifies the ledger as owner and checks RLS as the appli
  });
  await verifyWorldsProductionSchema(database,owner);
  await assert.rejects(verifyWorldsProductionSchema(database,owner,{enableProfiles:true}),/008_worlds_project_accounts/);
- includeProfileReceipt=true;
+ migrationLevel=8;
+ await assert.rejects(verifyWorldsProductionSchema(database,owner,{enableProfiles:true}),/009_worlds_migration_receipts/);
+ migrationLevel=9;
  await verifyWorldsProductionSchema(database,owner,{enableProfiles:true});
- await assert.rejects(verifyWorldsProductionSchema(database,owner,{enableProfiles:true,enableSelfService:true}),/009_worlds_migration_receipts/);
- includeMigrationReceipt=true;
- await verifyWorldsProductionSchema(database,owner,{enableProfiles:true,enableSelfService:true});
  profileRls=false;
  await assert.rejects(verifyWorldsProductionSchema(database,owner,{enableProfiles:true}),/project profile checks/);
  runtimeReadsLedger=true;

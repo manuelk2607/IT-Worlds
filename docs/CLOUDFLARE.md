@@ -32,6 +32,16 @@ Dateien und Werte geheim halten; der Befehl benötigt nur den lokalen Pfad, kein
 
 ## Prüfen und veröffentlichen
 
+`npm run deploy` erhält die aktive Worlds-Anmeldung und Lernprofile sowie die
+individuell freigegebene Altprofil-Verknüpfung. Für die Vorprüfung braucht der
+Runner `IT_WORLDS_PRODUCTION_DATABASE_URL` mit der eingeschränkten Laufzeitrolle
+und `IT_WORLDS_MIGRATION_DATABASE_URL` mit der direkten Owner-Verbindung.
+Er prüft die Migrationen 003 bis 009, RLS und den Abmeldeempfänger. Beide URLs
+bleiben im Prüfprozess. Die vorhandenen Worker-Secrets gelten für den normalen
+Upload weiter. Nur eine ausdrücklich veranlasste Altprofil-Freigabe mit
+`--enable-worlds-linking` und `WORLDS_LINK_TARGET` ersetzt das Kontopaar.
+`npm run deploy:check` prüft das Paket ohne Datenbankzugang oder Upload.
+
 ```bash
 npm ci
 npm test
