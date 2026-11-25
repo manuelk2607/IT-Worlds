@@ -50,6 +50,9 @@ bestand für `73847b4` einschließlich Node 22, Node 24 und PostgreSQL 18.
 Der Abgleich mit `main` erhielt den geprüften Worker-Code. Die 141 lokalen
 Tests und die Trockenläufe für den Standard-Deploy und die ausdrückliche
 Selbstübernahme bestanden für den zusammengeführten Stand.
+[GitHub](https://github.com/manuelk2607/IT-Worlds/actions/runs/45639518764)
+bestätigte `a751cbe` mit Node 22, Node 24 und PostgreSQL 18. Die
+Produktionsfreigabe für die Selbstübernahme steht aus.
 
 ## Zentraler IT-Worlds-Migrationsnachweis – 24.11.2026
 
