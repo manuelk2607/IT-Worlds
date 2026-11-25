@@ -1,5 +1,15 @@
 # IT-Worlds – Fortschritt
 
+## Rückweg zum Worlds Hub
+
+Der Link in der Fußzeile führt zur DE/EN-Startseite des Hubs. Lokal bestanden
+141 Tests, 11 umgebungsabhängige Tests wurden übersprungen. Astro-Prüfung
+und Build bestanden. Chromium-Desktop und WebKit bei 320 px prüften Link
+und Tastaturbedienung auf beiden Start- und 404-Seiten. In WebKit wurden
+auch Menü und Designumschaltung geprüft.
+
+Produktive Veröffentlichung und Live-Prüfung stehen aus.
+
 ## Zentrale Anmeldung als Produktionsstandard – 25.11.2026
 
 `npm run deploy` erhält Anmeldung, Lernprofile, die bestehende
