@@ -48,7 +48,7 @@ export async function verifyWorldsProductionSchema(databaseUrl:string,migrationU
  }
  const directory=new URL('../migrations/',import.meta.url),expected=new Map<string,string>();
  const available=new Set(await readdir(directory));
- const required=enableProfiles?[...migrationNames,'008_worlds_project_accounts.sql']:[...migrationNames];
+ const required=enableProfiles?[...migrationNames,'008_worlds_project_accounts.sql','009_worlds_migration_receipts.sql']:migrationNames;
  for(const name of required){
   if(!available.has(name))throw new Error(`Missing migration source: ${name}`);
   expected.set(name,createHash('sha256').update(await readFile(new URL(name,directory),'utf8')).digest('hex'));

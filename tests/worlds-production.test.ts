@@ -54,14 +54,14 @@ test('checking migration receipts requires a separate direct owner connection to
 
 test('release preflight verifies the ledger as owner and checks RLS as the application role',async t=>{
  const migrationDir=new URL('../migrations/',import.meta.url);
- const names=(await readdir(migrationDir)).filter(name=>/^00[3-8]_/.test(name)).sort();
+ const names=(await readdir(migrationDir)).filter(name=>/^00[3-9]_/.test(name)).sort();
  const receipts=await Promise.all(names.map(async name=>[
   name,createHash('sha256').update(await readFile(new URL(name,migrationDir))).digest('hex')
  ]));
  const owner=database.replace('it_worlds_app','neondb_owner').replace('-pooler','');
  let runtimeReadsLedger=false;
  let corruptReceipt=false;
- let includeProfileReceipt=false;
+ let migrationLevel=7;
  let profileRls=true;
  t.mock.method(globalThis,'fetch',async (_input:RequestInfo|URL,init?:RequestInit)=>{
   const connection=new URL(new Headers(init?.headers).get('neon-connection-string')!);
@@ -69,9 +69,10 @@ test('release preflight verifies the ledger as owner and checks RLS as the appli
   if(query.includes('SELECT name,sha256')){
    assert.equal(connection.username,'neondb_owner');
    assert.equal(connection.hostname,new URL(owner).hostname);
+   const throughLevel=receipts.filter(([name])=>Number(name.slice(0,3))<=migrationLevel);
    return Response.json({
     fields:['name','sha256'].map(name=>({name,dataTypeID:25})),
-    rows:corruptReceipt?[[receipts[0][0],'wrong'],...receipts.slice(1)]:includeProfileReceipt?receipts:receipts.slice(0,-1)
+    rows:corruptReceipt?[[throughLevel[0][0],'wrong'],...throughLevel.slice(1)]:throughLevel
    });
   }
   assert.match(query,/row_security_active/);
@@ -87,7 +88,9 @@ test('release preflight verifies the ledger as owner and checks RLS as the appli
  });
  await verifyWorldsProductionSchema(database,owner);
  await assert.rejects(verifyWorldsProductionSchema(database,owner,{enableProfiles:true}),/008_worlds_project_accounts/);
- includeProfileReceipt=true;
+ migrationLevel=8;
+ await assert.rejects(verifyWorldsProductionSchema(database,owner,{enableProfiles:true}),/009_worlds_migration_receipts/);
+ migrationLevel=9;
  await verifyWorldsProductionSchema(database,owner,{enableProfiles:true});
  profileRls=false;
  await assert.rejects(verifyWorldsProductionSchema(database,owner,{enableProfiles:true}),/project profile checks/);

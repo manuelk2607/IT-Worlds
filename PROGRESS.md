@@ -1,5 +1,21 @@
 # IT-Worlds – Fortschritt
 
+## Zentrale Anmeldung als Produktionsstandard – 25.11.2026
+
+`npm run deploy` erhält Anmeldung, Lernprofile, die bestehende
+Altprofil-Freigabe und den projektübergreifenden Abmeldeempfänger.
+Vor einem Upload prüft der Runner das Cloudflare-Ziel, die beiden
+Datenbankrollen, die Migrationen bis 009 und den Abmeldeempfänger.
+Der Anwendungscode entspricht dem bereits produktiven `0e92e30`.
+Die allgemeine Selbstübernahme für das verbleibende Altprofil ist
+separat geprüft und wartet auf ihre Produktionsfreigabe.
+140 Tests bestanden, 11 optionale übersprungen. Typprüfung, Build, SEO-,
+Linkprüfung und Wrangler-Trockenlauf bestanden. Der Runner stoppt bei
+fremdem Cloudflare-Konto, fehlender Produktionsverbindung oder fehlendem
+Kontopaar für eine ausdrückliche Altprofil-Freigabe vor Wrangler.
+Der Live-Abruf des Sitzungsstatus bestätigte die zentrale Anmeldung und
+private Header für anonyme Anfragen.
+
 ## Zentraler IT-Worlds-Migrationsnachweis – 24.11.2026
 
 Produktiver Nur-Lese-Abgleich: ein bestehender, bestätigter Altprofil-Link

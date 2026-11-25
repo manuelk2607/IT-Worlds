@@ -9,13 +9,20 @@ import {parseWorldsLinkTarget} from '../worker/worlds-production.ts';
 const args=process.argv.slice(2);
 if(args.some(value=>!['--dry-run','--worlds-production','--enable-worlds-linking','--enable-worlds-profiles'].includes(value)))throw new Error('Unsupported release argument');
 const dryRun=args.includes('--dry-run');
-const worldsProduction=args.includes('--worlds-production');
-const enableLinking=args.includes('--enable-worlds-linking');
-const enableProfiles=args.includes('--enable-worlds-profiles');
-if((enableLinking||enableProfiles)&&!worldsProduction)throw new Error('Worlds feature flags require --worlds-production');
-const linkTarget=enableLinking?parseWorldsLinkTarget(process.env.WORLDS_LINK_TARGET):null;
-if(enableLinking&&(!linkTarget||!enableProfiles||process.env.WORLDS_HUB_SESSION_EVENT_JWK!==undefined)){
- throw new Error('The scoped link release requires one approved account pair and --enable-worlds-profiles, and retains the existing session-event key.');
+const replaceLinkTarget=args.includes('--enable-worlds-linking');
+const linkTarget=replaceLinkTarget?parseWorldsLinkTarget(process.env.WORLDS_LINK_TARGET):null;
+if(replaceLinkTarget&&(!linkTarget||process.env.WORLDS_HUB_SESSION_EVENT_JWK!==undefined)){
+ throw new Error('The scoped link release requires one approved account pair and retains the existing session-event key.');
+}
+const accountId=process.env.CLOUDFLARE_ACCOUNT_ID;
+if(!dryRun&&accountId&&accountId!=='ec3c070d8e4f88d2fc533d7d797f2daa')throw new Error('Use the Cloudflare account that owns the production IT-Worlds Worker.');
+const databaseUrl=process.env.IT_WORLDS_PRODUCTION_DATABASE_URL;
+const worldsArgs=productionReleaseArgs(databaseUrl,process.env.WORLDS_HUB_SESSION_EVENT_JWK,{
+ dryRun,enableLinking:true,enableProfiles:true,keepActiveSessionEventKey:true,
+});
+if(!dryRun){
+ await verifyWorldsProductionSchema(databaseUrl!,process.env.IT_WORLDS_MIGRATION_DATABASE_URL,{enableProfiles:true});
+ await verifyActiveSessionReceiver();
 }
 const root=fileURLToPath(new URL('../',import.meta.url));
 const temporary=await mkdtemp(join(tmpdir(),'it-worlds-release-'));
@@ -36,23 +43,16 @@ try{
  if(build.error)throw build.error;if(build.status!==0)throw new Error('Isolated release build failed');
  console.log(`Release artifact: ${await verifyReleaseArtifact(assets)} files; no synchronisation copies.`);
  node('scripts/seo-check.ts');node('scripts/links-check.ts');
- let worldsArgs:string[]=[];
- if(worldsProduction){
-  const databaseUrl=process.env.IT_WORLDS_PRODUCTION_DATABASE_URL;
-  if(enableLinking&&!dryRun)await verifyActiveSessionReceiver();
-  worldsArgs=productionReleaseArgs(databaseUrl,process.env.WORLDS_HUB_SESSION_EVENT_JWK,{dryRun,enableLinking,enableProfiles,keepActiveSessionEventKey:enableLinking});
-  if(!dryRun)await verifyWorldsProductionSchema(databaseUrl!,process.env.IT_WORLDS_MIGRATION_DATABASE_URL,{enableProfiles});
-  if(linkTarget&&!dryRun){
-   await writeFile(targetSecretFile,JSON.stringify({WORLDS_LINK_TARGET:JSON.stringify(linkTarget)}),{mode:0o600,flag:'wx'});
-   worldsArgs.push('--secrets-file',targetSecretFile);
-  }
+ if(linkTarget&&!dryRun){
+  await writeFile(targetSecretFile,JSON.stringify({WORLDS_LINK_TARGET:JSON.stringify(linkTarget)}),{mode:0o600,flag:'wx'});
+  worldsArgs.push('--secrets-file',targetSecretFile);
  }
  // The directory flag overrides only the asset location; routing and existing bindings remain configured in wrangler.jsonc.
  const deployment=spawnSync(process.execPath,[join(root,'node_modules/wrangler/bin/wrangler.js'),'deploy','--assets',assets,'--keep-vars',...worldsArgs,...(dryRun?['--dry-run']:[])],{cwd:root,env,stdio:'inherit'});
  if(deployment.error)throw deployment.error;if(deployment.status!==0)throw new Error('Wrangler release failed');
  if(!dryRun){
   console.log('Deployment completed; verifying public delivery.');
-  try{if(enableLinking)await verifyActiveSessionReceiver();node('scripts/seo-check.ts',['--live']);}
+  try{await verifyActiveSessionReceiver();node('scripts/seo-check.ts',['--live']);}
   catch(error){keepArtifact=true;console.error(`Deployment completed, but public verification failed. Exact artifact retained: ${assets}`);throw error;}
  }
 }finally{
