@@ -21,7 +21,7 @@ Beispielen. `main` enthält den bereits laufenden Anwendungscode und
 den verifizierten Releaseweg. Die laufende Worker-Version
 `163de77f-5c7a-4353-8589-483df8c8de50` war der Ausgangspunkt.
 
-## Selbstständige Übernahme bestehender IT-Worlds-Konten vorbereitet
+## Selbstständige Übernahme bestehender IT-Worlds-Konten produktiv
 
 Der Nur-Lese-Abgleich zählt zwei Altprofile mit den bisherigen IDs,
 davon eines bereits mit Worlds verknüpft. Das zweite Profil kann der
@@ -31,8 +31,8 @@ Vorschau und Bestätigung verwenden die nachgewiesenen Konten. Die lokale
 ID bleibt erhalten. Ein anderes Altprofil kann mit derselben Vorschau
 nicht bestätigt werden.
 
-Produktiv gilt weiterhin die Freigabe für ein einzelnes Kontopaar. Die
-Selbstübernahme wird ausdrücklich mit
+Die bisherige Paarfreigabe wurde durch den bestätigten
+Selbstübernahmemodus ersetzt. Dieser wird ausdrücklich mit
 `npm run deploy -- --enable-worlds-self-service-linking` aktiviert und
 setzt die eingespielte Migration 009 voraus. Reguläre Veröffentlichungen
 behalten den aktiven Übernahmemodus. Eine ausdrücklich freigegebene
@@ -44,15 +44,21 @@ die Worlds-Anmeldung und den privaten Versandweg zum Hub.
 
 141 lokale Tests bestanden, 11 optionale übersprungen. Typprüfung, Build,
 SEO, Linkprüfung und Cloudflare-Trockenlauf mit eigener Freischaltung
-bestanden. Der neue Modus bleibt bis zur produktiven Freigabe geschlossen.
+bestanden.
 [GitHub](https://github.com/manuelk2607/IT-Worlds/actions/runs/45397308296)
 bestand für `73847b4` einschließlich Node 22, Node 24 und PostgreSQL 18.
 Der Abgleich mit `main` erhielt den geprüften Worker-Code. Die 141 lokalen
 Tests und die Trockenläufe für den Standard-Deploy und die ausdrückliche
 Selbstübernahme bestanden für den zusammengeführten Stand.
 [GitHub](https://github.com/manuelk2607/IT-Worlds/actions/runs/45639518764)
-bestätigte `a751cbe` mit Node 22, Node 24 und PostgreSQL 18. Die
-Produktionsfreigabe für die Selbstübernahme steht aus.
+bestätigte `a751cbe` mit Node 22, Node 24 und PostgreSQL 18. Der
+verifizierte Release `96ea3c9b-5814-4a36-be61-0ac2cd9cb976` läuft zu
+100 Prozent im Deployment `276951bd-6743-448b-9dd6-35351e0449b1`.
+Alle 15 bestehenden Bindungen sind vorhanden. Die vorhandenen
+Migrationen stimmen mit ihren Prüfsummen überein und die Anwendungsrolle
+ist eingeschränkt. Live geprüft wurden DE/EN, der PKCE-Anmeldestart,
+der anonyme Zugriffsschutz und der Abmeldeempfänger. Die erste
+Übernahme des verbleibenden Altprofils durch seinen Inhaber steht aus.
 
 ## Zentraler IT-Worlds-Migrationsnachweis – 24.11.2026
 

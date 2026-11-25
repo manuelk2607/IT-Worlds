@@ -41,6 +41,8 @@ bleiben im Prüfprozess. Die vorhandenen Worker-Secrets gelten für den normalen
 Upload weiter. Nur eine ausdrücklich veranlasste Altprofil-Freigabe mit
 `--enable-worlds-linking` und `WORLDS_LINK_TARGET` ersetzt das Kontopaar.
 `npm run deploy:check` prüft das Paket ohne Datenbankzugang oder Upload.
+Der aktive Selbstübernahmemodus bleibt beim Standard-Deploy erhalten.
+Die ausdrückliche Aktivierung verwendet `--enable-worlds-self-service-linking`.
 
 ```bash
 npm ci
