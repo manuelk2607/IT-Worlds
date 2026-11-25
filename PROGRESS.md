@@ -15,6 +15,11 @@ fremdem Cloudflare-Konto, fehlender Produktionsverbindung oder fehlendem
 Kontopaar für eine ausdrückliche Altprofil-Freigabe vor Wrangler.
 Der Live-Abruf des Sitzungsstatus bestätigte die zentrale Anmeldung und
 private Header für anonyme Anfragen.
+[GitHub](https://github.com/manuelk2607/IT-Worlds/actions/runs/45636039497)
+bestand mit Node 22 und 24 sowie den veröffentlichten PostgreSQL-18-
+Beispielen. `main` enthält den bereits laufenden Anwendungscode und
+den verifizierten Releaseweg. Die laufende Worker-Version
+`163de77f-5c7a-4353-8589-483df8c8de50` war der Ausgangspunkt.
 
 ## Zentraler IT-Worlds-Migrationsnachweis – 24.11.2026
 
