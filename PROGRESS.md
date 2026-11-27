@@ -8,7 +8,14 @@ und Build bestanden. Chromium-Desktop und WebKit bei 320 px prüften Link
 und Tastaturbedienung auf beiden Start- und 404-Seiten. In WebKit wurden
 auch Menü und Designumschaltung geprüft.
 
-Produktive Veröffentlichung und Live-Prüfung stehen aus.
+`a6ad092` läuft seit 27.11. als Worker `829c21a6-f3fc-4249-9791-4a196195d212`.
+Der erste Live-Abgleich direkt nach dem Upload fand eine abweichende
+Version von `/lernen/`. Nach der Veröffentlichung stimmten alle 528
+indexierbaren Seiten bytegenau mit dem Build überein. Beide Start- und
+Kontoseiten liefern den erwarteten Hub-Link. Der vorhandene Abmeldeempfänger
+bestand die Prüfung vor und nach dem Upload. Rücknahmeversion ist
+`96ea3c9b-5814-4a36-be61-0ac2cd9cb976`.
+[GitHub Actions](https://github.com/manuelk2607/IT-Worlds/actions/runs/45647576735)
 
 ## Zentrale Anmeldung als Produktionsstandard – 25.11.2026
 
